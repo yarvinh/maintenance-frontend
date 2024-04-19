@@ -1,0 +1,28 @@
+.work_order_button {
+    color: white;
+    cursor: pointer;
+    padding: 8px;
+    width: 150px;
+    border-width: 3px;
+    border-style: solid;
+    border-color:  #777;
+    text-align: center;
+    font-size: 12px;
+    border-radius: .25rem;
+  }
+
+  .inactive_color {
+    background-color: #777
+  }
+  
+  .active_color {
+    background-color: #0d6efd;
+  }
+
+  .work_order_container {
+    padding: 2px 16px;
+    background-color: #eee;
+    align-items: center;
+    width: 80%;
+  }
+  

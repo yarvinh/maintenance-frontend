@@ -1,0 +1,242 @@
+.form {  
+    width:100%;
+    max-width: 500px;
+}
+
+.form-select {
+    width:100%;
+    max-width: 200px;
+}
+
+.team-card {
+    width: 100%;
+    max-width: 300px;
+}
+
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    width: 40%;
+  
+}
+  
+.card:hover, .card.game-card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+  
+.container {
+    padding: 2px 16px;
+}
+
+.custom-nav-link {
+      color:#fff;
+}
+
+.card.game-card, .likes-section, .bets-section {
+      width:95%; 
+}
+
+.card-container {
+      width:700px;
+      background-color: #eee;
+      
+}
+
+.gallery {
+    margin-left: 5px; 
+    padding: 10px; 
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    width:90%;
+    margin:0 auto;
+} 
+
+.full-image{
+    width: 100%;
+    height: 80%;
+    background: rgba(0,0,0,0.9);
+    position:  absolute;
+    top: 0;
+    left: 0;
+}
+
+.full-image img{ 
+   opacity: .90;
+   transition: opacity ease 250ms; 
+}  
+.full-image img:hover{
+    opacity: 1;
+} 
+
+
+.gallery-container{ 
+    width: 100%;  
+    padding: 1rem;
+}
+
+.slider-wrapper{ 
+    position: relative;
+    max-width: 48rem;
+    margin: 0 auto;
+}
+
+.photo img { 
+    width: 100%;
+    aspect-ratio: 16/15;
+    object-fit: contain ; 
+    position:relative; 
+
+}
+
+.photo{
+    width: 100%;
+    position:relative;  
+}
+
+
+
+
+
+
+.circle {
+    margin-left: 50%;
+    cursor: pointer;
+    border-radius: 50%;
+    height:36px;
+    width:36px;
+    background-color: rgba(0,0,0,0.7);
+    bottom:2%;
+    right:50%;
+    display:flex;
+    justify-content: center;
+    opacity: .50;
+    transition: opacity ease 250ms; 
+
+
+}
+.delete-image{
+    margin-left: 50%;
+    cursor: pointer;
+    border-radius: 50%;
+    height:30px;
+    width:30px;
+    background-color: rgba(0,0,0,0.7);
+    bottom:2%;
+    color: white;
+    align-content: center;
+    right:24%;
+    display:flex;
+    justify-content: center;
+    opacity: .50;
+    transition: opacity ease 250ms; 
+}
+
+.delete-image span{
+    display:inline-block;
+    margin: auto;
+}
+
+.delete-image:hover{
+    opacity: 100;
+}
+
+
+.image-form{   
+    top: 5px;
+    right:46%;
+    justify-content: center;
+}
+
+.image-form input{
+    border-radius: 10px;
+}
+
+.image-input:hover{
+    opacity: 2;
+}
+
+
+
+
+.gallery-image  img{
+   flex: 1 0 100%;
+   cursor: pointer;
+   width: 80px;
+   height: 80px;
+   scroll-snap-align: start;
+   /* padding: 2px; */
+   border-radius: .4rem;
+   
+} 
+
+.gallery-image  img:hover{
+    width: 87px;
+    height: 87px;
+}
+
+.carousel{
+    padding: 2px;
+}
+.gallery-image {   
+    display: flex;
+    height: 100px;
+    overflow: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    box-shadow: 0 1.5rem -0.75rem hsla(0,0%,0%,0.25);
+    border-radius: 0.5rem ;
+}
+
+.gallery {
+    position: relative;
+    max-width: 48rem;
+    margin: 0 auto;
+}
+
+.bar-container{
+    padding: .5rem;
+}
+
+
+ .bi-pencil {
+    width:16px;
+    height:16px;
+    display:inline-block;
+    margin: auto;    
+}
+
+ .circle:hover{
+   opacity: 100;
+   
+} 
+
+
+.img-button {
+    border-radius: 30%;
+    background-color:rgba(0,0,0,0.10);
+}
+
+.img-button :hover{
+    opacity: 1;
+    
+ } 
+
+ .task-container{
+    /* box-shadow: 0 4px 8px 0 rgba(0,0,0,0.40); */
+    /* transition: opacity ease 250ms;  */
+    /* margin:auto; */
+    border-radius: .5rem;
+    width: 100%;
+ }
+
+ /* .task-container:hover{
+
+    opacity: 1;
+} */
+.task-creater{
+    margin-top: 30px;
+    background-color: blue;
+}
+

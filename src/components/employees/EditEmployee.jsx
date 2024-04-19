@@ -1,0 +1,123 @@
+import React, {useState,useEffect } from 'react';
+import { connect } from 'react-redux';
+import {editEmployee} from '../../actions/employeesActions'
+import {useParams,useNavigate} from 'react-router-dom';
+import {clearErrors} from '../../actions/errorsActions'
+import UploadProfileImage  from "../users/UpdloadProfileImage"
+import '../../styles/styles.css'
+
+const EditEmployee = (props) =>{
+    const {errorsOrMessages,user} = props
+    let navigate = useNavigate()
+    let {id} = useParams()
+    const [employee, setEmployee] = useState({
+        name: "",
+        phone: "",
+        email: "",
+        username: "",
+        password: "",
+        old_password: '',
+    })
+
+    useEffect(() => {  
+        if (errorsOrMessages.length > 0){          
+          props.clearErrors()
+        }
+    },[]);
+
+    const goBack = (e) => {
+        return navigate(-1)
+    }
+
+    let handleOnChange = (e)=>{
+      setEmployee({
+       ...employee,[e.target.name]: e.target.value
+      })
+    }
+
+    let handleOnSubmit = (e,type) =>{
+        e.preventDefault()
+        if(type === 'password'){
+            props.editEmployee({employee:{[type]: employee[type],old_password: employee.old_password}, id: id}) 
+        }else{ 
+            props.editEmployee({[type]: employee[type],id: id})  
+            setEmployee({
+                ...employee,[type]: ""
+            }) 
+        }
+    }
+
+    return(   
+      <div>
+            <div className='settings-forms standar-form-position'>
+                <div>
+                  {!user.admin ?<UploadProfileImage employeeOrUser={"employee"} user={user}/>:null}
+                </div>
+                {props.errorsOrMessages.map((e,k) => {
+                  return (
+                    < ul key={k}>
+                      <strong className={"errors"}>{e}</strong> 
+                    </ul>
+                  ) } ) }
+               <br/>
+              <div className='center'>  
+                <form onSubmit={(e)=>handleOnSubmit(e,"name")} >
+                    <label>Name: {user.user?.name}</label>
+                    <input onChange={handleOnChange} placeholder={"Edit name"}  value={employee.name} className="standar-input" type="text" name="name"/>
+                    <button type='submit' className="standar-button">Save name</button>
+                </form>
+                <br/>
+                <form onSubmit={e => handleOnSubmit(e,'phone')}>
+                    <label>Phone number: {user.user?.phone}</label>
+                    <input onChange={handleOnChange} value={employee.phone} placeholder={"Edit phone number"} className="standar-input" type="phone" name="phone" />
+                    <button type='submit' className="standar-button">Save phone #</button>
+                </form> 
+                <br/>
+                <form onSubmit={ e=> handleOnSubmit(e,'email')}>
+                    <label>Email: {user.user?.email}</label>
+                    <input onChange={handleOnChange} placeholder={"Edit Email"} value={employee.email} className="standar-input" type="email"  name="email"/>
+                    <button type='submit' className="standar-button">Save email</button>
+                </form>
+                <br/>
+                <form onSubmit={e => handleOnSubmit(e,'username')}>
+                    <label>Username: {user.user?.username}</label>
+                    <input onChange={handleOnChange} placeholder={"Edit username"} value={employee.username} className="standar-input" type="text"  name="username"/>
+                    <button type='submit' className="standar-button">Save username</button>
+                </form>
+                <br/>
+                <form onSubmit={e => handleOnSubmit(e,'password')}>  
+                    <label>Enter old password</label>
+                    <input onChange={handleOnChange} placeholder={"Enter new password"} value={employee.password}className="standar-input" type="password" name="password" />
+                    <label>Enter new password</label>
+                    <input onChange={handleOnChange} placeholder={"Enter old password"} value={employee.old_password} className="standar-input" type="password" name="old_password" />
+                    <button type='submit' className="standar-button">Save password</button>
+                </form>  
+              </div> 
+              <br/>
+              <br/>
+              <br/>
+              <button className="back-button"  onClick={goBack}> {"<< Back"} </button>
+              <br/>
+              <br/>
+              <br/>  
+            </div>
+        </div> 
+    )
+}
+
+const mapStateToProps = state => { 
+    return {
+      user: state.user.user,
+      loading: state.employees.loading,
+      errorsOrMessages: state.errorsOrMessages.errorsOrMessages
+    }
+}
+  
+const mapDispatchToProps = dispatch => {
+    return {
+        editEmployee: (action) => dispatch(editEmployee(action)),
+        clearErrors: () => dispatch(clearErrors()),
+    }
+}   
+      
+export default connect(mapStateToProps, mapDispatchToProps)(EditEmployee)

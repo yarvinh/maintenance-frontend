@@ -1,0 +1,54 @@
+.car-shadow{
+    border-radius: .5rem;
+    border-width: 2px;
+    box-shadow: 5px 5px 5px 2px #d3d2d0;
+    background-color: #00000008;
+  }
+
+  .picc{ 
+    width: 150px;
+    height: 150px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    overflow: auto;
+    margin: auto;
+     margin: auto;
+    cursor: pointer;
+    width: 30%;
+    margin-bottom: 5%;
+    border-width: 2px;
+    border-style: solid;
+    border-color: rgb(15, 13, 13); 
+    margin-top: 2.5%;
+  }
+  
+  /* .main-gallery-component{
+    margin-top: 7rem;
+  } */
+
+  .imgs-input {
+    width: 260px;
+    margin-left: 1rem;
+  }
+
+  .imgs-button {
+    margin-left: 1rem;
+    width: 130px;
+    background-color: #0D6EFD;
+    border-width: 2px;
+    border-radius: .3rem;
+    border-width: 2px;
+    border-style: solid;
+    opacity: .90;
+    margin-top: 2px;
+    color: white;
+    margin-bottom: 5rem;
+  }
+  .imgs-button:hover{
+    opacity: 1; 
+  }
+
+  .receipt-container{
+    margin-bottom: 5rem;
+  }

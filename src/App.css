@@ -1,6 +1,7 @@
-.App {
-  text-align: center;
-}
+
+.center { 
+   text-align: center;
+} 
 
 .App-logo {
   height: 40vmin;
@@ -36,3 +37,489 @@
     transform: rotate(360deg);
   }
 }
+
+.notifications{
+  width: 100%;
+  height: 27px;
+  background-color: #f1cc81;
+}
+
+.text{
+  text-align: center;
+  color: #444;
+  padding: 50px;
+  width: 100%;
+  font-size: 16px;
+}
+
+
+@media screen and (max-width: 450px) {
+  .expire {
+    background-color: rgb(249, 125, 125);
+  }
+  .closed {
+    background-color: rgb(167, 244, 167)
+  }
+  .pending {
+    background-color: rgb(245, 216, 164);
+  }
+  .work_order_status {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 361px) {
+  .work_order_address {
+    display: none;
+  }
+}
+
+
+.search_box { 
+  width: 50%;
+  min-height: 40px;
+  border-width: 3px;
+  border-style: solid;
+  border-color:  #777;
+  border-radius: .8rem;
+  font-size: 20px;
+}
+
+.name {
+  display: inline;
+  margin-left: 5%;
+}
+
+.delete-task {
+  padding-left: 15px;
+  
+}
+
+
+.files-input{
+  cursor: pointer;
+  padding: 0px;
+  width: 50%;
+  border-width: 2px;
+  border-color: rgb(15, 13, 13); 
+  margin-left: 15px; 
+  margin-top: 3%;
+  margin-bottom: 5%;
+  border-radius: .220rem;
+}
+
+.submit-image{
+  cursor: pointer;
+  text-align: center;
+  font-size: 14px;
+  height: 40px;
+  width: 110px;
+  border-width: 5px;
+  border-style: solid;
+  margin-top: 3%;
+  border-radius: .220rem;
+}
+.edit-receipt-form{
+  border-width: 5px;
+  margin-left: 3%; 
+  margin-top: 3%;
+}
+
+.edit-receipt-inputs{
+    font-size: 16px;
+    height: 30px;
+    width: 30%;
+    border-width: 2px;
+    border-style: solid;
+    margin-top: 3%;
+    border-radius: .220rem;
+}
+  
+
+
+.receipt{
+  max-width: 500px;
+  color: rgb(10, 9, 9);
+  padding: 0px;
+  margin-bottom: 10px; 
+  border-radius: .220rem;
+  box-shadow: 3px 5px 5px 2px #d3d2d0;
+  
+}
+
+.diplay-images{
+  margin: auto;
+  width: 100%;
+  max-width: 500px;
+  padding: 0px;
+}
+
+.delete-receipt{
+  color: rgb(10, 9, 9);
+  cursor: pointer;
+  padding: 0px;
+  border-width: 2px;
+  border-style: solid;
+  border-color: rgb(15, 13, 13); 
+  margin-left: 3%; 
+  font-size: 18px;
+  margin-bottom: 10px; 
+  border-radius: .220rem;
+}
+
+.picc-enlarger { 
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin: auto;
+  cursor: pointer;
+  padding: 0px;
+  width: 90%;
+  max-width: 700px;
+  border-width: 2px;
+  border-style: solid;
+  border-color: rgb(15, 13, 13); 
+
+}
+
+.task-price-input{
+  width: 25%;
+  border-top-right-radius: .8rem;
+  border-bottom-right-radius: .8rem;
+  margin-left: 2px;
+  border-color:  #777;
+  border-style: solid;
+  border-width: 2px;
+  min-height: 30px;
+  max-height: 30px;
+}
+
+.auto_height_for_task-textarea { 
+  max-width: 30rem; 
+  width: 70%;
+  /* min-width: 20rem; */
+  min-height: 30px;
+  border-width: 3px;
+  border-style: solid;
+  border-color:  #777;
+  border-top-left-radius: .8rem;
+  border-bottom-left-radius: .8rem;
+  font-size: 16px;
+  max-height: 30px;
+
+
+}
+
+.create-task-form{
+  width: 100%;
+  align-items: center;
+  align-content: center;
+
+}
+.comment-text-area{
+  height: 1px;
+  font-size: 16px;
+}
+
+.comment-subject-input{
+  margin-top: 2.5%;
+  margin-bottom: 10px;
+}
+
+.profile_image{ 
+  cursor: pointer;
+  padding: 0px;
+  width: 60px;
+  height: 60px;
+  border-style: solid;
+  margin-left: 2px; 
+}
+
+
+.receipt_user_image{
+  cursor: pointer;
+  padding: 0px;
+  width: 30px;
+  height: 30px;
+  border-style: solid;
+  margin-left: 9px; 
+}
+
+
+
+.profile-name{
+  color: black;
+  margin-top: 0px;
+  font-size: 12px;
+  margin-bottom: 0px
+}
+
+.receipt-description{
+  color: black;
+  margin-top: 0px;
+  font-size: 12px;
+  margin-bottom: 0px
+}
+
+
+.employee_card_image{
+  cursor: pointer;
+  padding: 0px;
+  width: 60px;
+  height: 60px;
+  border-style: solid;
+  margin-left: 15px; 
+  border-radius: .5rem;
+}
+
+.edit-form{
+  cursor: pointer;
+  padding: 0px;
+  margin-left: 15px; 
+}
+
+.edit-inputs{
+  cursor: pointer;
+  padding: 0px;
+  width: 75%;
+  max-width: 500px;
+  border-width: 2px;
+  border-style: solid;
+  border-color:  #777;
+  text-align:calc(5px);
+  font-size: 18px;
+  border-top-left-radius: .500rem;
+  border-bottom-left-radius: .500rem;
+}
+
+.edit-button{
+  background-color: #0d6efd;;
+  color: rgb(241, 236, 236);
+  cursor: pointer;
+  width: 50px;
+  border-width: 1px;
+  border-style: solid;
+  border-color:  #777;
+  text-align: center;
+  font-size: 18px;
+  border-top-right-radius: .500rem;
+  border-bottom-right-radius: .500rem;
+}
+
+.login-error {
+  color: red
+}
+
+.signup-errors{
+  color: red
+}
+
+.uploading{
+  margin-left: 15px;
+  background-color: #0d6efd;
+  color: rgb(241, 236, 236);
+}
+
+
+
+
+.create-form{
+  background-color:#eee;
+  position:absolute;
+  padding: 0px;
+  margin-top: 1rem;
+  margin-left: 15px; 
+  box-shadow: 5px 5px 5px 5px #d3d2d0;
+  width: 90%;
+  max-width: 500px;
+  border-radius: .5rem;
+}
+
+.create-input{
+  margin-top: 1rem;
+  margin-left: 1rem;
+  padding: 0px;
+  width: 90%;
+  max-width: 500px;
+  border-width: 2px;
+  border-style: solid;
+  border-color:  #777;
+  text-align:calc(5px);
+  font-size: 18px;
+  border-radius: .500rem;
+}
+
+.create-button{
+  background-color: #0d6efd;;
+  color: rgb(241, 236, 236);
+  cursor: pointer;
+  width: 150px;
+  border-width: 1px;
+  border-style: solid;
+  border-color:  #777;
+  text-align: center;
+  font-size: 18px;
+  border-radius: .500rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  margin-left: 1rem;
+}
+
+
+.errors{
+  margin-left: 1rem;
+  color: red;
+}
+
+.add-unit{
+  /* margin-top: 4px; */
+  padding: 0;
+  width: 75%;
+  max-width: 10rem;
+  border-width: 2px;
+  border-style: solid;
+  border-color:  #777;
+  text-align:calc(5px);
+  font-size: 18px;
+  border-radius: .5rem;
+  margin-top: .5rem;
+  display: block;
+  margin: auto ;
+}
+
+.unit-form{ 
+  margin-top: 2rem;
+  margin-bottom: 5px;
+  padding: 0px;
+  margin-left: 15px; 
+} 
+
+.building-warning{
+  margin-left: 15px;
+  color: red;
+}
+.unit-creater{
+  border-width: 2px;
+  height: 3rem;
+
+}
+
+
+.home-links{
+  list-style-type:none;
+  color: white;
+  display: block;
+  text-decoration-color:  #0d6efd;
+  width: 8rem;
+  height: 2rem;
+  margin: auto;
+  opacity: .85;
+  text-align: center;
+  background-color: #0d6efd;
+  border-radius: .5rem;
+  border-width: 2px;
+  border-style: solid;
+  border-color: rgb(83, 81, 81);
+  
+}
+
+.home-links:hover{
+  opacity: 1;
+  color: white;
+}
+
+.text-font{
+  font-family: "Times New Roman", Times, serif;
+  font-size: 18px;;
+}
+
+.empty-space{
+height: 20rem;
+}
+
+
+.content-container {
+  overflow:hidden;
+}
+
+.workorder-content{
+  overflow:auto ;
+}
+
+.login-section{
+  padding-top: 2rem;
+  width: 70%;
+  margin: auto;
+  border-radius: .5rem;
+  /* background-color: aliceblue; */
+  /* box-shadow: 5px 5px 5px 5px #d3d2d0; */
+}
+
+.personal-account-form{
+  margin: auto;
+  box-shadow: 5px 5px 5px 0px #d3d2d0;
+  width: 90%;
+  max-width: 500px;
+  border-radius: .5;
+
+}
+.try-it-container{
+  display: flex; 
+}
+
+.try-it{
+  margin: auto;
+}
+
+.login-messages{
+  height: 4rem;
+}
+
+.login-message-button{
+  width: 100%;
+  max-width: 500px;
+  background-color: #eee;
+  /* background-color: aliceblue; */
+  border-width: 3px;
+  padding: 1px;
+  border-width: 3px;
+  border-style: solid;
+  border-color: rgb(252,247,247);
+  box-shadow: 5px 5px 5px 0px #d3d2d0;
+  transition: 0.4s; 
+}
+
+.login-message-button:hover {
+  background-color: rgb(186, 181, 181);
+  /* background-color: #eee; */
+} 
+
+.login-a-color{
+  /* background-color: aliceblue; */
+  max-width: 350px;
+  margin: auto;
+  transition: 0.4s; 
+  /* box-shadow: 5px 5px 5px 0px #d3d2d0; */
+  /* display: flex; */
+  /* justify-content: center; */
+}
+
+.login-a-color:hover{
+  background-color: #eee;
+}
+
+.get-new-code{
+  margin-top: 5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 
+.work-order-detail{
+  display: flex;
+  justify-content: center;
+  justify-items: center;
+
+} */

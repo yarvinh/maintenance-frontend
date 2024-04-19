@@ -1,0 +1,42 @@
+.tenant-text-container{
+    margin-left: .5rem;
+    word-break: break-word;
+}
+
+.tenant-bottom:hover{
+    opacity: 1;
+}
+  
+.tenant-container{
+    font-family: "Times New Roman", Times, serif;
+    display:flex;
+    flex-wrap: wrap;
+    margin-top: .5rem;
+    border-radius: .5rem;
+    border-width: 2px;
+}
+
+.edit-tenant{
+    width: 10rem;
+    position:static;
+    border-radius: .5rem;
+    border-width: 1px;
+    border-style: solid;
+    border-color:  #777;
+    text-align: center;
+    border-radius: .5rem;
+    margin-bottom: .5rem;
+  }
+  
+  #edit-tenant:hover{
+    background-color: rgb(186, 181, 181);
+  }
+  
+  .replies_accordion:after {
+    content: '\002B';
+    color: white;
+    font-weight: bold;
+    float: right;
+    margin-left: 5px;
+  } 
+  
