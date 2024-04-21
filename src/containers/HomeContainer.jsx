@@ -6,13 +6,11 @@ import HomeWithoutLogin from '../components/home/HomeWithoutLogin'
 import {isLoginToken} from "../componentsHelpers/token"
 
 const HomeContainer = (props)=>{
-
-    const {user,fetchAppContent} = props
-
+    const {user} = props
     return (
         <>  
-            {user.is_login && isLoginToken()? <Home fetchAppContent={fetchAppContent}/>:null}
-            {!isLoginToken() || user?.verification_session  ?<HomeWithoutLogin />:null }
+            {user.is_login && isLoginToken() || user.is_login? <Home />:null}
+            {!isLoginToken() || user?.verification_session || !user.is_login?<HomeWithoutLogin />:null }
         </>
     )
 }

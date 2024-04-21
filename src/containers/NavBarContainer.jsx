@@ -14,7 +14,7 @@ const NavBarContainer = (props) => {
       <div id="nav-links"  className={`${displayBarAccordion("display-nav-bar",acordion)} bar-accordion`}>
       <div className="var-menu bar-accordion" id="p">
         <ul className="bar-menu-list bar-accordion">
-          {user.is_login && isLoginToken()?<LoginBar/>:null}
+          {user.is_login && isLoginToken() || user.is_login?<LoginBar/>:null}
           {!isLoginToken() || user.verification_session?<NoLoginBar/>:null }
           <div className=''>
             <div className='bar-lines-width'></div>

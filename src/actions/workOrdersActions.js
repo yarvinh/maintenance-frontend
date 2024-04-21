@@ -24,21 +24,21 @@ import {baseUrl} from './actionsHelper'
     }
   }
 
-  export const createWorkOrder = (payload) => {
-    const {workOrders, workOrder,path} = payload
-    return (dispatch) => {
-          dispatch({type: "LOADING_WORK_ORDER"})
-          axios.post(`${baseUrl()}/${path}`, workOrder ,{headers: token(),withCredentials: true})
-          .then(response => {
-              const error = response.data.errors_or_messages
-              if(error) 
-                dispatch({ type: 'ADD_ERRORS_OR_MESSAGES', errorsOrMessages: response.data.errors_or_messages})
-              else
-                dispatch({ type: 'ADD_WORK_ORDERS', workOrders: [response.data,...workOrders]})
-                dispatch({ type: 'ADD_WORK_ORDER', workOrder: response.data})
-          })
-      }  
-  }
+  // export const createWorkOrder = (payload) => {
+  //   const {workOrders, workOrder,path} = payload
+  //   return (dispatch) => {
+  //         dispatch({type: "LOADING_WORK_ORDER"})
+  //         axios.post(`${baseUrl()}/${path}`, workOrder ,{headers: token(),withCredentials: true})
+  //         .then(response => {
+  //             const error = response.data.errors_or_messages
+  //             if(error) 
+  //               dispatch({ type: 'ADD_ERRORS_OR_MESSAGES', errorsOrMessages: response.data.errors_or_messages})
+  //             else
+  //               dispatch({ type: 'ADD_WORK_ORDERS', workOrders: [response.data,...workOrders]})
+  //               dispatch({ type: 'ADD_WORK_ORDER', workOrder: response.data})
+  //         })
+  //     }  
+  // }
 
 
   export const editWorkOrder = (payload) => {

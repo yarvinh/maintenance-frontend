@@ -1,12 +1,13 @@
 import React, { useState,useEffect } from 'react';
 import { connect } from 'react-redux';
-import {  createEmployee} from '../../actions/employeesActions'
+// import {  createEmployee} from '../../actions/employeesActions'
 import {clearErrors} from '../../actions/errorsActions'
 import {acordionButtonClass,diplayAcordion} from '../../componentsHelpers/acordion'
+import { postFetchAction } from '../../actions/fetchActions';
 import '../../styles/styles.css'
 
 const  CreateEmployees =(props)=> {
-  const {errorsOrMessages,acordion,user} = props
+  const {errorsOrMessages,acordion,user,employees} = props
   const [employee,setEmployee] = useState({
         name: "",
         email: "",
@@ -24,7 +25,13 @@ const  CreateEmployees =(props)=> {
  
   const handleOnsubmit = (e) =>{
     e.preventDefault()
-    props.createEmployee({employee: employee})
+    props.postFetchAction({
+      path: '/employees',
+      stateName:{forResponse: "employee", forArray: "employees"} ,
+      type: {loadingType: "LOADING_EMPLOYEES", forArray: "ADD_EMPLOYEES", forResponse: "ADD_EMPLOYEE"}, 
+      params: {payload: {employee: employee}, array: employees}
+    })
+    // props.createEmployee({employee: employee})
     setEmployee({
       name: "",
       email: "",
@@ -80,7 +87,7 @@ const mapStateToProps = state => {
   return {
     user: state.user.user,
     acordion: state.acordion.acordion,
-    employees: state.employees,
+    employees: state.employees.employees,
     loading: state.employees.loading,
     errorsOrMessages: state.errorsOrMessages.errorsOrMessages
   }
@@ -88,7 +95,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    createEmployee: (action) => dispatch(createEmployee(action)),
+    postFetchAction: (action) => dispatch(postFetchAction(action)),
+    // createEmployee: (action) => dispatch(createEmployee(action)),
     clearErrors: () => dispatch(clearErrors()),
   }
 }

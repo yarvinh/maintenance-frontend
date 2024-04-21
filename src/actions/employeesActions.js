@@ -26,17 +26,16 @@ import {baseUrl} from './actionsHelper'
 
 
   
-  export const createEmployee = (employee) => {
-      return (dispatch) => {
-          dispatch({type: "LOADING_EMPLOYEE"})
-          axios.post(`${baseUrl()}/employees`, employee ,{headers: token(), withCredentials: true})
-          .then(response => {
-              const error = response.data.errors_or_messages
-              error? dispatch({ type: 'ADD_ERRORS_OR_MESSAGES', errorsOrMessages: response.data.errors_or_messages}):  dispatch({ type: 'ADD_EMPLOYEES', employees: response.data})
-          })
-      }
-    
-  }
+  // export const createEmployee = (employee) => {
+  //     return (dispatch) => {
+  //         dispatch({type: "LOADING_EMPLOYEE"})
+  //         axios.post(`${baseUrl()}/employees`, employee ,{headers: token(), withCredentials: true})
+  //         .then(response => {
+  //             const error = response.data.errors_or_messages
+  //             error? dispatch({ type: 'ADD_ERRORS_OR_MESSAGES', errorsOrMessages: response.data.errors_or_messages}):  dispatch({ type: 'ADD_EMPLOYEES', employees: response.data})
+  //         })
+  //     } 
+  // }
 
   export const editEmployee = (params) => {
     return (dispatch) => {

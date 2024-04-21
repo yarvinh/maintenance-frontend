@@ -3,12 +3,14 @@ import {Link} from 'react-router-dom'
 import WorkOrdersContainer from "../../containers/WorkOrdersContainer"
 import { pendingUserWorkOrders } from '../../componentsHelpers/workOrdersHelper';
 import { useEffect } from "react";
+import { fetchAppContent} from '../../componentsHelpers/fetching';
+import { getFetchAction } from '../../actions/fetchActions';
 const Home = (props)=>{
-    const {user,workOrders,fetchAppContent } = props
+    const {user,workOrders} = props
     const pendingWorkOrders = pendingUserWorkOrders({workOrders: workOrders,user: user})
 
     useEffect(()=>{
-        fetchAppContent() 
+        fetchAppContent(getFetchAction) 
     },[user.is_login])
     
     return (
@@ -31,6 +33,12 @@ const mapStateToProps = state => {
     workOrders: state.workOrders.workOrders,
   }
 }
+
+const mapDispatchToProps = dispatch => {
+  return {
+    getFetchAction: action => dispatch(getFetchAction(action))
+  }
+}
  
 
-export default connect(mapStateToProps, null)(Home)
+export default connect(mapStateToProps, mapDispatchToProps)(Home)

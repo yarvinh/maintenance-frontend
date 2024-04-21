@@ -1,30 +1,40 @@
-
-import React from 'react'
-import { render,fireEvent, screen } from '@testing-library/react';
+// import React from 'react'
+import { render,fireEvent, screen,waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom'
 import App from '../App';
-import { pathsHelper } from './helpers/pathsHelpers';
 import rootReducer from "../reducers/manageAllReducers";
 import { createStore, applyMiddleware } from 'redux';
 import {thunk} from 'redux-thunk';
-import {http, HttpResponse} from 'msw'
-import {setupServer} from 'msw/node'
+// import {http, HttpResponse} from 'msw'
+// import {setupServer} from 'msw/node'
 import { Provider } from 'react-redux';
-const decoder = new TextDecoder()
 import { server } from '../mocks/browser';
-// const {server} = await import('../mocks/browser.js')
+import HomeContainer from '../containers/HomeContainer';
 const store = createStore(rootReducer, applyMiddleware(thunk))
+beforeAll(() => server.listen({ onUnhandledRequest: "bypass" }))
+afterEach(() => server.resetHandlers())
+afterAll(() => server.close())
 
-// beforeAll(() => server.listen({ onUnhandledRequest: "bypass" }))
-// afterEach(() => server.resetHandlers())
-// afterAll(() => server.close())
-
-
-test('renders App',() => {
-  const component = render(
+test('renders App', async () => {
+  const appComponent = render(
     <Provider store={store}>
-      <App paths={pathsHelper()} />
+      <App  />
     </Provider>   
   );
-  component.getByText('Sign in as a business')
-});
+
+  const HomeComponent = render(
+    <Provider store={store}>
+      <HomeContainer />
+    </Provider>   
+  );
+
+  // await waitFor(() =>  component.getByText('GGC'))
+  // await waitFor(() =>  component.getByText('Home'))
+  // await waitFor(() =>  component.getByText('Employees'))
+  // await waitFor(() =>  component.getByText('Settings'))
+  // await waitFor(() =>  component.getByText('Buildings'))
+  // await waitFor(() =>  component.getByText('Work Orders'))
+}); 
+
+
+

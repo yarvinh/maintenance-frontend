@@ -3,7 +3,7 @@
 import { http, HttpResponse } from 'msw'
  
 export const handlers = [
-  http.get('http://localhost:3000/test/checklogin', () => {
+  http.get('http://localhost:3000/test/checklogin', (response) => {
     return HttpResponse.json(
       {
         is_login: true, 

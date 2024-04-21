@@ -2,9 +2,11 @@
 import React, {useState,useEffect } from 'react';
 import {useParams} from 'react-router-dom';
 import {connect } from 'react-redux';
-import {createWorkOrder} from '../../actions/workOrdersActions'
+// import {createWorkOrder} from '../../actions/workOrdersActions'
 import {clearErrors} from '../../actions/errorsActions'
 import {acordionButtonClass,diplayAcordion} from '../../componentsHelpers/acordion'
+import { paths } from '../../actions/actionsHelper';
+import { postFetchAction } from '../../actions/fetchActions';
 import '../../styles/styles.css'
 
 const CreateWorkOrder = (props) => {
@@ -31,15 +33,26 @@ const CreateWorkOrder = (props) => {
     
     const handleOnSubmit=(e)=>{
       e.preventDefault()
+
       user.admin? 
-        props.createWorkOrder({path: "work_orders", workOrders: workOrders, workOrder: workOrder})
+        props.postFetchAction({
+          path: paths().workOrdersPath,
+          stateName:{forResponse: "workOrder", forArray: "workOrders"} ,
+          type: {loadingType: "LOADING_WORK_ORDERS", forArray: "ADD_WORK_ORDERS", forResponse: "ADD_WORK_ORDER"}, 
+          params: {payload: workOrder, array: workOrders}
+        })
       : 
-        props.createWorkOrder({path: "work_order_by_employee", workOrders: workOrders, workOrder: workOrder})
-        e.target.children[1].value = "select_employee"
+        props.postFetchAction({
+          path: "/work_order_by_employee",
+          stateName:{forResponse: "workOrder", forArray: "workOrders"} ,
+          type: {loadingType: "LOADING_WORK_ORDERS", forArray: "ADD_WORK_ORDERS", forResponse: "ADD_WORK_ORDER"}, 
+          params: {payload: workOrder, array: workOrders}
+        })
+      e.target.children[1].value = "select_employee"
       e.target.children[2].value = "select_location"
       if (errorsOrMessages.length > 0){
         props.clearErrors()
-      }
+    }
      
       setWorkOrder({
         ...workOrder,
@@ -108,7 +121,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        createWorkOrder: (action) => dispatch(createWorkOrder(action)),
+        postFetchAction: (action)=> dispatch(postFetchAction(action)),
+        // createWorkOrder: (action) => dispatch(createWorkOrder(action)),
         clearErrors: () => dispatch(clearErrors())   
     }
 }   

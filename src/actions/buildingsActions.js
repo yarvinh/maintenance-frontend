@@ -24,23 +24,23 @@ export const fetchBuilding = (id) =>{
   }
 }
 
-export const createBuilding = (payload) => {
-  const {building,buildings} = payload
-  return (dispatch) => {
-      dispatch({ type: 'LOADING_BUILDING'})
-      axios.post(`${baseUrl()}/buildings`, building, {headers: token(), withCredentials: true})
-      .then(response => {
+// export const createBuilding = (payload) => {
+//   const {building,buildings} = payload
+//   return (dispatch) => {
+//       dispatch({ type: 'LOADING_BUILDING'})
+//       axios.post(`${baseUrl()}/buildings`, building, {headers: token(), withCredentials: true})
+//       .then(response => {
 
-        const error = response.data.errors_or_messages
-        if(error){
-          dispatch({ type: 'ADD_ERRORS_OR_MESSAGES', errorsOrMessages: error})
-        }else{
-          dispatch({ type: 'ADD_BUILDING', building: response.data})
-          dispatch({ type: 'ADD_BUILDINGS', buildings: [...buildings, response.data]})
-        }
-    })
-  }
-}
+//         const error = response.data.errors_or_messages
+//         if(error){
+//           dispatch({ type: 'ADD_ERRORS_OR_MESSAGES', errorsOrMessages: error})
+//         }else{
+//           dispatch({ type: 'ADD_BUILDING', building: response.data})
+//           dispatch({ type: 'ADD_BUILDINGS', buildings: [...buildings, response.data]})
+//         }
+//     })
+//   }
+// }
 
 export const editBuilding = (payload) => {
   const {id, buildings, building} = payload

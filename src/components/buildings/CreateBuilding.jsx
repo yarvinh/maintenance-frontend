@@ -1,9 +1,11 @@
 import React, {useState,useEffect } from 'react';
 import { connect } from 'react-redux';
 import '../../styles/styles.css'
-import { createBuilding} from '../../actions/buildingsActions'
+// import { createBuilding} from '../../actions/buildingsActions'
 import {clearErrors} from '../../actions/errorsActions'
 import {acordionButtonClass,diplayAcordion} from '../../componentsHelpers/acordion'
+import { postFetchAction } from '../../actions/fetchActions';
+import { paths } from '../../actions/actionsHelper';
 
 const CreateBuilding = (props) =>{
     const {errorsOrMessages ,acordion,buildings} = props
@@ -15,7 +17,7 @@ const CreateBuilding = (props) =>{
         lot: "",
         block: "",
     })
-
+    
     useEffect(() => {
       if (errorsOrMessages.length > 0){
         props.clearErrors()
@@ -30,7 +32,13 @@ const CreateBuilding = (props) =>{
 
     let handleOnSubmit = (e) =>{
         e.preventDefault()
-        props.createBuilding({building: building, buildings: buildings})
+        props.postFetchAction({
+          path: paths().buildingsPath,
+          stateName:{forResponse: "building", forArray: "buildings"} ,
+          type: {loadingType: "LOADING_BUILDING", forArray: "ADD_BUILDINGS", forResponse: "ADD_BUILDING"}, 
+          params: {payload: {building: building}, array: buildings}
+        })
+        // props.createBuilding({building: building, buildings: buildings})
         setBuilding({
           address: "",
           super_name: "",
@@ -88,7 +96,8 @@ const mapStateToProps = state => {
       
 const mapDispatchToProps = dispatch => {
     return {
-        createBuilding: (action) => dispatch(createBuilding(action)),
+        postFetchAction: (action) => dispatch(postFetchAction(action)),
+        // createBuilding: (action) => dispatch(createBuilding(action)),
         clearErrors: () => dispatch(clearErrors()),
     }
 }   

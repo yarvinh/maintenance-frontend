@@ -30,7 +30,7 @@ const root = createRoot(document.getElementById("root"));
   root.render(
     <HttpsRedirect>
       <Provider store={store}>
-        <App paths={paths()}/>
+        <App/>
       </Provider> 
     </HttpsRedirect>
   );

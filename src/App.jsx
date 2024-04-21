@@ -1,6 +1,6 @@
 
 import { connect } from 'react-redux';
-import React, {useEffect ,useRef} from 'react';
+import {useEffect ,useRef} from 'react';
 import {BrowserRouter, Routes, Route, Link} from 'react-router-dom'
 import LogOut from './components/users/LogOut'
 import LogIn from './components/users/LogIn'
@@ -35,47 +35,13 @@ import NavBarContainer from './containers/NavBarContainer';
 import {verificationSessionToken,removeLoginToken} from "./componentsHelpers/token"
 import Anime from "./components/Anime"
 import { getFetchAction } from './actions/fetchActions';
-import{pathsToState} from './actions/pathsToStateAction'
-
-
+import { fetchAppContent,fetchCurrentUser } from './componentsHelpers/fetching';
+import NewUserNotification from './components/users/NewUserNotification';
 
 const App  = (props) => {
-  let {paths, user ,workOrders,buildings,employees,acordion,userLoading,verificationSession} = props
-  const {checkLoginPath,employeesPath,workOrdersPath,buildingsPath} =  paths
+  let { user ,workOrders,acordion,userLoading,verificationSession} = props
   const fetchTimesRef = useRef(1)
-  // console.log(user)
-  const fetchAppContent = ()=>{
-    if(fetchTimesRef.current === 1){
-      fetchTimesRef.current += 1  
-      props.getFetchAction({
-        loading: "LOADING_WORK_ORDERS", 
-        type: 'ADD_WORK_ORDERS',
-        path: workOrdersPath, 
-        stateName: 'workOrders'
-      })
-      props.getFetchAction({
-        loading: "LOADING_BUILDINGS", 
-        type: 'ADD_BUILDINGS',
-        path: buildingsPath, 
-        stateName: 'buildings'
-      })
-      props.getFetchAction({
-        loading: "LOADING_EMPLOYEES", 
-        type: 'ADD_EMPLOYEES',
-        path: employeesPath, 
-        stateName: 'employees'
-      })
-    } 
-  }
-  const fetchCurrentUser = ()=>{
-    props.getFetchAction({
-      loading: "LOADING_USER", 
-      type: 'ADD_USER',
-      path: checkLoginPath, 
-      stateName: 'user'
-    })
-  }
-  
+
   const handleOnAcordion = (e)=>{
     const approveAcordion =  e.target.className.includes('display_accordion') 
     || (!e.target.className.includes('acordion')) 
@@ -91,24 +57,18 @@ const App  = (props) => {
       props.barAccordionDisplay({element: e, acordion: acordion})  
     } 
   }
-
   useEffect(() => {
-    fetchCurrentUser()   
-    fetchAppContent() 
-    props.pathsToState(paths)
+     fetchCurrentUser(props.getFetchAction)   
   },[] ); 
 
-  if(!userLoading && !user.is_login) fetchTimesRef.current = 1  
-
-  const newUserNotifications=()=>{
-    if (user.is_login  && employees.length < 1  && user.is_login  &&  buildings.length < 1 ){
-      return <p className='notifications'>Create an {<Link to='employees'>employee</Link> } and a {<Link to ="/buildings">building</Link>} first to create a work order</p>
-    } else if (user.is_login  && employees.length < 1 ){
-      return <p className='notifications'>Create an {<Link to='employees'>employee</Link>} first to create a work order</p>
-    }else if(user.is_login  &&  buildings.length < 1){
-      return <p className='notifications'>Create a {<Link to ="/buildings">building</Link>} first to create a work order</p>
+  useEffect(() => {
+    if(fetchTimesRef.current === 1){
+      fetchTimesRef.current += 1  
+      fetchAppContent(props.getFetchAction) 
     }
-  }
+  },[user] ); 
+
+  if(!userLoading && !user.is_login) fetchTimesRef.current = 1  
 
   return (
     <BrowserRouter >
@@ -116,18 +76,18 @@ const App  = (props) => {
         <NavBarContainer/>
         <section>
           <div>
-            {user.admin? newUserNotifications() : null}
+            {user.admin? <NewUserNotification/> : null}
             {user.is_login? <Notification/> :null }
           </div>
         </section>
         <main>
         <Routes>
-            <Route exact path='/login' element={<LogIn admin={false} fetchAppContent={fetchAppContent}/>} />
-            <Route exact path='/business/login' element={<LogIn admin={true}  fetchAppContent={fetchAppContent}/>} />
+            <Route exact path='/login' element={<LogIn admin={false}/>} />
+            <Route exact path='/business/login' element={<LogIn admin={true} />} />
             <Route exact path='/signup'  element={<SignUp />}/> 
-            <Route exact path='/' index element={<HomeContainer fetchAppContent={fetchAppContent}/>} /> 
+            <Route exact path='/' index element={<HomeContainer/>} /> 
             <Route exact path='/username_recovery' element={<ForgotUsername/>} />
-            <Route exact path='/verifying_email' element={<EmailValidation fetchCurrentUser={fetchCurrentUser} fetchAppContent={fetchAppContent}/>} />
+            <Route exact path='/verifying_email' element={<EmailValidation/>} />
             <Route exact path='/password_recovery' element={<ForgotPassword/>} />
             <Route exact path='/reset_password' element={<ResetPassword/>} /> 
             <Route exact path='/signout' element={<LogOut/>}/>
@@ -147,7 +107,7 @@ const App  = (props) => {
             <Route exact path='/work_orders/:id/gallery' element={<GalleryContainer/> }/>
             <Route exact path='/employee_setting/:id' element={<EditEmployee/> }/>       
             <Route exact path='/pending_to_accept' element={<PendingToAccept/>} />   
-            <Route exact path='/try_it_yourself' element={<TryItYourself fetchAppContent={fetchAppContent}/>} />   
+            <Route exact path='/try_it_yourself' element={<TryItYourself/>} />   
             <Route exact path='/anime' element={<Anime/>} />   
         </Routes>
         </main>
@@ -170,7 +130,6 @@ const mapStateToProps = state => {
  
 const mapDispatchToProps = dispatch => {
   return {
-    pathsToState: action => dispatch(pathsToState(action)),
     getFetchAction: action => dispatch(getFetchAction(action)),
     acordionDisplay: action => dispatch(acordionDisplay(action)),
     barAccordionDisplay: action => dispatch(barAccordionDisplay(action)),
