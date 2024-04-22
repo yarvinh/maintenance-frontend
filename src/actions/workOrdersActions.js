@@ -2,24 +2,24 @@ import axios from 'axios'
 import {token} from '../componentsHelpers/token'
 import {baseUrl} from './actionsHelper'
 
-  export const editWorkOrder = (payload) => {
-  const {workOrder,workOrders } = payload
-    return (dispatch) => {
-        dispatch({type: "LOADING_WORK_ORDER"})
-        axios.patch(`${baseUrl()}/work_orders/${workOrder.id}`, workOrder ,{headers: token(), withCredentials: true})
-        .then(response => {
-          const error = response.data.errors_or_messages
-          const index = workOrders.findIndex(e=> e.id?.toString() === workOrder.id)
-          if(error){
-            dispatch({ type: 'ADD_ERRORS_OR_MESSAGES', errorsOrMessages: response.data.errors_or_messages})
-          }else{
-            workOrders[index] = response.data
-            dispatch({ type: 'ADD_WORK_ORDER', workOrder: response.data})
-            dispatch({ type: 'ADD_WORK_ORDERS', workOrders: workOrders})
-          }
-        })
-    } 
-}
+//   export const editWorkOrder = (payload) => {
+//   const {workOrder,workOrders } = payload
+//     return (dispatch) => {
+//         dispatch({type: "LOADING_WORK_ORDER"})
+//         axios.patch(`${baseUrl()}/work_orders/${workOrder.id}`, workOrder ,{headers: token(), withCredentials: true})
+//         .then(response => {
+//           const error = response.data.errors_or_messages
+//           const index = workOrders.findIndex(e=> e.id?.toString() === workOrder.id)
+//           if(error){
+//             dispatch({ type: 'ADD_ERRORS_OR_MESSAGES', errorsOrMessages: response.data.errors_or_messages})
+//           }else{
+//             workOrders[index] = response.data
+//             dispatch({ type: 'ADD_WORK_ORDER', workOrder: response.data})
+//             dispatch({ type: 'ADD_WORK_ORDERS', workOrders: workOrders})
+//           }
+//         })
+//     } 
+// }
 
 
 export const deleteWorkOrder = (id) => {

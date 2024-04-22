@@ -1,10 +1,12 @@
 import React, {useState,useEffect} from 'react';
 import { connect } from 'react-redux';
-import {editWorkOrder} from '../../actions/workOrdersActions'
+// import {editWorkOrder} from '../../actions/workOrdersActions'
 import {clearErrors} from '../../actions/errorsActions'
 import {useParams} from 'react-router-dom';
 import {acordionButtonClass,diplayAcordion} from '../../componentsHelpers/acordion'
+import { patchFetchAction } from '../../actions/fetchActions';
 import '../../styles/styles.css'
+// import { fetchAppContent } from '../../componentsHelpers/fetching';
 
 const EditWorkOrder = (props) =>{
     const {employees,buildings,errorsOrMessages,acordion,workOrders} = props
@@ -34,10 +36,18 @@ const EditWorkOrder = (props) =>{
 
     let handleOnSubmit = (e,type) =>{
         e.preventDefault()
-        props.editWorkOrder({workOrders: workOrders, workOrder: {[type]: workOrder[type],id: id}})  
-            setWorkOrder({
-                ...workOrder,[type]: ""
+        props.patchFetchAction({
+          path: `/work_orders/${id}`,
+          id: id,
+          stateName:{forResponse: "workOrder", forArray: "workOrders"} ,
+          type: {loading: "LOADING_WORK_ORDERS", forArray: "ADD_WORK_ORDERS", forResponse: "ADD_WORK_ORDER"}, 
+          params: {payload: {[type]: workOrder[type]}, array: workOrders}
+      })
+        // props.editWorkOrder({workOrders: workOrders, workOrder: {[type]: workOrder[type],id: id}})  
+        setWorkOrder({
+          ...workOrder,[type]: ""
         }) 
+
         if (errorsOrMessages.length > 0){
           props.clearErrors()
         }
@@ -119,8 +129,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        editWorkOrder: (action) => dispatch(editWorkOrder(action)),
-        clearErrors: () => dispatch(clearErrors()),
+      patchFetchAction: (action) => dispatch(patchFetchAction(action)),
+      clearErrors: () => dispatch(clearErrors()),
     }
 }   
       

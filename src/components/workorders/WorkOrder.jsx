@@ -2,9 +2,9 @@ import {Link} from 'react-router-dom';
 import { connect } from 'react-redux';
 import '../../styles/styles.css'
 import {workOrderStatus,statusForMobiles} from "../../componentsHelpers/workOrdersHelper"
-import {editWorkOrder,deleteWorkOrder,workOrderIndex} from '../../actions/workOrdersActions'
+import {deleteWorkOrder,workOrderIndex} from '../../actions/workOrdersActions'
 import {date} from '../../componentsHelpers/date'
-
+import { patchFetchAction } from '../../actions/fetchActions';
 const WorkOrder = (props) => {
     let {workOrder,workOrders,index,workOrderIndex} = props
     const {user,admin} = props.user
@@ -36,7 +36,14 @@ const WorkOrder = (props) => {
     const handleOnClick=(e)=>{  
         workOrderIndex(index)
         if (acceptedWorkOrder() !== 'accepted' && !admin){
-          props.editWorkOrder({workOrders: workOrders, workOrder: {accepted: true, id: workOrder.id?.toString() }})
+            props.patchFetchAction({
+                path: `/work_orders/${workOrder.id}`,
+                id: workOrder.id?.toString(),
+                stateName:{forResponse: "workOrder", forArray: "workOrders"} ,
+                type: {loading: "LOADING_WORK_ORDERS", forArray: "ADD_WORK_ORDERS", forResponse: "ADD_WORK_ORDER"}, 
+                params: {payload: {accepted: true}, array: workOrders}
+            })
+        //   props.editWorkOrder({workOrders: workOrders, workOrder: {accepted: true, id: workOrder.id?.toString() }})
         }
     }
 
@@ -71,7 +78,8 @@ const WorkOrder = (props) => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        editWorkOrder: (action) => dispatch(editWorkOrder(action)),
+        patchFetchAction: (action) => dispatch(patchFetchAction(action)),
+        // editWorkOrder: (action) => dispatch(editWorkOrder(action)),
         deleteWorkOrder: (action) => dispatch(deleteWorkOrder(action)),
         workOrderIndex: (action) => dispatch(workOrderIndex(action))
     }   

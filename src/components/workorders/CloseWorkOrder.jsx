@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import {useParams} from 'react-router-dom';
 import { connect } from 'react-redux';
-import {editWorkOrder} from '../../actions/workOrdersActions'
 import '../../styles/styles.css'
+import { patchFetchAction } from '../../actions/fetchActions';
 const CloseWorkOrder = (props) => {
     const {id} = useParams()
     let {workOrder,workOrders} = props
@@ -26,11 +26,23 @@ const CloseWorkOrder = (props) => {
     const handleOnClick = (e) => { 
         e.preventDefault()
        if (!workOrder.status){
-        props.editWorkOrder({workOrders: workOrders, workOrder: {status: true, id: id}})
-        e.target.value = "Open Work Order"
+            props.patchFetchAction({
+                path: `/work_orders/${id}`,
+                id: id,
+                stateName:{forResponse: "workOrder", forArray: "workOrders"} ,
+                type: {loading: "LOADING_WORK_ORDERS", forArray: "ADD_WORK_ORDERS", forResponse: "ADD_WORK_ORDER"}, 
+                params: {payload: {status: true}, array: workOrders}
+            })
+            e.target.value = "Open Work Order"
        } else {    
-        props.editWorkOrder({workOrders: workOrders,workOrder: {status: false, id: id }})
-        e.target.value = "Close Work Order"
+            props.patchFetchAction({
+                path: `/work_orders/${id}`,
+                id: id,
+                stateName:{forResponse: "workOrder", forArray: "workOrders"} ,
+                type: {loading: "LOADING_WORK_ORDERS", forArray: "ADD_WORK_ORDERS", forResponse: "ADD_WORK_ORDER"}, 
+                params: {payload: {status: false}, array: workOrders}
+            })
+            e.target.value = "Close Work Order"
        }
     }
     
@@ -54,7 +66,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        editWorkOrder: (action) => dispatch(editWorkOrder(action))
+        patchFetchAction: (action) => dispatch(patchFetchAction(action))
     }
 }   
       
