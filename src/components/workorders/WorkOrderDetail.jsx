@@ -6,17 +6,16 @@ import CommentsContainer from '../../containers/CommentsContainer'
 import '../../styles/styles.css'
 import CloseWorkOrder from './CloseWorkOrder';
 import TasksContainer from '../../containers/TasksContainer';
-import {deleteWorkOrder,removeEmployee,fetchWorkOrder} from "../../actions/workOrdersActions"
+import {deleteWorkOrder,removeEmployee} from "../../actions/workOrdersActions"
 import {date} from "../../componentsHelpers/date"
+import { getFetchAction } from '../../actions/fetchActions';
 
 const WorkOrderDetails = (props)=>{ 
     const {id} = useParams()
     let navigate = useNavigate()
     const {user,buildings,employees,workOrder,workOrders,errorsOrMessages,receipts} = props
-    
     const {admin} = user
- 
-    const belongToCurrentUser = workOrder.employees.filter(emp => emp.id === user.user.id)[0]
+    const belongToCurrentUser = workOrder?.employees.filter(emp => emp.id === user.user.id)[0]
     
     useEffect(()=>{
       const worOrderDoesNotExist =  errorsOrMessages?.includes('Access to this comment was dinied')
@@ -25,7 +24,12 @@ const WorkOrderDetails = (props)=>{
    },[errorsOrMessages])
 
     useEffect(()=>{
-       props.fetchWorkOrder(id)
+      props.getFetchAction({
+        loading: "LOADING_WORK_ORDER", 
+        type: 'ADD_WORK_ORDER',
+        path: `/work_orders/${id}`, 
+        stateName: 'workOrder'
+      })
     },[])
 
     const workOrderEmployees = ()=>{
@@ -136,9 +140,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
+    getFetchAction: (action) => dispatch(getFetchAction(action)),
     deleteWorkOrder: (action) => dispatch(deleteWorkOrder(action)),
     removeEmployee: (action) => dispatch(removeEmployee(action)),
-    fetchWorkOrder: (action) => dispatch(fetchWorkOrder(action)),
     }
 }
 

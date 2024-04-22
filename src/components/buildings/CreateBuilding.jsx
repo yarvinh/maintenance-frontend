@@ -38,7 +38,6 @@ const CreateBuilding = (props) =>{
           type: {loadingType: "LOADING_BUILDING", forArray: "ADD_BUILDINGS", forResponse: "ADD_BUILDING"}, 
           params: {payload: {building: building}, array: buildings}
         })
-        // props.createBuilding({building: building, buildings: buildings})
         setBuilding({
           address: "",
           super_name: "",

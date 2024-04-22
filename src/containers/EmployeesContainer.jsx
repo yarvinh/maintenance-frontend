@@ -13,7 +13,7 @@ const EmployeesContainer = (props) => {
     const {id} = useParams()
     const [employees, setEmployees] = useState([])
     const [searchBoxValue, setSearchBoxValue] = useState("")
-    
+    console.log(props.employees)
     useEffect(()=>{
     if(props.employees?.length > 0)
        setEmployees(props.employees)

@@ -8,6 +8,7 @@ import WorkOrdersContainer from '../../containers/WorkOrdersContainer';
 import UnitsContainer from '../../containers/UnitsContainer';
 import { date } from '../../componentsHelpers/date';
 import { useEffect } from 'react';
+import { getFetchAction } from '../../actions/fetchActions';
 
 const BuildingDetails = (props)=>{
     const {user} = props
@@ -17,7 +18,13 @@ const BuildingDetails = (props)=>{
     const buildingWorkOrders = workOrders.filter(wo => wo.building && wo.building_id.toString() === id) 
     
     useEffect(()=>{
-      props.fetchBuilding(id)
+      props.getFetchAction({
+        loading: "LOADING_BUILDING", 
+        type: 'ADD_BUILDING',
+        path: `/buildings/${id}`, 
+        stateName: 'building'
+      })
+      // props.fetchBuilding(id)
     },[])
 
     const handleOnClick=(e)=>{
@@ -80,8 +87,9 @@ const mapStateToProps = state => {
 
   const mapDispatchToProps = dispatch => {
     return {
+      getFetchAction: (action) => dispatch(getFetchAction(action)),
       deleteBuilding: (action) => dispatch(deleteBuilding(action)),
-      fetchBuilding: (action) => dispatch(fetchBuilding(action))
+      // fetchBuilding: (action) => dispatch(fetchBuilding(action))
     }
   }
 

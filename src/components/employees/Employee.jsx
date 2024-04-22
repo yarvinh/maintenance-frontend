@@ -13,8 +13,7 @@ const Employee = (props)=>{
           )
           if (confirmBox === true) {
             props.deleteEmployee(employee.id)  
-          }
-           
+          }    
      }
    
     return (
@@ -36,8 +35,7 @@ const Employee = (props)=>{
 
 const mapDispatchToProps = dispatch => {
     return {
-    deleteEmployee: (action) => dispatch(deleteEmployee(action)),
-   
+      deleteEmployee: (action) => dispatch(deleteEmployee(action)),
     }
   }
 

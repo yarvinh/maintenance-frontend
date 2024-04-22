@@ -2,7 +2,8 @@ import { connect } from 'react-redux';
 import {useParams,useNavigate} from 'react-router-dom';
 import React, {useEffect,useState } from 'react';
 import WorkOrdersContainer from '../../containers/WorkOrdersContainer';
-import {deleteEmployee,fetchEmployee} from "../../actions/employeesActions"
+import {deleteEmployee} from "../../actions/employeesActions"
+import { getFetchAction } from '../../actions/fetchActions';
 import '../../styles/styles.css'
 
 const EmployeeDetails = (props)=>{    
@@ -13,7 +14,12 @@ const EmployeeDetails = (props)=>{
     const employeeWorkOrders =  employee?.work_orders 
     
     useEffect(() => {
-        props.fetchEmployee(id) 
+      props.getFetchAction({
+        loading: "LOADING_EMPLOYEE", 
+        type: 'ADD_EMPLOYEE',
+        path: `/employees/${id}`, 
+        stateName: 'employee'
+      })
     },[workOrders]);
 
     const handleOnClick = (e)=> {
@@ -102,11 +108,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-    deleteEmployee: (action) => dispatch(deleteEmployee(action)),
-    // fetchEmployees: (action) => dispatch(fetchEmployees(action)),
-    // fetchEmployees: () => dispatch(fetchEmployees()),
-    fetchEmployee: (action) => dispatch(fetchEmployee(action))
-   
+      getFetchAction: (action) => dispatch(getFetchAction(action)),
+      deleteEmployee: (action) => dispatch(deleteEmployee(action))
     }
 }
 

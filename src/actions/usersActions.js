@@ -15,21 +15,7 @@ export const createUser =  (user) => {
           error? dispatch({ type: 'ADD_ERRORS_OR_MESSAGES', errorsOrMessages: response.data.errors_or_messages}): dispatch({ type: 'ADD_ERRORS_OR_MESSAGES', errorsOrMessages: []})
       })
     }
-  }
-
-
-  // export const fetchCurrentUser = (checkLoginPath) => { 
-  //   return (dispatch) => {
-  //       dispatch({ type: 'LOADING_USER'})
-  //       axios.get(`${baseUrl()}${checkLoginPath}`, 
-  //       {headers: token(),withCredentials: true})    
-  //       .then(response => {
-  //         dispatch({ type: 'ADD_USER', user: response.data})
-  //       })
-  //       .catch(error => console.log('api errors:', error))
-  //   }
-
-  // }
+}
 
   export const fetchLogOut = () => {
     return (dispatch) => {
@@ -87,7 +73,6 @@ export const recoveryPassword=(user)=> {
           localStorage.setItem('token', response.data.token)
           localStorage.setItem('account_type', response.data.account_type)
         }
-        
         dispatch({ type: 'ADD_ERRORS_OR_MESSAGES', errorsOrMessages: response.data.errors_or_messages})
       })
   }

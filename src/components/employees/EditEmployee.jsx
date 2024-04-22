@@ -4,10 +4,11 @@ import {editEmployee} from '../../actions/employeesActions'
 import {useParams,useNavigate} from 'react-router-dom';
 import {clearErrors} from '../../actions/errorsActions'
 import UploadProfileImage  from "../users/UpdloadProfileImage"
+import { patchFetchAction } from '../../actions/fetchActions';
 import '../../styles/styles.css'
 
 const EditEmployee = (props) =>{
-    const {errorsOrMessages,user} = props
+    const {errorsOrMessages,user,employees} = props
     let navigate = useNavigate()
     let {id} = useParams()
     const [employee, setEmployee] = useState({
@@ -37,14 +38,22 @@ const EditEmployee = (props) =>{
 
     let handleOnSubmit = (e,type) =>{
         e.preventDefault()
+        let payload = {}
         if(type === 'password'){
-            props.editEmployee({employee:{[type]: employee[type],old_password: employee.old_password}, id: id}) 
+           payload = {old_password: employee.old_password, [type]: employee[type]}
         }else{ 
-            props.editEmployee({[type]: employee[type],id: id})  
+           payload = {[type]: employee[type],id: id}
             setEmployee({
                 ...employee,[type]: ""
             }) 
         }
+        props.patchFetchAction({
+            path: `/employees/${id}`,
+            id: id,
+            stateName:{forResponse: "user", forArray: "employees"} ,
+            type: {loading: "LOADING_USER", forArray: "ADD_EMPLOYEES", forResponse: 'ADD_USER'}, 
+            params: {payload: {employee: payload},array: employees}
+        })
     }
 
     return(   
@@ -86,9 +95,9 @@ const EditEmployee = (props) =>{
                 </form>
                 <br/>
                 <form onSubmit={e => handleOnSubmit(e,'password')}>  
-                    <label>Enter old password</label>
-                    <input onChange={handleOnChange} placeholder={"Enter new password"} value={employee.password}className="standar-input" type="password" name="password" />
                     <label>Enter new password</label>
+                    <input onChange={handleOnChange} placeholder={"Enter new password"} value={employee.password}className="standar-input" type="password" name="password" />
+                    <label>Enter old password</label>
                     <input onChange={handleOnChange} placeholder={"Enter old password"} value={employee.old_password} className="standar-input" type="password" name="old_password" />
                     <button type='submit' className="standar-button">Save password</button>
                 </form>  
@@ -107,6 +116,7 @@ const EditEmployee = (props) =>{
 
 const mapStateToProps = state => { 
     return {
+      employees: state.employees.employees,
       user: state.user.user,
       loading: state.employees.loading,
       errorsOrMessages: state.errorsOrMessages.errorsOrMessages
@@ -115,7 +125,8 @@ const mapStateToProps = state => {
   
 const mapDispatchToProps = dispatch => {
     return {
-        editEmployee: (action) => dispatch(editEmployee(action)),
+        patchFetchAction: (action) => dispatch(patchFetchAction(action)),
+        // editEmployee: (action) => dispatch(editEmployee(action)),
         clearErrors: () => dispatch(clearErrors()),
     }
 }   

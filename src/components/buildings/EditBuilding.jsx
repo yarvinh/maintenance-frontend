@@ -1,9 +1,10 @@
 import React, {useState,useEffect } from 'react';
 import { connect } from 'react-redux';
-import {editBuilding} from '../../actions/buildingsActions'
+// import {editBuilding} from '../../actions/buildingsActions'
 import {useParams} from 'react-router-dom';
 import {clearErrors} from '../../actions/errorsActions'
 import {acordionButtonClass,diplayAcordion} from '../../componentsHelpers/acordion'
+import { patchFetchAction } from '../../actions/fetchActions';
 import '../../styles/styles.css'
 
 const EditBuilding = (props) =>{
@@ -32,7 +33,13 @@ const EditBuilding = (props) =>{
 
     let handleOnSubmit = (e,type) =>{
         e.preventDefault()
-        props.editBuilding({id: id, buildings: buildings, building: {[type]: building[type]}})  
+        props.patchFetchAction({
+            id: id,
+            path: `/buildings/${id}`,
+            stateName:{forResponse: "building", forArray: "buildings"} ,
+            type: {loading: "LOADING_BUILDINGS", forArray: "ADD_BUILDINGS", forResponse: "ADD_BUILDING"}, 
+            params: {payload: {[type]: building[type]}, array: buildings}
+          })
             setBuilding({
                 ...building,[type]: ""
         })    
@@ -111,7 +118,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        editBuilding: (action) => dispatch(editBuilding(action)),
+        patchFetchAction: (action) => dispatch(patchFetchAction(action)),
+        // editBuilding: (action) => dispatch(editBuilding(action)),
         clearErrors: () => dispatch(clearErrors()),
     }
 }   
