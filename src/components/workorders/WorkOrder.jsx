@@ -8,7 +8,6 @@ import { patchFetchAction } from '../../actions/fetchActions';
 const WorkOrder = (props) => {
     let {workOrder,workOrders,index,workOrderIndex} = props
     const {user,admin} = props.user
-
     const acceptedWorkOrder = ()=>{
         const currentEmployee = workOrder.employees.find(emp => emp.id === user.id)
         return  !workOrder.accepted && currentEmployee || !workOrder.accepted && admin ? "notifications"  : "accepted"
@@ -39,11 +38,10 @@ const WorkOrder = (props) => {
             props.patchFetchAction({
                 path: `/work_orders/${workOrder.id}`,
                 id: workOrder.id?.toString(),
-                stateName:{forResponse: "workOrder", forArray: "workOrders"} ,
-                type: {loading: "LOADING_WORK_ORDERS", forArray: "ADD_WORK_ORDERS", forResponse: "ADD_WORK_ORDER"}, 
+                stateName:{itemName: "workOrder", arrayName: "workOrders"} ,
+                type: {addItemToArray: "ADD_WORK_ORDERS", addItem: "ADD_WORK_ORDER"}, 
                 params: {payload: {accepted: true}, array: workOrders}
             })
-        //   props.editWorkOrder({workOrders: workOrders, workOrder: {accepted: true, id: workOrder.id?.toString() }})
         }
     }
 
@@ -79,7 +77,6 @@ const WorkOrder = (props) => {
 const mapDispatchToProps = dispatch => {
     return {
         patchFetchAction: (action) => dispatch(patchFetchAction(action)),
-        // editWorkOrder: (action) => dispatch(editWorkOrder(action)),
         deleteWorkOrder: (action) => dispatch(deleteWorkOrder(action)),
         workOrderIndex: (action) => dispatch(workOrderIndex(action))
     }   

@@ -24,7 +24,7 @@ import {baseUrl} from './actionsHelper'
 
 export const deleteWorkOrder = (id) => {
   return (dispatch) => {
-    dispatch({ type: 'LOADING_WORK_ORDERS'})
+    dispatch({ type: 'LOADING'})
     axios.delete(`${baseUrl()}/work_orders/${id}`,{headers: token(), withCredentials: true}
     ).then(response => {   
       dispatch({ type: 'ADD_WORK_ORDERS', workOrders: response.data })
@@ -39,7 +39,7 @@ export const deleteWorkOrder = (id) => {
 export const removeEmployee = (payload) => {
   const {workOrders, ids} = payload
   return (dispatch) => {
-    dispatch({ type: 'LOADING_WORK_ORDER'})
+    dispatch({ type: 'LOADING'})
     axios.delete(`${baseUrl()}/remove_employee`,{params: ids, headers: token(), withCredentials: true}
     ).then(response => {   
       const error = response.data.errors_or_messages

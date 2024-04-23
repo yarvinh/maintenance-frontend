@@ -8,7 +8,7 @@ export const fetchTasks = (id) => {
         id:id
       };   
     return (dispatch) => {
-        dispatch({type: "LOADING_TASKS"})
+        dispatch({type: "LOADING"})
         axios.get(`${baseUrl()}/tasks`, {params}, {headers: token(), withCredentials: true})
         .then(response => {
             const error = response.data.errors_or_messages 
@@ -20,7 +20,7 @@ export const fetchTasks = (id) => {
 
 export const createTask  = (task) => { 
     return (dispatch) => {
-        dispatch({type: "LOADING_TASKS"})
+        dispatch({type: "LOADING"})
         axios.post(`${baseUrl()}/tasks`, task ,{headers: token(), withCredentials: true})
         .then(response => {
             const error = response.data.error
@@ -31,7 +31,7 @@ export const createTask  = (task) => {
 
 export const changeStatus = (id) => {
     return (dispatch) => {
-        dispatch({type: "LOADING_TASKS"})
+        dispatch({type: "LOADING"})
         axios.patch(`${baseUrl()}/tasks/${id}`,{headers: token(), withCredentials: true})
         .then(response => {
             const error = response.data.error 
@@ -42,7 +42,7 @@ export const changeStatus = (id) => {
 
 export const deleteTask = (id) => {
     return (dispatch) => {
-      dispatch({ type: 'LOADING_TASKS'})
+      dispatch({ type: 'LOADING'})
       axios.delete(`${baseUrl()}/tasks/${id}`,{headers: token(), withCredentials: true}
       ).then(response => {  
         const error = response.data.error 
@@ -56,7 +56,7 @@ export const editTask  = (task) => {
     // console.log(task)
     const  id = task.id
     return (dispatch) => {
-        dispatch({type: "LOADING_TASKS"})
+        dispatch({type: "LOADING"})
         axios.patch(`${baseUrl()}/tasks/${id}`, task ,{headers: token(), withCredentials: true})
         .then(response => {
             const error = response.data.error

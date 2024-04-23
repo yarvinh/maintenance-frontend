@@ -1,7 +1,7 @@
 
 import { connect } from 'react-redux';
 import {useEffect ,useRef} from 'react';
-import {BrowserRouter, Routes, Route, Link} from 'react-router-dom'
+import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import LogOut from './components/users/LogOut'
 import LogIn from './components/users/LogIn'
 import ResetPassword from './components/users/ResetPassword'
@@ -35,13 +35,10 @@ import NavBarContainer from './containers/NavBarContainer';
 import {verificationSessionToken,removeLoginToken} from "./componentsHelpers/token"
 import Anime from "./components/Anime"
 import { getFetchAction } from './actions/fetchActions';
-import { fetchAppContent,fetchCurrentUser } from './componentsHelpers/fetching';
-import NewUserNotification from './components/users/NewUserNotification';
-
+import { paths } from './actions/actionsHelper';
 const App  = (props) => {
   let { user ,workOrders,acordion,userLoading,verificationSession} = props
   const fetchTimesRef = useRef(1)
-
   const handleOnAcordion = (e)=>{
     const approveAcordion =  e.target.className.includes('display_accordion') 
     || (!e.target.className.includes('acordion')) 
@@ -58,13 +55,23 @@ const App  = (props) => {
     } 
   }
   useEffect(() => {
-     fetchCurrentUser(props.getFetchAction)   
+    props.getFetchAction({
+      loading: "LOADING_USER", 
+      type: 'ADD_USER',
+      path: paths().checkLoginPath, 
+      stateName: 'user'
+    })  
   },[] ); 
 
   useEffect(() => {
     if(fetchTimesRef.current === 1){
       fetchTimesRef.current += 1  
-      fetchAppContent(props.getFetchAction) 
+      props.getFetchAction({
+        loading: "LOADING_WORK_ORDERS", 
+        type: 'ADD_WORK_ORDERS',
+        path: paths().workOrdersPath, 
+        stateName: 'workOrders'
+      }) 
     }
   },[user] ); 
 
@@ -76,7 +83,6 @@ const App  = (props) => {
         <NavBarContainer/>
         <section>
           <div>
-            {user.admin? <NewUserNotification/> : null}
             {user.is_login? <Notification/> :null }
           </div>
         </section>
@@ -119,11 +125,8 @@ const App  = (props) => {
 const mapStateToProps = state => { 
   return {
     verificationSession: state.user.user?.verification_session,
-    userLoading: state.user.loading,
     acordion: state.acordion.acordion,
-    employees: state.employees.employees,
     user: state.user.user,
-    buildings: state.buildings.buildings,
     workOrders: state.workOrders.workOrders,
   }
 }

@@ -36,8 +36,8 @@ const EditBuilding = (props) =>{
         props.patchFetchAction({
             id: id,
             path: `/buildings/${id}`,
-            stateName:{forResponse: "building", forArray: "buildings"} ,
-            type: {loading: "LOADING_BUILDINGS", forArray: "ADD_BUILDINGS", forResponse: "ADD_BUILDING"}, 
+            stateName:{itemName: "building", arrayName: "buildings"} ,
+            type: {addItemToArray: "ADD_BUILDINGS", addItem: "ADD_BUILDING"}, 
             params: {payload: {[type]: building[type]}, array: buildings}
           })
             setBuilding({

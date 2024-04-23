@@ -13,8 +13,23 @@ import { UnitReducer,UnitsReducer } from "./unitsReducers";
 import {receiptsReducer} from "./receiptsReducer"
 import {galleryReducer} from "./galleryReducer"
 
+const Loading = (state = {loading: false}, action) => {
+   switch(action.type) {
+         case 'LOADING':
+           return state = {
+             loading: true    
+         }
+         default:
+            return state;
+         
+   }
+}
+
+
+
 
 const rootReducer = combineReducers({
+   loading: Loading,
    user: UserReducer,  
    employees: EmployeesReducer,
    employee: EmployeeReducer,

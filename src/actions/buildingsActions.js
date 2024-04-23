@@ -5,7 +5,7 @@ import {baseUrl} from './actionsHelper'
 
 export const deleteBuilding = (id) => {
   return (dispatch) => {
-    dispatch({ type: 'LOADING_BUILDING'})
+    dispatch({ type: 'LOADING'})
     axios.delete(`${baseUrl()}/buildings/${id}`,{headers: token(), withCredentials: true}
     ).then(response => {   
       dispatch({ type: 'ADD_BUILDINGS', buildings: response.data })
@@ -15,7 +15,7 @@ export const deleteBuilding = (id) => {
 
 export const searchBuilding = (params) => {
   return (dispatch) => {
-    dispatch({ type: 'LOADING_BUILDINGS'})
+    dispatch({ type: 'LOADING'})
     axios.get(`${baseUrl()}/search/buildings/`,{params: {address: params}, headers: token(), withCredentials: true}
     ).then(response => {   
       dispatch({ type: 'ADD_BUILDINGS', buildings: response.data })

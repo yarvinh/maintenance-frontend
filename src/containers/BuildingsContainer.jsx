@@ -5,14 +5,22 @@ import Building from "../components/buildings/Building"
 import {useParams,useNavigate} from 'react-router-dom';
 import {searchBuilding} from "../actions/buildingsActions"
 import {buildingsFilter} from '../componentsHelpers/buildings'
-
+import { getFetchAction } from '../actions/fetchActions';
 const BuildingsContainer = (props) => {
     let navigate = useNavigate()
+    console.log(props.loading)
     let {admin,user} = props.user
     const {id} = useParams()
-
     const [buildings, setBuildings] = useState([])
     const [searchBoxValue, setSearchBoxValue] = useState("")
+    useEffect(()=>{
+      props.getFetchAction({
+        loading: "LOADING_BUILDINGS", 
+        type: 'ADD_BUILDINGS',
+        path: "/buildings", 
+        stateName: 'buildings'
+      }) 
+    },[])
 
     useEffect(()=>{
       if (props.buildings?.length > 0)
@@ -85,13 +93,14 @@ const mapStateToProps = state => {
     return {
       user: state.user.user,
       buildings: state.buildings.buildings,
-      loading: state.buildings.loading
+      loading: state.loading
     }
   }
 
   const mapDispatchToProps = dispatch => {
     return {
-        searchBuilding: (action) => dispatch(searchBuilding(action)),
+      getFetchAction: (action) => dispatch(getFetchAction(action)),
+      searchBuilding: (action) => dispatch(searchBuilding(action)),
     }
   }
 

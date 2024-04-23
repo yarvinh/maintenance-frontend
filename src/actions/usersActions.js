@@ -4,14 +4,14 @@ import {baseUrl} from './actionsHelper'
 
 export const createUser =  (user) => {
     return (dispatch) => {
-        dispatch({ type: 'LOADING_USER'})
+        dispatch({ type: 'LOADING'})
         axios.post(`${baseUrl()}/users`, user, {headers:token(), withCredentials: true})
         .then(response => {
           const error = response.data.errors_or_messages
           if(response.data.created){
             localStorage.setItem('token', response.data.token)
           }
-          dispatch({ type: 'ADD_USER', user: response.data})
+          dispatch({ type: 'ADD', user: response.data})
           error? dispatch({ type: 'ADD_ERRORS_OR_MESSAGES', errorsOrMessages: response.data.errors_or_messages}): dispatch({ type: 'ADD_ERRORS_OR_MESSAGES', errorsOrMessages: []})
       })
     }
@@ -19,7 +19,7 @@ export const createUser =  (user) => {
 
   export const fetchLogOut = () => {
     return (dispatch) => {
-      dispatch({ type: 'LOADING_USER'})
+      dispatch({ type: 'LOADING'})
         axios.delete(`${baseUrl()}/logout`, {headers:token(),withCredentials: true})
         .then(response=> {
             dispatch({ type: 'ADD_USER', user: response.data })
@@ -31,7 +31,7 @@ export const createUser =  (user) => {
 
   export const fetchLogIn=(user,path)=> {
     return (dispatch) => {
-      dispatch({ type: 'LOADING_USER'})
+      dispatch({ type: 'LOADING'})
         axios.post(`${baseUrl()}/${path}`, 
         {user}, {withCredentials: true})
         .then(response=> {

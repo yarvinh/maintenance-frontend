@@ -5,7 +5,7 @@ import {baseUrl} from './actionsHelper'
 export const createTenant = (tenant) => {
 
     return (dispatch) => {
-        dispatch({ type: 'LOADING_UNIT'})
+        dispatch({ type: 'LOADING'})
         axios.post(`${baseUrl()}/buildings/${tenant.building_id}/tenants`, {tenant: tenant}, {headers: token(), withCredentials: true})
         .then(response => {
           const error = response.data.errors_or_messages
@@ -17,7 +17,7 @@ export const createTenant = (tenant) => {
 
 export const deleteTenant = (ids) => {
     return (dispatch) => {
-      dispatch({ type: 'LOADING_UNIT'})
+      dispatch({ type: 'LOADING'})
       axios.delete(`${baseUrl()}/buildings/${ids.buildingId}/tenants/${ids.tenantId}`,{headers: token(), withCredentials: true}
       ).then(response => {   
         dispatch({ type: 'ADD_UNIT', unit: response.data })
@@ -27,7 +27,7 @@ export const deleteTenant = (ids) => {
 
   export const editTenant = (params) => {
     return (dispatch) => {
-        dispatch({type: "LOADING_UNIT"})
+        dispatch({type: "LOADING"})
         axios.patch(`${baseUrl()}/buildings/${params.building_id}/tenants/${params.tenant_id}`, {tenant: params.tenant},{headers: token(), withCredentials: true})
         .then(response => {
           const error = response.data.errors_or_messages

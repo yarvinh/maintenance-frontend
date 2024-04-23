@@ -6,17 +6,25 @@ import {useParams,useNavigate} from 'react-router-dom';
 import {searchEmployees} from "../actions/employeesActions"
 import { useEffect } from 'react';
 import {employeesFilter} from '../componentsHelpers/employees'
-
+import { paths } from '../actions/actionsHelper';
+import { getFetchAction } from '../actions/fetchActions';
 const EmployeesContainer = (props) => {
     let navigate = useNavigate()
     let {admin,user} = props.user
     const {id} = useParams()
     const [employees, setEmployees] = useState([])
     const [searchBoxValue, setSearchBoxValue] = useState("")
-    console.log(props.employees)
     useEffect(()=>{
-    if(props.employees?.length > 0)
-       setEmployees(props.employees)
+        props.getFetchAction({
+            loading: "LOADING", 
+            type: 'ADD_EMPLOYEES',
+            path: paths().employeesPath, 
+            stateName: 'employees'
+        })
+    },[])
+    useEffect(()=>{
+        if(props.employees?.length > 0)
+          setEmployees(props.employees)
     },[props.employees])
     
     const goBack = (e) => {
@@ -90,6 +98,7 @@ const mapStateToProps = state => {
 
   const mapDispatchToProps = dispatch => {
     return {
+        getFetchAction: (action) => dispatch(getFetchAction(action)),
         searchEmployees: (action) => dispatch(searchEmployees(action)),
     }
   }

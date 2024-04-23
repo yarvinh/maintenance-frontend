@@ -9,7 +9,7 @@ export const fetchComments = (id) => {
       };
       
     return (dispatch) => {
-        dispatch({type: "LOADING_COMMENTS"})
+        dispatch({type: "LOADING"})
         axios.get(`${baseUrl()}/comments`, {params}, {headers: token(), withCredentials: true})
         .then(response => {
            const  error = response.data.errors_or_messages
@@ -33,7 +33,7 @@ export const createComment = (comment) => {
 
 export const deleteComment = (id) => {
     return (dispatch) => {
-      dispatch({ type: 'LOADING_COMMENTS'})
+      dispatch({ type: 'LOADING'})
       axios.delete(`${baseUrl()}/comments/${id}`,{headers: token()}
       ).then(response => {   
         // dispatch({ type: 'ADD_COMMENTS', comments: response.data })

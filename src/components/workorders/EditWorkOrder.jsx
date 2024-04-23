@@ -1,12 +1,11 @@
-import React, {useState,useEffect} from 'react';
+import {useState,useEffect} from 'react';
 import { connect } from 'react-redux';
-// import {editWorkOrder} from '../../actions/workOrdersActions'
 import {clearErrors} from '../../actions/errorsActions'
 import {useParams} from 'react-router-dom';
 import {acordionButtonClass,diplayAcordion} from '../../componentsHelpers/acordion'
 import { patchFetchAction } from '../../actions/fetchActions';
-import '../../styles/styles.css'
-// import { fetchAppContent } from '../../componentsHelpers/fetching';
+import { getFetchAction } from '../../actions/fetchActions';
+// import '../../styles/styles.css'
 
 const EditWorkOrder = (props) =>{
     const {employees,buildings,errorsOrMessages,acordion,workOrders} = props
@@ -20,6 +19,20 @@ const EditWorkOrder = (props) =>{
         title: "",
     })
     useEffect(() => {
+      if(employees.length === 0){
+        props.getFetchAction({
+          path: '/employees',
+          stateName: "employees",
+          type: "ADD_EMPLOYEES"
+        })
+      }
+      if(buildings.length === 0){
+          props.getFetchAction({
+            path: '/buildings',
+            stateName: "buildings",
+            type: "ADD_BUILDINGS"
+          })
+      }
       if (errorsOrMessages?.length > 0){
         props.clearErrors()
       }
@@ -32,33 +45,29 @@ const EditWorkOrder = (props) =>{
       })
     }
 
-
-
     let handleOnSubmit = (e,type) =>{
         e.preventDefault()
         props.patchFetchAction({
           path: `/work_orders/${id}`,
           id: id,
-          stateName:{forResponse: "workOrder", forArray: "workOrders"} ,
-          type: {loading: "LOADING_WORK_ORDERS", forArray: "ADD_WORK_ORDERS", forResponse: "ADD_WORK_ORDER"}, 
-          params: {payload: {[type]: workOrder[type]}, array: workOrders}
+          stateName:{itemName: "workOrder", arrayName: "workOrders"} ,
+          type: {addItemToArray: "ADD_WORK_ORDERS", addItem: "ADD_WORK_ORDER"}, 
+          params: {payload: {work_order: {[type]: workOrder[type]}}, array: workOrders}
       })
-        // props.editWorkOrder({workOrders: workOrders, workOrder: {[type]: workOrder[type],id: id}})  
-        setWorkOrder({
-          ...workOrder,[type]: ""
-        }) 
+      setWorkOrder({
+        ...workOrder,[type]: ""
+      }) 
 
-        if (errorsOrMessages.length > 0){
-          props.clearErrors()
-        }
-          
+      if (errorsOrMessages.length > 0){
+        props.clearErrors()
+      }
+        
     }
 
   return(   
       <div className='center'>
             <button  id='edit-work-order' className={acordionButtonClass('edit-work-order',acordion)}> Edit Work Order</button>
             <div className={diplayAcordion('edit-work-order',acordion)}>
-
             <div className='standar-forms acordion'>
                 <div className="container d-flex justify-content-center align-items-center acordion" > 
                     <form onSubmit={(e)=>handleOnSubmit(e,"employee_id")}  className='acordion'>
@@ -126,9 +135,9 @@ const mapStateToProps = state => {
     }
 }
 
-
 const mapDispatchToProps = dispatch => {
     return {
+      getFetchAction: (action) => dispatch(getFetchAction(action)),
       patchFetchAction: (action) => dispatch(patchFetchAction(action)),
       clearErrors: () => dispatch(clearErrors()),
     }

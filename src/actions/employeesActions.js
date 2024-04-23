@@ -5,7 +5,7 @@ import {baseUrl} from './actionsHelper'
 
 export const deleteEmployee = (id) => {
   return (dispatch) => {
-    dispatch({ type: 'LOADING_EMPLOYEES'})
+    dispatch({ type: 'LOADING'})
     axios.delete(`${baseUrl()}/employees/${id}`,{headers: token(), withCredentials: true}
     ).then(response => {   
       dispatch({ type: 'ADD_EMPLOYEES', employees: response.data })
@@ -15,7 +15,7 @@ export const deleteEmployee = (id) => {
 
 export const searchEmployees = (params) => {
   return (dispatch) => {
-    dispatch({ type: 'LOADING_EMPLOYEES'})
+    dispatch({ type: 'LOADING'})
     axios.get(`${baseUrl()}/search/employees`,{params: {data: params}, headers: token(), withCredentials: true}
     ).then(response => {   
       dispatch({ type: 'ADD_EMPLOYEES', employees: response.data })

@@ -29,8 +29,8 @@ const CloseWorkOrder = (props) => {
             props.patchFetchAction({
                 path: `/work_orders/${id}`,
                 id: id,
-                stateName:{forResponse: "workOrder", forArray: "workOrders"} ,
-                type: {loading: "LOADING_WORK_ORDERS", forArray: "ADD_WORK_ORDERS", forResponse: "ADD_WORK_ORDER"}, 
+                stateName:{itemName: "workOrder", arrayName: "workOrders"} ,
+                type: {addItemToArray: "ADD_WORK_ORDERS", addItem: "ADD_WORK_ORDER"}, 
                 params: {payload: {status: true}, array: workOrders}
             })
             e.target.value = "Open Work Order"
@@ -38,8 +38,8 @@ const CloseWorkOrder = (props) => {
             props.patchFetchAction({
                 path: `/work_orders/${id}`,
                 id: id,
-                stateName:{forResponse: "workOrder", forArray: "workOrders"} ,
-                type: {loading: "LOADING_WORK_ORDERS", forArray: "ADD_WORK_ORDERS", forResponse: "ADD_WORK_ORDER"}, 
+                stateName:{itemName: "workOrder", arrayName: "workOrders"} ,
+                type: {addItemToArray: "ADD_WORK_ORDERS", addItem: "ADD_WORK_ORDER"}, 
                 params: {payload: {status: false}, array: workOrders}
             })
             e.target.value = "Close Work Order"

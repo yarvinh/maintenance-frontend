@@ -1,6 +1,5 @@
-import React, {useState,useEffect } from 'react';
+import  {useState,useEffect } from 'react';
 import { connect } from 'react-redux';
-import {editEmployee} from '../../actions/employeesActions'
 import {useParams,useNavigate} from 'react-router-dom';
 import {clearErrors} from '../../actions/errorsActions'
 import UploadProfileImage  from "../users/UpdloadProfileImage"
@@ -50,8 +49,8 @@ const EditEmployee = (props) =>{
         props.patchFetchAction({
             path: `/employees/${id}`,
             id: id,
-            stateName:{forResponse: "user", forArray: "employees"} ,
-            type: {loading: "LOADING_USER", forArray: "ADD_EMPLOYEES", forResponse: 'ADD_USER'}, 
+            stateName:{itemName: "user", arrayName: "employees"} ,
+            type: {addItemToArray: "ADD_EMPLOYEES", addItem: 'ADD_USER'}, 
             params: {payload: {employee: payload},array: employees}
         })
     }
@@ -126,7 +125,6 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         patchFetchAction: (action) => dispatch(patchFetchAction(action)),
-        // editEmployee: (action) => dispatch(editEmployee(action)),
         clearErrors: () => dispatch(clearErrors()),
     }
 }   

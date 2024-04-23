@@ -34,8 +34,8 @@ const CreateBuilding = (props) =>{
         e.preventDefault()
         props.postFetchAction({
           path: paths().buildingsPath,
-          stateName:{forResponse: "building", forArray: "buildings"} ,
-          type: {loadingType: "LOADING_BUILDING", forArray: "ADD_BUILDINGS", forResponse: "ADD_BUILDING"}, 
+          stateName:{itemName: "building", arrayName: "buildings"} ,
+          type: { addItemToArray: "ADD_BUILDINGS", addItem: "ADD_BUILDING"}, 
           params: {payload: {building: building}, array: buildings}
         })
         setBuilding({

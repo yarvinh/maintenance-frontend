@@ -4,7 +4,7 @@ import {baseUrl} from './actionsHelper'
 
 export const createUnit = (unit) => {
     return (dispatch) => {
-        dispatch({ type: 'LOADING_UNITS'})
+        dispatch({ type: 'LOADING'})
         axios.post(`${baseUrl()}/buildings/${unit.building_id}/units`, {unit: unit}, {headers: token(), withCredentials: true})
         .then(response => {
           const error = response.data.errors_or_messages
@@ -15,7 +15,7 @@ export const createUnit = (unit) => {
 
   export const getUnits = (id) =>{
     return (dispatch) => {
-      dispatch({ type: 'LOADING_UNITS'})
+      dispatch({ type: 'LOADING'})
       axios.get(`${baseUrl()}/buildings/${id}/units`,{headers: token(), withCredentials: true})
       .then(response => {
         const error = response.data.errors_or_messages
@@ -26,7 +26,7 @@ export const createUnit = (unit) => {
 
   export const getUnit = (ids) =>{
     return (dispatch) => {
-      dispatch({ type: 'LOADING_UNIT'})
+      dispatch({ type: 'LOADING'})
       axios.get(`${baseUrl()}/buildings/${ids.buildingId}/units/${ids.unitId}`,{headers: token(), withCredentials: true})
       .then(response => {
         dispatch({ type: 'ADD_UNIT', unit: response.data})
@@ -37,7 +37,7 @@ export const createUnit = (unit) => {
 
   export const deleteUnit = (ids) => {
     return (dispatch) => {
-      dispatch({ type: 'LOADING_UNITS'})
+      dispatch({ type: 'LOADING'})
       axios.delete(`${baseUrl()}/buildings/${ids.buildingId}/units/${ids.unitId}`,{headers: token(), withCredentials: true}
       ).then(response => {   
         dispatch({ type: 'ADD_UNITS', units: response.data })
@@ -47,7 +47,7 @@ export const createUnit = (unit) => {
 
   export const editUnit = (params) => {
     return (dispatch) => {
-        dispatch({type: "LOADING_UNIT"})
+        dispatch({type: "LOADING"})
         axios.patch(`${baseUrl()}/buildings/${params.building_id}/units/${params.unit_id}`, params ,{headers: token(), withCredentials: true})
         .then(response => {
           const error = response.data.errors_or_messages
