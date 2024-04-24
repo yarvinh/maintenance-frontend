@@ -16,8 +16,6 @@ const SignUp = (props) => {
     verification_code: ""
   })
 
-  
-
   const handleOnSubmit = (e) => {
       e.preventDefault()
       props.createUser({user: user})  
@@ -33,16 +31,16 @@ const SignUp = (props) => {
       <div>
         <div className="container d-flex justify-content-center align-items-center">
           <form onSubmit={handleOnSubmit} className="form">
-            <label className="mt-5"> Name: </label>
-            <input onChange={handleOnChange} className="form-control" value={user.name} name="name" type='text'/> <br/>
-            <label >Email:</label >
-            <input  onChange={handleOnChange} className="form-control" value={user.email} name="email" type='text'/> <br/>
-            <label >Username:</label >
-            <input onChange={handleOnChange} className="form-control"  value={user.username} name="username" type='text'/> <br/>
-            <label > Password: </label >
-            <input onChange={handleOnChange} className="form-control"  value={user.password} name="password" type='password'/> <br/>
-            <label > Confirm password:</label >
-            <input onChange={handleOnChange} className="form-control"  value={user.password_confirmation} name="password_confirmation" type='password'/> <br/>
+            <label className="mt-5" htmlFor="signUpName"> Name: </label>
+            <input onChange={handleOnChange} id="signUpName" className="form-control" value={user.name} name="name" type='text'/> <br/>
+            <label htmlFor='signUpEmail' >Email:</label >
+            <input  onChange={handleOnChange} id="signUpEmail" className="form-control" value={user.email} name="email" type='text'/> <br/>
+            <label htmlFor='signUpUsername'>Username:</label >
+            <input onChange={handleOnChange} id="signUpUsername" className="form-control"  value={user.username} name="username" type='text'/> <br/>
+            <label htmlFor='signUpPassword'> Password: </label >
+            <input onChange={handleOnChange} id='signUpPassword' className="form-control"  value={user.password} name="password" type='password'/> <br/>
+            <label htmlFor='signUpConfirmPassword'> Confirm password:</label >
+            <input onChange={handleOnChange} id="signUpConfirmPassword" className="form-control"  value={user.password_confirmation} name="password_confirmation" type='password'/> <br/>
             <button type='submit' className="btn btn-primary">Submit</button>
             <div className="center"> 
             {props.errorsOrMessages.map((e,k) => {return (

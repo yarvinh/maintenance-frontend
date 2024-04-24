@@ -3,6 +3,7 @@ import {token,verificationToken,removeLoginToken} from '../componentsHelpers/tok
 import {baseUrl} from './actionsHelper'
 
 export const createUser =  (user) => {
+  console.log(user)
     return (dispatch) => {
         dispatch({ type: 'LOADING'})
         axios.post(`${baseUrl()}/users`, user, {headers:token(), withCredentials: true})

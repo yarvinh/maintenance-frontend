@@ -36,27 +36,29 @@ import {verificationSessionToken,removeLoginToken} from "./componentsHelpers/tok
 import Anime from "./components/Anime"
 import { getFetchAction } from './actions/fetchActions';
 import { paths } from './actions/actionsHelper';
+
 const App  = (props) => {
   let { user ,workOrders,acordion,userLoading,verificationSession} = props
   const fetchTimesRef = useRef(1)
   const handleOnAcordion = (e)=>{
-    const approveAcordion =  e.target.className.includes('display_accordion') 
+    const openAccordion =  e.target.className.includes('display_accordion') 
     || (!e.target.className.includes('acordion')) 
     && (acordion.acordion === 'display_accordion active')   
 
     if(verificationSessionToken() && verificationSession && e.target.className.includes('exit-email-verification')){
       removeLoginToken()
       props.setVerificationSession()
-      props.barAccordionDisplay({element: e, acordion: acordion})  
-    }else if ( approveAcordion ){
+      props.barAccordionDisplay({element: e, acordion: acordion}) 
+
+    }else if ( openAccordion ){
       props.acordionDisplay({element: e, acordion: acordion})
     }else if(e.target.className.includes('display-nav-bar')  || (!e.target.className.includes('bar-accordion')) && (acordion.varAcordion === 'display-nav-bar hide')){
       props.barAccordionDisplay({element: e, acordion: acordion})  
     } 
   }
+
   useEffect(() => {
     props.getFetchAction({
-      loading: "LOADING_USER", 
       type: 'ADD_USER',
       path: paths().checkLoginPath, 
       stateName: 'user'
@@ -67,7 +69,6 @@ const App  = (props) => {
     if(fetchTimesRef.current === 1){
       fetchTimesRef.current += 1  
       props.getFetchAction({
-        loading: "LOADING_WORK_ORDERS", 
         type: 'ADD_WORK_ORDERS',
         path: paths().workOrdersPath, 
         stateName: 'workOrders'

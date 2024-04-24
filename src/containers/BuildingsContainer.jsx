@@ -6,9 +6,9 @@ import {useParams,useNavigate} from 'react-router-dom';
 import {searchBuilding} from "../actions/buildingsActions"
 import {buildingsFilter} from '../componentsHelpers/buildings'
 import { getFetchAction } from '../actions/fetchActions';
+
 const BuildingsContainer = (props) => {
     let navigate = useNavigate()
-    console.log(props.loading)
     let {admin,user} = props.user
     const {id} = useParams()
     const [buildings, setBuildings] = useState([])

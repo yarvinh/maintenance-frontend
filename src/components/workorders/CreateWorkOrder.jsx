@@ -7,6 +7,7 @@ import {clearErrors} from '../../actions/errorsActions'
 import {acordionButtonClass,diplayAcordion} from '../../componentsHelpers/acordion'
 import { paths } from '../../actions/actionsHelper';
 import { postFetchAction } from '../../actions/fetchActions';
+import { getFetchAction } from '../../actions/fetchActions';
 import '../../styles/styles.css'
 
 const CreateWorkOrder = (props) => {
@@ -26,9 +27,26 @@ const CreateWorkOrder = (props) => {
     today.pop()
 
     useEffect(() => {
-      if (errorsOrMessages?.length > 0){
-        props.clearErrors()
+      if (employees.length === 0){
+        console.log("testing")
+         props.getFetchAction({
+           path: "/employees",
+           stateName: "employees",
+           type: "ADD_EMPLOYEES"
+
+          })
       }
+      if (employees.length === 0){
+        console.log("testing 2")
+        props.getFetchAction({
+          path: "/buildings",
+          stateName: "buildings",
+          type: "ADD_BUILDINGS"
+        })
+      }
+      if (errorsOrMessages?.length > 0)
+        props.clearErrors()
+      
     },[ ]);
     
     const handleOnSubmit=(e)=>{
@@ -68,7 +86,6 @@ const CreateWorkOrder = (props) => {
         setWorkOrder({
             ...workOrder,[e.target.name]: e.target.value
         })
-
     }
 
     return (
@@ -121,8 +138,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
+        getFetchAction: (action) => dispatch(getFetchAction(action)),
         postFetchAction: (action)=> dispatch(postFetchAction(action)),
-        // createWorkOrder: (action) => dispatch(createWorkOrder(action)),
         clearErrors: () => dispatch(clearErrors())   
     }
 }   

@@ -2,11 +2,11 @@
 export const acordionDisplay = (action) =>{
   if(action.acordion.acordion === 'display_accordion' && action.element.target.className?.includes('display_accordion')){
     return (dispatch) => { 
-      dispatch({ type: 'ACORDION', acordion: {acordion: 'display_accordion active' , varAcordion: 'display-nav-bar',display: 'display_elements',elementId: action.element.target.id} })  
+      dispatch({ type: 'ACORDION', acordion: {barDisplay: 'hide-bar',acordion: 'display_accordion active' , varAcordion: 'display-nav-bar',display: 'display_elements',elementId: action.element.target.id} })  
     }
   } else {
     return (dispatch) => {
-      dispatch({ type: 'ACORDION', acordion: {acordion: 'display_accordion', varAcordion: 'display-nav-bar', display: 'hide_elements',elementId: action.element.target.id} })}
+      dispatch({ type: 'ACORDION', acordion: {barDisplay: 'hide-bar',acordion: 'display_accordion', varAcordion: 'display-nav-bar', display: 'hide_elements',elementId: action.element.target.id} })}
   }
 }
 
