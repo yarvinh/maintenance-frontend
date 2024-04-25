@@ -94,7 +94,7 @@ const App  = (props) => {
             <Route exact path='/signup'  element={<SignUp />}/> 
             <Route exact path='/' index element={<HomeContainer/>} /> 
             <Route exact path='/username_recovery' element={<ForgotUsername/>} />
-            <Route exact path='/verifying_email' element={<EmailValidation/>} />
+            {/* <Route exact path='/verifying_email' element={<EmailValidation/>} /> */}
             <Route exact path='/password_recovery' element={<ForgotPassword/>} />
             <Route exact path='/reset_password' element={<ResetPassword/>} /> 
             <Route exact path='/signout' element={<LogOut/>}/>

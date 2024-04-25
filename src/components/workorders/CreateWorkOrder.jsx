@@ -28,7 +28,6 @@ const CreateWorkOrder = (props) => {
 
     useEffect(() => {
       if (employees.length === 0){
-        console.log("testing")
          props.getFetchAction({
            path: "/employees",
            stateName: "employees",
@@ -37,7 +36,6 @@ const CreateWorkOrder = (props) => {
           })
       }
       if (employees.length === 0){
-        console.log("testing 2")
         props.getFetchAction({
           path: "/buildings",
           stateName: "buildings",

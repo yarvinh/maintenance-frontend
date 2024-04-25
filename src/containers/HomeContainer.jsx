@@ -5,12 +5,12 @@ import Home from '../components/home/Home'
 import HomeWithoutLogin from '../components/home/HomeWithoutLogin'
 import {isLoginToken} from "../componentsHelpers/token"
 
-const HomeContainer = (props)=>{
-    const {user} = props
+const HomeContainer = ({user,loading})=>{
+   console.log(loading)
     return (
         <>  
-            {user.is_login && isLoginToken() || user.is_login? <Home />:null}
-            {!isLoginToken() || user?.verification_session || !user.is_login?<HomeWithoutLogin />:null }
+            {user.is_login? <Home />:null}
+            {!user.is_login?<HomeWithoutLogin />:null }
         </>
     )
 }
@@ -18,6 +18,7 @@ const HomeContainer = (props)=>{
 const mapStateToProps = state => { 
     return {
        user: state.user.user,
+       loading: state.loading.loading
     }
 }
 

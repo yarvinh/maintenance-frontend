@@ -1,20 +1,21 @@
 import axios from 'axios'
 import {token,verificationToken,removeLoginToken} from '../componentsHelpers/token'
 import {baseUrl} from './actionsHelper'
-
+import { paths } from './actionsHelper'
 export const createUser =  (user) => {
-  console.log(user)
     return (dispatch) => {
         dispatch({ type: 'LOADING'})
-        axios.post(`${baseUrl()}/users`, user, {headers:token(), withCredentials: true})
+        fetch(`${baseUrl()}${paths().usersPath}`, {method: "POST",body:  JSON.stringify(user),
+        headers:token(), withCredentials: true})
+        .then(response => response.json())
         .then(response => {
-          const error = response.data.errors_or_messages
-          if(response.data.created){
-            localStorage.setItem('token', response.data.token)
+          const error = response.errors_or_messages
+          if(response.created){
+            localStorage.setItem('token', response.token)
           }
-          dispatch({ type: 'ADD', user: response.data})
-          error? dispatch({ type: 'ADD_ERRORS_OR_MESSAGES', errorsOrMessages: response.data.errors_or_messages}): dispatch({ type: 'ADD_ERRORS_OR_MESSAGES', errorsOrMessages: []})
-      })
+          dispatch({ type: 'ADD_USER', user: response})
+          error? dispatch({ type: 'ADD_ERRORS_OR_MESSAGES', errorsOrMessages: response.errors_or_messages}): dispatch({ type: 'ADD_ERRORS_OR_MESSAGES', errorsOrMessages: []})
+      }).catch(error => console.log(error, "this is a test from users actions catch"))
     }
 }
 
@@ -107,19 +108,20 @@ export const resetUserPassword = ({user,path}) => {
 
 export const verifyEmail = (params) => {
   return (dispatch) => {
-      dispatch({type: "LOADING_USER"})
-      axios.patch(`${baseUrl()}/verify_email`, params ,{withCredentials: true, headers: verificationToken()})
+      dispatch({type: "LOADING"})
+      fetch(`${baseUrl()}${paths().verifyEmail}`,{method: "PATCH",withCredentials: true, headers: verificationToken(), body: JSON.stringify(params)})
+      .then(response => response.json())
       .then(response => {
-       let error = response.data.errors_or_messages
-        if(response.data.updated){
+       let error = response.errors_or_messages
+        if(response.updated){
           localStorage.removeItem('token')
-          localStorage.setItem('token', response.data.token?.token)
-          localStorage.setItem('secret_key', response.data.token?.secret_key)
-        }else if (response.data.session_expired){
+          localStorage.setItem('token', response.token?.token)
+          localStorage.setItem('secret_key', response.token?.secret_key)
+        }else if (response.session_expired){
           removeLoginToken()
         }
-        error ? dispatch({ type: 'ADD_ERRORS_OR_MESSAGES', errorsOrMessages: response.data.errors_or_messages}) : dispatch({ type: 'ADD_ERRORS_OR_MESSAGES', errorsOrMessages: []})
-        dispatch({ type: 'ADD_USER', user: response.data})
+        error ? dispatch({ type: 'ADD_ERRORS_OR_MESSAGES', errorsOrMessages: response.errors_or_messages}) : dispatch({ type: 'ADD_ERRORS_OR_MESSAGES', errorsOrMessages: []})
+        dispatch({ type: 'ADD_USER', user: response})
       })
   }
 }

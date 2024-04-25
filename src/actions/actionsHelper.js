@@ -1,3 +1,6 @@
+// import { verifyEmail } from "./usersActions"
+
+import { verifyEmail } from "./usersActions"
 
 export const baseUrl = () => { 
    return  process.env.NODE_ENV === "development" ? 'http://localhost:3000'
@@ -18,7 +21,8 @@ export const paths = ()=>{
       commentsPath: "/test/comments",
       workOrdersPath: "/test/work_orders",
       searchBuildingsPath: '/test/search/buildings/',
-      employeesPath: "/test/employees"
+      employeesPath: "/test/employees",
+      verifyEmail: "/test/verify_email"
    }  
   const paths =  {
       checkLoginPath: '/checklogin',
@@ -27,7 +31,8 @@ export const paths = ()=>{
       commentsPath: "/comments",
       workOrdersPath: "/work_orders",
       searchBuildingsPath: '/search/buildings/',
-      employeesPath: "/employees"
+      employeesPath: "/employees",
+      verifyEmail: "/verify_email"
    }
    return process.env.NODE_ENV === 'test' ? testPaths : paths
 

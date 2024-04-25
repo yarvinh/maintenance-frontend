@@ -9,7 +9,6 @@ const EmailValidation = (props) => {
     const [user, setUser] = useState({
       security_code: ""
     })
-
     const redirect =()=>{
       return <Navigate to='/'/>
     }
@@ -33,8 +32,8 @@ const EmailValidation = (props) => {
       {props.user.is_login? redirect(): null}
       <div className="container d-flex justify-content-center align-items-center">
           <form onSubmit={handleOnSubmit} className="form">
-              <label className="mt-5"> Enter security code: </label>
-              <input onChange={handleOnChange} className="form-control" value={user.security_code} name="security_code" type='text'/> <br/>
+              <label htmlFor="email-security-code" className="mt-5">Enter security code:</label>
+              <input onChange={handleOnChange} id="email-security-code"  className="form-control" value={user.security_code} name="security_code" type='text'/> <br/>
               <button type='submit' className="btn btn-primary">Submit</button>
               <div className="center"> 
                 {props.errorsOrMessages.map((e,k) => {return e.includes("expired")? <Link to='/business/login' key={k} className="errors">{e}</Link> : <strong key={k} >{e}</strong>})}
@@ -42,12 +41,11 @@ const EmailValidation = (props) => {
           </form>
       </div>
       <div className='get-new-code'>
-        <label > Didn't receive the code?</label>
-        <button onClick={handleOnClick} className='standar-button'> Request new code</button>
+        <label  htmlFor='get-new-security-code'> Didn't receive the code?</label>
+        <button id="get-new-security-code" onClick={handleOnClick} className='standar-button'> Request new code</button>
       </div>
     </div>
-    )
-  
+    )  
 };
 
 

@@ -1,9 +1,11 @@
 import React, {useState } from 'react';
 import { connect } from 'react-redux';
-import {Navigate} from 'react-router-dom'
+// import {Navigate,redirect} from 'react-router-dom'
 import { createUser } from '../../actions/usersActions'
 import {clearErrors} from '../../actions/errorsActions'
 import '../../styles/styles.css'
+import EmailValidation from './EmailValidation';
+import NewUserInstructions from './NewUserInstructions';
 
 const SignUp = (props) => {
   const {verificationSession} = props
@@ -26,7 +28,9 @@ const SignUp = (props) => {
        ...user,[e.target.name]: e.target.value 
     })
   }
-
+  if(props.user.is_login){
+    return <NewUserInstructions/>
+  } else if (!verificationSession ){
     return (
       <div>
         <div className="container d-flex justify-content-center align-items-center">
@@ -54,9 +58,13 @@ const SignUp = (props) => {
         </div>
         <br/>
         <br/>
-        {verificationSession? <Navigate to="/verifying_email"/> : null }
       </div>
-    );
+    )
+  } else {
+       return (
+        <EmailValidation/>
+       ) 
+  }
 
 };
 
@@ -64,8 +72,7 @@ const mapStateToProps = state => {
   return {
     verificationSession: state.user.user.verification_session,
     errorsOrMessages: state.errorsOrMessages.errorsOrMessages,
-    // loading: state.user.loading,
-    // user: state.user.user
+    user: state.user.user
   }
 }
  
