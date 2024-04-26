@@ -7,7 +7,7 @@ const NewUserInstructions = ({user})=>{
     return (
         <article className='center'>
             <header> 
-                <strong>Welcome {user.user?.name} </strong>
+                <strong>Welcome {user.user?.name}</strong>
             </header>
             <p>
                 <strong>

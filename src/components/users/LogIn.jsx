@@ -51,10 +51,10 @@ const LogIn = (props) => {
        <div className="container h-100  d-flex  justify-content-center align-items-center">
         <form onSubmit={handleOnSubmit} className="form">
             <br/>
-            <label className="mt-3 form-label">Username</label>
-            <input className="form-control" onChange={handleOnChange} name="username" type="text" value={user.username}/>
-            <label className="form-label">Password</label >
-            <input className="form-control" onChange={handleOnChange } name="password" type="password" value={user.password}/>
+            <label htmlFor='login-username' className="mt-3 form-label">Username</label>
+            <input id='login-username' className="form-control" onChange={handleOnChange} name="username" type="text" value={user.username}/>
+            <label htmlFor='login-password' className="form-label">Password</label >
+            <input id='login-password' className="form-control" onChange={handleOnChange } name="password" type="password" value={user.password}/>
           <button  className="my-4 btn btn-primary" type="submit">Login</button>
 
         </form>

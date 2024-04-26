@@ -5,8 +5,8 @@ import Home from '../components/home/Home'
 import HomeWithoutLogin from '../components/home/HomeWithoutLogin'
 import {isLoginToken} from "../componentsHelpers/token"
 
-const HomeContainer = ({user,loading})=>{
-   console.log(loading)
+const HomeContainer = ({user})=>{
+
     return (
         <>  
             {user.is_login? <Home />:null}

@@ -88,7 +88,8 @@ describe("<SignUp/>",()=>{
 
 
         await waitFor(() =>  {
-            screen.getByText("Welcome to Work orders TESTING APP")
+            const welcome = screen.getByText("Welcome TESTING APP")
+            expect(welcome.innerHTML).toBe("Welcome TESTING APP")
         })
 
     })
