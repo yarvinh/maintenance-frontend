@@ -1,4 +1,4 @@
-export const messagesEndErrors = (state = { errorsOrMessages: [], loading: false }, action)=>{
+export const messagesEndErrors = (state = { errorsOrMessages: {errors: [], msg:[]}, loading: false }, action)=>{
   switch(action.type) {
       case 'LOADING_ERRORS_OR_MESSAGES':
       return state = {

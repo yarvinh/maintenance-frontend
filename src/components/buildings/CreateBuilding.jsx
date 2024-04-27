@@ -6,6 +6,7 @@ import {clearErrors} from '../../actions/errorsActions'
 import {acordionButtonClass,diplayAcordion} from '../../componentsHelpers/acordion'
 import { postFetchAction } from '../../actions/fetchActions';
 import { paths } from '../../actions/actionsHelper';
+import Errors from '../Errors';
 
 const CreateBuilding = (props) =>{
     const {errorsOrMessages ,acordion,buildings} = props
@@ -60,7 +61,8 @@ const CreateBuilding = (props) =>{
       <div className="container d-flex justify-content-center align-items-center acordion" > 
           <form onSubmit={handleOnSubmit} className='acordion'>
               <div className='acordion'> 
-                {errorsOrMessages.map((e,k) => {return <p className='errors acordion' key={k} >{e}</p>})}
+              <Errors/>
+                {/* {errorsOrMessages.map((e,k) => {return <p className='errors acordion' key={k} >{e}</p>})} */}
               </div>  
               <label className='acordion'>Address</label>
               <input onChange={handleOnChange}  name="address" className="standar-input acordion" type="text" value={building.address}/><br/>

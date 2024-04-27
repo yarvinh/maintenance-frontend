@@ -1,9 +1,6 @@
-import React, {useState,useEffect } from 'react';
+import React, {useState} from 'react';
 import { connect } from 'react-redux';
 import {editTask} from '../../actions/tasksActions'
-// import {useParams} from 'react-router-dom';
-// import {clearErrors} from '../../actions/errorsActions'
-// import '../../styles/styles.css'
 
 const EditTask = (props) => {
    console.log(props.task)

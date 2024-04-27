@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import '../../styles/styles.css'
 import { useParams} from 'react-router-dom';
 import {createReceipts} from '../../actions/receiptsActions'
+import Errors from '../Errors';
 
 const CreateReceipt=(props)=>{
     const {user} = props
@@ -40,7 +41,8 @@ const CreateReceipt=(props)=>{
                    <input  onChange={handleOnChange} type="file" multiple name="receipts" className='imgs-input' />
                    <br></br>
                    <button type='submit' className="imgs-button">Save image</button>
-                   {props.errorsOrMessages.map((e,k) => {return <p key={k}>{e}</p>})}
+                   <Errors/>
+                   {/* {props.errorsOrMessages.map((e,k) => {return <p key={k}>{e}</p>})} */}
                 </form>
             </div>
         </div>
@@ -48,11 +50,11 @@ const CreateReceipt=(props)=>{
 
 }
 
-const mapStateToProps = state => { 
-    return {
-        errorsOrMessages: state.errorsOrMessages.errorsOrMessages
-    }
-}
+// const mapStateToProps = state => { 
+//     return {
+//         errorsOrMessages: state.errorsOrMessages.errorsOrMessages
+//     }
+// }
       
 const mapDispatchToProps = dispatch => {
     return {
@@ -60,4 +62,4 @@ const mapDispatchToProps = dispatch => {
     }
 }   
       
-export default connect(mapStateToProps , mapDispatchToProps)(CreateReceipt)
+export default connect(null , mapDispatchToProps)(CreateReceipt)

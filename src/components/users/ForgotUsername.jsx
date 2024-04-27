@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import {clearErrors} from '../../actions/errorsActions'
 import {recoveryUsername} from '../../actions/usersActions'
 import '../../styles/styles.css'
+import Errors from '../Errors';
 
 const ForgotUsername = (props) =>{
     const {errorsOrMessages} = props
@@ -40,7 +41,8 @@ const ForgotUsername = (props) =>{
                 </form>   
             </div>
             <div className="center"> 
-              {errorsOrMessages.map((e,k) => {return <p key={k}>{e}</p>})}
+              <Errors/>
+              {/* {errorsOrMessages.map((e,k) => {return <p key={k}>{e}</p>})} */}
             </div> 
         </div>
     )

@@ -5,6 +5,7 @@ import {useParams} from 'react-router-dom';
 import {clearErrors} from '../../actions/errorsActions'
 import {acordionButtonClass,diplayAcordion} from '../../componentsHelpers/acordion'
 import '../../styles/styles.css'
+import Errors from '../Errors';
 
 const CreateTenant = (props) =>{
     const {acordion} = props
@@ -43,7 +44,8 @@ const CreateTenant = (props) =>{
                 <div className="standar-forms acordion">
                     <form onSubmit={handleOnSubmit} className='acordion'>
                         <div className='acordion' > 
-                          {props.errorsOrMessages.map((e,k) => {return <li key={k} className="errors acordion">{e}</li>})}
+                        <Errors/>
+                          {/* {props.errorsOrMessages.map((e,k) => {return <li key={k} className="errors acordion">{e}</li>})} */}
                         </div>  
                         <input onChange={handleOnChange}  placeholder="Tenant name" name="name" className="standar-input acordion" type="text" value={tenant.name}/><br></br>
                         <input onChange={handleOnChange}  placeholder="Tenant phone #" name="phone" className="standar-input acordion" type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required value={tenant.phone}/><br></br>
@@ -60,7 +62,7 @@ const CreateTenant = (props) =>{
 const mapStateToProps = state => { 
     return {
         acordion: state.acordion.acordion,
-        errorsOrMessages: state.errorsOrMessages.errorsOrMessages,
+        // errorsOrMessages: state.errorsOrMessages.errorsOrMessages,
     }
 }
 

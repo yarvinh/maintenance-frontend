@@ -4,6 +4,7 @@ import {resetUserPassword} from '../../actions/usersActions'
 import {useParams,Navigate,Link} from 'react-router-dom';
 import {clearErrors} from '../../actions/errorsActions'
 import {accountTypeToken }from '../../componentsHelpers/token'
+import Errors from '../Errors';
 import '../../styles/styles.css'
 
 const ResetPassword= (props) =>{
@@ -58,7 +59,8 @@ const ResetPassword= (props) =>{
             {passwordForm()}
             <br/>
             <div className="center"> 
-              {errorsOrMessages.map((e,k) => {
+            {/* <Errors/> */}
+              {errorsOrMessages.msg?.map((e,k) => {
                   return (
                     <div key={k}>
                       <p> {e} </p>

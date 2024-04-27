@@ -5,6 +5,7 @@ import {useParams} from 'react-router-dom';
 import {acordionButtonClass,diplayAcordion} from '../../componentsHelpers/acordion'
 import { patchFetchAction } from '../../actions/fetchActions';
 import { getFetchAction } from '../../actions/fetchActions';
+import Errors from '../Errors';
 // import '../../styles/styles.css'
 
 const EditWorkOrder = (props) =>{
@@ -58,7 +59,7 @@ const EditWorkOrder = (props) =>{
         ...workOrder,[type]: ""
       }) 
 
-      if (errorsOrMessages.length > 0){
+      if (errorsOrMessages.errors?.length > 0){
         props.clearErrors()
       }
         
@@ -74,6 +75,7 @@ const EditWorkOrder = (props) =>{
                         <label className='acordion'>Add new employee</label>
                         <select className="standar-input acordion" onChange={handleOnChange} name="employee_id">
                           <option value='' className='acordion'>Select Employee</option>
+                          {/* <Errors/> */}
                           {!employees.error_message? employees.map(e => <option key={e.id} value={e.id} className='acordion'>{e.name}</option>):null}
                         </select>
                         <button type='submit' className="standar-button acordion">Add employee</button>
@@ -116,7 +118,8 @@ const EditWorkOrder = (props) =>{
                     </form>
                 </div>
                 <div>
-                  <p className='errors acordion'>{errorsOrMessages}</p>
+                  <Errors/>
+                  {/* <p className='errors acordion'>{errorsOrMessages}</p> */}
                 </div>
                 </div>
             </div>   

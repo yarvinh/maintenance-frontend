@@ -4,6 +4,7 @@ import {editUnit} from '../../actions/unitsActions'
 import {useParams} from 'react-router-dom';
 import {clearErrors} from '../../actions/errorsActions'
 import {acordionButtonClass,diplayAcordion} from '../../componentsHelpers/acordion'
+import Errors from '../Errors';
 import '../../styles/styles.css'
 
 const EditUnit = (props) =>{
@@ -32,17 +33,14 @@ const EditUnit = (props) =>{
             <div className="standar-forms acordion">
                 <form onSubmit={handleOnSubmit} className='acordion'>
                     <div className='acordion'> 
-                      {props.errorsOrMessages.map((e,k) => {return <li key={k} className="errors acordion">{e}</li>})}
+                      <Errors/>
+                      {/* {props.errorsOrMessages.map((e,k) => {return <li key={k} className="errors acordion">{e}</li>})} */}
                     </div>  
                     <input onChange={handleOnChange} maxLength="8" placeholder="Edit Unit" name="unit" className="standar-input acordion" type="text" value={unit.unit}/>
                     <button type='submit' className="standar-button acordion">Save</button>
                 </form>    
                 <br/>
             </div>
-
-            <div> 
-                {errorsOrMessages.map((e,k) => {return <p key={k}>{e}</p>})}
-            </div> 
             </div>
            
   

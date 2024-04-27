@@ -8,12 +8,13 @@ import {acordionButtonClass,diplayAcordion} from '../../componentsHelpers/acordi
 import { paths } from '../../actions/actionsHelper';
 import { postFetchAction } from '../../actions/fetchActions';
 import { getFetchAction } from '../../actions/fetchActions';
+import Errors from '../Errors';
 import '../../styles/styles.css'
 
 const CreateWorkOrder = (props) => {
     const {workOrders,user} = props
     const {id} = useParams()
-    const {employees,buildings,errorsOrMessages,employee,building,acordion} = props
+    const {employees,buildings,employee,building,acordion,errorsOrMessages} = props
     const [workOrder, setWorkOrder] = useState({
         unit: "",
         date: "",
@@ -42,8 +43,8 @@ const CreateWorkOrder = (props) => {
           type: "ADD_BUILDINGS"
         })
       }
-      if (errorsOrMessages?.length > 0)
-        props.clearErrors()
+      // if (errorsOrMessages?.length > 0)
+      //   props.clearErrors()
       
     },[ ]);
     
@@ -66,7 +67,7 @@ const CreateWorkOrder = (props) => {
         })
       e.target.children[1].value = "select_employee"
       e.target.children[2].value = "select_location"
-      if (errorsOrMessages.length > 0){
+      if (errorsOrMessages.errors?.length > 0){
         props.clearErrors()
     }
      
@@ -93,7 +94,8 @@ const CreateWorkOrder = (props) => {
             <div className="standar-forms standar-form-position acordion">
                 <form onSubmit={handleOnSubmit} className='acordion'>
                   <div className="center acordion"> 
-                    {errorsOrMessages?.map((e,k) => {return <p className='errors acordion' key={k}>{e}</p>})}
+                  <Errors/>
+                    {/* {errorsOrMessages?.map((e,k) => {return <p className='errors acordion' key={k}>{e}</p>})} */}
                   </div>  
                   {!employee ? <select  className="standar-input acordion" onChange={handleOnChange} name="employee_id" defaultValue="select_employee">
                       <option  name="employee" value="select_employee" className='acordion'>Select Employee</option> 

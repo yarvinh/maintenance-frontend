@@ -5,6 +5,7 @@ import {useParams} from 'react-router-dom';
 import {clearErrors} from '../../actions/errorsActions'
 import {acordionButtonClass,diplayAcordion} from '../../componentsHelpers/acordion'
 import '../../styles/styles.css'
+import Errors from '../Errors';
 
 const EditTenant = (props)=>{
     const {building_id} = useParams()
@@ -38,7 +39,8 @@ const EditTenant = (props)=>{
 
     <div className="tenant-form acordion">
         <div className='acordion'> 
-            {errorsOrMessages.map((e,k) => {return <li key={k} className="errors acordion">{e}</li>})}
+        <Errors/>
+            {/* {errorsOrMessages.map((e,k) => {return <li key={k} className="errors acordion">{e}</li>})} */}
         </div>  
         <form onSubmit={(e)=>handleOnSubmit(e,"name")} className='acordion'>
             <input onChange={handleOnChange} placeholder={tenant.name} name="name" className="standar-input acordion" type="text" value={editTenant.name}/>

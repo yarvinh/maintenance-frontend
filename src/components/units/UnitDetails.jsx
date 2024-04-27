@@ -64,9 +64,7 @@ const UnitsDetails = (props)=>{
    
 };
 
-
 const mapStateToProps = state => { 
-
     return {
       user: state.user.user,
       acordion: state.acordion.acordion,

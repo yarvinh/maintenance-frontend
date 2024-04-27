@@ -8,12 +8,10 @@ const NextButton=(props)=>{
     }
 
     return(
-        // <React.Fragment >
         <button onClick={handleOnclick} name="next"className="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
             <span className="carousel-control-next-icon img-button" name="next" aria-hidden="true"></span>
             <span className="visually-hidden img-button">Next</span>
         </button>
-        // </React.Fragment>
     )
 }
 

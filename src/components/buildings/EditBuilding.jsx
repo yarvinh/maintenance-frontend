@@ -6,9 +6,10 @@ import {clearErrors} from '../../actions/errorsActions'
 import {acordionButtonClass,diplayAcordion} from '../../componentsHelpers/acordion'
 import { patchFetchAction } from '../../actions/fetchActions';
 import '../../styles/styles.css'
+import Errors from '../Errors';
 
 const EditBuilding = (props) =>{
-    const {errorsOrMessages,currentBuilding,buildings,acordion} = props
+    const {currentBuilding,buildings,acordion} = props
     let {id} = useParams()
     const [building, setBuilding] = useState({
         address: "",
@@ -19,11 +20,11 @@ const EditBuilding = (props) =>{
         lot: "",
     })
 
-    useEffect(() => {
-        if (errorsOrMessages.length > 0){
-          props.clearErrors()
-        }
-    },[ ]);
+    // useEffect(() => {
+    //     if (errorsOrMessages.length > 0){
+    //       props.clearErrors()
+    //     }
+    // },[ ]);
     
     let handleOnChange = (e)=>{
       setBuilding({
@@ -51,7 +52,8 @@ const EditBuilding = (props) =>{
             <div className={diplayAcordion("edit-building",acordion)}>
                 <div className='standar-forms acordion'>
                     <div className='acordion errors'> 
-                        {errorsOrMessages?.map((e,k) => {return <p key={k} className='acordion'>{e}</p>})}
+                    <Errors/>
+                        {/* {errorsOrMessages?.map((e,k) => {return <p key={k} className='acordion'>{e}</p>})} */}
                     </div> 
                     <div className="container d-flex justify-content-center align-items-center  acordion" > 
                         <form onSubmit={(e)=>handleOnSubmit(e,"address")} className='acordion' >

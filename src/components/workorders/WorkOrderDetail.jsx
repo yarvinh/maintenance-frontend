@@ -9,6 +9,7 @@ import TasksContainer from '../../containers/TasksContainer';
 import {deleteWorkOrder,removeEmployee} from "../../actions/workOrdersActions"
 import {date} from "../../componentsHelpers/date"
 import { getFetchAction } from '../../actions/fetchActions';
+import Errors from '../Errors';
 
 const WorkOrderDetails = (props)=>{ 
     const {id} = useParams()
@@ -18,7 +19,7 @@ const WorkOrderDetails = (props)=>{
     const belongToCurrentUser = workOrder?.employees.filter(emp => emp.id === user.user.id)[0]
     
     useEffect(()=>{
-      const worOrderDoesNotExist =  errorsOrMessages?.includes('Access to this comment was dinied')
+      const worOrderDoesNotExist =  errorsOrMessages.errors?.includes('Access to this comment was dinied')
       if(worOrderDoesNotExist )
         navigate('/work_orders') 
    },[errorsOrMessages])
@@ -92,7 +93,8 @@ const WorkOrderDetails = (props)=>{
                       <div className="card-body">
                         <span>Created date: {date(workOrder.created_at)}</span> <br/>
                         <span>Last time updated: {date(workOrder.updated_at)}</span> 
-                        {errorsOrMessages?.map((err,k) => <strong key={k} className='errors'>{err}</strong>)}
+                        <Errors/>
+                        {/* {errorsOrMessages?.map((err,k) => <strong key={k} className='errors'>{err}</strong>)} */}
                         <div>
                           {workOrderEmployees()}
                         </div>

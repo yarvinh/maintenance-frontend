@@ -44,6 +44,18 @@ describe("<Login/>",()=>{
     test('Input Password Should exist and accept a value',()=>{
         const passwordInput = screen.getByLabelText('Password')
         fireEvent.change(passwordInput, {target: {value: '123456'}})
+        expect(passwordInput.value).toBe('123456')
     })
+
+    test("Should submit username and password",()=>{
+        const userNameInput = screen.getByLabelText('Username')
+        fireEvent.change(userNameInput, {target: {value: "testingapp"}})
+        const passwordInput = screen.getByLabelText('Password')
+        fireEvent.change(passwordInput, {target: {value: '123456'}})
+        const loginFormSubmitButton = screen.getByText("Login")
+        fireEvent.click(loginFormSubmitButton)  
+    })
+
+    
 
 })

@@ -4,6 +4,7 @@ import {verifyEmail} from '../../actions/usersActions'
 import {Navigate,Link} from 'react-router-dom'
 import {setVerificationSession,requestSecurityCode} from '../../actions/usersActions'
 import '../../styles/styles.css'
+import Errors from '../Errors';
 
 const EmailValidation = (props) => {
     const [user, setUser] = useState({
@@ -36,7 +37,8 @@ const EmailValidation = (props) => {
               <input onChange={handleOnChange} id="email-security-code"  className="form-control" value={user.security_code} name="security_code" type='text'/> <br/>
               <button type='submit' className="btn btn-primary">Submit</button>
               <div className="center"> 
-                {props.errorsOrMessages.map((e,k) => {return e.includes("expired")? <Link to='/business/login' key={k} className="errors">{e}</Link> : <strong key={k} >{e}</strong>})}
+              <Errors/>
+                {/* {props.errorsOrMessages.map((e,k) => {return e.includes("expired")? <Link to='/business/login' key={k} className="errors">{e}</Link> : <strong key={k} >{e}</strong>})} */}
               </div>  
           </form>
       </div>

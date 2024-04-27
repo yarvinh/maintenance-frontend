@@ -5,6 +5,7 @@ import {clearErrors} from '../../actions/errorsActions'
 import UploadProfileImage  from "../users/UpdloadProfileImage"
 import { patchFetchAction } from '../../actions/fetchActions';
 import '../../styles/styles.css'
+import Errors from '../Errors';
 
 const EditEmployee = (props) =>{
     const {errorsOrMessages,user,employees} = props
@@ -61,12 +62,7 @@ const EditEmployee = (props) =>{
                 <div>
                   {!user.admin ?<UploadProfileImage employeeOrUser={"employee"} user={user}/>:null}
                 </div>
-                {props.errorsOrMessages.map((e,k) => {
-                  return (
-                    < ul key={k}>
-                      <strong className={"errors"}>{e}</strong> 
-                    </ul>
-                  ) } ) }
+                <Errors/>
                <br/>
               <div className='center'>  
                 <form onSubmit={(e)=>handleOnSubmit(e,"name")} >

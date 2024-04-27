@@ -5,6 +5,7 @@ import {clearErrors} from '../../actions/errorsActions'
 import {acordionButtonClass,diplayAcordion} from '../../componentsHelpers/acordion'
 import { postFetchAction } from '../../actions/fetchActions';
 import '../../styles/styles.css'
+import Errors from '../Errors';
 
 const  CreateEmployees =(props)=> {
   const {errorsOrMessages,acordion,user,employees} = props
@@ -59,7 +60,7 @@ const  CreateEmployees =(props)=> {
             <div className="standar-forms standar-form-position acordion">
                 <form onSubmit={handleOnsubmit} className='acordion'>
                     <div className='acordion'> 
-                      {errorsOrMessages.map((e,k) => {return <li key={k} className="errors acordion">{e}</li>})}
+                    <Errors/>
                     </div>  
                     <label className='acordion'>Name</label>
                     <input onChange={handleOnChange} placeholder={"Enter full name"} name="name" className="standar-input acordion" type="text" value={employee.name}/><br/>

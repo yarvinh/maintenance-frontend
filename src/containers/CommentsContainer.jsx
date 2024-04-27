@@ -6,6 +6,7 @@ import {useParams} from 'react-router-dom';
 import Comment  from '../components/comments/Comment';
 import CreateComment from '../components/comments/CreateComment';
 import{wsurl} from '../actions/actionsHelper'
+import Errors from '../components/Errors';
 
 const CommentsContainer = (props)=>{ 
   const {id} = useParams()
@@ -47,7 +48,8 @@ const CommentsContainer = (props)=>{
   
   return (
   <div className='container'>
-    {errorsOrMessages?.map((err,k) => <strong key={k} className='errors'>{err}</strong>)}
+    <Errors/>
+    {/* {errorsOrMessages?.map((err,k) => <strong key={k} className='errors'>{err}</strong>)} */}
     <CreateComment  admin={admin} user={user}/>
     <div>
     {comments? comments.map((comment)=>{return <Comment  user={user} admin={admin} key={comment.id} comment={comment}/> }):null}

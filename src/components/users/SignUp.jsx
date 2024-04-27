@@ -6,6 +6,7 @@ import {clearErrors} from '../../actions/errorsActions'
 import '../../styles/styles.css'
 import EmailValidation from './EmailValidation';
 import NewUserInstructions from './NewUserInstructions';
+import Errors from '../Errors';
 
 const SignUp = (props) => {
   const {verificationSession} = props
@@ -47,12 +48,13 @@ const SignUp = (props) => {
             <input onChange={handleOnChange} id="signUpConfirmPassword" className="form-control"  value={user.password_confirmation} name="password_confirmation" type='password'/> <br/>
             <button type='submit' className="btn btn-primary">Submit</button>
             <div className="center"> 
-            {props.errorsOrMessages.map((e,k) => {return (
+            {/* {props.errorsOrMessages.errors?.map((e,k) => {return (
               <div key={k}>
                 <strong className="signup-errors">{e}</strong>
               </div>
             )
-            })}
+            })} */}
+            <Errors/>
         </div>  
           </form> 
         </div>
@@ -71,7 +73,7 @@ const SignUp = (props) => {
 const mapStateToProps = state => { 
   return {
     verificationSession: state.user.user.verification_session,
-    errorsOrMessages: state.errorsOrMessages.errorsOrMessages,
+    // errorsOrMessages: state.errorsOrMessages.errorsOrMessages,
     user: state.user.user
   }
 }

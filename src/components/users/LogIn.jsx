@@ -5,6 +5,7 @@ import { fetchLogIn,setAccountType} from '../../actions/usersActions'
 import '../../styles/styles.css'
 import {Navigate} from 'react-router-dom'
 import {verificationSessionToken} from "../../componentsHelpers/token"
+import Errors from '../Errors';
 
 const LogIn = (props) => {
   const {login,verificationSession,errorsOrMessages,account} = props
@@ -41,7 +42,8 @@ const LogIn = (props) => {
       <div>
            {verificationSession && verificationSessionToken()? <Navigate to="/verifying_email"/> : null }
            <div className="center login-messages" > 
-            {errorsOrMessages.map((e,k) => {return <li className="login-error" key={k}>{e}</li>})} 
+           <Errors/>
+            {/* {errorsOrMessages.map((e,k) => {return <li className="login-error" key={k}>{e}</li>})}  */}
           </div>
           <div className='center login-messages'>
             <button onClick={handleOnClick} className="login-message-button" >{text}</button>

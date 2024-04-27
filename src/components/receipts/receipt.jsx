@@ -53,8 +53,7 @@ const Receipt = (props)=>{
  
   const mapDispatchToProps = dispatch => {
     return {
-    removeReceipt: (action) => dispatch(removeReceipt(action)),
-   
+      removeReceipt: (action) => dispatch(removeReceipt(action))
     }
   }
 

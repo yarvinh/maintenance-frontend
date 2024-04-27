@@ -7,8 +7,8 @@ import LogIn from '../users/LogIn';
 
 const HomeWithoutLogin = (props) => {
   const {errorsOrMessages,fetchAppContent} = props
-
-  if (errorsOrMessages.includes("Account was successfully created" )){
+  // console.log(errorsOrMessages)
+  if (errorsOrMessages.msg?.includes("Account was successfully created" )){
     return <Navigate to='/login'/>
   } else {
     return(
@@ -37,7 +37,7 @@ const HomeWithoutLogin = (props) => {
 const mapStateToProps = state => { 
   return {
     user: state.user.user,
-    errorsOrMessages: state.errorsOrMessages.errorsOrMessages
+    // errorsOrMessages: state.errorsOrMessages.errorsOrMessages
   }
 }
 

@@ -32,6 +32,7 @@ export const createUser =  (user) => {
   }
 
   export const fetchLogIn=(user,path)=> {
+    console.log("testing fetchLogin action",user)
     return (dispatch) => {
       dispatch({ type: 'LOADING'})
         axios.post(`${baseUrl()}/${path}`, 

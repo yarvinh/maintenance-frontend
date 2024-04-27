@@ -18,11 +18,9 @@ const NavBarButton = (props)=>{
     }
 
     return(
-    // <div  className='button-cantainer' >
         <button id="display-nav-bar" className={`${barButtonClass("display-nav-bar",acordion)} nav-bar-button`}>  
           {buttonLines()}
         </button>
-    // </div>
     )
 }
 
