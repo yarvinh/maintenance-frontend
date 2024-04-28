@@ -6,6 +6,7 @@ import '../../styles/styles.css'
 import {Navigate} from 'react-router-dom'
 import {verificationSessionToken} from "../../componentsHelpers/token"
 import Errors from '../Errors';
+import { paths } from '../../actions/actionsHelper';
 
 const LogIn = (props) => {
   const {login,verificationSession,errorsOrMessages,account} = props
@@ -35,7 +36,7 @@ const LogIn = (props) => {
   
     const handleOnSubmit = (e) => {
         e.preventDefault()
-        account.business ? props.fetchLogIn(user,'business_login'): props.fetchLogIn(user,'login')
+        account.business ? props.fetchLogIn(user,'business_login'): props.fetchLogIn(user,paths().login)
     }
 
     return(

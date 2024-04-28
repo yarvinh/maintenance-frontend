@@ -1,9 +1,10 @@
-export const token =()=>{
+export const token = (data = "")=>{
     const token = localStorage.getItem('token')
     const secretKey = localStorage.getItem('secret_key')
     return {
         'Content-Type': 'application/json',
-        'Authorization': `bearer ${token} ${secretKey}`
+        'Authorization': `bearer ${token} ${secretKey}`,
+        'content-type': data
       }
 }
 

@@ -19,7 +19,7 @@ const  CreateEmployees =(props)=> {
   })
 
   useEffect(()=>{  
-      if (errorsOrMessages.length > 0){
+      if (errorsOrMessages.errors?.length > 0){
         props.clearErrors()
       }
   },[])
@@ -97,7 +97,6 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     postFetchAction: (action) => dispatch(postFetchAction(action)),
-    // createEmployee: (action) => dispatch(createEmployee(action)),
     clearErrors: () => dispatch(clearErrors()),
   }
 }

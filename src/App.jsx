@@ -38,6 +38,7 @@ import { getFetchAction } from './actions/fetchActions';
 import { paths } from './actions/actionsHelper';
 
 const App  = (props) => {
+  console.log('testing app rendering')
   let { user ,workOrders,acordion,userLoading,verificationSession} = props
   const fetchTimesRef = useRef(1)
   const handleOnAcordion = (e)=>{
@@ -94,7 +95,7 @@ const App  = (props) => {
             <Route exact path='/signup'  element={<SignUp />}/> 
             <Route exact path='/' index element={<HomeContainer/>} /> 
             <Route exact path='/username_recovery' element={<ForgotUsername/>} />
-            {/* <Route exact path='/verifying_email' element={<EmailValidation/>} /> */}
+            <Route exact path='/verifying_email' element={<EmailValidation/>} />
             <Route exact path='/password_recovery' element={<ForgotPassword/>} />
             <Route exact path='/reset_password' element={<ResetPassword/>} /> 
             <Route exact path='/signout' element={<LogOut/>}/>

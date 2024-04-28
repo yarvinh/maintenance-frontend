@@ -1,9 +1,10 @@
-import React, {useState} from 'react';
+import {useState} from 'react';
 import { connect } from 'react-redux';
 import '../../styles/styles.css'
 import { useParams} from 'react-router-dom';
 import {createGalleryImages} from '../../actions/galleryActions'
 import Errors from '../Errors';
+import Uploading from '../Loading';
 
 const CreateImages=(props)=>{
     const {user} = props
@@ -41,8 +42,9 @@ const CreateImages=(props)=>{
                    <input  onChange={handleOnChange} type="file" multiple name="images" className="imgs-input"  />
                    <br></br>
                    <button type='submit' className="imgs-button">Save image</button>
+                   <Uploading/>
                    <Errors/>
-                   {/* {props.errorsOrMessages.map((e,k) => {return <p key={k}>{e}</p>})} */}
+                   {/* {props.errorsOrMessages.errors?.map((e,k) => {return <p key={k}>{e}</p>})} */}
                 </form>
             </div>
         </div>

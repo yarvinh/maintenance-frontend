@@ -4,7 +4,7 @@ import rootReducer from "../../../reducers/manageAllReducers";
 import { createStore, applyMiddleware } from 'redux';
 import {thunk} from 'redux-thunk';
 import { Provider } from 'react-redux';
-import { server } from '../../../mocks/browser';
+// import { server } from '../../../mocks/browser';
 import { BrowserRouter} from 'react-router-dom';
 import LogIn from '../../../components/users/LogIn';
 
@@ -47,13 +47,18 @@ describe("<Login/>",()=>{
         expect(passwordInput.value).toBe('123456')
     })
 
-    test("Should submit username and password",()=>{
+    test("Should submit username and password",async ()=>{
         const userNameInput = screen.getByLabelText('Username')
         fireEvent.change(userNameInput, {target: {value: "testingapp"}})
         const passwordInput = screen.getByLabelText('Password')
         fireEvent.change(passwordInput, {target: {value: '123456'}})
         const loginFormSubmitButton = screen.getByText("Login")
         fireEvent.click(loginFormSubmitButton)  
+
+        await waitFor(() =>  {
+            const welcome = screen.getByText("Welcome TESTING APP")
+            // expect(welcome.innerHTML).toBe("Welcome TESTING APP")
+        })
     })
 
     

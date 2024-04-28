@@ -48,9 +48,9 @@ const CreateBuilding = (props) =>{
           block: "",
         })
 
-        if (errorsOrMessages.length > 0){
-          props.clearErrors()
-        }
+        // if (errorsOrMessages.errors?.length > 0){
+        //   props.clearErrors()
+        // }
     }
 
   return(  

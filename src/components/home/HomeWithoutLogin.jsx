@@ -5,9 +5,7 @@ import CreateEmployees from "../employees/CreateEmployees"
 import LogIn from '../users/LogIn';
 
 
-const HomeWithoutLogin = (props) => {
-  const {errorsOrMessages,fetchAppContent} = props
-  // console.log(errorsOrMessages)
+const HomeWithoutLogin = ({errorsOrMessages,fetchAppContent}) => {
   if (errorsOrMessages.msg?.includes("Account was successfully created" )){
     return <Navigate to='/login'/>
   } else {
@@ -37,7 +35,7 @@ const HomeWithoutLogin = (props) => {
 const mapStateToProps = state => { 
   return {
     user: state.user.user,
-    // errorsOrMessages: state.errorsOrMessages.errorsOrMessages
+    errorsOrMessages: state.errorsOrMessages.errorsOrMessages
   }
 }
 

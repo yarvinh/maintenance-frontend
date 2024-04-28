@@ -9,7 +9,7 @@ import '../../styles/styles.css'
 import Errors from '../Errors';
 
 const EditBuilding = (props) =>{
-    const {currentBuilding,buildings,acordion} = props
+    const {currentBuilding,buildings,acordion,errorsOrMessages} = props
     let {id} = useParams()
     const [building, setBuilding] = useState({
         address: "",
@@ -20,11 +20,11 @@ const EditBuilding = (props) =>{
         lot: "",
     })
 
-    // useEffect(() => {
-    //     if (errorsOrMessages.length > 0){
-    //       props.clearErrors()
-    //     }
-    // },[ ]);
+    useEffect(() => {
+        if (errorsOrMessages.errors.length > 0){
+          props.clearErrors()
+        }
+    },[ ]);
     
     let handleOnChange = (e)=>{
       setBuilding({
@@ -121,7 +121,6 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         patchFetchAction: (action) => dispatch(patchFetchAction(action)),
-        // editBuilding: (action) => dispatch(editBuilding(action)),
         clearErrors: () => dispatch(clearErrors()),
     }
 }   

@@ -4,6 +4,7 @@ import '../../styles/styles.css'
 import { useParams} from 'react-router-dom';
 import {createImage,updateImage} from '../../actions/actionsProfileImages'
 import {clearErrors} from '../../actions/errorsActions'
+// import FormData from 'form-data'
 
 const UploadProfileImage = (props)=>{
     const {employeeOrUser,user} = props
@@ -45,7 +46,6 @@ const UploadProfileImage = (props)=>{
         </div>
     )
 }
-
 
 const mapDispatchToProps = dispatch => {
     return {

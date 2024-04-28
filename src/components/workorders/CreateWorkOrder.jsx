@@ -43,9 +43,8 @@ const CreateWorkOrder = (props) => {
           type: "ADD_BUILDINGS"
         })
       }
-      // if (errorsOrMessages?.length > 0)
-      //   props.clearErrors()
-      
+      if (errorsOrMessages.errors?.length > 0)
+        props.clearErrors()  
     },[ ]);
     
     const handleOnSubmit=(e)=>{

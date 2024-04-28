@@ -22,7 +22,8 @@ export const paths = ()=>{
       workOrdersPath: "/test/work_orders",
       searchBuildingsPath: '/test/search/buildings/',
       employeesPath: "/test/employees",
-      verifyEmail: "/test/verify_email"
+      verifyEmail: "/test/verify_email",
+      login: "/test/login"
    }  
   const paths =  {
       checkLoginPath: '/checklogin',
@@ -32,7 +33,8 @@ export const paths = ()=>{
       workOrdersPath: "/work_orders",
       searchBuildingsPath: '/search/buildings/',
       employeesPath: "/employees",
-      verifyEmail: "/verify_email"
+      verifyEmail: "/verify_email",
+      login: "/login"
    }
    return process.env.NODE_ENV === 'test' ? testPaths : paths
 

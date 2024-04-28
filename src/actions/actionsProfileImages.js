@@ -4,8 +4,8 @@ import {baseUrl} from './actionsHelper'
 
 export const createImage = (params) => {
     return (dispatch) => {
-        dispatch({type: "LOADING"})
-        axios.post(`${baseUrl()}/${params.path}`, params.image ,{headers:token(), withCredentials: true,'content-type': 'multipart/form-data'})
+        dispatch({type: "LOADING_USER"})
+        axios.post(`${baseUrl()}/${params.path}`, params.image ,{headers: token('multipart/form-data'), withCredentials: true})
         .then(response => {
          let error = response.data.errors_or_messages
              error ? dispatch({ type: 'ADD_ERRORS_OR_MESSAGES', errorsOrMessages: response.data.errors_or_messages}) : dispatch({ type: 'ADD_ERRORS_OR_MESSAGES', errorsOrMessages: []})
@@ -16,8 +16,8 @@ export const createImage = (params) => {
 
 export const updateImage = (params) => {
     return (dispatch) => {
-        dispatch({type: "LOADING"})
-        axios.patch(`${baseUrl()}/${params.path}`, params.image ,{headers:token(), withCredentials: true,'content-type': 'multipart/form-data'})
+        dispatch({type: "LOADING_USER"})
+        axios.patch(`${baseUrl()}/${params.path}`, params.image ,{headers: token('multipart/form-data'), withCredentials: true,'content-type': 'multipart/form-data'})
         .then(response => {
          let error = response.data.errors_or_messages
              error ? dispatch({ type: 'ADD_ERRORS_OR_MESSAGES', errorsOrMessages: response.data.errors_or_messages}) : dispatch({ type: 'ADD_ERRORS_OR_MESSAGES', errorsOrMessages: []})

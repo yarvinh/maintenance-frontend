@@ -19,7 +19,7 @@ export const createGalleryImages = (gallery) => {
     const id = gallery.id
     return (dispatch) => {
         dispatch({type: "UPLOADING"})
-        axios.post(`${baseUrl()}/work_orders/${id}/add_gallery_images`,gallery.images.images,{headers: token(), withCredentials: true,'content-type': 'multipart/form-data'})
+        axios.post(`${baseUrl()}/work_orders/${id}/add_gallery_images`,gallery.images.images,{headers: token('multipart/form-data'), withCredentials: true})
         .then(response => {
             const error = response.data.errors_or_messages
             error? dispatch({ type: 'ADD_ERRORS_OR_MESSAGES', errorsOrMessages: response.data.errors_or_messages}):  dispatch({ type: 'ADD_GALLERY', gallery: response.data})

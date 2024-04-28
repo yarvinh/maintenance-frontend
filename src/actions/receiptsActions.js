@@ -18,8 +18,8 @@ import {baseUrl} from './actionsHelper'
 export const createReceipts = (receipts) => {
     const id = receipts.id
     return (dispatch) => {
-        dispatch({type: "UP_LOADING"})
-        axios.post(`${baseUrl()}/work_orders/${id}/add_receipts`, receipts.receipts.receipts,{headers: token(), withCredentials: true,'content-type': 'multipart/form-data'})
+        dispatch({type: 'UP_LOADING_RECEIPTS'})
+        axios.post(`${baseUrl()}/work_orders/${id}/add_receipts`, receipts.receipts.receipts,{headers: token('multipart/form-data'), withCredentials: true})
         .then(response => {
             const error = response.data.errors_or_messages
             error? dispatch({ type: 'ADD_ERRORS_OR_MESSAGES', errorsOrMessages: response.data.errors_or_messages}):  dispatch({ type: 'ADD_RECEIPTS', receipts: response.data})
