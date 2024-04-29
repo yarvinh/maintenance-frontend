@@ -1,9 +1,9 @@
 
-import React, {useState,useEffect } from 'react';
+import {useState,useEffect } from 'react';
 import {useParams} from 'react-router-dom';
 import {connect } from 'react-redux';
 // import {createWorkOrder} from '../../actions/workOrdersActions'
-import {clearErrors} from '../../actions/errorsActions'
+// import {clearErrors} from '../../actions/errorsActions'
 import {acordionButtonClass,diplayAcordion} from '../../componentsHelpers/acordion'
 import { paths } from '../../actions/actionsHelper';
 import { postFetchAction } from '../../actions/fetchActions';
@@ -15,6 +15,7 @@ const CreateWorkOrder = (props) => {
     const {workOrders,user} = props
     const {id} = useParams()
     const {employees,buildings,employee,building,acordion,errorsOrMessages} = props
+    console.log(errorsOrMessages.from === 'create_work_order' )
     const [workOrder, setWorkOrder] = useState({
         unit: "",
         date: "",
@@ -43,8 +44,8 @@ const CreateWorkOrder = (props) => {
           type: "ADD_BUILDINGS"
         })
       }
-      if (errorsOrMessages.errors?.length > 0)
-        props.clearErrors()  
+      // if (errorsOrMessages.errors?.length > 0)
+      //   props.clearErrors()  
     },[ ]);
     
     const handleOnSubmit=(e)=>{
@@ -66,9 +67,9 @@ const CreateWorkOrder = (props) => {
         })
       e.target.children[1].value = "select_employee"
       e.target.children[2].value = "select_location"
-      if (errorsOrMessages.errors?.length > 0){
-        props.clearErrors()
-    }
+    //   if (errorsOrMessages.errors?.length > 0){
+    //     props.clearErrors()
+    // }
      
       setWorkOrder({
         ...workOrder,
@@ -93,7 +94,7 @@ const CreateWorkOrder = (props) => {
             <div className="standar-forms standar-form-position acordion">
                 <form onSubmit={handleOnSubmit} className='acordion'>
                   <div className="center acordion"> 
-                  <Errors/>
+                  {errorsOrMessages.from  === 'create_work_order' ? <Errors errorsOrMessages={errorsOrMessages}/> : null}
                     {/* {errorsOrMessages?.map((e,k) => {return <p className='errors acordion' key={k}>{e}</p>})} */}
                   </div>  
                   {!employee ? <select  className="standar-input acordion" onChange={handleOnChange} name="employee_id" defaultValue="select_employee">
@@ -139,7 +140,7 @@ const mapDispatchToProps = dispatch => {
     return {
         getFetchAction: (action) => dispatch(getFetchAction(action)),
         postFetchAction: (action)=> dispatch(postFetchAction(action)),
-        clearErrors: () => dispatch(clearErrors())   
+        // clearErrors: () => dispatch(clearErrors())   
     }
 }   
       

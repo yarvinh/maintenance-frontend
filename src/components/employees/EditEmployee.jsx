@@ -62,7 +62,7 @@ const EditEmployee = (props) =>{
                 <div>
                   {!user.admin ?<UploadProfileImage employeeOrUser={"employee"} user={user}/>:null}
                 </div>
-                <Errors/>
+                {errorsOrMessages.from === "edit_employee" ? <Errors/>: null}
                <br/>
               <div className='center'>  
                 <form onSubmit={(e)=>handleOnSubmit(e,"name")} >

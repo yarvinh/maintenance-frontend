@@ -36,14 +36,14 @@ const LogIn = (props) => {
   
     const handleOnSubmit = (e) => {
         e.preventDefault()
-        account.business ? props.fetchLogIn(user,'business_login'): props.fetchLogIn(user,paths().login)
+        account.business ? props.fetchLogIn(user,'/business_login'): props.fetchLogIn(user,paths().login)
     }
 
     return(
       <div>
            {verificationSession && verificationSessionToken()? <Navigate to="/verifying_email"/> : null }
            <div className="center login-messages" > 
-           <Errors/>
+           {/* <Errors/> */}
             {/* {errorsOrMessages.map((e,k) => {return <li className="login-error" key={k}>{e}</li>})}  */}
           </div>
           <div className='center login-messages'>

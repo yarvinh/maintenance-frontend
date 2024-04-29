@@ -25,7 +25,7 @@ export const handlers = [
   const user = {
     admin: true,
     created: true,
-    errors_or_messages: {errors: ['We send you an email with a verification code, please check your email.']},
+    errors_or_messages: {from: "verify_email" , errors: ['We send you an email with a verification code, please check your email.']},
     is_login: false,
     reload: false,
     token: "eyJhbGciOiJIUzI1NiJ9.eyJleHBpcmVzX2F0IjoiMjAyNC0wNC0yNCAwMzoxNzozMyBVVEMiLCJlbWFpbF9jb2RlIjoiZjQzYjRkIn0.cBdT56ZnYejFOtX7pLioGSUcXqElZRrq0uMQJaiszPw",

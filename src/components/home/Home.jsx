@@ -9,10 +9,6 @@ const Home = (props)=>{
     const {user,workOrders} = props
     const pendingWorkOrders = pendingUserWorkOrders({workOrders: workOrders,user: user})
 
-    // useEffect(()=>{
-    //     fetchAppContent(getFetchAction) 
-    // },[user.is_login])
-    
     return (
       <div>
           <WorkOrdersContainer fromHome={true} workOrders={pendingWorkOrders}/>

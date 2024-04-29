@@ -93,7 +93,7 @@ const WorkOrderDetails = (props)=>{
                       <div className="card-body">
                         <span>Created date: {date(workOrder.created_at)}</span> <br/>
                         <span>Last time updated: {date(workOrder.updated_at)}</span> 
-                        <Errors/>
+                        {/* <Errors/> */}
                         {/* {errorsOrMessages?.map((err,k) => <strong key={k} className='errors'>{err}</strong>)} */}
                         <div>
                           {workOrderEmployees()}

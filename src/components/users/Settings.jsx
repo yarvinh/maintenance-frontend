@@ -6,10 +6,11 @@ import {clearErrors} from '../../actions/errorsActions'
 import UploadProfileImage from './UpdloadProfileImage';
 import '../../styles/styles.css'
 import Errors from '../Errors';
+
 const Settings = (props) =>{
     let navigate = useNavigate()
     const {id} = useParams()
-    // const {errorsOrMessages} = props
+    const {errorsOrMessages} = props
     const currentUser = props.user
     const [user, setUser] = useState({
         name: "",
@@ -55,13 +56,9 @@ const Settings = (props) =>{
         <div>
             <div  className='settings-forms standar-form-position'>
                 <UploadProfileImage employeeOrUser={"user"} user={currentUser}/>
-                <Errors/>
-                {/* { errorsOrMessages?.map((e,k) => {return (
-                    < ul key={k}>
-                    <strong className={"errors"}>{e}</strong> 
-                    </ul>
-                ) } ) } */}
-                <div className='center' >           
+                
+                <div className='center' > 
+                    {<Errors errorsOrMessages={errorsOrMessages}/>}          
                     <div > 
                         <strong>Name: {currentUser.user?.name}</strong>
                         <form onSubmit={(e)=>handleOnSubmit(e,"name")}>
@@ -120,7 +117,7 @@ const mapStateToProps = state => {
     return {
       user: state.user.user,
       loading: state.user.loading,
-    //   errorsOrMessages: state.errorsOrMessages.errorsOrMessages
+      errorsOrMessages: state.errorsOrMessages.errorsOrMessages
     }
   }
   

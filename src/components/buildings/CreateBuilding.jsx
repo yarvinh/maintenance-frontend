@@ -61,7 +61,7 @@ const CreateBuilding = (props) =>{
       <div className="container d-flex justify-content-center align-items-center acordion" > 
           <form onSubmit={handleOnSubmit} className='acordion'>
               <div className='acordion'> 
-              <Errors/>
+              {errorsOrMessages.from === "create_building" ? <Errors errorsOrMessages={errorsOrMessages}/>: null}
                 {/* {errorsOrMessages.map((e,k) => {return <p className='errors acordion' key={k} >{e}</p>})} */}
               </div>  
               <label className='acordion'>Address</label>

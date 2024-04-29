@@ -9,7 +9,9 @@ import NewUserInstructions from './NewUserInstructions';
 import Errors from '../Errors';
 
 const SignUp = (props) => {
-  const {verificationSession} = props
+
+  const {verificationSession,errorsOrMessages} = props
+  console.log(errorsOrMessages)
   const [user, setUser] = useState({
     name: "",
     email: "",
@@ -48,13 +50,7 @@ const SignUp = (props) => {
             <input onChange={handleOnChange} id="signUpConfirmPassword" className="form-control"  value={user.password_confirmation} name="password_confirmation" type='password'/> <br/>
             <button type='submit' className="btn btn-primary">Submit</button>
             <div className="center"> 
-            {/* {props.errorsOrMessages.errors?.map((e,k) => {return (
-              <div key={k}>
-                <strong className="signup-errors">{e}</strong>
-              </div>
-            )
-            })} */}
-            <Errors/>
+            {errorsOrMessages?.from === "create_user"?<Errors errorsOrMessages={errorsOrMessages}/>:null}
         </div>  
           </form> 
         </div>
@@ -73,7 +69,7 @@ const SignUp = (props) => {
 const mapStateToProps = state => { 
   return {
     verificationSession: state.user.user.verification_session,
-    // errorsOrMessages: state.errorsOrMessages.errorsOrMessages,
+    errorsOrMessages: state.errorsOrMessages.errorsOrMessages,
     user: state.user.user
   }
 }

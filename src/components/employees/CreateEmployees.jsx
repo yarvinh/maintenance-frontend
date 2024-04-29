@@ -41,9 +41,9 @@ const  CreateEmployees =(props)=> {
       password_confirmation: "",
       phone: "",
     })
-    if (errorsOrMessages.length > 0){
-      props.clearErrors()
-    }
+    // if (errorsOrMessages.length > 0){
+    //   props.clearErrors()
+    // }
   }
     const handleOnChange = (e) =>{  
       setEmployee(
@@ -60,7 +60,7 @@ const  CreateEmployees =(props)=> {
             <div className="standar-forms standar-form-position acordion">
                 <form onSubmit={handleOnsubmit} className='acordion'>
                     <div className='acordion'> 
-                    <Errors/>
+                    {errorsOrMessages.from  === "create_employee" ? <Errors errorsOrMessages={errorsOrMessages}/> : null}
                     </div>  
                     <label className='acordion'>Name</label>
                     <input onChange={handleOnChange} placeholder={"Enter full name"} name="name" className="standar-input acordion" type="text" value={employee.name}/><br/>

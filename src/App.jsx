@@ -38,7 +38,6 @@ import { getFetchAction } from './actions/fetchActions';
 import { paths } from './actions/actionsHelper';
 
 const App  = (props) => {
-  console.log('testing app rendering')
   let { user ,workOrders,acordion,userLoading,verificationSession} = props
   const fetchTimesRef = useRef(1)
   const handleOnAcordion = (e)=>{

@@ -1,11 +1,13 @@
-export const token = (data = "")=>{
+export const token = (dataType = "")=>{
     const token = localStorage.getItem('token')
     const secretKey = localStorage.getItem('secret_key')
-    return {
+    const header = {
         'Content-Type': 'application/json',
-        'Authorization': `bearer ${token} ${secretKey}`,
-        'content-type': data
-      }
+        'Authorization': `bearer ${token} ${secretKey}`
+    }
+    if (dataType.length > 0)
+        header["content-type"] = dataType
+    return header
 }
 
 export const verificationToken = ()=>{

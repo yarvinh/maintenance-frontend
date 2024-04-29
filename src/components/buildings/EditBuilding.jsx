@@ -52,7 +52,7 @@ const EditBuilding = (props) =>{
             <div className={diplayAcordion("edit-building",acordion)}>
                 <div className='standar-forms acordion'>
                     <div className='acordion errors'> 
-                    <Errors/>
+                    {errorsOrMessages.from === "edit_building" ?<Errors/> : null}
                         {/* {errorsOrMessages?.map((e,k) => {return <p key={k} className='acordion'>{e}</p>})} */}
                     </div> 
                     <div className="container d-flex justify-content-center align-items-center  acordion" > 

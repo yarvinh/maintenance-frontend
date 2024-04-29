@@ -3,10 +3,12 @@ import { connect } from 'react-redux';
 import {verifyEmail} from '../../actions/usersActions'
 import {Navigate,Link} from 'react-router-dom'
 import {setVerificationSession,requestSecurityCode} from '../../actions/usersActions'
-import '../../styles/styles.css'
+// import '../../styles/styles.css'
 import Errors from '../Errors';
 
 const EmailValidation = (props) => {
+    const {errorsOrMessages} = props
+  console.log(errorsOrMessages,props.user)
     const [user, setUser] = useState({
       security_code: ""
     })
@@ -37,8 +39,7 @@ const EmailValidation = (props) => {
               <input onChange={handleOnChange} id="email-security-code"  className="form-control" value={user.security_code} name="security_code" type='text'/> <br/>
               <button type='submit' className="btn btn-primary">Submit</button>
               <div className="center"> 
-              <Errors/>
-                {/* {props.errorsOrMessages.map((e,k) => {return e.includes("expired")? <Link to='/business/login' key={k} className="errors">{e}</Link> : <strong key={k} >{e}</strong>})} */}
+                {errorsOrMessages.from === 'verify_email' || errorsOrMessages.from ==="request_security_code" ?<Errors errorsOrMessages={errorsOrMessages}/> : null}
               </div>  
           </form>
       </div>
