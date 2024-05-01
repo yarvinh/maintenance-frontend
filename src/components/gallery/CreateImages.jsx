@@ -7,7 +7,7 @@ import Errors from '../Errors';
 import Uploading from '../Loading';
 
 const CreateImages=(props)=>{
-    const {user} = props
+    const {user,errorsOrMessages,uploading} = props
     const {id} = useParams()
     const [images,setImages] = useState({
         images: [] 
@@ -42,21 +42,20 @@ const CreateImages=(props)=>{
                    <input  onChange={handleOnChange} type="file" multiple name="images" className="imgs-input"  />
                    <br></br>
                    <button type='submit' className="imgs-button">Save image</button>
-                   <Uploading/>
-                   <Errors/>
-                   {/* {props.errorsOrMessages.errors?.map((e,k) => {return <p key={k}>{e}</p>})} */}
+                   {errorsOrMessages.from === 'add_gallery_images' ? <Errors errorsOrMessages={errorsOrMessages}/> : null}
                 </form>
+                {uploading && errorsOrMessages.from !== 'add_gallery_images'? <Uploading/>: null}
             </div>
         </div>
     )
-
 }
 
-// const mapStateToProps = state => { 
-//     return {
-//         errorsOrMessages: state.errorsOrMessages.errorsOrMessages
-//     }
-// }
+const mapStateToProps = state => { 
+    return {
+        errorsOrMessages: state.errorsOrMessages.errorsOrMessages,
+        uploading: state.gallery.uploading
+    }
+}
       
 const mapDispatchToProps = dispatch => {
     return {
@@ -64,4 +63,4 @@ const mapDispatchToProps = dispatch => {
     }
 }   
       
-export default connect(null , mapDispatchToProps)(CreateImages)
+export default connect(mapStateToProps, mapDispatchToProps)(CreateImages)

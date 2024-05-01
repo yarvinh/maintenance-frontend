@@ -21,12 +21,6 @@ const Settings = (props) =>{
         old_password: '',
     })
 
-    // useEffect(() => {
-    //     if (errorsOrMessages.length > 0){
-    //       props.clearErrors()
-    //     }
-    //   },[ ]);
-
     const goBack = (e) => {
         return navigate(-1)
     }
@@ -58,7 +52,7 @@ const Settings = (props) =>{
                 <UploadProfileImage employeeOrUser={"user"} user={currentUser}/>
                 
                 <div className='center' > 
-                    {<Errors errorsOrMessages={errorsOrMessages}/>}          
+                    {errorsOrMessages.from === "update_user" ? <Errors errorsOrMessages={errorsOrMessages}/>: null}          
                     <div > 
                         <strong>Name: {currentUser.user?.name}</strong>
                         <form onSubmit={(e)=>handleOnSubmit(e,"name")}>

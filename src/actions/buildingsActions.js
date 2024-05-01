@@ -8,6 +8,7 @@ export const deleteBuilding = (id) => {
     dispatch({ type: 'LOADING'})
     axios.delete(`${baseUrl()}/buildings/${id}`,{headers: token(), withCredentials: true}
     ).then(response => {   
+      // console.log(response)
       dispatch({ type: 'ADD_BUILDINGS', buildings: response.data })
     })
   }

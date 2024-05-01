@@ -2,8 +2,6 @@
 import {useState,useEffect } from 'react';
 import {useParams} from 'react-router-dom';
 import {connect } from 'react-redux';
-// import {createWorkOrder} from '../../actions/workOrdersActions'
-// import {clearErrors} from '../../actions/errorsActions'
 import {acordionButtonClass,diplayAcordion} from '../../componentsHelpers/acordion'
 import { paths } from '../../actions/actionsHelper';
 import { postFetchAction } from '../../actions/fetchActions';
@@ -15,7 +13,6 @@ const CreateWorkOrder = (props) => {
     const {workOrders,user} = props
     const {id} = useParams()
     const {employees,buildings,employee,building,acordion,errorsOrMessages} = props
-    console.log(errorsOrMessages.from === 'create_work_order' )
     const [workOrder, setWorkOrder] = useState({
         unit: "",
         date: "",
@@ -44,8 +41,6 @@ const CreateWorkOrder = (props) => {
           type: "ADD_BUILDINGS"
         })
       }
-      // if (errorsOrMessages.errors?.length > 0)
-      //   props.clearErrors()  
     },[ ]);
     
     const handleOnSubmit=(e)=>{
@@ -54,23 +49,19 @@ const CreateWorkOrder = (props) => {
       user.admin? 
         props.postFetchAction({
           path: paths().workOrdersPath,
-          stateName:{forResponse: "workOrder", forArray: "workOrders"} ,
-          type: {loadingType: "LOADING_WORK_ORDERS", forArray: "ADD_WORK_ORDERS", forResponse: "ADD_WORK_ORDER"}, 
+          stateName:{itemName: "workOrder", arrayName: "workOrders"} ,
+          type: {addItemToArray: "ADD_WORK_ORDERS", addItem: "ADD_WORK_ORDER"}, 
           params: {payload: workOrder, array: workOrders}
         })
       : 
         props.postFetchAction({
           path: "/work_order_by_employee",
           stateName:{forResponse: "workOrder", forArray: "workOrders"} ,
-          type: {loadingType: "LOADING_WORK_ORDERS", forArray: "ADD_WORK_ORDERS", forResponse: "ADD_WORK_ORDER"}, 
+          type: { forArray: "ADD_WORK_ORDERS", forResponse: "ADD_WORK_ORDER"}, 
           params: {payload: workOrder, array: workOrders}
         })
       e.target.children[1].value = "select_employee"
       e.target.children[2].value = "select_location"
-    //   if (errorsOrMessages.errors?.length > 0){
-    //     props.clearErrors()
-    // }
-     
       setWorkOrder({
         ...workOrder,
         unit: "",
@@ -95,7 +86,6 @@ const CreateWorkOrder = (props) => {
                 <form onSubmit={handleOnSubmit} className='acordion'>
                   <div className="center acordion"> 
                   {errorsOrMessages.from  === 'create_work_order' ? <Errors errorsOrMessages={errorsOrMessages}/> : null}
-                    {/* {errorsOrMessages?.map((e,k) => {return <p className='errors acordion' key={k}>{e}</p>})} */}
                   </div>  
                   {!employee ? <select  className="standar-input acordion" onChange={handleOnChange} name="employee_id" defaultValue="select_employee">
                       <option  name="employee" value="select_employee" className='acordion'>Select Employee</option> 
@@ -139,8 +129,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         getFetchAction: (action) => dispatch(getFetchAction(action)),
-        postFetchAction: (action)=> dispatch(postFetchAction(action)),
-        // clearErrors: () => dispatch(clearErrors())   
+        postFetchAction: (action)=> dispatch(postFetchAction(action))
     }
 }   
       

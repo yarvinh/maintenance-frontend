@@ -4,7 +4,6 @@ import {getImages} from '../actions/galleryActions'
 import Image from "../components/gallery/Image"
 import CreateImages from '../components/gallery/CreateImages';
 import {useNavigate, useParams,Navigate} from 'react-router-dom';
-import Uploading from '../components/Loading'
 import ImgSlider from '../components/gallery/ImgSlider';
 
 const GalleryContainer = (props)=>{  
@@ -42,7 +41,6 @@ const GalleryContainer = (props)=>{
             <div>
                 <CreateImages user={user.user} workOrderId={id}/>
             </div>
-            {props.loading && props.uploading? <Uploading/>:null}
             <div className='center'>
               {gallery[index]?.user ?<strong> {gallery[index].user.name} </strong>: <strong> {gallery[index]?.employee.name}</strong>}
             </div>
@@ -78,7 +76,7 @@ const mapStateToProps = state => {
        gallery: state.gallery.gallery,
        user: state.user,
        loading: state.gallery.loading,
-       uploading: state.gallery.uploading
+   
     }
 }
       

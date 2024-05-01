@@ -1,4 +1,4 @@
-import React, {useState,useEffect} from 'react';
+import {useState,useEffect} from 'react';
 import { connect } from 'react-redux';
 import CreateBuilding from '../components/buildings/CreateBuilding'
 import Building from "../components/buildings/Building"
@@ -23,7 +23,6 @@ const BuildingsContainer = (props) => {
     },[])
 
     useEffect(()=>{
-      if (props.buildings?.length > 0)
         setBuildings(props.buildings)
     },[props.buildings])
 
@@ -68,7 +67,7 @@ const BuildingsContainer = (props) => {
 
     return (
         <div >
-            {!id ?<CreateBuilding />: null }
+            {!id ? <CreateBuilding />: null }
             <br/>
             <div className="center">
                 {props.buildings?.length > 15 && admin || buildings.length > 15 && user.user_id?<input onChange={handleOnChange} className='search_box' placeholder='Search Buildings ' type='search' value={searchBoxValue}/>:null}

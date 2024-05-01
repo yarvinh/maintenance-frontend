@@ -6,7 +6,6 @@ import {acordionButtonClass,diplayAcordion} from '../../componentsHelpers/acordi
 import { patchFetchAction } from '../../actions/fetchActions';
 import { getFetchAction } from '../../actions/fetchActions';
 import Errors from '../Errors';
-// import '../../styles/styles.css'
 
 const EditWorkOrder = (props) =>{
     const {employees,buildings,errorsOrMessages,acordion,workOrders} = props
@@ -33,9 +32,6 @@ const EditWorkOrder = (props) =>{
             stateName: "buildings",
             type: "ADD_BUILDINGS"
           })
-      }
-      if (errorsOrMessages?.length > 0){
-        props.clearErrors()
       }
     },[ ]);
   
@@ -70,12 +66,12 @@ const EditWorkOrder = (props) =>{
             <button  id='edit-work-order' className={acordionButtonClass('edit-work-order',acordion)}> Edit Work Order</button>
             <div className={diplayAcordion('edit-work-order',acordion)}>
             <div className='standar-forms acordion'>
+              {errorsOrMessages.from === "update_work_order" ? <Errors errorsOrMessages={errorsOrMessages}/> : null}
                 <div className="container d-flex justify-content-center align-items-center acordion" > 
                     <form onSubmit={(e)=>handleOnSubmit(e,"employee_id")}  className='acordion'>
                         <label className='acordion'>Add new employee</label>
                         <select className="standar-input acordion" onChange={handleOnChange} name="employee_id">
                           <option value='' className='acordion'>Select Employee</option>
-                          {/* <Errors/> */}
                           {!employees.error_message? employees.map(e => <option key={e.id} value={e.id} className='acordion'>{e.name}</option>):null}
                         </select>
                         <button type='submit' className="standar-button acordion">Add employee</button>
@@ -118,8 +114,6 @@ const EditWorkOrder = (props) =>{
                     </form>
                 </div>
                 <div>
-                  <Errors/>
-                  {/* <p className='errors acordion'>{errorsOrMessages}</p> */}
                 </div>
                 </div>
             </div>   

@@ -1,11 +1,12 @@
 
 import {useNavigate,useParams} from 'react-router-dom';
 import { connect } from 'react-redux';
-import React, {useEffect} from 'react';
+import {useEffect} from 'react';
 import {getUnit,deleteUnit} from "../../actions/unitsActions"
 import EditUnit from './EditUnit';
 import CreateTenant from '../tenants/CreateTenant'
 import TenantContainer from '../../containers/TenantContainer';
+
 const UnitsDetails = (props)=>{
     const {unit,user} = props
     const {building_id, unit_id} = useParams()

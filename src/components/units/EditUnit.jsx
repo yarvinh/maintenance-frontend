@@ -33,8 +33,7 @@ const EditUnit = (props) =>{
             <div className="standar-forms acordion">
                 <form onSubmit={handleOnSubmit} className='acordion'>
                     <div className='acordion'> 
-                      <Errors/>
-                      {/* {props.errorsOrMessages.map((e,k) => {return <li key={k} className="errors acordion">{e}</li>})} */}
+                      {errorsOrMessages.from === "update_unit" ? <Errors errorsOrMessages={errorsOrMessages}/> :null}
                     </div>  
                     <input onChange={handleOnChange} maxLength="8" placeholder="Edit Unit" name="unit" className="standar-input acordion" type="text" value={unit.unit}/>
                     <button type='submit' className="standar-button acordion">Save</button>

@@ -1,4 +1,4 @@
-export const galleryReducer = (state = {gallery: [],loading: true},action)=>{
+export const galleryReducer = (state = {gallery: [],uploading: false},action)=>{
     switch(action.type) {
       case "UPLOADING_GALLERY":
       return state = {
@@ -7,17 +7,11 @@ export const galleryReducer = (state = {gallery: [],loading: true},action)=>{
         loading: true,  
         uploading:  true 
       }
-      case 'LOADING_GALLERY':
-      return state = {
-        ...state,
-        gallery: state.gallery,
-        loading: true,  
-      }
       case 'ADD_GALLERY':
         return {
            ...state,
           gallery: action.gallery,
-          loading: false
+          uploading: false
       } 
     default:
       return state;

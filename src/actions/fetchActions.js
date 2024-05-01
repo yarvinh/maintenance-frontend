@@ -20,17 +20,18 @@ export const getFetchAction = ({path,type, stateName}) => {
 
 export const postFetchAction = ({path, type, stateName,params}) => {
     const {payload,array} = params
-    const {itemName,arratName} = stateName
+    const {itemName,arrayName} = stateName
     return (dispatch) => {
         dispatch({ type: "LOADING"})
         axios.post(`${baseUrl()}${path}`, payload, {headers: token(), withCredentials: true})
         .then(response => {
           const error = response.data.errors_or_messages
+       
           if(error){
             dispatch({ type: 'ADD_ERRORS_OR_MESSAGES', errorsOrMessages: error})
           }else{
             dispatch({ type: type.addItem, [itemName]: response.data})
-            dispatch({ type: type.addItemToArray, [arratName]: [ response.data,...array]})
+            dispatch({ type: type.addItemToArray, [arrayName]: [ response.data,...array]})
           }
       })
     }

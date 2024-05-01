@@ -1,6 +1,5 @@
 import React, { useState,useEffect } from 'react';
 import { connect } from 'react-redux';
-// import {  createEmployee} from '../../actions/employeesActions'
 import {clearErrors} from '../../actions/errorsActions'
 import {acordionButtonClass,diplayAcordion} from '../../componentsHelpers/acordion'
 import { postFetchAction } from '../../actions/fetchActions';
@@ -28,11 +27,10 @@ const  CreateEmployees =(props)=> {
     e.preventDefault()
     props.postFetchAction({
       path: '/employees',
-      stateName:{forResponse: "employee", forArray: "employees"} ,
-      type: {loadingType: "LOADING_EMPLOYEES", forArray: "ADD_EMPLOYEES", forResponse: "ADD_EMPLOYEE"}, 
+      stateName:{itemName: "employee", arrayName: "employees"} ,
+      type: { addItemToArray: "ADD_EMPLOYEES", addItem: "ADD_EMPLOYEE"}, 
       params: {payload: {employee: employee}, array: employees}
     })
-    // props.createEmployee({employee: employee})
     setEmployee({
       name: "",
       email: "",
@@ -41,9 +39,7 @@ const  CreateEmployees =(props)=> {
       password_confirmation: "",
       phone: "",
     })
-    // if (errorsOrMessages.length > 0){
-    //   props.clearErrors()
-    // }
+
   }
     const handleOnChange = (e) =>{  
       setEmployee(

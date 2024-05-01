@@ -39,8 +39,7 @@ const EditTenant = (props)=>{
 
     <div className="tenant-form acordion">
         <div className='acordion'> 
-        <Errors/>
-            {/* {errorsOrMessages.map((e,k) => {return <li key={k} className="errors acordion">{e}</li>})} */}
+        {errorsOrMessages.from === "update_tenant" ? <Errors errorsOrMessages={errorsOrMessages}/> : null}
         </div>  
         <form onSubmit={(e)=>handleOnSubmit(e,"name")} className='acordion'>
             <input onChange={handleOnChange} placeholder={tenant.name} name="name" className="standar-input acordion" type="text" value={editTenant.name}/>

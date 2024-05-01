@@ -4,9 +4,10 @@ import '../../styles/styles.css'
 import { useParams} from 'react-router-dom';
 import {createReceipts} from '../../actions/receiptsActions'
 import Errors from '../Errors';
+import Loading from '../Loading'
 
 const CreateReceipt=(props)=>{
-    const {user} = props
+    const {user,errorsOrMessages,uploading} = props
     const {id} = useParams()
     const [receipts,setReceipts] = useState({
         receipts: [] 
@@ -41,20 +42,23 @@ const CreateReceipt=(props)=>{
                    <input  onChange={handleOnChange} type="file" multiple name="receipts" className='imgs-input' />
                    <br></br>
                    <button type='submit' className="imgs-button">Save image</button>
-                   <Errors/>
-                   {/* {props.errorsOrMessages.map((e,k) => {return <p key={k}>{e}</p>})} */}
+                   {errorsOrMessages.from === "add_receipts" ?<Errors errorsOrMessages={errorsOrMessages}/> : null}
                 </form>
+                </div>
+                  {uploading && errorsOrMessages.from !== "add_receipts"? <Loading/>:null}
+                <div>
             </div>
         </div>
     )
 
 }
 
-// const mapStateToProps = state => { 
-//     return {
-//         errorsOrMessages: state.errorsOrMessages.errorsOrMessages
-//     }
-// }
+const mapStateToProps = state => { 
+    return {
+        errorsOrMessages: state.errorsOrMessages.errorsOrMessages,
+        uploading: state.receipts.uploading
+    }
+}
       
 const mapDispatchToProps = dispatch => {
     return {
@@ -62,4 +66,4 @@ const mapDispatchToProps = dispatch => {
     }
 }   
       
-export default connect(null , mapDispatchToProps)(CreateReceipt)
+export default connect(mapStateToProps , mapDispatchToProps)(CreateReceipt)

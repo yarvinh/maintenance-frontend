@@ -1,16 +1,15 @@
 
-import React, {useEffect,useState } from 'react';
+import  {useEffect,useState } from 'react';
 import { connect } from 'react-redux';
 import {createComment,fetchComments,addComment} from '../actions/commentsActions'
 import {useParams} from 'react-router-dom';
 import Comment  from '../components/comments/Comment';
 import CreateComment from '../components/comments/CreateComment';
 import{wsurl} from '../actions/actionsHelper'
-import Errors from '../components/Errors';
 
 const CommentsContainer = (props)=>{ 
   const {id} = useParams()
-  let {user,admin,comments,comment,errorsOrMessages} = props
+  let {user,admin,comments} = props
 
   const [ws, setWs] = useState(new WebSocket(wsurl()))
   const [guid, setGuid] = useState("")
@@ -48,8 +47,6 @@ const CommentsContainer = (props)=>{
   
   return (
   <div className='container'>
-    <Errors/>
-    {/* {errorsOrMessages?.map((err,k) => <strong key={k} className='errors'>{err}</strong>)} */}
     <CreateComment  admin={admin} user={user}/>
     <div>
     {comments? comments.map((comment)=>{return <Comment  user={user} admin={admin} key={comment.id} comment={comment}/> }):null}

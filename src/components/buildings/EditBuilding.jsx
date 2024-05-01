@@ -1,6 +1,5 @@
-import React, {useState,useEffect } from 'react';
+import {useState,useEffect } from 'react';
 import { connect } from 'react-redux';
-// import {editBuilding} from '../../actions/buildingsActions'
 import {useParams} from 'react-router-dom';
 import {clearErrors} from '../../actions/errorsActions'
 import {acordionButtonClass,diplayAcordion} from '../../componentsHelpers/acordion'
@@ -52,8 +51,7 @@ const EditBuilding = (props) =>{
             <div className={diplayAcordion("edit-building",acordion)}>
                 <div className='standar-forms acordion'>
                     <div className='acordion errors'> 
-                    {errorsOrMessages.from === "edit_building" ?<Errors/> : null}
-                        {/* {errorsOrMessages?.map((e,k) => {return <p key={k} className='acordion'>{e}</p>})} */}
+                    {errorsOrMessages.from === "update_building" ?<Errors errorsOrMessages={errorsOrMessages}/> : null}
                     </div> 
                     <div className="container d-flex justify-content-center align-items-center  acordion" > 
                         <form onSubmit={(e)=>handleOnSubmit(e,"address")} className='acordion' >

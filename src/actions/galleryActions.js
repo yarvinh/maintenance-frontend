@@ -18,7 +18,7 @@ import {baseUrl} from './actionsHelper'
 export const createGalleryImages = (gallery) => {
     const id = gallery.id
     return (dispatch) => {
-        dispatch({type: "UPLOADING"})
+        dispatch({type: "UPLOADING_GALLERY"})
         axios.post(`${baseUrl()}/work_orders/${id}/add_gallery_images`,gallery.images.images,{headers: token('multipart/form-data'), withCredentials: true})
         .then(response => {
             const error = response.data.errors_or_messages
@@ -26,7 +26,6 @@ export const createGalleryImages = (gallery) => {
         }).catch(
           function (error) {
             console.log(error, 'Show error notification!')
-            // return Promise.reject(error)
           }
         )
       
