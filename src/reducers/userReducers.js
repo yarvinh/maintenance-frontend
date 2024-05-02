@@ -23,7 +23,7 @@ export const UserReducer = (state = { user: {is_login: false, admin: false, user
       }
 }
 
-export const accountType = (state = {account: {business: false, text: "Login to business account"}},action)=>{
+export const accountType = (state = {account: {business: false, text: "business"}},action)=>{
    switch(action.type){
     case 'ACCOUNT':
       return state = {

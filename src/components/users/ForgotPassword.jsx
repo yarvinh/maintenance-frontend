@@ -4,18 +4,23 @@ import {clearErrors} from '../../actions/errorsActions'
 import {recoveryPassword} from '../../actions/usersActions'
 import '../../styles/styles.css'
 import Errors from '../Errors';
+import { setAccountType } from '../../actions/usersActions';
 
 const ForgotPassword = (props) =>{
-    const {errorsOrMessages,account} = props
+    const {account, errorsOrMessages} = props
+    const {business, text} = account
     const [user, setUser] = useState({
       username: ""
     })
-    const {business} = account
-    useEffect(() => {
-        if (errorsOrMessages.length > 0){
-          props.clearErrors()
-        }
-    },[ ]);
+
+    const handleOnClick=(e)=>{
+      if(business) {
+        props.setAccountType({business: false, text: "business"})
+      }else {
+        props.setAccountType({business: true, text:  "personal"})
+      }
+    }
+
 
     let handleOnChange = (e)=>{
       setUser({
@@ -33,6 +38,10 @@ const ForgotPassword = (props) =>{
     
     return (
         <div>
+          <br/>
+          <div className='center login-messages'>
+            <button onClick={handleOnClick} className="login-message-button" >Recover {text} account password</button>
+          </div>
             <div className="container d-flex justify-content-center align-items-center">
                 <form onSubmit={handleOnSubmit} className="form">
                 <label >Enter your username:</label >
@@ -41,8 +50,7 @@ const ForgotPassword = (props) =>{
                 </form>   
             </div>
             <div className="center"> 
-            <Errors/>
-              {/* {errorsOrMessages.map((e,k) => {return <p key={k}>{e}</p>})} */}
+            {errorsOrMessages.from === 'set_password_session' ? <Errors errorsOrMessages={errorsOrMessages}/>: null}
             </div> 
         </div>
     )
@@ -62,6 +70,7 @@ const mapStateToProps = state => {
   
 const mapDispatchToProps = dispatch => {
     return {
+        setAccountType: (action)=> dispatch(setAccountType(action)),
         recoveryPassword: (action) => dispatch(recoveryPassword(action)),
         clearErrors: () => dispatch(clearErrors()),
     }

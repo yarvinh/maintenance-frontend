@@ -14,6 +14,7 @@ const CreateImages=(props)=>{
     })
 
     const handleOnChange=(e)=>{
+
         const formData = new FormData(); 
         Array.from(e.target.files).forEach((file)=>{             
             formData.append("file[]", file);  
@@ -23,6 +24,7 @@ const CreateImages=(props)=>{
             [e.target.name]: formData,
             employee_id: user.admin ? "" : user.id 
         })
+        
     }
 
     const handleOnSubmit = (e) =>{

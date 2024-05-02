@@ -10,12 +10,12 @@ import { paths } from '../../actions/actionsHelper';
 
 const LogIn = (props) => {
   const {login,verificationSession,errorsOrMessages,account} = props
-    const {business, text} = account
+  const {business, text} = account
     const handleOnClick=(e)=>{
       if(business) {
-        props.setAccountType({business: false, text: "Login to business account"})
+        props.setAccountType({business: false, text: "business"})
       }else {
-        props.setAccountType({business: true, text:  "Login to your account"})
+        props.setAccountType({business: true, text:  "personal"})
       }
     }
 
@@ -43,11 +43,10 @@ const LogIn = (props) => {
       <div>
            {verificationSession && verificationSessionToken()? <Navigate to="/verifying_email"/> : null }
            <div className="center login-messages" > 
-           {/* <Errors/> */}
-            {/* {errorsOrMessages.map((e,k) => {return <li className="login-error" key={k}>{e}</li>})}  */}
+           {errorsOrMessages.from === "login" ? <Errors errorsOrMessages={errorsOrMessages}/> : null}
           </div>
           <div className='center login-messages'>
-            <button onClick={handleOnClick} className="login-message-button" >{text}</button>
+            <button onClick={handleOnClick} className="login-message-button" >Login to {text} account</button>
           </div>
          
          

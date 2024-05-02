@@ -10,6 +10,7 @@ import '../../styles/styles.css'
 const ResetPassword= (props) =>{
     const {id} = useParams()
     const {errorsOrMessages} = props
+    // console.log(errorsOrMessages)
     const [user, setUser] = useState({
       password: "",
       password_confirmation: "",
@@ -59,8 +60,8 @@ const ResetPassword= (props) =>{
             {passwordForm()}
             <br/>
             <div className="center"> 
-            {/* <Errors/> */}
-              {errorsOrMessages.msg?.map((e,k) => {
+            {errorsOrMessages.from === 'reset_password' ?  
+              errorsOrMessages.msg?.map((e,k) => {
                   return (
                     <div key={k}>
                       <p> {e} </p>
@@ -68,7 +69,8 @@ const ResetPassword= (props) =>{
                     </div>
                   )
                 }
-              )}
+              )
+            : null }
             </div> 
         </div>
     )
