@@ -8,7 +8,6 @@ import Errors from '../Errors';
 
 const EmailValidation = (props) => {
     const {errorsOrMessages} = props
-  console.log(errorsOrMessages,props.user)
     const [user, setUser] = useState({
       security_code: ""
     })

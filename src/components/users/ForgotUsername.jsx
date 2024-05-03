@@ -7,6 +7,7 @@ import Errors from '../Errors';
 
 const ForgotUsername = (props) =>{
     const {errorsOrMessages} = props
+    console.log(errorsOrMessages)
     const [user, setUser] = useState({
       email: ""
     })
@@ -41,7 +42,7 @@ const ForgotUsername = (props) =>{
                 </form>   
             </div>
             <div className="center"> 
-              <Errors/>
+              {errorsOrMessages.from === 'forgot_username' ?<Errors errorsOrMessages={errorsOrMessages}/> : null}
               {/* {errorsOrMessages.map((e,k) => {return <p key={k}>{e}</p>})} */}
             </div> 
         </div>

@@ -6,7 +6,7 @@ export const token = (dataType = "")=>{
         'Authorization': `bearer ${token} ${secretKey}`
     }
     if (dataType.length > 0)
-        header["content-type"] = dataType
+        header["Content-type"] = dataType
     return header
 }
 

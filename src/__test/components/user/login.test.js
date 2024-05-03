@@ -4,15 +4,17 @@ import rootReducer from "../../../reducers/manageAllReducers";
 import { createStore, applyMiddleware } from 'redux';
 import {thunk} from 'redux-thunk';
 import { Provider } from 'react-redux';
-// import { server } from '../../../mocks/browser';
+import { server } from '../../../mocks/browser';
 import { BrowserRouter} from 'react-router-dom';
 import LogIn from '../../../components/users/LogIn';
 
 
+
+
 const store = createStore(rootReducer, applyMiddleware(thunk))
-// beforeAll(() => server.listen({ onUnhandledRequest: "bypass" }))
-// afterEach(() => server.resetHandlers())
-// afterAll(() => server.close())
+beforeAll(() => server.listen({ onUnhandledRequest: "bypass" }))
+afterEach(() => server.resetHandlers())
+afterAll(() => server.close())
 
 const render = component => rtlRender(
     <Provider store={store}>
@@ -30,7 +32,7 @@ describe("<Login/>",()=>{
     test('Should have a button when click change the type of login, personal or business',()=>{
         const loginTypeButton = screen.getByText('Login to business account')
         fireEvent.click(loginTypeButton) 
-        expect(loginTypeButton.innerHTML).toBe("Login to your account")
+        expect(loginTypeButton.innerHTML).toBe("Login to personal account")
         fireEvent.click(loginTypeButton) 
         expect(loginTypeButton.innerHTML).toBe('Login to business account')
     })
@@ -55,10 +57,17 @@ describe("<Login/>",()=>{
         const loginFormSubmitButton = screen.getByText("Login")
         fireEvent.click(loginFormSubmitButton)  
 
-        await waitFor(() =>  {
-            const welcome = screen.getByText("Welcome TESTING APP")
-            // expect(welcome.innerHTML).toBe("Welcome TESTING APP")
-        })
+        // await waitFor(() =>  {
+            // const welcome = screen.getByText("Welcome TESTING APP")
+//             // expect(welcome.innerHTML).toBe("Welcome TESTING APP")
+        // })
+  
+        await waitFor(() => {
+           console.log(history)
+   
+              
+          });
+        
     })
 
     

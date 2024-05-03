@@ -11,7 +11,7 @@ import Errors from '../Errors';
 const SignUp = (props) => {
 
   const {verificationSession,errorsOrMessages} = props
-  console.log(errorsOrMessages)
+
   const [user, setUser] = useState({
     name: "",
     email: "",

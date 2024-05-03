@@ -62,7 +62,7 @@ const EditEmployee = (props) =>{
                 <div>
                   {!user.admin ?<UploadProfileImage employeeOrUser={"employee"} user={user}/>:null}
                 </div>
-                {errorsOrMessages.from === "edit_employee" ? <Errors/>: null}
+                {errorsOrMessages.from === 'update_employee' ? <Errors errorsOrMessages={errorsOrMessages}/> : null}
                <br/>
               <div className='center'>  
                 <form onSubmit={(e)=>handleOnSubmit(e,"name")} >
@@ -95,6 +95,7 @@ const EditEmployee = (props) =>{
                     <label>Enter old password</label>
                     <input onChange={handleOnChange} placeholder={"Enter old password"} value={employee.old_password} className="standar-input" type="password" name="old_password" />
                     <button type='submit' className="standar-button">Save password</button>
+                    
                 </form>  
               </div> 
               <br/>
