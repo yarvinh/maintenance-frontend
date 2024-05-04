@@ -19,6 +19,35 @@ export const createUser =  (user) => {
     }
 }
 
+export const fetchLogIn=(user,path)=> {
+  return (dispatch) => {
+    dispatch({ type: 'LOADING'})
+      fetch(`${baseUrl()}${path}`, { 
+        method: "POST", 
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({user}), 
+        withCredentials: true
+      })
+      .then(response => response.json())
+      .then(response => {
+        // console.log(response)
+        const error = response.errors_or_messages
+        if(response.is_login){
+          localStorage.setItem('token', response.token?.token)
+          localStorage.setItem('secret_key', response.token?.secret_key)
+        }else if(!response.valid_email && response.token){
+          localStorage.setItem('token', response.token)
+        }
+        dispatch({ type: 'ADD_USER', user: response})
+        error? dispatch({ type: 'ADD_ERRORS_OR_MESSAGES', errorsOrMessages: response.errors_or_messages}): dispatch({ type: 'ADD_ERRORS_OR_MESSAGES', errorsOrMessages: []})//dispatch({ type: 'ADD_USER', user: response.data})
+      })
+}
+}
+
+
   export const fetchLogOut = () => {
     return (dispatch) => {
       dispatch({ type: 'LOADING'})
@@ -31,24 +60,27 @@ export const createUser =  (user) => {
 
   }
 
-  export const fetchLogIn=(user,path)=> {
-    return (dispatch) => {
-      dispatch({ type: 'LOADING'})
-        axios.post(`${baseUrl()}${path}`, 
-        {user}, {withCredentials: true})
-        .then(response=> {
-          const error = response.data.errors_or_messages
-          if(response.data.is_login){
-            localStorage.setItem('token', response.data.token?.token)
-            localStorage.setItem('secret_key', response.data.token?.secret_key)
-          }else if(!response.data.valid_email && response.data.token){
-            localStorage.setItem('token', response.data.token)
-          }
-          dispatch({ type: 'ADD_USER', user: response.data})
-          error? dispatch({ type: 'ADD_ERRORS_OR_MESSAGES', errorsOrMessages: response.data.errors_or_messages}): dispatch({ type: 'ADD_ERRORS_OR_MESSAGES', errorsOrMessages: []})//dispatch({ type: 'ADD_USER', user: response.data})
-        })
-  }
-}
+//   export const fetchLogIn=(user,path)=> {
+//     console.log(`${baseUrl()}${path}`)
+//     return (dispatch) => {
+//       dispatch({ type: 'LOADING'})
+//         axios.post(`${baseUrl()}${path}`, 
+//         {user}, {withCredentials: true})
+//         .then(response=> {
+//           // console.log(response)
+//           const error = response.data.errors_or_messages
+//           if(response.data.is_login){
+//             localStorage.setItem('token', response.data.token?.token)
+//             localStorage.setItem('secret_key', response.data.token?.secret_key)
+//           }else if(!response.data.valid_email && response.data.token){
+//             localStorage.setItem('token', response.data.token)
+//           }
+//           dispatch({ type: 'ADD_USER', user: response.data})
+//           error? dispatch({ type: 'ADD_ERRORS_OR_MESSAGES', errorsOrMessages: response.data.errors_or_messages}): dispatch({ type: 'ADD_ERRORS_OR_MESSAGES', errorsOrMessages: []})//dispatch({ type: 'ADD_USER', user: response.data})
+//         })
+//   }
+// }
+
 
 export const editUser = (params) => {
   return (dispatch) => {

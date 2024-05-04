@@ -55,4 +55,27 @@ export const handlers = [
     }
       return HttpResponse.json(user)
     }),
+
+    http.post('http://localhost:3000/test/business_login', async ({request}) => {
+    
+      const loginInf = await request.json()
+      const user  =  {
+        is_login: true, 
+        admin: true, 
+        user: {
+          name: "TESTING APP",
+          username: 'testingapp',
+          email: 'ggc@gmail.com', 
+          id: 1 
+        }
+      }
+      console.log(loginInf.user)
+    
+      const error =  {is_login: false,errors_or_messages: {from: "login", errors: ["Incorrect username or password"]} }
+  
+      return HttpResponse.json(
+       loginInf.user.password === "123456" && loginInf.user.username === 'testingapp' ? user : error
+      )
+
+    }),
 ]

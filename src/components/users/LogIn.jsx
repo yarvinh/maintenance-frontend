@@ -9,6 +9,7 @@ import Errors from '../Errors';
 import { paths } from '../../actions/actionsHelper';
 
 const LogIn = (props) => {
+
   const {login,verificationSession,errorsOrMessages,account} = props
   const {business, text} = account
     const handleOnClick=(e)=>{
@@ -25,7 +26,11 @@ const LogIn = (props) => {
     })
  
     const redirect = ()=>{
-      return <Navigate to='/' /> 
+      return <>
+      <p> to home</p>
+        <Navigate to='/'/>
+      </>
+
     }
 
     const handleOnChange = (e) => {  
@@ -36,7 +41,7 @@ const LogIn = (props) => {
   
     const handleOnSubmit = (e) => {
         e.preventDefault()
-        account.business ? props.fetchLogIn(user,'/business_login'): props.fetchLogIn(user,paths().login)
+        account.business ? props.fetchLogIn(user,paths(true).login): props.fetchLogIn(user,paths(false).login)
     }
 
     return(

@@ -13,7 +13,7 @@ export  const wsurl = ()=>{
    return  process.env.NODE_ENV === "development" ? "ws://localhost:3000/cable" : "wss://workorders.herokuapp.com/cable" 
 }
 
-export const paths = ()=>{
+export const paths = (business = false)=>{
    const testPaths  = {
       checkLoginPath: '/test/checklogin',
       usersPath: '/test/users',
@@ -23,7 +23,7 @@ export const paths = ()=>{
       searchBuildingsPath: '/test/search/buildings/',
       employeesPath: "/test/employees",
       verifyEmail: "/test/verify_email",
-      login: "/test/login"
+      login: '/test/business_login'
    }  
   const paths =  {
       checkLoginPath: '/checklogin',
@@ -34,7 +34,8 @@ export const paths = ()=>{
       searchBuildingsPath: '/search/buildings/',
       employeesPath: "/employees",
       verifyEmail: "/verify_email",
-      login: "/login"
+      login: business ? '/business_login' : "/login"
+      // login: "/login"
    }
    return process.env.NODE_ENV === 'test' ? testPaths : paths
 
