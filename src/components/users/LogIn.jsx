@@ -26,10 +26,8 @@ const LogIn = (props) => {
     })
  
     const redirect = ()=>{
-      return <>
-      <p> to home</p>
-        <Navigate to='/'/>
-      </>
+      
+      return <Navigate to='/'/>
 
     }
 

@@ -5,7 +5,6 @@ import { createStore, applyMiddleware } from 'redux';
 import {thunk} from 'redux-thunk';
 import { Provider } from 'react-redux';
 import { server } from '../../../mocks/browser';
-// import { BrowserRouter} from 'react-router-dom';
 import LogIn from '../../../components/users/LogIn';
 import {BrowserRouter, MemoryRouter, Route, Routes } from "react-router-dom";
 import HomeContainer from '../../../containers/HomeContainer';
@@ -31,6 +30,15 @@ describe("<Login/>",()=>{
              </BrowserRouter>
         )
     })
+
+    const loginSubmitForm = ({password, username}) => {
+        const userNameInput = screen.getByLabelText('Username')
+        fireEvent.change(userNameInput, {target: {value: username}})
+        const passwordInput = screen.getByLabelText('Password')
+        fireEvent.change(passwordInput, {target: {value: password}})
+        const loginFormSubmitButton = screen.getByText("Login")
+        fireEvent.click(loginFormSubmitButton)  
+    }
     
 
     test('Should have a button when click change the type of login, personal or business',()=>{
@@ -55,35 +63,17 @@ describe("<Login/>",()=>{
         expect(passwordInput.value).toBe('123456')
     })
 
-    // test('If wrong Password or wrong username should display an error',async ()=>{
-   
-    //     const userNameInput = screen.getByLabelText('Username')
-    //     fireEvent.change(userNameInput, {target: {value: "testingapp"}})
-    //     const passwordInput = screen.getByLabelText('Password')
-    //     fireEvent.change(passwordInput, {target: {value: '123456'}})
-    //     const loginTypeButton = screen.getByText('Login to business account')
-    //     fireEvent.click(loginTypeButton) 
-
-    //     const loginFormSubmitButton = screen.getByText("Login")
-    //     fireEvent.click(loginFormSubmitButton)  
-        
-  
-    // })
-
-    
-
-    test("Should submit username, password and redirect to Home",async ()=>{
-        const userNameInput = screen.getByLabelText('Username')
-        fireEvent.change(userNameInput, {target: {value: "testingapp"}})
-        const passwordInput = screen.getByLabelText('Password')
-        fireEvent.change(passwordInput, {target: {value: '123456'}})
-
+    test('If wrong Password or wrong username should display an error',async ()=>{
+        loginSubmitForm({password: "123457", username: "testingapp"})
         const loginTypeButton = screen.getByText('Login to business account')
         fireEvent.click(loginTypeButton) 
+        loginSubmitForm({password: "12345", username: "testingapps"})
     
-        const loginFormSubmitButton = screen.getByText("Login")
-        fireEvent.click(loginFormSubmitButton)  
-     
+    })
+
+    test("Should submit username, password and redirect to Home",async ()=>{
+        loginSubmitForm({password: "123456", username: "testingapp"})
+ 
         await waitFor(() =>  {
             screen.getByText('You have no work orders to display at this moment')
         })     
