@@ -69,12 +69,12 @@ export const handlers = [
           id: 1 
         }
       }
-      console.log(loginInf.user)
+      // console.log(loginInf)
     
       const error =  {is_login: false,errors_or_messages: {from: "login", errors: ["Incorrect username or password"]} }
   
       return HttpResponse.json(
-       loginInf.user.password === "123456" && loginInf.user.username === 'testingapp' ? user : error
+       loginInf.user.password === "12345@" && loginInf.user.username === "testapp" ? user : error
       )
 
     }),

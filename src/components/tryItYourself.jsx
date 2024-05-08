@@ -2,10 +2,11 @@ import  {useEffect} from 'react';
 import { connect } from 'react-redux';
 import { fetchLogIn } from '../actions/usersActions'
 import {Navigate} from 'react-router-dom'
+import { paths } from '../actions/actionsHelper';
 const TryItYourself = (props) => {
   const {login} = props
     useEffect(() => {
-        props.fetchLogIn({username: "testapp",password: "12345@"},'/business_login')
+        props.fetchLogIn({username: "testapp",password: "12345@"},paths(true).login)
     } ,[]); 
 
      const redirect = ()=>{

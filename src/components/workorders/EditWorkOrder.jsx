@@ -49,8 +49,9 @@ const EditWorkOrder = (props) =>{
           id: id,
           stateName:{itemName: "workOrder", arrayName: "workOrders"} ,
           type: {addItemToArray: "ADD_WORK_ORDERS", addItem: "ADD_WORK_ORDER"}, 
-          params: {payload: {work_order: {[type]: workOrder[type]}}, array: workOrders}
+          params: {payload: {[type]: workOrder[type]}, array: workOrders}
       })
+
       setWorkOrder({
         ...workOrder,[type]: ""
       }) 

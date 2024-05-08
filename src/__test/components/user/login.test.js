@@ -8,6 +8,7 @@ import { server } from '../../../mocks/browser';
 import LogIn from '../../../components/users/LogIn';
 import {BrowserRouter, MemoryRouter, Route, Routes } from "react-router-dom";
 import HomeContainer from '../../../containers/HomeContainer';
+// import { wait } from '@testing-library/user-event/dist/utils';
 const store = createStore(rootReducer, applyMiddleware(thunk))
 beforeAll(() => server.listen({ onUnhandledRequest: "bypass" }))
 afterEach(() => server.resetHandlers())
@@ -60,6 +61,7 @@ describe("<Login/>",()=>{
         fireEvent.change(userNameInput, {target: {value: "testingapp"}})
         const passwordInput = screen.getByLabelText('Password')
         fireEvent.change(passwordInput, {target: {value: '123456'}})
+
         expect(passwordInput.value).toBe('123456')
     })
 
@@ -68,11 +70,16 @@ describe("<Login/>",()=>{
         const loginTypeButton = screen.getByText('Login to business account')
         fireEvent.click(loginTypeButton) 
         loginSubmitForm({password: "12345", username: "testingapps"})
+
+        await waitFor(()=>{
+           const  errorMsg =  screen.getByText('Incorrect username or password')
+            expect(errorMsg.innerHTML).toBe('Incorrect username or password')
+        })
     
     })
 
     test("Should submit username, password and redirect to Home",async ()=>{
-        loginSubmitForm({password: "123456", username: "testingapp"})
+        loginSubmitForm({password: "12345@", username: "testapp"})
  
         await waitFor(() =>  {
             screen.getByText('You have no work orders to display at this moment')

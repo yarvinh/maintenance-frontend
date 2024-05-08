@@ -20,6 +20,7 @@ export const createUser =  (user) => {
 }
 
 export const fetchLogIn=(user,path)=> {
+   console.log("testing fetchLogin", path)
   return (dispatch) => {
     dispatch({ type: 'LOADING'})
       fetch(`${baseUrl()}${path}`, { 
@@ -33,7 +34,6 @@ export const fetchLogIn=(user,path)=> {
       })
       .then(response => response.json())
       .then(response => {
-        // console.log(response)
         const error = response.errors_or_messages
         if(response.is_login){
           localStorage.setItem('token', response.token?.token)

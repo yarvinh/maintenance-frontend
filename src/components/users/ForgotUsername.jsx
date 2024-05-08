@@ -7,7 +7,6 @@ import Errors from '../Errors';
 
 const ForgotUsername = (props) =>{
     const {errorsOrMessages} = props
-    console.log(errorsOrMessages)
     const [user, setUser] = useState({
       email: ""
     })
