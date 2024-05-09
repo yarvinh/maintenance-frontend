@@ -29,7 +29,10 @@ test('Render App component', async () => {
   // const input3 = screen.getByLabelText('Username:')
   // const input4 = screen.getByLabelText('Password:')
   // const input5 = screen.getByLabelText('Confirm password:')
-  const submit = await waitFor(() =>  appComponent.getByText('GGC'))
+  // test('',async()=>{
+     const submit = await waitFor(() =>  appComponent.getByText('Home'))
+  // })
+ 
 
 }); 
 

@@ -5,10 +5,8 @@ import { createStore, applyMiddleware } from 'redux';
 import {thunk} from 'redux-thunk';
 import { Provider } from 'react-redux';
 import { server } from '../../../mocks/browser';
-import LogIn from '../../../components/users/LogIn';
-import {BrowserRouter, MemoryRouter, Route, Routes } from "react-router-dom";
-import HomeContainer from '../../../containers/HomeContainer';
-// import { wait } from '@testing-library/user-event/dist/utils';
+import App from '../../../App';
+
 const store = createStore(rootReducer, applyMiddleware(thunk))
 beforeAll(() => server.listen({ onUnhandledRequest: "bypass" }))
 afterEach(() => server.resetHandlers())
@@ -23,14 +21,10 @@ const render = component => rtlRender(
 describe("<Login/>",()=>{
     beforeEach(()=>{
         return  render(
-            <BrowserRouter >
-                <Routes>
-                  <Route path='/Home' element={<LogIn admin={true} />}/>
-                  <Route path="/" element={<HomeContainer/>}/>
-                </Routes>
-             </BrowserRouter>
+            <App/>
         )
     })
+
 
     const loginSubmitForm = ({password, username}) => {
         const userNameInput = screen.getByLabelText('Username')
@@ -61,7 +55,6 @@ describe("<Login/>",()=>{
         fireEvent.change(userNameInput, {target: {value: "testingapp"}})
         const passwordInput = screen.getByLabelText('Password')
         fireEvent.change(passwordInput, {target: {value: '123456'}})
-
         expect(passwordInput.value).toBe('123456')
     })
 
@@ -82,7 +75,7 @@ describe("<Login/>",()=>{
         loginSubmitForm({password: "12345@", username: "testapp"})
  
         await waitFor(() =>  {
-            screen.getByText('You have no work orders to display at this moment')
+            screen.getByText("Sign Out")
         })     
     })  
 

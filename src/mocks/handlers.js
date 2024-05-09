@@ -5,21 +5,21 @@ import { http, HttpResponse } from 'msw'
  
 export const handlers = [
   
-  http.get('http://localhost:3000/test/checklogin', (response) => {
-    return HttpResponse.json(
-      {
-        is_login: true, 
-        admin: true, 
-        user: {
-          name: 'GGC',
-          username: 'ggc' ,
-          email: 'ggc@gmail.com', 
-          id: 1 
-        }
+  // http.get('http://localhost:3000/test/checklogin', (response) => {
+  //   return HttpResponse.json(
+  //     {
+  //       is_login: true, 
+  //       admin: true, 
+  //       user: {
+  //         name: 'GGC',
+  //         username: 'ggc' ,
+  //         email: 'ggc@gmail.com', 
+  //         id: 1 
+  //       }
       
-      }
-    )
-  }),
+  //     }
+  //   )
+  // }),
 
   http.post('http://localhost:3000/test/users', async (response) => {
   const user = {

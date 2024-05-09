@@ -6,8 +6,10 @@ import { createStore, applyMiddleware } from 'redux';
 import {thunk} from 'redux-thunk';
 import { Provider } from 'react-redux';
 import { server } from '../../../mocks/browser';
-import SignUp from '../../../components/users/SignUp';
-import { BrowserRouter} from 'react-router-dom';
+// import SignUp from '../../../components/users/SignUp';
+// import { BrowserRouter} from 'react-router-dom';
+import App from '../../../App';
+
 
 
 const store = createStore(rootReducer, applyMiddleware(thunk))
@@ -24,8 +26,14 @@ const render = component => rtlRender(
 describe("<SignUp/>",()=>{
     beforeEach(()=>{
         return  render(
-            <BrowserRouter><SignUp/></BrowserRouter>
+            <App/>
+            // <BrowserRouter><SignUp/></BrowserRouter>
         )
+    })
+
+    test("Should be able to click on Signup",async()=>{
+        const signUpLink = screen.getByText("Sign up")
+        fireEvent.click(signUpLink)
     })
 
     const signUp = ()=>{
@@ -39,7 +47,7 @@ describe("<SignUp/>",()=>{
         fireEvent.change(input4, {target: {value: '123456'}})
         const input5 = screen.getByLabelText('Confirm password:')
         fireEvent.change(input5, {target: {value: '123456'}})
-        const button = screen.getByRole('button')
+        const button = screen.getByText('Submit')
         fireEvent.click(button)
     }
 
