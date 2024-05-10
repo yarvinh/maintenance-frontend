@@ -1,7 +1,6 @@
 import  {useState,useEffect } from 'react';
 import { connect } from 'react-redux';
 import '../../styles/styles.css'
-// import { createBuilding} from '../../actions/buildingsActions'
 import {clearErrors} from '../../actions/errorsActions'
 import {acordionButtonClass,diplayAcordion} from '../../componentsHelpers/acordion'
 import { postFetchAction } from '../../actions/fetchActions';
@@ -47,10 +46,6 @@ const CreateBuilding = (props) =>{
           lot: "",
           block: "",
         })
-
-        // if (errorsOrMessages.errors?.length > 0){
-        //   props.clearErrors()
-        // }
     }
 
   return(  
@@ -62,20 +57,19 @@ const CreateBuilding = (props) =>{
           <form onSubmit={handleOnSubmit} className='acordion'>
               <div className='acordion'> 
               {errorsOrMessages.from === "create_building" ? <Errors errorsOrMessages={errorsOrMessages}/>: null}
-                {/* {errorsOrMessages.map((e,k) => {return <p className='errors acordion' key={k} >{e}</p>})} */}
               </div>  
-              <label className='acordion'>Address</label>
-              <input onChange={handleOnChange}  name="address" className="standar-input acordion" type="text" value={building.address}/><br/>
-              <label className='acordion'>Superintendent</label>
-              <input onChange={handleOnChange} name="super_name" className="standar-input acordion" type="text" value={building.super_name}/><br/>
-              <label className='acordion'>Phone</label>
-              <input onChange={handleOnChange}  name="phone_number" className="standar-input acordion" type="phone" value={building.phone_number}/><br/>
-              <label className='acordion'>Bin Number</label>
-              <input onChange={handleOnChange}  name="bin" className="standar-input acordion" type="text" value={building.bin}/><br/>
-              <label className='acordion'>Tax lot</label>
-              <input onChange={handleOnChange}  name="lot" className="standar-input acordion" type="text" value={building.lot}/><br/>
-              <label className='acordion'>Tax block</label>
-              <input onChange={handleOnChange}  name="block" className="standar-input acordion" type="text" value={building.block}/><br/>
+              <label htmlFor='c-b-address' className='acordion'>Address</label>
+              <input id='c-b-address' onChange={handleOnChange}  name="address" className="standar-input acordion" type="text" value={building.address}/><br/>
+              <label htmlFor='c-b-superintendent' className='acordion'>Superintendent</label>
+              <input id='c-b-superintendent' onChange={handleOnChange} name="super_name" className="standar-input acordion" type="text" value={building.super_name}/><br/>
+              <label htmlFor='c-b-phone' className='acordion'>Phone</label>
+              <input id='c-b-phone' onChange={handleOnChange}  name="phone_number" className="standar-input acordion" type="phone" value={building.phone_number}/><br/>
+              <label htmlFor='cb-bin-number' className='acordion'>Bin Number</label>
+              <input id='c-b-bin-number' onChange={handleOnChange}  name="bin" className="standar-input acordion" type="text" value={building.bin}/><br/>
+              <label htmlFor='cb-tax-lot' className='acordion'>Tax lot</label>
+              <input id='c-b-tax-lot' onChange={handleOnChange}  name="lot" className="standar-input acordion" type="text" value={building.lot}/><br/>
+              <label htmlFor='cb-tax-block' className='acordion'>Tax block</label>
+              <input id='c-b-tax-block' onChange={handleOnChange}  name="block" className="standar-input acordion" type="text" value={building.block}/><br/>
               <button type='submit' className="btn btn-primary acordion">Submit</button>
           </form> 
         </div>    
@@ -98,7 +92,6 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         postFetchAction: (action) => dispatch(postFetchAction(action)),
-        // createBuilding: (action) => dispatch(createBuilding(action)),
         clearErrors: () => dispatch(clearErrors()),
     }
 }   

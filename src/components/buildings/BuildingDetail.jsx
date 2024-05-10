@@ -11,10 +11,10 @@ import { useEffect } from 'react';
 import { getFetchAction } from '../../actions/fetchActions';
 
 const BuildingDetails = (props)=>{
-    const {user} = props
     const {id} = useParams()
     let navigate = useNavigate()
-    const {building,workOrders} = props
+    const {building,workOrders,user} = props
+    console.log(building)
     const buildingWorkOrders = workOrders.filter(wo => wo.building && wo.building_id.toString() === id) 
     
     useEffect(()=>{

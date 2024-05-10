@@ -20,7 +20,6 @@ export const createUser =  (user) => {
 }
 
 export const fetchLogIn=(user,path)=> {
-   console.log("testing fetchLogin", path)
   return (dispatch) => {
     dispatch({ type: 'LOADING'})
       fetch(`${baseUrl()}${path}`, { 

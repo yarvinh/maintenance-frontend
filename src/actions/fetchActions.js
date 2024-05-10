@@ -23,15 +23,16 @@ export const postFetchAction = ({path, type, stateName,params}) => {
     const {itemName,arrayName} = stateName
     return (dispatch) => {
         dispatch({ type: "LOADING"})
-        axios.post(`${baseUrl()}${path}`, payload, {headers: token(), withCredentials: true})
+        fetch(`${baseUrl()}${path}`,  {method: "POST",headers: token(), withCredentials: true, body: JSON.stringify(payload)})
+        .then(response => response.json())
         .then(response => {
-          const error = response.data.errors_or_messages
-       
+          // console.log("from postAction",response)
+          const error = response.errors_or_messages
           if(error){
             dispatch({ type: 'ADD_ERRORS_OR_MESSAGES', errorsOrMessages: error})
           }else{
-            dispatch({ type: type.addItem, [itemName]: response.data})
-            dispatch({ type: type.addItemToArray, [arrayName]: [ response.data,...array]})
+            dispatch({ type: type.addItem, [itemName]: response})
+            dispatch({ type: type.addItemToArray, [arrayName]: [ response,...array]})
           }
       })
     }
