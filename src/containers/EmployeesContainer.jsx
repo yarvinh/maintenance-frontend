@@ -6,8 +6,8 @@ import {useParams,useNavigate} from 'react-router-dom';
 import {searchEmployees} from "../actions/employeesActions"
 import { useEffect } from 'react';
 import {employeesFilter} from '../componentsHelpers/employees'
-import { paths } from '../actions/actionsHelper';
 import { getFetchAction } from '../actions/fetchActions';
+import { EMPLOYEES_SETTER } from '../componentsHelpers/fetchingConstants';
 const EmployeesContainer = (props) => {
     let navigate = useNavigate()
     let {admin,user} = props.user
@@ -15,12 +15,7 @@ const EmployeesContainer = (props) => {
     const [employees, setEmployees] = useState([])
     const [searchBoxValue, setSearchBoxValue] = useState("")
     useEffect(()=>{
-        props.getFetchAction({
-            loading: "LOADING", 
-            type: 'ADD_EMPLOYEES',
-            path: paths().employeesPath, 
-            stateName: 'employees'
-        })
+        props.getFetchAction(EMPLOYEES_SETTER)
     },[])
     useEffect(()=>{
         if(props.employees?.length > 0)

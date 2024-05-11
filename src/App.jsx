@@ -35,7 +35,7 @@ import NavBarContainer from './containers/NavBarContainer';
 import {verificationSessionToken,removeLoginToken} from "./componentsHelpers/token"
 import Anime from "./components/Anime"
 import { getFetchAction } from './actions/fetchActions';
-import { paths } from './actions/actionsHelper';
+import { CURRENT_USER_SETTER, WORKORDERS_SETTER } from './componentsHelpers/fetchingConstants';
 
 const App  = (props) => {
   let { user ,workOrders,acordion,userLoading,verificationSession} = props
@@ -58,21 +58,13 @@ const App  = (props) => {
   }
 
   useEffect(() => {
-    props.getFetchAction({
-      type: 'ADD_USER',
-      path: paths().checkLoginPath, 
-      stateName: 'user'
-    })  
+    props.getFetchAction(CURRENT_USER_SETTER)  
   },[] ); 
 
   useEffect(() => {
     if(fetchTimesRef.current === 1){
       fetchTimesRef.current += 1  
-      props.getFetchAction({
-        type: 'ADD_WORK_ORDERS',
-        path: paths().workOrdersPath, 
-        stateName: 'workOrders'
-      }) 
+      props.getFetchAction(WORKORDERS_SETTER) 
     }
   },[user] ); 
 

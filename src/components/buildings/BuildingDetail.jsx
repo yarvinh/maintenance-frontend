@@ -3,28 +3,22 @@ import { connect } from 'react-redux';
 import {useParams,useNavigate,Link} from 'react-router-dom';
 import EditBuilding from "./EditBuilding"
 import '../../styles/styles.css'
-import {deleteBuilding,fetchBuilding} from "../../actions/buildingsActions"
+import {deleteBuilding} from "../../actions/buildingsActions"
 import WorkOrdersContainer from '../../containers/WorkOrdersContainer';
 import UnitsContainer from '../../containers/UnitsContainer';
 import { date } from '../../componentsHelpers/date';
 import { useEffect } from 'react';
 import { getFetchAction } from '../../actions/fetchActions';
+import { buildingSetter } from '../../componentsHelpers/fetchingFunctions';
 
 const BuildingDetails = (props)=>{
     const {id} = useParams()
     let navigate = useNavigate()
     const {building,workOrders,user} = props
-    console.log(building)
     const buildingWorkOrders = workOrders.filter(wo => wo.building && wo.building_id.toString() === id) 
     
     useEffect(()=>{
-      props.getFetchAction({
-        loading: "LOADING_BUILDING", 
-        type: 'ADD_BUILDING',
-        path: `/buildings/${id}`, 
-        stateName: 'building'
-      })
-      // props.fetchBuilding(id)
+      props.getFetchAction(buildingSetter(id))
     },[])
 
     const handleOnClick=(e)=>{
@@ -88,8 +82,7 @@ const mapStateToProps = state => {
   const mapDispatchToProps = dispatch => {
     return {
       getFetchAction: (action) => dispatch(getFetchAction(action)),
-      deleteBuilding: (action) => dispatch(deleteBuilding(action)),
-      // fetchBuilding: (action) => dispatch(fetchBuilding(action))
+      deleteBuilding: (action) => dispatch(deleteBuilding(action))
     }
   }
 

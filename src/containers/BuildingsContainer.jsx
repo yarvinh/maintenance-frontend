@@ -6,6 +6,7 @@ import {useParams,useNavigate} from 'react-router-dom';
 import {searchBuilding} from "../actions/buildingsActions"
 import {buildingsFilter} from '../componentsHelpers/buildings'
 import { getFetchAction } from '../actions/fetchActions';
+import {BUILDINGS_SETTER} from '../componentsHelpers/fetchingConstants';
 
 const BuildingsContainer = (props) => {
     let navigate = useNavigate()
@@ -14,12 +15,7 @@ const BuildingsContainer = (props) => {
     const [buildings, setBuildings] = useState([])
     const [searchBoxValue, setSearchBoxValue] = useState("")
     useEffect(()=>{
-      props.getFetchAction({
-        loading: "LOADING_BUILDINGS", 
-        type: 'ADD_BUILDINGS',
-        path: "/buildings", 
-        stateName: 'buildings'
-      }) 
+      props.getFetchAction( BUILDINGS_SETTER) 
     },[])
 
     useEffect(()=>{

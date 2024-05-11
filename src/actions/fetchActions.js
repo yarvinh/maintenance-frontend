@@ -26,7 +26,6 @@ export const postFetchAction = ({path, type, stateName,params}) => {
         fetch(`${baseUrl()}${path}`,  {method: "POST",headers: token(), withCredentials: true, body: JSON.stringify(payload)})
         .then(response => response.json())
         .then(response => {
-          // console.log("from postAction",response)
           const error = response.errors_or_messages
           if(error){
             dispatch({ type: 'ADD_ERRORS_OR_MESSAGES', errorsOrMessages: error})

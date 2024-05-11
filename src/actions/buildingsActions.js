@@ -4,11 +4,11 @@ import {baseUrl} from './actionsHelper'
 
 
 export const deleteBuilding = (id) => {
+  // console.log("testing",id)
   return (dispatch) => {
     dispatch({ type: 'LOADING'})
     axios.delete(`${baseUrl()}/buildings/${id}`,{headers: token(), withCredentials: true}
     ).then(response => {   
-      // console.log(response)
       dispatch({ type: 'ADD_BUILDINGS', buildings: response.data })
     })
   }

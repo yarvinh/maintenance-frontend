@@ -80,21 +80,28 @@ export const handlers = [
     http.post('http://localhost:3000/test/buildings', async ({request}) => {
       const requestInf = await request.json()
       const building = {
-        address: "114 Park ave",
-        id: 1,
-        phone_number: "646-567-5678",
-        super_name: "Humberto Martinez",
+        address: requestInf.building.address,
+        id: requestInf.building.address === "111 west 119 st" ? 1 : 2,
+        phone_number: requestInf.building.phone_number,
+        super_name: requestInf.building.super_name,
         user_id: 1
       }
-      if (requestInf.building.super_name?.trim() === ""){
-        return HttpResponse.json({is_login: true ,errors_or_messages: {from: "login", errors: ["Super name can't be blank"]} })
-      } else if (requestInf.building.address?.trim() === ""){
-        return HttpResponse.json({is_login: true ,errors_or_messages: {from: "login", errors: ["Address can't be blank"]} })
-      }else if (requestInf.building.phone_number?.trim() === ""){
-        return HttpResponse.json({is_login: true ,errors_or_messages: {from: "login", errors: ["Phone number can't be blank"]} })
-      } else {
+
+      const errors = []
+      if (requestInf.building.super_name?.trim() === "" )
+        errors.push("Super name can't be blank")
+       
+      if (requestInf.building.address?.trim() === "")
+        errors.push("Address can't be blank")
+
+      if (requestInf.building.phone_number?.trim() === "")
+        errors.push("Phone number can't be blank")
+      
+      if(errors.length > 0) 
+        return HttpResponse.json({is_login: true ,errors_or_messages: {from: "create_building", errors: errors} })
+      else
         return HttpResponse.json(building)
-      }
+      
   
     })
 ]

@@ -35,7 +35,6 @@ export const paths = (business = false)=>{
       employeesPath: "/employees",
       verifyEmail: "/verify_email",
       login: business ? '/business_login' : "/login"
-      // login: "/login"
    }
    return process.env.NODE_ENV === 'test' ? testPaths : paths
 
