@@ -50,11 +50,11 @@ const  CreateEmployees =(props)=> {
     }
 
       return(
-        <div className='center'>
+        <section className='center'>
             <button id="create-employee" className={acordionButtonClass("create-employee",acordion)}> {user.is_login ? "Create An Employee": "Create a personal account"}</button>
             <div className={diplayAcordion("create-employee",acordion)}>
             <div className="standar-forms standar-form-position acordion">
-                <form onSubmit={handleOnsubmit} className='acordion'>
+                <form onSubmit={handleOnsubmit} className='acordion accor-diplay-form'>
                     <div className='acordion'> 
                     {errorsOrMessages.from  === "create_employee" ? <Errors errorsOrMessages={errorsOrMessages}/> : null}
                     </div>  
@@ -69,12 +69,12 @@ const  CreateEmployees =(props)=> {
                     <label className='acordion'>Password</label>
                     <input onChange={handleOnChange} placeholder="Enter password" name="password" className="standar-input acordion" type="password" value={employee.password}/><br/>
                     <input onChange={handleOnChange} placeholder="Confirm password" name="password_confirmation" className="standar-input acordion" type="password" value={employee.password_confirmation}/><br/>
-                    <button type='submit' className="standar-button acordion">Submit</button>
+                    <button type='submit' className="white-blue-buttons acordion">Submit</button>
+
                 </form> 
-                <br/>   
             </div>
             </div>
-        </div>
+        </section>
       );    
     
 

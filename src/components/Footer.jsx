@@ -1,9 +1,10 @@
 
 const Footer = (props)=>{
     return(
-        <footer >
-
-            {/* <p >Copyright Creations Studios NY</p> */}
+        <footer className="footer">
+           <section>
+            <p >Copyright Creations Studios NY</p>
+            </section>
         </footer>
     )
 }

@@ -77,7 +77,7 @@ const WorkOrderDetails = (props)=>{
     }
 
     return (
-        <div className="work-order-detail"> 
+        <section className="work-order-detail"> 
             <br/>
             <br/>
             <div className="container d-flex "> 
@@ -93,8 +93,6 @@ const WorkOrderDetails = (props)=>{
                       <div className="card-body">
                         <span>Created date: {date(workOrder.created_at)}</span> <br/>
                         <span>Last time updated: {date(workOrder.updated_at)}</span> 
-                        {/* <Errors/> */}
-                        {/* {errorsOrMessages?.map((err,k) => <strong key={k} className='errors'>{err}</strong>)} */}
                         <div>
                           {workOrderEmployees()}
                         </div>
@@ -124,8 +122,7 @@ const WorkOrderDetails = (props)=>{
             </div>
             <br></br>
             <button  onClick={goBack} className="back-button"> {"<< Back"} </button>
-            <div className='empty-space'></div>
-        </div>
+        </section>
     )
 };
 

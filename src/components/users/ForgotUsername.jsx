@@ -37,7 +37,7 @@ const ForgotUsername = (props) =>{
                 <form onSubmit={handleOnSubmit} className="form">
                 <label >Enter your email:</label >
                 <input  onChange={handleOnChange} className="form-control" value={useState.email} name="email" type='text'/> <br/>
-                <button type='submit' className="btn btn-primary">Submit</button>
+                <button type='submit' className="white-blue-buttons">Submit</button>
                 </form>   
             </div>
             <div className="center"> 

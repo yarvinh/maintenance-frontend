@@ -46,7 +46,7 @@ const ForgotPassword = (props) =>{
                 <form onSubmit={handleOnSubmit} className="form">
                 <label >Enter your username:</label >
                 <input  onChange={handleOnChange} className="form-control" value={user.username} name="username" type='text'/> <br/>
-                <button type='submit' className="btn btn-primary">Submit</button>
+                <button type='submit' className="white-blue-buttons">Submit</button>
                 </form>   
             </div>
             <div className="center"> 

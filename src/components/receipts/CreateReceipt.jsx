@@ -1,8 +1,8 @@
-import React, {useState} from 'react';
+import  {useState} from 'react';
 import { connect } from 'react-redux';
-import '../../styles/styles.css'
 import { useParams} from 'react-router-dom';
 import {createReceipts} from '../../actions/receiptsActions'
+import imageCompression from 'browser-image-compression';
 import Errors from '../Errors';
 import Loading from '../Loading'
 
@@ -14,9 +14,15 @@ const CreateReceipt=(props)=>{
     })
 
     const handleOnChange=(e)=>{
+        const options = {
+            maxSizeMB: 1,
+            maxWidthOrHeight: 1920,
+            useWebWorker: true
+        }
         const formData = new FormData(); 
-        Array.from(e.target.files).forEach((file)=>{             
-            formData.append("file[]", file);  
+        Array.from(e.target.files).forEach( async (file)=>{    
+            const compressedFile = await imageCompression(file, options);  
+            formData.append("file[]", compressedFile);  
         })
 
         setReceipts({

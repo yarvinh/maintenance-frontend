@@ -4,7 +4,7 @@ import '../../styles/styles.css'
 import { useParams} from 'react-router-dom';
 import {createImage,updateImage} from '../../actions/actionsProfileImages'
 import {clearErrors} from '../../actions/errorsActions'
-// import FormData from 'form-data'
+import imageCompression from 'browser-image-compression';
 
 const UploadProfileImage = (props)=>{
     const {employeeOrUser,user} = props
@@ -14,9 +14,16 @@ const UploadProfileImage = (props)=>{
         image: ""
     })
 
-    const handleOnChange=(e)=>{
-        const formData = new FormData();            
-        formData.append("image",e.target.files[0]);  
+    const handleOnChange= async (e)=>{
+        const options = {
+            maxSizeMB: 1,
+            maxWidthOrHeight: 1920,
+            useWebWorker: true
+        }
+
+        const formData = new FormData();    
+        const compressedFile = await imageCompression(e.target.files[0], options);         
+        formData.append("image",compressedFile);  
         setImage({
             image: formData,
         })
@@ -41,7 +48,7 @@ const UploadProfileImage = (props)=>{
             <form className="files-input"  onSubmit={handleOnSubmit}>    
                 <input  onChange={handleOnChange} type="file"  name="profile_picture"/> 
                 <br></br>
-                <button type='submit' className="btn btn-primary submit-image">Save image</button>
+                <button type='submit' className="white-blue-buttons">Save image</button>
             </form>
         </div>
     )

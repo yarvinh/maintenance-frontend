@@ -12,10 +12,6 @@ const Home = (props)=>{
     return (
       <section>
           <WorkOrdersContainer fromHome={true} workOrders={pendingWorkOrders}/>
-          <br/>
-          <br/>
-          <br/>
-          <div className='empty-space'></div>
       </section>
     )
 }

@@ -3,18 +3,18 @@
 }
 
 .standar-button{
+  margin:1rem;
   font-size: 16px;
   color: black;
   width: 160px;
   height: 31px;
   position:static;
-  border-radius: .5rem;
+  border-radius: .2rem;
   border-width: 1px;
   border-style: solid;
   border-color:  #777;
   text-align: center;
   background-color: #efefef;
-  border-radius: .5rem;
 }
 
 
@@ -292,8 +292,13 @@
   border-radius: .5rem;
 }
 
+
 .back-button:hover{
   background-color: rgb(186, 181, 181);
 }
 
+.accor-diplay-form{
+  align-items: center;
+  justify-content: center;
+}
 

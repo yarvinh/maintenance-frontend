@@ -48,7 +48,7 @@ const SignUp = (props) => {
             <input onChange={handleOnChange} id='signUpPassword' className="form-control"  value={user.password} name="password" type='password'/> <br/>
             <label htmlFor='signUpConfirmPassword'> Confirm password:</label >
             <input onChange={handleOnChange} id="signUpConfirmPassword" className="form-control"  value={user.password_confirmation} name="password_confirmation" type='password'/> <br/>
-            <button type='submit' className="btn btn-primary">Submit</button>
+            <button type='submit' className="white-blue-buttons">Submit</button>
             <div className="center"> 
             {errorsOrMessages?.from === "create_user"?<Errors errorsOrMessages={errorsOrMessages}/>:null}
         </div>  

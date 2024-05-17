@@ -98,13 +98,9 @@ const EditEmployee = (props) =>{
                     
                 </form>  
               </div> 
-              <br/>
-              <br/>
-              <br/>
+
               <button className="back-button"  onClick={goBack}> {"<< Back"} </button>
-              <br/>
-              <br/>
-              <br/>  
+
             </div>
         </div> 
     )

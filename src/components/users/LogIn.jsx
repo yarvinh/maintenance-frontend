@@ -60,7 +60,7 @@ const LogIn = (props) => {
             <input id='login-username' className="form-control" onChange={handleOnChange} name="username" type="text" value={user.username}/>
             <label htmlFor='login-password' className="form-label">Password</label >
             <input id='login-password' className="form-control" onChange={handleOnChange } name="password" type="password" value={user.password}/>
-          <button  className="my-4 btn btn-primary" type="submit">Login</button>
+          <button  className="white-blue-buttons" type="submit">Login</button>
 
         </form>
          {login ? redirect():null}

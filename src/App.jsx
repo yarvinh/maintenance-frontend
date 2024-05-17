@@ -36,6 +36,7 @@ import {verificationSessionToken,removeLoginToken} from "./componentsHelpers/tok
 import Anime from "./components/Anime"
 import { getFetchAction } from './actions/fetchActions';
 import { CURRENT_USER_SETTER, WORKORDERS_SETTER } from './componentsHelpers/fetchingConstants';
+import Footer from './components/Footer';
 
 const App  = (props) => {
   let { user ,workOrders,acordion,userLoading,verificationSession} = props
@@ -72,7 +73,7 @@ const App  = (props) => {
 
   return (
     <BrowserRouter >
-      <div onClick={handleOnAcordion} className="App text-font">
+      <div onClick={handleOnAcordion} className="App text-font body">
         <NavBarContainer/>
         <section>
           <div>
@@ -110,6 +111,7 @@ const App  = (props) => {
             <Route exact path='/anime' element={<Anime/>} />   
         </Routes>
         </main>
+        <Footer/>
       </div>  
     </BrowserRouter>    
   ); 

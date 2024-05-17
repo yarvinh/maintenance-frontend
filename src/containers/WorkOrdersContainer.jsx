@@ -17,10 +17,6 @@ const WorkOrdersContainer = (props)=>{
        setWorkOrders(props.workOrders)
     },[props.workOrders])
 
-    // useEffect(()=>{
-    //   props.clearErrors()
-    // },[])
-
     const goBack = (e) => {
         return navigate(-1)
     }
@@ -78,7 +74,7 @@ const WorkOrdersContainer = (props)=>{
             </div>
             <br></br>
             <button  onClick={goBack}  className="back-button"> {"<< Back"} </button>
-            <div className='empty-space'></div>
+ 
        </div>
    )
 }
