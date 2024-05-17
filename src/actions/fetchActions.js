@@ -12,9 +12,12 @@ export const getFetchAction = ({path,type, stateName}) => {
         .then(response => {
           dispatch({ type: type, [stateName]: response})
         })
-        .catch( error => 
-            dispatch({ type: 'ERRORS_OR_MESSAGES', errorOrMessages: ['Something went wrong with the server, please try again later.']})
-        )
+        .catch( error => {
+          console.log(error)
+          throw "Something went wrong with the server, please try again later."
+        })
+            // dispatch({ type: 'ERRORS_OR_MESSAGES', errorOrMessages: ['Something went wrong with the server, please try again later.']})
+        // )
     }
 }
 
@@ -56,7 +59,7 @@ export const postFetchAction = ({path, type, stateName,params}) => {
             dispatch({ type: type.addItem, [itemName]: response.data})
             dispatch({ type: type.addItemToArray, [arrayName]: array})
           }
-        })
+        }).catch((err => console.log(err)))
     }
   }
   

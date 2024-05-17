@@ -10,13 +10,13 @@ const Home = (props)=>{
     const pendingWorkOrders = pendingUserWorkOrders({workOrders: workOrders,user: user})
 
     return (
-      <div>
+      <section>
           <WorkOrdersContainer fromHome={true} workOrders={pendingWorkOrders}/>
           <br/>
           <br/>
           <br/>
           <div className='empty-space'></div>
-      </div>
+      </section>
     )
 }
 

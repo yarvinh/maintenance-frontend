@@ -10,14 +10,14 @@ const HomeWithoutLogin = ({errorsOrMessages,fetchAppContent}) => {
     return <Navigate to='/login'/>
   } else {
     return(
-      <div className="no-login-home">
+      <section className="no-login-home">
         <section className='home-links-container'>
-          <section className='personal-account-form'>
+          <div className='personal-account-form'>
             <CreateEmployees/>
-          </section>
-          <section className="login-section">
+          </div>
+          <div className="login-section">
             <LogIn  fetchAppContent={fetchAppContent}/>
-          </section>
+          </div>
         </section>
         
         <section className='try-it-container'>
@@ -27,7 +27,7 @@ const HomeWithoutLogin = ({errorsOrMessages,fetchAppContent}) => {
           </p>
         </section>
   
-      </div>
+      </section>
     )
   }
 }

@@ -197,7 +197,6 @@
 .auto_height_for_task-textarea { 
   max-width: 30rem; 
   width: 70%;
-  /* min-width: 20rem; */
   min-height: 30px;
   border-width: 3px;
   border-style: solid;
@@ -372,7 +371,6 @@
 }
 
 .add-unit{
-  /* margin-top: 4px; */
   padding: 0;
   width: 75%;
   max-width: 10rem;
@@ -451,8 +449,6 @@ height: 20rem;
   width: 70%;
   margin: auto;
   border-radius: .5rem;
-  /* background-color: aliceblue; */
-  /* box-shadow: 5px 5px 5px 5px #d3d2d0; */
 }
 
 .personal-account-form{
@@ -479,7 +475,6 @@ height: 20rem;
   width: 100%;
   max-width: 500px;
   background-color: #eee;
-  /* background-color: aliceblue; */
   border-width: 3px;
   padding: 1px;
   border-width: 3px;
@@ -491,17 +486,12 @@ height: 20rem;
 
 .login-message-button:hover {
   background-color: rgb(186, 181, 181);
-  /* background-color: #eee; */
 } 
 
 .login-a-color{
-  /* background-color: aliceblue; */
   max-width: 350px;
   margin: auto;
   transition: 0.4s; 
-  /* box-shadow: 5px 5px 5px 0px #d3d2d0; */
-  /* display: flex; */
-  /* justify-content: center; */
 }
 
 .login-a-color:hover{
@@ -516,10 +506,3 @@ height: 20rem;
   justify-content: center;
 }
 
-/* 
-.work-order-detail{
-  display: flex;
-  justify-content: center;
-  justify-items: center;
-
-} */

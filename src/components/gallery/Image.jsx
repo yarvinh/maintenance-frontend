@@ -1,7 +1,7 @@
 
 const Image = (props)=>{
     const {image_url,index,id} = props
-
+    
     const style = ()=>{
         if(index === id){
             const element = document.getElementById(index)

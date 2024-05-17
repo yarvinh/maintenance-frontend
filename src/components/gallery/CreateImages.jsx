@@ -5,6 +5,7 @@ import { useParams} from 'react-router-dom';
 import {createGalleryImages} from '../../actions/galleryActions'
 import Errors from '../Errors';
 import Uploading from '../Loading';
+import imageCompression from 'browser-image-compression';
 
 const CreateImages=(props)=>{
     const {user,errorsOrMessages,uploading} = props
@@ -13,11 +14,17 @@ const CreateImages=(props)=>{
         images: [] 
     })
 
-    const handleOnChange=(e)=>{
-
+    const handleOnChange =  (e)=>{
+        const options = {
+            maxSizeMB: 1,
+            maxWidthOrHeight: 1920,
+            useWebWorker: true
+          }
+    
         const formData = new FormData(); 
-        Array.from(e.target.files).forEach((file)=>{             
-            formData.append("file[]", file);  
+        Array.from(e.target.files).forEach(async (file)=>{   
+            const compressedFile = await imageCompression(file, options);      
+            formData.append("file[]", compressedFile);  
         })
 
         setImages({
