@@ -4,6 +4,7 @@ import {baseUrl} from './actionsHelper'
 
 
 export const getFetchAction = ({path,type, stateName}) => { 
+  console.log(baseUrl())
     return (dispatch) => {
       dispatch({ type: 'LOADING'})
         fetch(`${baseUrl()}${path}`, 
