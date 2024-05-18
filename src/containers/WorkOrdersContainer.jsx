@@ -2,7 +2,7 @@ import React, { useState,useEffect} from 'react';
 import CreateWorkOrder from "../components/workorders/CreateWorkOrder"
 import { connect } from 'react-redux';
 import WorkOrder from "../components/workorders/WorkOrder"
-import {useNavigate} from 'react-router-dom';
+// import {useNavigate} from 'react-router-dom';
 import { clearErrors } from '../actions/errorsActions';
 import {getSearchWorkOrders,workOrderSelector} from "../componentsHelpers/workOrdersHelper"
 
@@ -10,16 +10,16 @@ const WorkOrdersContainer = (props)=>{
     let {employees,buildings,employee,building,fromHome,user} = props
     const [workOrders,setWorkOrders] = useState([])
     const [searchBoxValue, setSearchBoxValue] = useState('')
-    let navigate = useNavigate()
+    // let navigate = useNavigate()
 
     useEffect(()=>{
      if (props.workOrders?.length > 0)
        setWorkOrders(props.workOrders)
     },[props.workOrders])
 
-    const goBack = (e) => {
-        return navigate(-1)
-    }
+    // const goBack = (e) => {
+    //     return navigate(-1)
+    // }
 
     const handleOnChange = (e)=>{
         setSearchBoxValue(e.target.value)
@@ -72,9 +72,6 @@ const WorkOrdersContainer = (props)=>{
                 :
                     <h3 className='text'>You have no work orders to display at this moment</h3>}  
             </div>
-            <br></br>
-            <button  onClick={goBack}  className="back-button"> {"<< Back"} </button>
- 
        </div>
    )
 }

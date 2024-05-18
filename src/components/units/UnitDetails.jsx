@@ -33,7 +33,7 @@ const UnitsDetails = (props)=>{
     }
  
     return (
-        <div>
+        <section>
             <div className="container d-flex ">
                 <div className="card-container mb-3 car-shadow">
                     {user.admin ? <i onClick={handleOnClick}  className="fa-solid fa-trash-can delete-task "></i>:null} 
@@ -55,11 +55,7 @@ const UnitsDetails = (props)=>{
                 </div>
     
             </div>
-            <br/>
-            <br/>
-            <button  className="back-button" onClick={goBack}> {"<< Back"} </button>
-            <div className='empty-space'></div>
-        </div>
+        </section>
             
     ) 
    

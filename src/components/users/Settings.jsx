@@ -47,7 +47,7 @@ const Settings = (props) =>{
     
     return( 
         
-        <div>
+        <section>
             <div  className='settings-forms standar-form-position'>
                 <UploadProfileImage employeeOrUser={"user"} user={currentUser}/>
                 
@@ -94,15 +94,8 @@ const Settings = (props) =>{
                     </div>
                     <br></br>
                 </div>
-                <br/>
-            <button className='back-button' onClick={goBack}> {"<< Back"} </button>
-            <br/>
-            <br/>
-            <br/> 
-
             </div>
-        </div>
-      
+        </section>  
   )
 }
 

@@ -70,11 +70,10 @@ const CreateBuilding = (props) =>{
               <input id='c-b-tax-lot' onChange={handleOnChange}  name="lot" className="standar-input acordion" type="text" value={building.lot}/><br/>
               <label htmlFor='cb-tax-block' className='acordion'>Tax block</label>
               <input id='c-b-tax-block' onChange={handleOnChange}  name="block" className="standar-input acordion" type="text" value={building.block}/><br/>
-              <button type='submit' className="btn btn-primary acordion">Submit</button>
+              <button type='submit' className="white-blue-buttons acordion">Submit</button>
           </form> 
         </div>    
     </div>
-    <br/>
     </div>
 </div>
   )

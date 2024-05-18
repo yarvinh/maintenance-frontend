@@ -20,7 +20,7 @@ const EditBuilding = (props) =>{
     })
 
     useEffect(() => {
-        if (errorsOrMessages.errors.length > 0){
+        if (errorsOrMessages.errors?.length > 0){
           props.clearErrors()
         }
     },[ ]);

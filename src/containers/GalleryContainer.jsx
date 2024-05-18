@@ -3,11 +3,11 @@ import { connect } from 'react-redux';
 import {getImages} from '../actions/galleryActions'
 import Image from "../components/gallery/Image"
 import CreateImages from '../components/gallery/CreateImages';
-import {useNavigate, useParams,Navigate} from 'react-router-dom';
+import { useParams,Navigate} from 'react-router-dom';
 import ImgSlider from '../components/gallery/ImgSlider';
 
 const GalleryContainer = (props)=>{  
-    let navigate = useNavigate()
+
     const {id} = useParams()
     const {user,loading} = props.user
     const {gallery} = props
@@ -18,10 +18,6 @@ const GalleryContainer = (props)=>{
 
     const handleOnclick = (e)=>{
         setIndex(parseInt(e.currentTarget.id))
-    }
-
-    const goBack = (e) => {
-        return navigate(-1)
     }
 
     const displayImages=()=>{
@@ -60,13 +56,7 @@ const GalleryContainer = (props)=>{
                   {gallery.length > 0 ?<strong>{gallery.length} images</strong>:null }
                 </div>
             </div>
-            <br></br>
-            <br></br>
-            <div className='gallery-back-button'>
-              <button  onClick={goBack}  className="back-button"> {"<< Back"} </button>
-            </div>
-            <br></br>
-            <br></br>
+   
        </div>
    ) 
 }

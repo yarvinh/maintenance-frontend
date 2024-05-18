@@ -56,7 +56,8 @@ const BuildingDetails = (props)=>{
                            
                         </div> 
                         <div className='building-warning'>
-                            {building.bin ? <Link to={`/buildings/${building.bin}/dob_violations`} >DOB Violations</Link>  :<p>Bin number must exist to see dob violations</p>}
+                            {building.bin ? <Link to={`/buildings/${building.bin}/dob_violations`} >DOB Violations</Link>  :<p>Bin number must exist to see dob violations</p>}<br/>
+                            {building.bin ? <Link to={`/buildings/${building.bin}/hpd_complaints`} >HPD complaints</Link>  :<p>Bin number must exist to see hpd complaints</p>}<br/>
                             {building.lot && building.block ? <Link to={`/buildings/${building.lot}/hpd_violations/${building.block}`} >HPD Violations</Link>: <p>Lot and block must exist to see HPD violations.</p> } <br/>
                         </div>
                         {user.admin || user.user?.user_id? <UnitsContainer building={building}/>:<strong className='building-warning'>You are not an authorize user to see units</strong>}
@@ -64,7 +65,6 @@ const BuildingDetails = (props)=>{
                 </div>
             </div>
             {building.id? <WorkOrdersContainer  building={building} workOrders={buildingWorkOrders} user={props.user}/>:null}
-            <div className='empty-space'></div>
         </div>     
     )
 };

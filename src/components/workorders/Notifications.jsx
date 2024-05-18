@@ -10,7 +10,7 @@ const Notification = (props)=>{
     if (acceptedWorkOrders?.length > 0){
       return (
         <div className="notifications">
-            <Link to={'/pending_to_accept'}>   
+            <Link to={'/pending_to_accept'} className="notifications">   
               <p>You Have {acceptedWorkOrders.length} new workOrder{acceptedWorkOrders.length > 1?"s":null}</p> 
             </Link>
         </div>

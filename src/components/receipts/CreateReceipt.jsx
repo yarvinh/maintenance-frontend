@@ -47,7 +47,7 @@ const CreateReceipt=(props)=>{
                 <form  onSubmit={handleOnSubmit}>    
                    <input  onChange={handleOnChange} type="file" multiple name="receipts" className='imgs-input' />
                    <br></br>
-                   <button type='submit' className="imgs-button">Save image</button>
+                   <button type='submit' className="white-blue-buttons">Save image</button>
                    {errorsOrMessages.from === "add_receipts" ?<Errors errorsOrMessages={errorsOrMessages}/> : null}
                 </form>
                 </div>

@@ -1,15 +1,15 @@
-import React, {useState} from 'react';
+import {useState} from 'react';
 import { connect } from 'react-redux';
 import CreateEmployees from '../components/employees/CreateEmployees'
 import Employee from "../components/employees/Employee"
-import {useParams,useNavigate} from 'react-router-dom';
+import {useParams} from 'react-router-dom';
 import {searchEmployees} from "../actions/employeesActions"
 import { useEffect } from 'react';
 import {employeesFilter} from '../componentsHelpers/employees'
 import { getFetchAction } from '../actions/fetchActions';
 import { EMPLOYEES_SETTER } from '../componentsHelpers/fetchingConstants';
 const EmployeesContainer = (props) => {
-    let navigate = useNavigate()
+
     let {admin,user} = props.user
     const {id} = useParams()
     const [employees, setEmployees] = useState([])
@@ -22,9 +22,6 @@ const EmployeesContainer = (props) => {
           setEmployees(props.employees)
     },[props.employees])
     
-    const goBack = (e) => {
-        return navigate(-1)
-    }
 
    let handleOnChange = (e)=>{
         const filteredEmployees = employeesFilter({employees: props.employees,value: e.target.value.toLowerCase()})
@@ -77,8 +74,6 @@ const EmployeesContainer = (props) => {
             <div>
               {!id && props.employees?.length > 0 ? renderEmployees(): <h3 className='text'>You have no employees to display at this moment</h3> }
             </div>
-            <button className="back-button"  onClick={goBack}> {"<< Back"} </button>
-            <div className='empty-space'></div>
         </div>
     )
 }

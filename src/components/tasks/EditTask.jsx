@@ -50,7 +50,7 @@ const EditTask = (props) => {
         <div className='task'>
             <div onClick={handleOnClick}>
                 <form onSubmit={handleOnSubmit}>
-                <input onChange={handleOnChange} disabled={disable.disable} type="text" value={task.task}/>
+                  <input onChange={handleOnChange} disabled={disable.disable} type="text" value={task.task}/>
                 </form>
             </div>
             <div>

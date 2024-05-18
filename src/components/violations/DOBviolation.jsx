@@ -39,14 +39,14 @@ const DOBviolation = (props)=>{
 
     return (
         <div >
-            <button onClick={handleOnclick} className={acordion.acordion}>Issue Date: {date(violation.issue_date)}</button>
-            <div className={acordion.display}>
+            {/* <button onClick={handleOnclick} className={acordion.acordion}>Issue Date: {date(violation.issue_date)}</button> */}
+            {/* <div className={acordion.display}> */}
                 <div className="container d-flex justify-content-center align-items-center">
                     <div >
                         <br/>
                         <br/>
-                        <div className="container d-flex justify-content-center">
-                            <div className="card-container mb-3">
+                        <div className="justify-content-center">
+                            <div className="mb-3">
                                 <div >
                                     <h3 className="card-header">{violation.house_number} {violation.street}</h3>
                                 </div>
@@ -69,7 +69,7 @@ const DOBviolation = (props)=>{
                     </div>
                 </div>   
             </div>
-        </div>
+        // </div>
     )
 };
 

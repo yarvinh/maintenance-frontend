@@ -2,14 +2,13 @@ import {useState,useEffect} from 'react';
 import { connect } from 'react-redux';
 import CreateBuilding from '../components/buildings/CreateBuilding'
 import Building from "../components/buildings/Building"
-import {useParams,useNavigate} from 'react-router-dom';
+import {useParams} from 'react-router-dom';
 import {searchBuilding} from "../actions/buildingsActions"
 import {buildingsFilter} from '../componentsHelpers/buildings'
 import { getFetchAction } from '../actions/fetchActions';
 import {BUILDINGS_SETTER} from '../componentsHelpers/fetchingConstants';
 
 const BuildingsContainer = (props) => {
-    let navigate = useNavigate()
     let {admin,user} = props.user
     const {id} = useParams()
     const [buildings, setBuildings] = useState([])
@@ -21,10 +20,6 @@ const BuildingsContainer = (props) => {
     useEffect(()=>{
         setBuildings(props.buildings)
     },[props.buildings])
-
-    const goBack = (e) => {
-        return navigate(-1)
-    }
 
     const handleOnChangeSearch = (e) => {
       setSearchBoxValue(e.target.value)
@@ -62,7 +57,7 @@ const BuildingsContainer = (props) => {
     }
 
     return (
-        <div >
+        <section>
             {!id ? <CreateBuilding />: null }
             <br/>
             <div className="center">
@@ -76,11 +71,8 @@ const BuildingsContainer = (props) => {
             <br/>
             <div>
               {!id && buildings !== 0? renderBuildings(): <h3 className='text'>You have no buildings to display at this moment</h3> }
-            </div>
-            <br></br>
-            <button  className="back-button" onClick={goBack}> {"<< Back"} </button>
-            <div className='empty-space'></div>
-        </div>
+            </div> 
+        </section>
     )   
 }
 

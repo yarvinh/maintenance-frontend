@@ -44,12 +44,6 @@ const ReceiptsContainer = (props)=>{
                 <CreateReceipt user={user.user} workOrderId={id}/>
                {loading || user.is_login? displayImages(): <Navigate to='/login'/>}
             </div>
-            <br></br>
-            <br></br>
-            <br></br>
-            <button  onClick={goBack}  className="back-button"> {"<< Back"} </button>
-            <br></br>
-            <br></br>
        </div>
    )
 }

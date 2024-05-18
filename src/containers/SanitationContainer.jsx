@@ -1,7 +1,7 @@
 import {ViolationsFetch} from "../actions/violationsActions"
 import React, {useEffect } from 'react';
 import { connect } from 'react-redux';
-import Sanitation from '../components/buildings/HPDviolation'
+import Sanitation from '../components/violations/HPDviolation'
 import {useParams} from 'react-router-dom';
 
 const SanitationContainer = (props)=>{

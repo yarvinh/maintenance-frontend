@@ -1,7 +1,7 @@
 import {ViolationsFetch} from "../actions/violationsActions"
-import React, {useEffect } from 'react';
+import {useEffect } from 'react';
 import { connect } from 'react-redux';
-import HPDviolation from '../components/buildings/HPDviolation'
+import HPDviolation from '../components/violations/HPDviolation'
 import {useParams} from 'react-router-dom';
 
 const HPDviolationsContainer = (props)=>{
@@ -36,4 +36,4 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-  export default connect(mapStateToProps, mapDispatchToProps)(HPDviolationsContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(HPDviolationsContainer)

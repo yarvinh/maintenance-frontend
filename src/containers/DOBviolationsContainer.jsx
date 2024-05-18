@@ -1,7 +1,7 @@
 import {ViolationsFetch} from "../actions/violationsActions"
 import React, {useEffect } from 'react';
 import { connect } from 'react-redux';
-import DOBviolation from '../components/buildings/DOBviolation'
+import DOBviolation from '../components/violations/DOBviolation'
 import {useParams} from 'react-router-dom';
 const DOBviolationsContainer = (props)=>{
     const {bin} = useParams()

@@ -37,6 +37,9 @@ import Anime from "./components/Anime"
 import { getFetchAction } from './actions/fetchActions';
 import { CURRENT_USER_SETTER, WORKORDERS_SETTER } from './componentsHelpers/fetchingConstants';
 import Footer from './components/Footer';
+import NavBackButton from './components/NavBackButton';
+import HpdComplaintsContainer from './containers/HpdComplaintsContainer';
+
 
 const App  = (props) => {
   let { user ,workOrders,acordion,userLoading,verificationSession} = props
@@ -102,6 +105,7 @@ const App  = (props) => {
             <Route exact path='/settings/:id' element={<Settings />}/>
             <Route exact path='/documentation' element={<Documentation/>}/>
             <Route path='/buildings/:bin/dob_violations' element={<DOBviolationsContainer/>}/>
+            <Route path='/buildings/:bin/hpd_complaints' element={<HpdComplaintsContainer/>}/>
             <Route path='/buildings/:lot/hpd_violations/:block' element={<HPDviolationsContainer/>}/>
             <Route exact path='/work_orders/:id/receipts' element={<ReceiptsContainer/>}/>
             <Route exact path='/work_orders/:id/gallery' element={<GalleryContainer/> }/>
@@ -111,6 +115,7 @@ const App  = (props) => {
             <Route exact path='/anime' element={<Anime/>} />   
         </Routes>
         </main>
+        <NavBackButton/>
         <Footer/>
       </div>  
     </BrowserRouter>    

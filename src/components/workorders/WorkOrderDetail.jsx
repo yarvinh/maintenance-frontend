@@ -58,9 +58,6 @@ const WorkOrderDetails = (props)=>{
       return !admin && user.user?.work_orders?.find((w)=> workOrder.id === w.id) 
     }
 
-    const goBack = (e) => {
-      return navigate(-1)
-    }
 
     const handleOnClick = (e) =>{
       let message = e.target.name === "employee" ?  "Are you sure you to remove this employee"
@@ -120,8 +117,6 @@ const WorkOrderDetails = (props)=>{
             <div>
                 {user ? <CommentsContainer  user={user} admin={admin}/>:null}
             </div>
-            <br></br>
-            <button  onClick={goBack} className="back-button"> {"<< Back"} </button>
         </section>
     )
 };

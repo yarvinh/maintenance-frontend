@@ -49,7 +49,7 @@ const CreateTenant = (props) =>{
                         <input onChange={handleOnChange}  placeholder="Tenant name" name="name" className="standar-input acordion" type="text" value={tenant.name}/><br></br>
                         <input onChange={handleOnChange}  placeholder="Tenant phone #" name="phone" className="standar-input acordion" type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required value={tenant.phone}/><br></br>
                         <input onChange={handleOnChange}  placeholder={"Tenant email"} className="standar-input acordion"  type="email"  name="email" value={tenant.email}/> <br/>
-                        <button type='submit' className="btn btn-primary  acordion">Save</button>
+                        <button type='submit' className="white-blue-buttons  acordion">Save</button>
                     </form>    
                 </div>
             </div>

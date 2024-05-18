@@ -105,7 +105,7 @@ const CreateWorkOrder = (props) => {
                     <input onChange={handleOnChange} className="standar-input acordion" name="title"  type="text" value={workOrder.title}/><br/>
                     <label className='acordion'>Unit</label> <br/>
                     <input onChange={handleOnChange} className="standar-input acordion" name="unit" value={workOrder.unit}/><br/><br/>
-                    <button type='submit' className="btn btn-primary acordion">Submit</button>
+                    <button type='submit' className="white-blue-buttons acordion">Submit</button>
                 </form>     
                 <br/>
             </div>
