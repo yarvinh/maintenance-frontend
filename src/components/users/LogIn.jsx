@@ -43,35 +43,31 @@ const LogIn = (props) => {
     }
 
     return(
-      <div>
-           {verificationSession && verificationSessionToken()? <Navigate to="/verifying_email"/> : null }
-           <div className="center login-messages" > 
-           {errorsOrMessages.from === "login" ? <Errors errorsOrMessages={errorsOrMessages}/> : null}
-          </div>
-          <div className='center login-messages'>
-            <button onClick={handleOnClick} className="login-message-button" >Login to {text} account</button>
-          </div>
-         
-         
-       <div className="container h-100  d-flex  justify-content-center align-items-center">
-        <form onSubmit={handleOnSubmit} className="form">
+      <section>
+        {verificationSession && verificationSessionToken()? <Navigate to="/verifying_email"/> : null }
+        <div className="center login-messages" > 
+          {errorsOrMessages.from === "login" ? <Errors errorsOrMessages={errorsOrMessages}/> : null}
+        </div>
+        <div className='center login-messages'>
+          <button onClick={handleOnClick} className="login-message-button" >Login to {text} account</button>
+        </div>
+        <div className="container h-100  d-flex  justify-content-center align-items-center">
+          <form onSubmit={handleOnSubmit} className="form">
             <br/>
             <label htmlFor='login-username' className="mt-3 form-label">Username</label>
             <input id='login-username' className="form-control" onChange={handleOnChange} name="username" type="text" value={user.username}/>
             <label htmlFor='login-password' className="form-label">Password</label >
             <input id='login-password' className="form-control" onChange={handleOnChange } name="password" type="password" value={user.password}/>
-          <button  className="white-blue-buttons" type="submit">Login</button>
-
-        </form>
+            <button  className="white-blue-buttons" type="submit">Login</button>
+          </form>
          {login ? redirect():null}
-      </div>
-      <div  className="center">
-        <Link to="/password_recovery" className="nav-link login-a-color">Forgot password?</Link>
-        <Link to="/username_recovery" className="nav-link login-a-color">Forgot username?</Link>
-        <Link  to="/signup" className="nav-link login-a-color">Sign up as business account?</Link> 
-      </div>
-      <br/>
-      </div>
+        </div>
+        <div  className="center">
+          <Link to="/password_recovery" className="nav-link login-a-color">Forgot password?</Link>
+          <Link to="/username_recovery" className="nav-link login-a-color">Forgot username?</Link>
+          <Link  to="/signup" className="nav-link login-a-color">Sign up as business account?</Link> 
+        </div>
+      </section>
     );
 };
 

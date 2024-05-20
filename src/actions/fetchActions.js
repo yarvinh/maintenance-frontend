@@ -1,10 +1,9 @@
 import axios from 'axios'
-import {token,verificationToken,removeLoginToken} from '../componentsHelpers/token'
+import {token} from '../componentsHelpers/token'
 import {baseUrl} from './actionsHelper'
 
 
 export const getFetchAction = ({path,type, stateName}) => { 
-  console.log(baseUrl())
     return (dispatch) => {
       dispatch({ type: 'LOADING'})
         fetch(`${baseUrl()}${path}`, 
@@ -14,11 +13,8 @@ export const getFetchAction = ({path,type, stateName}) => {
           dispatch({ type: type, [stateName]: response})
         })
         .catch( error => {
-          console.log(error)
           throw "Something went wrong with the server, please try again later."
         })
-            // dispatch({ type: 'ERRORS_OR_MESSAGES', errorOrMessages: ['Something went wrong with the server, please try again later.']})
-        // )
     }
 }
 

@@ -32,7 +32,7 @@ const ForgotUsername = (props) =>{
 
 
     return (
-        <div>
+        <section>
             <div className="container d-flex justify-content-center align-items-center">
                 <form onSubmit={handleOnSubmit} className="form">
                 <label >Enter your email:</label >
@@ -42,9 +42,8 @@ const ForgotUsername = (props) =>{
             </div>
             <div className="center"> 
               {errorsOrMessages.from === 'forgot_username' ?<Errors errorsOrMessages={errorsOrMessages}/> : null}
-              {/* {errorsOrMessages.map((e,k) => {return <p key={k}>{e}</p>})} */}
             </div> 
-        </div>
+        </section>
     )
 
 

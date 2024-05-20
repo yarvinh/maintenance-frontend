@@ -47,54 +47,39 @@ const Settings = (props) =>{
     
     return( 
         
-        <section>
-            <div  className='settings-forms standar-form-position'>
-                <UploadProfileImage employeeOrUser={"user"} user={currentUser}/>
-                
-                <div className='center' > 
-                    {errorsOrMessages.from === "update_user" ? <Errors errorsOrMessages={errorsOrMessages}/>: null}          
-                    <div > 
-                        <strong>Name: {currentUser.user?.name}</strong>
-                        <form onSubmit={(e)=>handleOnSubmit(e,"name")}>
-                            <input onChange={handleOnChange} value={user.name} placeholder={"Edit name"} className="standar-input" type="text" name="name"/>
-                            <button type='submit' className="standar-button">Save name</button>
-                        </form>
-                    </div>
-                    <br></br>
-                    <div >
-                        <strong>Address: {currentUser.user?.address}</strong>
-                        <form onSubmit={e => handleOnSubmit(e,'address')}>
-                            <input onChange={handleOnChange} value={user.address} placeholder={"Edit address"} className="standar-input"  type="address" name="address" />
-                            <button type='submit' className="standar-button">Save address</button>
-                        </form> 
-                    </div>
-                        <br/>
-                    <div> 
-                        <strong>Email: {currentUser.user?.email}</strong>
-                        <form onSubmit={ e=> handleOnSubmit(e,'email')}>
-                            <input onChange={handleOnChange}  value={user.email} placeholder={"Edit email"} className="standar-input"  type="email"  name="email"/>
-                            <button type='submit' className="standar-button">Save email</button>
-                        </form>
-                    </div>
-                    <br></br>
-                    <div> 
-                        <strong>Username: {currentUser.user?.username}</strong>
-                        <form onSubmit={e => handleOnSubmit(e,'username')}>
-                            <input onChange={handleOnChange}  value={user.username} placeholder={"Edit username"}className="standar-input"  type="text"  name="username"/>
-                            <button type='submit' className="standar-button">Save username</button>
-                        </form>
-                    </div>
-                    <br></br>
-                    <div> 
-                        <form onSubmit={e => handleOnSubmit(e,'password')}>  
-                            <input onChange={handleOnChange} value={user.password} placeholder={"Enter new password"} className="standar-input"  type="password" name="password" /> 
-                            <input onChange={handleOnChange}  value={user.old_password} className="standar-input"  placeholder={"Enter old password"} type="password" name="old_password" />
-                            <button type='submit' className="standar-button">Save password</button>
-                        </form>  
-                    </div>
-                    <br></br>
-                </div>
-            </div>
+        <section className='settings-forms standar-form-position center'>
+            <UploadProfileImage employeeOrUser={"user"} user={currentUser}/>
+            {errorsOrMessages.from === "update_user" ? <Errors errorsOrMessages={errorsOrMessages}/>: null}          
+            <strong>Name: {currentUser.user?.name}</strong>
+            <form onSubmit={(e)=>handleOnSubmit(e,"name")}>
+                <input onChange={handleOnChange} value={user.name} placeholder={"Edit name"} className="standar-input" type="text" name="name"/>
+                <button type='submit' className="standar-button">Save name</button>
+            </form>
+
+            <strong>Address: {currentUser.user?.address}</strong>
+            <form onSubmit={e => handleOnSubmit(e,'address')}>
+                <input onChange={handleOnChange} value={user.address} placeholder={"Edit address"} className="standar-input"  type="address" name="address" />
+                <button type='submit' className="standar-button">Save address</button>
+            </form> 
+    
+        
+            <strong>Email: {currentUser.user?.email}</strong>
+            <form onSubmit={ e=> handleOnSubmit(e,'email')}>
+                <input onChange={handleOnChange}  value={user.email} placeholder={"Edit email"} className="standar-input"  type="email"  name="email"/>
+                <button type='submit' className="standar-button">Save email</button>
+            </form>
+
+            <strong>Username: {currentUser.user?.username}</strong>
+            <form onSubmit={e => handleOnSubmit(e,'username')}>
+                <input onChange={handleOnChange}  value={user.username} placeholder={"Edit username"}className="standar-input"  type="text"  name="username"/>
+                <button type='submit' className="standar-button">Save username</button>
+            </form>
+
+            <form onSubmit={e => handleOnSubmit(e,'password')}>  
+                <input onChange={handleOnChange} value={user.password} placeholder={"Enter new password"} className="standar-input"  type="password" name="password" /> 
+                <input onChange={handleOnChange}  value={user.old_password} className="standar-input"  placeholder={"Enter old password"} type="password" name="old_password" />
+                <button type='submit' className="standar-button">Save password</button>
+            </form>  
         </section>  
   )
 }

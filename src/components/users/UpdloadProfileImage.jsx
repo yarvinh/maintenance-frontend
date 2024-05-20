@@ -44,13 +44,10 @@ const UploadProfileImage = (props)=>{
     }
 
     return (
-        <div >
-            <form className="files-input"  onSubmit={handleOnSubmit}>    
-                <input  onChange={handleOnChange} type="file"  name="profile_picture"/> 
-                <br></br>
-                <button type='submit' className="white-blue-buttons">Save image</button>
-            </form>
-        </div>
+        <form className="files-input"  onSubmit={handleOnSubmit}>    
+            <input  onChange={handleOnChange} type="file"  name="profile_picture"/> 
+            <button type='submit' className="white-blue-buttons">Save image</button>
+        </form>
     )
 }
 

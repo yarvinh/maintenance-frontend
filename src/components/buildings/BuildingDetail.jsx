@@ -32,9 +32,7 @@ const BuildingDetails = (props)=>{
     }
 
     return (
-        <div className="text-font">
-            <br/>
-            <br/>
+        <section className="text-font">
             <div className="container d-flex ">
                 <div  className="card-container mb-3 car-shadow">
                     {user.admin ? <i onClick={handleOnClick}  className="fa-solid fa-trash-can delete-task "></i>:null} 
@@ -43,17 +41,14 @@ const BuildingDetails = (props)=>{
                             <h3 className="card-header">{building.address}</h3>
                         </div>
                         <div className="card-body">
-                            <div>
                               {building.id && building.user_id?<EditBuilding currentBuilding={building} />:null}
                               {building.id && !building.user_id?<EditBuilding currentBuilding={building} />:null}
-                            </div>
                             <span>Created date: {date(building.created_at)}</span> <br/>
                             <strong>Superintendent: {building.super_name}</strong><br></br>
                             <strong>contact: <a href={`tel:${building.phone_number}`}><span className="bottom">{building.phone_number}</span></a> </strong> <br></br>
                             <strong>Bin: {building.bin}</strong><br></br>
                             <strong>Lot: {building.lot}</strong><br></br>
-                            <strong>Block: {building.block}</strong> <br></br>
-                           
+                            <strong>Block: {building.block}</strong> <br></br> 
                         </div> 
                         <div className='building-warning'>
                             {building.bin ? <Link to={`/buildings/${building.bin}/dob_violations`} >DOB Violations</Link>  :<p>Bin number must exist to see dob violations</p>}<br/>
@@ -65,7 +60,7 @@ const BuildingDetails = (props)=>{
                 </div>
             </div>
             {building.id? <WorkOrdersContainer  building={building} workOrders={buildingWorkOrders} user={props.user}/>:null}
-        </div>     
+        </section>     
     )
 };
 

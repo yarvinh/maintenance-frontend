@@ -35,7 +35,6 @@ const SignUp = (props) => {
     return <NewUserInstructions/>
   } else if (!verificationSession ){
     return (
-      <div>
         <div className="container d-flex justify-content-center align-items-center">
           <form onSubmit={handleOnSubmit} className="form">
             <label className="mt-5" htmlFor="signUpName"> Name: </label>
@@ -50,12 +49,9 @@ const SignUp = (props) => {
             <input onChange={handleOnChange} id="signUpConfirmPassword" className="form-control"  value={user.password_confirmation} name="password_confirmation" type='password'/> <br/>
             <button type='submit' className="white-blue-buttons">Submit</button>
             <div className="center"> 
-            {errorsOrMessages?.from === "create_user"?<Errors errorsOrMessages={errorsOrMessages}/>:null}
-        </div>  
+              {errorsOrMessages?.from === "create_user"?<Errors errorsOrMessages={errorsOrMessages}/>:null}
+            </div>  
           </form> 
-        </div>
-        <br/>
-        <br/>
       </div>
     )
   } else {

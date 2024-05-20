@@ -37,7 +37,7 @@ const ForgotPassword = (props) =>{
         }
     
     return (
-        <div>
+        <section>
           <br/>
           <div className='center login-messages'>
             <button onClick={handleOnClick} className="login-message-button" >Recover {text} account password</button>
@@ -50,9 +50,9 @@ const ForgotPassword = (props) =>{
                 </form>   
             </div>
             <div className="center"> 
-            {errorsOrMessages.from === 'set_password_session' ? <Errors errorsOrMessages={errorsOrMessages}/>: null}
+              {errorsOrMessages.from === 'set_password_session' ? <Errors errorsOrMessages={errorsOrMessages}/>: null}
             </div> 
-        </div>
+        </section>
     )
 
 

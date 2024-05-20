@@ -1,4 +1,4 @@
-import React, {useState } from 'react';
+import {useState } from 'react';
 import { connect } from 'react-redux';
 import {createComment} from '../../actions/commentsActions'
 import {useParams} from 'react-router-dom';
