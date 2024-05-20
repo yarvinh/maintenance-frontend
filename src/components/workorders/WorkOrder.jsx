@@ -10,7 +10,7 @@ const WorkOrder = (props) => {
     const {user,admin} = props.user
     const acceptedWorkOrder = ()=>{
         const currentEmployee = workOrder.employees.find(emp => emp.id === user.id)
-        return  !workOrder.accepted && currentEmployee || !workOrder.accepted && admin ? "notifications"  : "accepted"
+        return  !workOrder.accepted && currentEmployee || !workOrder.accepted && admin ? "pending-work-orders"  : "accepted"
     }
 
     const workOrderEmployees=()=>{
