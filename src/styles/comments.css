@@ -40,6 +40,13 @@
     justify-content:center;
     align-items: center;
     max-width: 43rem;
+    margin: auto;
+  }
+
+  .comment-input{
+    align-items: center;
+    max-width: 43rem;
+    margin: auto;
   }
 
   .text-area {
@@ -63,6 +70,7 @@
     max-width: 43rem;
     border-radius: .5rem;
     box-shadow: 3px 5px 5px 5px #d3d2d0;
+    margin: auto;
   }
 
   .comments_container {
@@ -102,5 +110,13 @@
     border-radius: .20rem;
     margin-left: 98%; 
   }
+
+/* .comments-container{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+} */
   
   

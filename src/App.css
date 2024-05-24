@@ -539,6 +539,14 @@ height: 20rem;
   margin-bottom: 1rem;
 }
 
+.links{
+  list-style: none;
+  /* text-decoration: none; */
+}
 /* .form{
   align-items: center;
+} */
+/* .double-back-angle{
+  width: 20px;
+  margin-right: 15px;
 } */

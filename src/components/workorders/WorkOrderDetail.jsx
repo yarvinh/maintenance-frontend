@@ -74,10 +74,10 @@ const WorkOrderDetails = (props)=>{
     }
 
     return (
-        <section className="work-order-detail"> 
+        <section className="work-order-detail "> 
             <br/>
             <br/>
-            <div className="container d-flex "> 
+            <div className="container d-flex"> 
                 <div className="card-container mb-3 car-shadow">
                       {admin ? <button onClick={handleOnClick}  className='delete-x' name="work-order">X</button>:null} 
                       <div className="card-header">
@@ -111,12 +111,13 @@ const WorkOrderDetails = (props)=>{
                             { workOrder.id ?<TasksContainer userWorkorder={userWorkorder} workOrder={workOrder} user={user} admin={admin}/>:null}
                         </div>  
                       </div> 
+                      
                 </div>
+                
               </div> 
-              <br/><br/>
-            <div>
+              {/* <div className='container'> */}
                 {user ? <CommentsContainer  user={user} admin={admin}/>:null}
-            </div>
+              {/* </div> */}
         </section>
     )
 };

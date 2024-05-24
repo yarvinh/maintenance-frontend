@@ -16,8 +16,8 @@ const WorkOrder = (props) => {
     const workOrderEmployees=()=>{
         return workOrder.employees.map((employee)=>{
             return (
-                <li key={employee.id}>
-                   <Link to={`/employees/${employee.id}`}>{employee.name}</Link>
+                <li key={employee.id} className="links">
+                   <Link to={`/employees/${employee.id}`} className="links">{employee.name}</Link>
                 </li>
             )
         })
@@ -52,15 +52,15 @@ const WorkOrder = (props) => {
                 <td>  
                     <p>{date(workOrder.date)}</p>
                 </td>   
-                <td className="work_order_address"><Link to={`/buildings/${workOrder.building_id}`}><p>{workOrder.building? workOrder.building.address: "Missing"}</p> </Link></td>
+                <td className="work_order_address"><Link to={`/buildings/${workOrder.building_id}`} className="links"><p>{workOrder.building? workOrder.building.address: "Missing"}</p> </Link></td>
                 <td>
-                    <Link to={`/work_orders/${workOrder.id}`}> 
+                    <Link to={`/work_orders/${workOrder.id}`} className="links"> 
                         <span onClick={handleOnClick}>{workOrder.title}, Unit: {workOrder.unit}</span>
                     </Link>   
                 </td>
                 <td>
                     <dd>
-                    {workOrderEmployees()}
+                      {workOrderEmployees()}
                     </dd>
                 </td>
                 <td className="work_order_status">  

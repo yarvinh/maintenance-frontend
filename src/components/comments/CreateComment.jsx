@@ -63,12 +63,13 @@ const CreateComment = (props) => {
 
     return (
         <div>
-            <form className="title-form" onSubmit={handleOnSubmit} >
-
-                <input onChange={handleOnChange} className="comment-subject-input" placeholder={placeholder.subject} name="subject" type="text" value={comment.subject}/><br/>   
-                <div className="text-area-section">
-                    <textarea className='auto_height comment-text-area' onChange={handleOnChange} placeholder={placeholder.comment} name="comment" row='1' value={comment.comment}></textarea> 
-                    <input className='buttons' type="submit" value='Comment'/>
+            <form className="" onSubmit={handleOnSubmit} >
+                <div className="comment-input"> 
+                    <input onChange={handleOnChange} className="comment-subject-input" placeholder={placeholder.subject} name="subject" type="text" value={comment.subject}/><br/>   
+                </div>
+                <div className="text-area-section"> 
+                        <textarea className='auto_height comment-text-area' onChange={handleOnChange} placeholder={placeholder.comment} name="comment" row='1' value={comment.comment}></textarea> 
+                        <input className='buttons' type="submit" value='Comment'/>
                 </div>
             </form>
             {renderComment()}

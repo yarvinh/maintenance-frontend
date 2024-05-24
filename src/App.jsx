@@ -70,7 +70,6 @@ const App  = (props) => {
       props.getFetchAction(WORKORDERS_SETTER) 
     }
   },[user] ); 
-   console.log( window.location.pathname )
   if(!userLoading && !user.is_login) fetchTimesRef.current = 1  
 
   return (
