@@ -1,4 +1,4 @@
-import {useState } from 'react';
+import {useState,useRef } from 'react';
 import { connect } from 'react-redux';
 import {createComment} from '../../actions/commentsActions'
 import {useParams} from 'react-router-dom';
@@ -6,7 +6,7 @@ import {clearErrors} from '../../actions/errorsActions'
 
 
 const CreateComment = (props) => {
-
+    const inputRef = useRef()
     const {id} = useParams()
     let {error} = props.comment
   
@@ -31,8 +31,6 @@ const CreateComment = (props) => {
     })
     }
 
-
-
     const handleOnSubmit = (e) => {
         e.preventDefault()
         props.createComment({comment})
@@ -45,8 +43,8 @@ const CreateComment = (props) => {
             subject: "Subject",
             comment: "Write a comment"
         })
-        e.target.children[2].children[0].style.height  = "24px"
-      }
+        inputRef.current.style.height  = "24px"
+    }
 
     const renderComment=()=>{
         if (error) {
@@ -65,11 +63,11 @@ const CreateComment = (props) => {
         <div>
             <form className="" onSubmit={handleOnSubmit} >
                 <div className="comment-input"> 
-                    <input onChange={handleOnChange} className="comment-subject-input" placeholder={placeholder.subject} name="subject" type="text" value={comment.subject}/><br/>   
+                    <input  onChange={handleOnChange} id="comment-input-id" className="comment-subject-input" placeholder={placeholder.subject} name="subject" type="text" value={comment.subject}/><br/>   
                 </div>
                 <div className="text-area-section"> 
-                        <textarea className='auto_height comment-text-area' onChange={handleOnChange} placeholder={placeholder.comment} name="comment" row='1' value={comment.comment}></textarea> 
-                        <input className='buttons' type="submit" value='Comment'/>
+                    <textarea ref={inputRef} className='auto_height comment-text-area' onChange={handleOnChange} placeholder={placeholder.comment} name="comment" row='1' value={comment.comment}></textarea> 
+                    <input className='buttons' type="submit" value='Comment'/>
                 </div>
             </form>
             {renderComment()}

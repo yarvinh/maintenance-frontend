@@ -1,9 +1,9 @@
-import React, {useState} from 'react';
+import {useState} from 'react';
 import { connect } from 'react-redux';
 import '../../styles/styles.css'
 import { useParams} from 'react-router-dom';
 import {updateReceipt,removeReceipt} from  '../../actions/receiptsActions'
-// import Errors from '../Errors';
+
 const EditReceipt=(props)=>{
     const {title,amount} = props.receipt
     const {id} = useParams()
@@ -14,12 +14,10 @@ const EditReceipt=(props)=>{
     })
 
     const handleOnClick = (e) =>{
-        let message = ""
-            message = "Are you sure you to remove this image"   
+          let  message = "Are you sure you to remove this image"   
           const confirmBox = window.confirm(message)
-          if (confirmBox === true ) {
-            props.removeReceipt(props.receipt.id)
-          }     
+          if (confirmBox === true ) 
+            props.removeReceipt(props.receipt.id) 
     }
 
     const handleOnChange=(e)=>{
@@ -40,8 +38,6 @@ const EditReceipt=(props)=>{
                    <input onClick={handleOnChange} onChange={handleOnChange} className="edit-receipt-inputs" placeholder="Description" name="title"  type="text" value={receipt.title}/><br/>
                    <input onChange={handleOnChange} className="edit-receipt-inputs" name="amount"  type="text" value={receipt.amount}/>
                    <button type='submit' hidden>Save</button>
-                   {/* <Errors/> */}
-                   {/* {props.errorsOrMessages.map((e,k) => {return <p key={k}>{e}</p>})} */}
                 </form>            
             </div>
             <br/>

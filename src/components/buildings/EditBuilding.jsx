@@ -1,4 +1,4 @@
-import {useState,useEffect } from 'react';
+import {useState} from 'react';
 import { connect } from 'react-redux';
 import {useParams} from 'react-router-dom';
 import {clearErrors} from '../../actions/errorsActions'
@@ -18,16 +18,11 @@ const EditBuilding = (props) =>{
         block: "",
         lot: "",
     })
-
-    useEffect(() => {
-        if (errorsOrMessages.errors?.length > 0){
-          props.clearErrors()
-        }
-    },[ ]);
     
     let handleOnChange = (e)=>{
       setBuilding({
-       ...building,[e.target.name]: e.target.value
+       ...building,
+       [e.target.name]: e.target.value
       })
     }
 
@@ -41,7 +36,8 @@ const EditBuilding = (props) =>{
             params: {payload: {[type]: building[type]}, array: buildings}
           })
             setBuilding({
-                ...building,[type]: ""
+                ...building,
+                [type]: ""
         })    
     }
 
@@ -51,7 +47,7 @@ const EditBuilding = (props) =>{
             <div className={diplayAcordion("edit-building",acordion)}>
                 <div className='standar-forms acordion'>
                     <div className='acordion errors'> 
-                    {errorsOrMessages.from === "update_building" ?<Errors errorsOrMessages={errorsOrMessages}/> : null}
+                    {(errorsOrMessages.from === "update_building") && <Errors errorsOrMessages={errorsOrMessages}/>}
                     </div> 
                     <div className="container d-flex justify-content-center align-items-center  acordion" > 
                         <form onSubmit={(e)=>handleOnSubmit(e,"address")} className='acordion' >
@@ -100,8 +96,6 @@ const EditBuilding = (props) =>{
                     <br/>
                 </div>
             </div>
-           
-  
         </div>
       
   )

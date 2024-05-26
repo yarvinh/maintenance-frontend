@@ -1,4 +1,4 @@
-import React, { useState} from 'react';
+import { useState} from 'react';
 import { connect } from 'react-redux';
 import {Link} from 'react-router-dom'
 import { fetchLogIn,setAccountType} from '../../actions/usersActions'
@@ -13,11 +13,10 @@ const LogIn = (props) => {
   const {login,verificationSession,errorsOrMessages,account} = props
   const {business, text} = account
     const handleOnClick=(e)=>{
-      if(business) {
+      if(business) 
         props.setAccountType({business: false, text: "business"})
-      }else {
+      else 
         props.setAccountType({business: true, text:  "personal"})
-      }
     }
 
     const [user, setUser] = useState({
@@ -25,10 +24,8 @@ const LogIn = (props) => {
       password: ''
     })
  
-    const redirect = ()=>{
-      
+    const redirect = ()=>{ 
       return <Navigate to='/'/>
-
     }
 
     const handleOnChange = (e) => {  
@@ -39,14 +36,14 @@ const LogIn = (props) => {
   
     const handleOnSubmit = (e) => {
         e.preventDefault()
-        account.business ? props.fetchLogIn(user,paths(true).login): props.fetchLogIn(user,paths(false).login)
+        account.business ? props.fetchLogIn(user,paths(true).login) : props.fetchLogIn(user,paths(false).login)
     }
 
     return(
       <section>
-        {verificationSession && verificationSessionToken()? <Navigate to="/verifying_email"/> : null }
+        {(verificationSession && verificationSessionToken()) && <Navigate to="/verifying_email"/>}
         <div className="center login-messages" > 
-          {errorsOrMessages.from === "login" ? <Errors errorsOrMessages={errorsOrMessages}/> : null}
+          {(errorsOrMessages.from === "login") && <Errors errorsOrMessages={errorsOrMessages}/>}
         </div>
         <div className='center login-messages'>
           <button onClick={handleOnClick} className="login-message-button" >Login to {text} account</button>
@@ -60,7 +57,7 @@ const LogIn = (props) => {
             <input id='login-password' className="form-control" onChange={handleOnChange } name="password" type="password" value={user.password}/>
             <button  className="white-blue-buttons" type="submit">Login</button>
           </form>
-         {login ? redirect():null}
+         {login && redirect()}
         </div>
         <div  className="center">
           <Link to="/password_recovery" className="nav-link login-a-color">Forgot password?</Link>

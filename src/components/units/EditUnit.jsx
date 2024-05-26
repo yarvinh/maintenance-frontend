@@ -1,4 +1,4 @@
-import React, {useState,useEffect } from 'react';
+import {useState} from 'react';
 import { connect } from 'react-redux';
 import {editUnit} from '../../actions/unitsActions'
 import {useParams} from 'react-router-dom';
@@ -30,19 +30,18 @@ const EditUnit = (props) =>{
       <div className='center '>
             <button id='edit-unit' className={acordionButtonClass("edit-unit",acordion)}> Edit Unit</button>
             <div className={diplayAcordion("edit-unit",acordion)}>
-            <div className="standar-forms acordion">
-                <form onSubmit={handleOnSubmit} className='acordion'>
-                    <div className='acordion'> 
-                      {errorsOrMessages.from === "update_unit" ? <Errors errorsOrMessages={errorsOrMessages}/> :null}
-                    </div>  
-                    <input onChange={handleOnChange} maxLength="8" placeholder="Edit Unit" name="unit" className="standar-input acordion" type="text" value={unit.unit}/>
-                    <button type='submit' className="standar-button acordion">Save</button>
-                </form>    
-                <br/>
-            </div>
+                <div className="standar-forms acordion">
+                    <form onSubmit={handleOnSubmit} className='acordion'>
+                        <div className='acordion'> 
+                        {(errorsOrMessages.from === "update_unit") && <Errors errorsOrMessages={errorsOrMessages}/>}
+                        </div>  
+                        <input onChange={handleOnChange} maxLength="8" placeholder="Edit Unit" name="unit" className="standar-input acordion" type="text" value={unit.unit}/>
+                        <button type='submit' className="standar-button acordion">Save</button>
+                    </form>    
+                    <br/>
+                </div>
             </div>
            
-  
         </div>   
    )
 }

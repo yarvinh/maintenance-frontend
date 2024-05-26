@@ -1,8 +1,7 @@
-import React, {useState,useEffect } from 'react';
+import {useState} from 'react';
 import { connect } from 'react-redux';
 import {createTenant} from '../../actions/tenantsActions'
 import {useParams} from 'react-router-dom';
-import {clearErrors} from '../../actions/errorsActions'
 import {acordionButtonClass,diplayAcordion} from '../../componentsHelpers/acordion'
 import '../../styles/styles.css'
 import Errors from '../Errors';
@@ -17,7 +16,6 @@ const CreateTenant = (props) =>{
         name: "",
         phone: "",
         email: ""
-
     })
     
     let handleOnChange = (e)=>{
@@ -44,7 +42,7 @@ const CreateTenant = (props) =>{
                 <div className="standar-forms acordion">
                     <form onSubmit={handleOnSubmit} className='acordion'>
                         <div className='acordion' > 
-                        {errorsOrMessages.from === "create_tenant" ? <Errors errorsOrMessages={errorsOrMessages}/> : null}
+                        {(errorsOrMessages.from === "create_tenant") && <Errors errorsOrMessages={errorsOrMessages}/> }
                         </div>  
                         <input onChange={handleOnChange}  placeholder="Tenant name" name="name" className="standar-input acordion" type="text" value={tenant.name}/><br></br>
                         <input onChange={handleOnChange}  placeholder="Tenant phone #" name="phone" className="standar-input acordion" type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required value={tenant.phone}/><br></br>
@@ -67,8 +65,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        createTenant: (action) => dispatch(createTenant(action)),
-        clearErrors: () => dispatch(clearErrors()),
+        createTenant: (action) => dispatch(createTenant(action))
     }
 }   
       

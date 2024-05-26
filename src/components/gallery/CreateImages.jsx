@@ -51,9 +51,9 @@ const CreateImages=(props)=>{
                    <input  onChange={handleOnChange} type="file" multiple name="images" className="imgs-input"  />
                    <br></br>
                    <button type='submit' className="white-blue-buttons">Save image</button>
-                   {errorsOrMessages.from === 'add_gallery_images' ? <Errors errorsOrMessages={errorsOrMessages}/> : null}
+                   {(errorsOrMessages.from === 'add_gallery_images') && <Errors errorsOrMessages={errorsOrMessages}/> }
                 </form>
-                {uploading && errorsOrMessages.from !== 'add_gallery_images'? <Uploading/>: null}
+                {uploading && (errorsOrMessages.from !== 'add_gallery_images') && <Uploading/>}
             </div>
         </div>
     )

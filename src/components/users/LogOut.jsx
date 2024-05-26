@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchLogOut } from '../../actions/usersActions'
 import {Navigate} from 'react-router-dom'
@@ -16,11 +16,10 @@ class LogOut extends Component {
     render() {
       return(
         <div>
-           {!this.props.user.is_login && !this.props.loading? <Navigate to='/'/>:null}     
+           {(!this.props.user.is_login && !this.props.loading) && <Navigate to='/'/>}     
         </div>
       );    
     }
-
 };
 
 const mapStateToProps = state => { 

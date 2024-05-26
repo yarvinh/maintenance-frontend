@@ -27,14 +27,13 @@ const WorkOrder = (props) => {
         const confirmBox = window.confirm(
         "Are you sure you want to delete this work order?  you will lose all comments and ryplies on this work Order!"     
         )
-        if (confirmBox === true) {
-            props.deleteWorkOrder(workOrder.id)  
-        }   
+        if (confirmBox === true) 
+            props.deleteWorkOrder(workOrder.id)   
     }
 
     const handleOnClick=(e)=>{  
         workOrderIndex(index)
-        if (acceptedWorkOrder() !== 'accepted' && !admin){
+        if (acceptedWorkOrder() !== 'accepted' && !admin)
             props.patchFetchAction({
                 path: `/work_orders/${workOrder.id}`,
                 id: workOrder.id?.toString(),
@@ -42,7 +41,6 @@ const WorkOrder = (props) => {
                 type: {addItemToArray: "ADD_WORK_ORDERS", addItem: "ADD_WORK_ORDER"}, 
                 params: {payload: {accepted: true}, array: workOrders}
             })
-        }
     }
 
     return (  
@@ -67,7 +65,7 @@ const WorkOrder = (props) => {
                     {workOrderStatus(workOrder)}
                 </td>
                 <td className="work_order_status">
-                    {admin ? <i onClick={handleDeleteOnClick}  className="fa-solid fa-trash-can delete-task "></i>:null} 
+                    {admin && <i onClick={handleDeleteOnClick}  className="fa-solid fa-trash-can delete-task "></i>} 
                 </td>
             </tr>
         </>

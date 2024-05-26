@@ -1,42 +1,32 @@
-import React, {useState,useEffect  } from 'react';
+import {useState} from 'react';
 import { connect } from 'react-redux';
 import {resetUserPassword} from '../../actions/usersActions'
-import {useParams,Navigate,Link} from 'react-router-dom';
-import {clearErrors} from '../../actions/errorsActions'
+import {Link} from 'react-router-dom';
 import {accountTypeToken }from '../../componentsHelpers/token'
-import Errors from '../Errors';
 import '../../styles/styles.css'
 
 const ResetPassword= (props) =>{
-    const {id} = useParams()
     const {errorsOrMessages} = props
-    // console.log(errorsOrMessages)
     const [user, setUser] = useState({
       password: "",
       password_confirmation: "",
     })
     
-    useEffect(() => {
-        if (errorsOrMessages.length > 0){
-          props.clearErrors()
-        }
-      },[ ]);
-
     let handleOnChange = (e)=>{
       setUser({
        ...user,[e.target.name]: e.target.value
       })
     }
 
-        let handleOnSubmit = (e) =>{
-            e.preventDefault()
-            accountTypeToken() === 'business' 
-            ?
-             props.resetUserPassword({path: '/reset_password' ,user: user}) 
-             : 
-             props.resetUserPassword({path: '/reset_employee_password' ,user: user})
-        }
-    
+    let handleOnSubmit = (e) =>{
+        e.preventDefault()
+        accountTypeToken() === 'business' 
+        ?
+          props.resetUserPassword({path: '/reset_password' ,user: user}) 
+          : 
+          props.resetUserPassword({path: '/reset_employee_password' ,user: user})
+    }
+
     const passwordForm = () =>{
             return (
                 <div>
@@ -54,7 +44,6 @@ const ResetPassword= (props) =>{
             )
     }
 
-    
     return (
         <div>
             {passwordForm()}
@@ -74,8 +63,6 @@ const ResetPassword= (props) =>{
             </div> 
         </div>
     )
-
-
 }
 
 
@@ -89,7 +76,6 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         resetUserPassword: (action) => dispatch(resetUserPassword(action)),
-        clearErrors: () => dispatch(clearErrors()),
     }
 }   
       

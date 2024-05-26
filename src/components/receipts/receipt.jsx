@@ -1,36 +1,33 @@
-import {Link} from 'react-router-dom'
+
 import '../../styles/styles.css'
 import { connect } from 'react-redux';
 import EditReceipt from './EditReceipt';
 import {removeReceipt} from '../../actions/receiptsActions'
-// import React, {useState} from 'react';
 
 const Receipt = (props)=>{
   const {image_url,receipt,user} = props
 
 
     const receiptUserProfileImage = ()=>{
-      if (receipt.user && user.profile_image){
+      if (receipt.user && user.profile_image)
         return(
           <>     
             <img src={ user.profile_image} className="bg-info rounded-circle receipt_user_image" ></img> <br/>
           </>
         )
-      } else if (receipt.employee?.image){
+      else if (receipt.employee?.image)
         return(
             <>     
               <img src={ receipt.employee.image } className="bg-info rounded-circle receipt_user_image" ></img> <br/>
             </>
         )
-      }
     }
 
     const handleOnClickImage = (e)=>{
-      if (e.target.className === "picc"){
+      if (e.target.className === "picc")
         e.target.className = "picc-enlarger"
-      } else{
+      else
         e.target.className = "picc"
-      }
     }
 
     return (

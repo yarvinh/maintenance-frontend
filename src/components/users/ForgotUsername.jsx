@@ -1,4 +1,4 @@
-import React, {useState ,useEffect } from 'react';
+import {useState} from 'react';
 import { connect } from 'react-redux';
 import {clearErrors} from '../../actions/errorsActions'
 import {recoveryUsername} from '../../actions/usersActions'
@@ -11,12 +11,6 @@ const ForgotUsername = (props) =>{
       email: ""
     })
 
-    useEffect(() => {
-        if (errorsOrMessages.length > 0){
-          props.clearErrors()
-        }
-      },[ ]);
-
     let handleOnChange = (e)=>{
       setUser({
        ...user,[e.target.name]: e.target.value
@@ -27,21 +21,18 @@ const ForgotUsername = (props) =>{
         e.preventDefault()
             props.recoveryUsername({email: user.email})   
     }
-    
-    
-
-
+  
     return (
         <section>
             <div className="container d-flex justify-content-center align-items-center">
                 <form onSubmit={handleOnSubmit} className="form">
-                <label >Enter your email:</label >
-                <input  onChange={handleOnChange} className="form-control" value={useState.email} name="email" type='text'/> <br/>
-                <button type='submit' className="white-blue-buttons">Submit</button>
+                  <label >Enter your email:</label >
+                  <input  onChange={handleOnChange} className="form-control" value={useState.email} name="email" type='text'/> <br/>
+                  <button type='submit' className="white-blue-buttons">Submit</button>
                 </form>   
             </div>
             <div className="center"> 
-              {errorsOrMessages.from === 'forgot_username' ?<Errors errorsOrMessages={errorsOrMessages}/> : null}
+              {(errorsOrMessages.from === 'forgot_username') && <Errors errorsOrMessages={errorsOrMessages}/>}
             </div> 
         </section>
     )

@@ -1,8 +1,6 @@
-import React, {useState } from 'react';
+import {useState } from 'react';
 import { connect } from 'react-redux';
-// import {Navigate,redirect} from 'react-router-dom'
 import { createUser } from '../../actions/usersActions'
-import {clearErrors} from '../../actions/errorsActions'
 import '../../styles/styles.css'
 import EmailValidation from './EmailValidation';
 import NewUserInstructions from './NewUserInstructions';
@@ -11,7 +9,6 @@ import Errors from '../Errors';
 const SignUp = (props) => {
 
   const {verificationSession,errorsOrMessages} = props
-
   const [user, setUser] = useState({
     name: "",
     email: "",
@@ -31,9 +28,9 @@ const SignUp = (props) => {
        ...user,[e.target.name]: e.target.value 
     })
   }
-  if(props.user.is_login){
+  if(props.user.is_login)
     return <NewUserInstructions/>
-  } else if (!verificationSession ){
+  else if (!verificationSession )
     return (
         <div className="container d-flex justify-content-center align-items-center">
           <form onSubmit={handleOnSubmit} className="form">
@@ -49,16 +46,16 @@ const SignUp = (props) => {
             <input onChange={handleOnChange} id="signUpConfirmPassword" className="form-control"  value={user.password_confirmation} name="password_confirmation" type='password'/> <br/>
             <button type='submit' className="white-blue-buttons">Submit</button>
             <div className="center"> 
-              {errorsOrMessages?.from === "create_user"?<Errors errorsOrMessages={errorsOrMessages}/>:null}
+              {(errorsOrMessages?.from === "create_user") && <Errors errorsOrMessages={errorsOrMessages}/>}
             </div>  
           </form> 
       </div>
     )
-  } else {
-       return (
+  else 
+      return (
         <EmailValidation/>
-       ) 
-  }
+      ) 
+  
 
 };
 
@@ -72,8 +69,7 @@ const mapStateToProps = state => {
  
 const mapDispatchToProps = dispatch => {
   return {
-     createUser: (action) => dispatch(createUser(action)),
-     clearErrors: () => dispatch(clearErrors()),
+     createUser: (action) => dispatch(createUser(action))
   }
 }
 

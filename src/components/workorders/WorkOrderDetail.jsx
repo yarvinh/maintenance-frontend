@@ -1,4 +1,4 @@
-import React, {useEffect,useRef} from 'react';
+import {useEffect} from 'react';
 import { connect } from 'react-redux';
 import {Link,useParams,useNavigate} from 'react-router-dom';
 import EditWorkOrder from "./EditWorkOrder"
@@ -14,7 +14,7 @@ import Errors from '../Errors';
 const WorkOrderDetails = (props)=>{ 
     const {id} = useParams()
     let navigate = useNavigate()
-    const {user,buildings,employees,workOrder,workOrders,errorsOrMessages,receipts} = props
+    const {user,buildings,employees,workOrder,workOrders,errorsOrMessages} = props
     const {admin} = user
     const belongToCurrentUser = workOrder?.employees.filter(emp => emp.id === user.user.id)[0]
     
@@ -22,7 +22,7 @@ const WorkOrderDetails = (props)=>{
       const worOrderDoesNotExist =  errorsOrMessages.errors?.includes('Access to this comment was dinied')
       if(worOrderDoesNotExist )
         navigate('/work_orders') 
-   },[errorsOrMessages])
+    },[errorsOrMessages])
 
     useEffect(()=>{
       props.getFetchAction({
@@ -37,7 +37,7 @@ const WorkOrderDetails = (props)=>{
       return workOrder.employees.map((employee,index) => {
         return( 
           < div  key={index}>
-             {admin ? <button onClick={handleOnClick} name="employee" value={employee.id} className='delete-x'>X</button>:null} 
+             {admin && <button onClick={handleOnClick} name="employee" value={employee.id} className='delete-x'>X</button>} 
             <Link to={`/employees/${employee.id}`}>
               <p className="name">{employee.name}</p> 
             </Link>   
@@ -79,13 +79,13 @@ const WorkOrderDetails = (props)=>{
             <br/>
             <div className="container d-flex"> 
                 <div className="card-container mb-3 car-shadow">
-                      {admin ? <button onClick={handleOnClick}  className='delete-x' name="work-order">X</button>:null} 
+                      {admin && <button onClick={handleOnClick}  className='delete-x' name="work-order">X</button>} 
                       <div className="card-header">
                         <strong>Date: {date(workOrder.date)}</strong> <br/>
                         <strong> Job Title: {workOrder.title}</strong> 
                       </div>
                       <div className=""> 
-                        { admin || !user?.user_id && belongToCurrentUser?<EditWorkOrder buildings={buildings} employees={employees} workOrder={workOrder}/>:null}
+                        { admin || (!user?.user_id && belongToCurrentUser) ?  <EditWorkOrder buildings={buildings} employees={employees} workOrder={workOrder}/>:null}
                       </div> 
                       <div className="card-body">
                         <span>Created date: {date(workOrder.created_at)}</span> <br/>
@@ -93,10 +93,10 @@ const WorkOrderDetails = (props)=>{
                         <div>
                           {workOrderEmployees()}
                         </div>
-                        {workOrder.building?<Link to={`/buildings/${workOrder.building.id}`}>{workOrder.building.address} </Link> :null} <br/>
-                        {workOrder.building?<strong>Contact: {workOrder.building.super_name}</strong>:null}<br/>
+                        {workOrder.building && <Link to={`/buildings/${workOrder.building.id}`}>{workOrder.building.address} </Link>} <br/>
+                        {workOrder.building && <strong>Contact: {workOrder.building.super_name}</strong>}<br/>
                         <strong>Unit: {workOrder.unit}</strong> <br/>
-                        {workOrder.building?<a href={`tel:${workOrder.building.phone_number}`}><span className="bottom">{workOrder.building.phone_number}</span></a> :null}
+                        {workOrder.building && <a href={`tel:${workOrder.building.phone_number}`}><span className="bottom">{workOrder.building.phone_number}</span></a>}
                         <br/>
                         <div className="nav-item">
                           <Link to={`/work_orders/${workOrder.id}/receipts`}>Material receipts</Link> {receiptAmount()}
@@ -108,16 +108,12 @@ const WorkOrderDetails = (props)=>{
                         </div>  
                         <br/>
                         <div className="task-container center">
-                            { workOrder.id ?<TasksContainer userWorkorder={userWorkorder} workOrder={workOrder} user={user} admin={admin}/>:null}
+                            { workOrder.id && <TasksContainer userWorkorder={userWorkorder} workOrder={workOrder} user={user} admin={admin}/>}
                         </div>  
-                      </div> 
-                      
-                </div>
-                
+                      </div>   
+                </div> 
               </div> 
-              {/* <div className='container'> */}
-                {user ? <CommentsContainer  user={user} admin={admin}/>:null}
-              {/* </div> */}
+                {user && <CommentsContainer  user={user} admin={admin}/>}
         </section>
     )
 };
@@ -135,9 +131,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-    getFetchAction: (action) => dispatch(getFetchAction(action)),
-    deleteWorkOrder: (action) => dispatch(deleteWorkOrder(action)),
-    removeEmployee: (action) => dispatch(removeEmployee(action)),
+      getFetchAction: (action) => dispatch(getFetchAction(action)),
+      deleteWorkOrder: (action) => dispatch(deleteWorkOrder(action)),
+      removeEmployee: (action) => dispatch(removeEmployee(action))
     }
 }
 

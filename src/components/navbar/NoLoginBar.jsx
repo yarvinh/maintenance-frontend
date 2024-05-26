@@ -15,7 +15,7 @@ const noLoginBar = (props)=>{
           <Link to='/login' className="bar-item exit-email-verification">Sign in</Link>
         </li>
         <li className="bar-item  bar-accordion">
-          {!user.is_login? <Link to='/signup' className="bar-item exit-email-verification">Sign up</Link>: null}
+          {!user.is_login && <Link to='/signup' className="bar-item exit-email-verification">Sign up</Link>}
         </li>
       </>
     )

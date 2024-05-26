@@ -52,10 +52,9 @@ const CreateTask = (props) => {
     )
 }
 
-
-  const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = dispatch => {
     return {
         createTask: (action) => dispatch(createTask(action))
     }
-  }
-  export default connect(null, mapDispatchToProps)(CreateTask)
+}
+export default connect(null, mapDispatchToProps)(CreateTask)

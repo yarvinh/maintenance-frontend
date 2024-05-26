@@ -56,7 +56,7 @@ const CreateBuilding = (props) =>{
       <div className="container d-flex justify-content-center align-items-center acordion" > 
           <form onSubmit={handleOnSubmit} className='acordion'>
               <div className='acordion'> 
-              {errorsOrMessages.from === "create_building" ? <Errors errorsOrMessages={errorsOrMessages}/>: null}
+              {(errorsOrMessages.from === "create_building") && <Errors errorsOrMessages={errorsOrMessages}/>}
               </div>  
               <label htmlFor='c-b-address' className='acordion'>Address</label>
               <input id='c-b-address' onChange={handleOnChange}  name="address" className="standar-input acordion" type="text" value={building.address}/><br/>

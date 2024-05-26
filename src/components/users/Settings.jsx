@@ -1,14 +1,12 @@
-import React, {useState ,useEffect} from 'react';
+import  {useState } from 'react';
 import { connect } from 'react-redux';
 import {editUser} from '../../actions/usersActions'
-import {useParams,useNavigate} from 'react-router-dom';
-import {clearErrors} from '../../actions/errorsActions'
+import {useParams} from 'react-router-dom';
 import UploadProfileImage from './UpdloadProfileImage';
 import '../../styles/styles.css'
 import Errors from '../Errors';
 
 const Settings = (props) =>{
-    let navigate = useNavigate()
     const {id} = useParams()
     const {errorsOrMessages} = props
     const currentUser = props.user
@@ -20,11 +18,6 @@ const Settings = (props) =>{
         password: "",
         old_password: '',
     })
-
-    const goBack = (e) => {
-        return navigate(-1)
-    }
- 
 
     let handleOnChange = (e)=>{
       setUser({
@@ -49,7 +42,7 @@ const Settings = (props) =>{
         
         <section className='settings-forms standar-form-position center'>
             <UploadProfileImage employeeOrUser={"user"} user={currentUser}/>
-            {errorsOrMessages.from === "update_user" ? <Errors errorsOrMessages={errorsOrMessages}/>: null}          
+            {(errorsOrMessages.from === "update_user") && <Errors errorsOrMessages={errorsOrMessages}/>}          
             <strong>Name: {currentUser.user?.name}</strong>
             <form onSubmit={(e)=>handleOnSubmit(e,"name")}>
                 <input onChange={handleOnChange} value={user.name} placeholder={"Edit name"} className="standar-input" type="text" name="name"/>
@@ -95,8 +88,7 @@ const mapStateToProps = state => {
   
 const mapDispatchToProps = dispatch => {
     return {
-        editUser: (action) => dispatch(editUser(action)),
-        clearErrors: () => dispatch(clearErrors()),
+        editUser: (action) => dispatch(editUser(action))
     }
 }   
       

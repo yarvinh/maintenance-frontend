@@ -1,8 +1,9 @@
 
-import {Link,useParams} from 'react-router-dom'
+import {useParams} from 'react-router-dom'
 import { connect } from 'react-redux';
 import {deleteTenant} from '../../actions/tenantsActions'
 import EditTenant from './EditTenant';
+
 const Tenant = (props)=>{
     const {building_id, unit_id} = useParams()
     const {tenant} = props
@@ -10,10 +11,10 @@ const Tenant = (props)=>{
         const confirmBox = window.confirm(
           "Are you sure you want to delete this tenant?"     
         )
-        if (confirmBox === true) {
+        if (confirmBox === true) 
             props.deleteTenant({buildingId: building_id, unitId: unit_id,tenantId: tenant.id})  
-        }
     }
+    
     return (
         < div className='tenant-text-container'>
             <div className='tenant-text'>
@@ -26,7 +27,6 @@ const Tenant = (props)=>{
                 <EditTenant tenant={tenant}/>
                 <br/>
             </div>
-            {/* <br/> */}
         </div>
       ) 
 

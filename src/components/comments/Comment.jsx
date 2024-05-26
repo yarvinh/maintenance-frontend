@@ -1,4 +1,4 @@
-import React, {useEffect,useState } from 'react';
+
 import { connect } from 'react-redux';
 import {Link} from 'react-router-dom';
 import {deleteComment} from '../../actions/commentsActions'
@@ -24,9 +24,8 @@ const Comment = (props)=>{
       }
 
       const deleteComment = ()=>{
-        if((admin && user.user?.id === comment.user_id) || (user.user?.id === comment.employee_id)){
+        if((admin && user.user?.id === comment.user_id) || (user.user?.id === comment.employee_id))
            return <button onClick={handleOnClick} className='delete' value={comment.id}>X</button>
-        }
       } 
 
         return (   
@@ -34,7 +33,7 @@ const Comment = (props)=>{
               <div   className='post' key={comment.id}> 
                 <div >
                   {deleteComment()}
-                  {comment.user?<span >Posted by: {comment.user.name} {dateAndTime()}</span>:<span >Posted by: <Link to={`/employees/${comment.employee.id}`}>{comment.employee.name}</Link> {dateAndTime()}</span>}
+                  {comment.user ? <span >Posted by: {comment.user.name} {dateAndTime()}</span>:<span >Posted by: <Link to={`/employees/${comment.employee.id}`}>{comment.employee.name}</Link> {dateAndTime()}</span>}
                 </div>
                 <div className='subject'>
                     <h3 className="comment_subject">{comment.subject}</h3>
@@ -49,13 +48,13 @@ const Comment = (props)=>{
                   </div>
   
                   <div >
-                    {user && Object.keys(comment).length > 0? <RepliesContainer  comment={comment} admin={admin} user={user}/>: null}
+                    {(user && Object.keys(comment).length > 0) && <RepliesContainer  comment={comment} admin={admin} user={user}/>}
                   </div>  
   
                 </div>
               </div>
            </div>
-            )    
+          )    
   }
 
   const mapDispatchToProps = dispatch => {

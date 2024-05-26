@@ -7,9 +7,9 @@ const ImgSlider=({gallery,user,index,setIndex})=>{
         return  (            
           <div className='photo'>
             <img src={gallery[index].image_url} ></img> 
-                {user.admin || !user.admin && gallery[index].employee?.id === user.user?.id? <EditImages image={gallery[index]}/>:null }
-                {index > 0 ? <BackButton index={index} setIndex={setIndex} gallery={gallery}/>:null}
-                {index < gallery.length -1 ? <NextButton    index={index} setIndex={setIndex} gallery={gallery}/>:null}
+                {(user.admin || !user.admin) ? (gallery[index].employee?.id === user.user?.id) && <EditImages image={gallery[index]}/>: null}
+                {index > 0 &&  <BackButton index={index} setIndex={setIndex} gallery={gallery}/>}
+                {index < gallery.length -1 && <NextButton    index={index} setIndex={setIndex} gallery={gallery}/>}
             </div>
         )
     } else if ( gallery.length > 0 && gallery[index - 1]){

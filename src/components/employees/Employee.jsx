@@ -25,7 +25,7 @@ const Employee = (props)=>{
                 </td>
                 <td><p>{employee.email}</p></td>
                 <td> <a href={`tel:${employee.phone}`}><span className="bottom">{employee.phone}</span></a> </td>
-                <td>{admin ? <i onClick={handleOnClick}  className="fa-solid fa-trash-can delete-task "></i>:null} </td>
+                <td>{admin && <i onClick={handleOnClick}  className="fa-solid fa-trash-can delete-task "></i>} </td>
             </tr>
    
         </>        

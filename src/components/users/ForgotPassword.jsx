@@ -1,4 +1,4 @@
-import React, {useState ,useEffect } from 'react';
+import {useState} from 'react';
 import { connect } from 'react-redux';
 import {clearErrors} from '../../actions/errorsActions'
 import {recoveryPassword} from '../../actions/usersActions'
@@ -14,11 +14,10 @@ const ForgotPassword = (props) =>{
     })
 
     const handleOnClick=(e)=>{
-      if(business) {
+      if(business) 
         props.setAccountType({business: false, text: "business"})
-      }else {
+      else 
         props.setAccountType({business: true, text:  "personal"})
-      }
     }
 
 
@@ -50,7 +49,7 @@ const ForgotPassword = (props) =>{
                 </form>   
             </div>
             <div className="center"> 
-              {errorsOrMessages.from === 'set_password_session' ? <Errors errorsOrMessages={errorsOrMessages}/>: null}
+              {(errorsOrMessages.from === 'set_password_session') && <Errors errorsOrMessages={errorsOrMessages}/>}
             </div> 
         </section>
     )

@@ -10,10 +10,10 @@ const loginBar = (props)=>{
               <Link to='/' className="bar-item">Home</Link>
             </li>
             <li className="bar-item bar-accordion">
-              {admin && user.user?.id? <Link to={`/settings/${user.user.id}`} className="bar-item">Settings</Link>: null}
+              {admin && user.user?.id && <Link to={`/settings/${user.user.id}`} className="bar-item">Settings</Link>}
             </li>
             <li className="bar-item  bar-accordion">
-              {user.user?.id && !admin ? <Link to={`/employee_setting/${user.user.id}`} className="bar-item">Settings</Link>: null}
+              {user.user?.id && !admin && <Link to={`/employee_setting/${user.user.id}`} className="bar-item">Settings</Link>}
             </li>
             <li className="bar-item  bar-accordion">
               <Link to='/buildings' className="bar-item">Buildings</Link>
@@ -22,7 +22,7 @@ const loginBar = (props)=>{
               <Link to='/work_orders' className="bar-item">Work Orders</Link>
             </li>
             <li className="bar-item  bar-accordion">
-              {!user.admin? <Link to='/my_work_orders' className="bar-item">My Work Orders</Link>: null}
+              {!user.admin && <Link to='/my_work_orders' className="bar-item">My Work Orders</Link>}
             </li>
             <li className="bar-item  bar-accordion">
               <Link to='/employees' className="bar-item">Employees</Link>

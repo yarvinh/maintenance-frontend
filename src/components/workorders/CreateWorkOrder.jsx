@@ -26,21 +26,20 @@ const CreateWorkOrder = (props) => {
     today.pop()
 
     useEffect(() => {
-      if (employees.length === 0){
+      if (employees.length === 0)
          props.getFetchAction({
            path: "/employees",
            stateName: "employees",
            type: "ADD_EMPLOYEES"
 
           })
-      }
-      if (employees.length === 0){
+
+      if (employees.length === 0)
         props.getFetchAction({
           path: "/buildings",
           stateName: "buildings",
           type: "ADD_BUILDINGS"
         })
-      }
     },[ ]);
     
     const handleOnSubmit=(e)=>{
@@ -85,17 +84,19 @@ const CreateWorkOrder = (props) => {
             <div className="standar-forms standar-form-position acordion">
                 <form onSubmit={handleOnSubmit} className='acordion'>
                   <div className="center acordion"> 
-                  {errorsOrMessages.from  === 'create_work_order' ? <Errors errorsOrMessages={errorsOrMessages}/> : null}
+                  {(errorsOrMessages.from  === 'create_work_order') && <Errors errorsOrMessages={errorsOrMessages}/>}
                   </div>  
-                  {!employee ? <select  className="standar-input acordion" onChange={handleOnChange} name="employee_id" defaultValue="select_employee">
+                  {!employee && 
+                    <select  className="standar-input acordion" onChange={handleOnChange} name="employee_id" defaultValue="select_employee">
                       <option  name="employee" value="select_employee" className='acordion'>Select Employee</option> 
                       {employees.map(e => <option key={e.id} value={e.id} className='acordion'>{e.name}</option>)}
-                    </select> :null}
+                    </select>}
 
-                    {!building ? <select  className="standar-input acordion" onChange={handleOnChange} name="building_id" defaultValue="select_location">
+                    {!building && 
+                    <select  className="standar-input acordion" onChange={handleOnChange} name="building_id" defaultValue="select_location">
                       <option  value="select_location" className='acordion'>Select Location</option>
-                      {!buildings.error_message ? buildings.map(b => <option key={b.id} className='acordion' value={b.id} >{b.address}</option>):null}
-                    </select>: null}
+                      {!buildings.error_message && buildings.map(b => <option key={b.id} className='acordion' value={b.id} >{b.address}</option>)}
+                    </select>}
                     <label className='acordion'>Date</label>
                     <div  className='acordion'> 
                     <input onChange={handleOnChange}  name="date" className="standar-input acordion" type="date" value={workOrder.date} min={today.join("-")} />

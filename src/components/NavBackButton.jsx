@@ -1,5 +1,4 @@
 import {useNavigate} from 'react-router-dom';
-// import "./angle-double-left.svg"
 
 const NavBackButton = ()=>{
     const navigate  = useNavigate()

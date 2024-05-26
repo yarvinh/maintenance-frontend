@@ -1,6 +1,6 @@
 import  {useState,useEffect } from 'react';
 import { connect } from 'react-redux';
-import {useParams,useNavigate} from 'react-router-dom';
+import {useParams} from 'react-router-dom';
 import {clearErrors} from '../../actions/errorsActions'
 import UploadProfileImage  from "../users/UpdloadProfileImage"
 import { patchFetchAction } from '../../actions/fetchActions';
@@ -9,7 +9,7 @@ import Errors from '../Errors';
 
 const EditEmployee = (props) =>{
     const {errorsOrMessages,user,employees} = props
-    let navigate = useNavigate()
+    console.log(errorsOrMessages)
     let {id} = useParams()
     const [employee, setEmployee] = useState({
         name: "",
@@ -25,10 +25,6 @@ const EditEmployee = (props) =>{
           props.clearErrors()
         }
     },[]);
-
-    const goBack = (e) => {
-        return navigate(-1)
-    }
 
     let handleOnChange = (e)=>{
       setEmployee({
@@ -60,9 +56,9 @@ const EditEmployee = (props) =>{
       <div>
             <div className='settings-forms standar-form-position'>
                 <div>
-                  {!user.admin ?<UploadProfileImage employeeOrUser={"employee"} user={user}/>:null}
+                  {!user.admin && <UploadProfileImage employeeOrUser={"employee"} user={user}/>}
                 </div>
-                {errorsOrMessages.from === 'update_employee' ? <Errors errorsOrMessages={errorsOrMessages}/> : null}
+                {(errorsOrMessages.from === 'update_employee') && <Errors errorsOrMessages={errorsOrMessages}/>}
                <br/>
               <div className='center'>  
                 <form onSubmit={(e)=>handleOnSubmit(e,"name")} >
@@ -98,9 +94,6 @@ const EditEmployee = (props) =>{
                     
                 </form>  
               </div> 
-
-              <button className="back-button"  onClick={goBack}> {"<< Back"} </button>
-
             </div>
         </div> 
     )

@@ -12,9 +12,8 @@ const UnitsDetails = (props)=>{
     const {building_id, unit_id} = useParams()
     let navigate = useNavigate()
     useEffect(() => {
-        if(unit_id){
+        if(unit_id)
           props.getUnit({unitId: unit_id,buildingId: building_id})
-        }
     },[]);
 
 
@@ -28,15 +27,11 @@ const UnitsDetails = (props)=>{
       }
     }
 
-    const goBack = (e) => {
-        return navigate(-1)
-    }
- 
     return (
         <section>
             <div className="container d-flex ">
                 <div className="card-container mb-3 car-shadow">
-                    {user.admin ? <i onClick={handleOnClick}  className="fa-solid fa-trash-can delete-task "></i>:null} 
+                    {user.admin && <i onClick={handleOnClick}  className="fa-solid fa-trash-can delete-task "></i>} 
                     <div >
                         <div className="card-header text-font">
                             <h4 >{unit.building?.address}</h4>
@@ -47,18 +42,14 @@ const UnitsDetails = (props)=>{
                            <h3 className='text-font'>Tenants</h3>
                            <div className='tenant-container'>
                                <TenantContainer unit={unit}/>
-                           </div>
-                            
+                           </div>  
                         </div> 
                         <CreateTenant user={user}/>
                     </div>
                 </div>
-    
             </div>
-        </section>
-            
-    ) 
-   
+        </section>        
+    )  
 };
 
 const mapStateToProps = state => { 

@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import React, {useState} from 'react';
+import {useState} from 'react';
 import {useParams} from 'react-router-dom';
 import '../../styles/styles.css'
 import { createUnit} from '../../actions/unitsActions'
@@ -37,8 +37,7 @@ const CreateUnit = (props)=>{
 
 const mapDispatchToProps = dispatch => {
     return {
-    createUnit: (action) => dispatch(createUnit(action)),
-   
+      createUnit: (action) => dispatch(createUnit(action))
     }
   }
 

@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import {useParams,useNavigate} from 'react-router-dom';
-import React, {useEffect,useState } from 'react';
+import {useEffect,useState } from 'react';
 import WorkOrdersContainer from '../../containers/WorkOrdersContainer';
 import {deleteEmployee} from "../../actions/employeesActions"
 import { getFetchAction } from '../../actions/fetchActions';
@@ -59,7 +59,7 @@ const EmployeeDetails = (props)=>{
             </div>
           </div>
            <h3 className="center">Work Orders</h3>
-          {user.user && employeeWorkOrders ? <WorkOrdersContainer   workOrders={user.user?.work_orders} employee={user.user} />: null}
+          {(user.user && employeeWorkOrders) && <WorkOrdersContainer  workOrders={user.user?.work_orders} employee={user.user} />}
         </>
       )
     }
@@ -71,9 +71,9 @@ const EmployeeDetails = (props)=>{
         <br/>
             <div className="container d-flex justify-content-center">
                 <div className="card-container mb-3 car-shadow">   
-                    {user.admin? <i onClick={handleOnClick}  className="fa-solid fa-trash-can delete-task "></i>:null}   
+                    {user.admin && <i onClick={handleOnClick}  className="fa-solid fa-trash-can delete-task "></i>}   
                     <div className="card-header employee-header-size">
-                      {employee.image ? <img src={employee.image} onClick={handleOnImg} className={imageClassName} ></img> : null}
+                      {employee.image && <img src={employee.image} onClick={handleOnImg} className={imageClassName} ></img>}
                        <p >{employee.name}</p>
                     </div> 
                     <div className="card-body">
@@ -83,7 +83,7 @@ const EmployeeDetails = (props)=>{
                 </div>
             </div>
             <h3 className="center">Work Orders</h3>
-            {employee && employeeWorkOrders? <WorkOrdersContainer   workOrders={employeeWorkOrders} employee={employee} />:null}
+            {(employee && employeeWorkOrders) && <WorkOrdersContainer  workOrders={employeeWorkOrders} employee={employee} />}
         </>
       )
     }

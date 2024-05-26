@@ -1,9 +1,8 @@
-import React, {useState,useEffect } from 'react';
+import {useState} from 'react';
 import { connect } from 'react-redux';
 import {verifyEmail} from '../../actions/usersActions'
-import {Navigate,Link} from 'react-router-dom'
+import {Navigate} from 'react-router-dom'
 import {setVerificationSession,requestSecurityCode} from '../../actions/usersActions'
-// import '../../styles/styles.css'
 import Errors from '../Errors';
 
 const EmailValidation = (props) => {
@@ -31,14 +30,14 @@ const EmailValidation = (props) => {
     
     return (
     <div>
-      {props.user.is_login? redirect(): null}
+      {props.user.is_login && redirect()}
       <div className="container d-flex justify-content-center align-items-center">
           <form onSubmit={handleOnSubmit} className="form">
               <label htmlFor="email-security-code" className="mt-5">Enter security code:</label>
               <input onChange={handleOnChange} id="email-security-code"  className="form-control" value={user.security_code} name="security_code" type='text'/> <br/>
               <button type='submit' className="btn btn-primary">Submit</button>
               <div className="center"> 
-                {errorsOrMessages.from === 'verify_email' || errorsOrMessages.from ==="request_security_code" ?<Errors errorsOrMessages={errorsOrMessages}/> : null}
+                {(errorsOrMessages.from === 'verify_email') || (errorsOrMessages.from ==="request_security_code") ? <Errors errorsOrMessages={errorsOrMessages}/> : null}
               </div>  
           </form>
       </div>

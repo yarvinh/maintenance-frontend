@@ -48,10 +48,10 @@ const CreateReceipt=(props)=>{
                    <input  onChange={handleOnChange} type="file" multiple name="receipts" className='imgs-input' />
                    <br></br>
                    <button type='submit' className="white-blue-buttons">Save image</button>
-                   {errorsOrMessages.from === "add_receipts" ?<Errors errorsOrMessages={errorsOrMessages}/> : null}
+                   {(errorsOrMessages.from === "add_receipts") && <Errors errorsOrMessages={errorsOrMessages}/>}
                 </form>
                 </div>
-                  {uploading && errorsOrMessages.from !== "add_receipts"? <Loading/>:null}
+                  {uploading && (errorsOrMessages.from !== "add_receipts") && <Loading/>}
                 <div>
             </div>
         </div>

@@ -21,7 +21,7 @@ const Image = (props)=>{
     return (
       <>
         <div style={style()} className='image-container'>    
-         <img src={image_url}  ></img> 
+         <img src={image_url}></img> 
         </div>
       </>
     )

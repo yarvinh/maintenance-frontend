@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react';
+import { useState,useEffect } from 'react';
 import { connect } from 'react-redux';
 import {clearErrors} from '../../actions/errorsActions'
 import {acordionButtonClass,diplayAcordion} from '../../componentsHelpers/acordion'
@@ -56,7 +56,7 @@ const  CreateEmployees =(props)=> {
             <div className="standar-forms standar-form-position acordion">
                 <form onSubmit={handleOnsubmit} className='acordion accor-diplay-form'>
                     <div className='acordion'> 
-                    {errorsOrMessages.from  === "create_employee" ? <Errors errorsOrMessages={errorsOrMessages}/> : null}
+                    {(errorsOrMessages.from  === "create_employee") && <Errors errorsOrMessages={errorsOrMessages}/>}
                     </div>  
                     <label className='acordion'>Name</label>
                     <input onChange={handleOnChange} placeholder={"Enter full name"} name="name" className="standar-input acordion" type="text" value={employee.name}/><br/>
@@ -70,7 +70,6 @@ const  CreateEmployees =(props)=> {
                     <input onChange={handleOnChange} placeholder="Enter password" name="password" className="standar-input acordion" type="password" value={employee.password}/><br/>
                     <input onChange={handleOnChange} placeholder="Confirm password" name="password_confirmation" className="standar-input acordion" type="password" value={employee.password_confirmation}/><br/>
                     <button type='submit' className="white-blue-buttons acordion">Submit</button>
-
                 </form> 
             </div>
             </div>

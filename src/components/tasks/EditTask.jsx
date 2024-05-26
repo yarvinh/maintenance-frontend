@@ -1,9 +1,8 @@
-import React, {useState} from 'react';
+import {useState} from 'react';
 import { connect } from 'react-redux';
 import {editTask} from '../../actions/tasksActions'
 
 const EditTask = (props) => {
-   console.log(props.task)
     const [task, setTask] = useState({
         task: props.task.task,
         status: props.task.completed

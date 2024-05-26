@@ -1,4 +1,3 @@
-import React, {useState} from 'react';
 import {useParams} from 'react-router-dom';
 import { connect } from 'react-redux';
 import '../../styles/styles.css'
@@ -8,19 +7,17 @@ const CloseWorkOrder = (props) => {
     let {workOrder,workOrders} = props
 
     const workOrderStatus = () => {
-        if (workOrder.status){
+        if (workOrder.status)
             return "Open Work Order"
-           } else {
+        else 
             return "Close Work Order"
-           }
     }
 
     const buttonColor = () => {
-        if (workOrder.status){
+        if (workOrder.status)
             return "inactive_color"
-           } else {
+        else 
             return "active_color"
-           }
     }
 
     const handleOnClick = (e) => { 

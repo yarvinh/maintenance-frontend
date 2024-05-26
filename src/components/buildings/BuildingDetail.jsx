@@ -35,14 +35,14 @@ const BuildingDetails = (props)=>{
         <section className="text-font">
             <div className="container d-flex ">
                 <div  className="card-container mb-3 car-shadow">
-                    {user.admin ? <i onClick={handleOnClick}  className="fa-solid fa-trash-can delete-task "></i>:null} 
+                    {user.admin && <i onClick={handleOnClick}  className="fa-solid fa-trash-can delete-task "></i>} 
                     <div >
                         <div>
                             <h3 className="card-header">{building.address}</h3>
                         </div>
                         <div className="card-body">
-                              {building.id && building.user_id?<EditBuilding currentBuilding={building} />:null}
-                              {building.id && !building.user_id?<EditBuilding currentBuilding={building} />:null}
+                            {building.id && building.user_id && <EditBuilding currentBuilding={building} />}
+                            {building.id && !building.user_id && <EditBuilding currentBuilding={building} />}
                             <span>Created date: {date(building.created_at)}</span> <br/>
                             <strong>Superintendent: {building.super_name}</strong><br></br>
                             <strong>contact: <a href={`tel:${building.phone_number}`}><span className="bottom">{building.phone_number}</span></a> </strong> <br></br>
@@ -55,11 +55,11 @@ const BuildingDetails = (props)=>{
                             {building.bin ? <Link to={`/buildings/${building.bin}/hpd_complaints`} >HPD complaints</Link>  :<p>Bin number must exist to see hpd complaints</p>}<br/>
                             {building.lot && building.block ? <Link to={`/buildings/${building.lot}/hpd_violations/${building.block}`} >HPD Violations</Link>: <p>Lot and block must exist to see HPD violations.</p> } <br/>
                         </div>
-                        {user.admin || user.user?.user_id? <UnitsContainer building={building}/>:<strong className='building-warning'>You are not an authorize user to see units</strong>}
+                        {user.admin || user.user?.user_id ? <UnitsContainer building={building}/>:<strong className='building-warning'>You are not an authorize user to see units</strong>}
                     </div>  
                 </div>
             </div>
-            {building.id? <WorkOrdersContainer  building={building} workOrders={buildingWorkOrders} user={props.user}/>:null}
+            {building.id && <WorkOrdersContainer  building={building} workOrders={buildingWorkOrders} user={props.user}/>}
         </section>     
     )
 };

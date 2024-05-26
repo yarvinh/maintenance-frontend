@@ -22,8 +22,6 @@ const CreateReply = (props) => {
         })
     }
 
-
-
     const handleOnKeyUp = (e) => {
         e.preventDefault()
         if (e.code  === 'Enter'){

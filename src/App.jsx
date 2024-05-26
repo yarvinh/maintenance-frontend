@@ -1,7 +1,7 @@
 
 import { connect } from 'react-redux';
 import {useEffect ,useRef} from 'react';
-import {BrowserRouter, Routes, Route, useLocation} from 'react-router-dom'
+import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import LogOut from './components/users/LogOut'
 import LogIn from './components/users/LogIn'
 import ResetPassword from './components/users/ResetPassword'
@@ -78,7 +78,7 @@ const App  = (props) => {
         <NavBarContainer/>
         <section>
           <div>
-            {user.is_login? <Notification/> :null }
+            {user.is_login && <Notification/> }
           </div>
         </section>
       
@@ -114,7 +114,7 @@ const App  = (props) => {
               <Route exact path='/anime' element={<Anime/>} />   
           </Routes>
         </main>
-        {window.location.pathname !== "/" ?<NavBackButton/>: null}
+        {(window.location.pathname !== "/") && <NavBackButton/>}
         <Footer/>
       </div>  
     </BrowserRouter>    
