@@ -2,12 +2,12 @@ import {useState} from 'react';
 import { connect } from 'react-redux';
 import {createTenant} from '../../actions/tenantsActions'
 import {useParams} from 'react-router-dom';
-import {acordionButtonClass,diplayAcordion} from '../../componentsHelpers/acordion'
+import {accordionButtonClass,diplayAccordion} from '../../componentsHelpers/accordion'
 import '../../styles/styles.css'
 import Errors from '../Errors';
 
 const CreateTenant = (props) =>{
-    const {acordion,errorsOrMessages} = props
+    const {accordion,errorsOrMessages} = props
     let {unit_id,building_id} = useParams()
     
     const [tenant,setTenant] = useState({
@@ -37,17 +37,17 @@ const CreateTenant = (props) =>{
 
     return(   
       <div className='center'>
-            <button id='create-tenant' className={acordionButtonClass('create-tenant',acordion)}> Add a new tenant</button>
-            <div className={diplayAcordion('create-tenant',acordion)}>
-                <div className="standar-forms acordion">
-                    <form onSubmit={handleOnSubmit} className='acordion'>
-                        <div className='acordion' > 
+            <button id='create-tenant' className={accordionButtonClass('create-tenant',accordion)}> Add a new tenant</button>
+            <div className={diplayAccordion('create-tenant',accordion)}>
+                <div className="standar-forms accordion">
+                    <form onSubmit={handleOnSubmit} className='accordion'>
+                        <div className='accordion' > 
                         {(errorsOrMessages.from === "create_tenant") && <Errors errorsOrMessages={errorsOrMessages}/> }
                         </div>  
-                        <input onChange={handleOnChange}  placeholder="Tenant name" name="name" className="standar-input acordion" type="text" value={tenant.name}/><br></br>
-                        <input onChange={handleOnChange}  placeholder="Tenant phone #" name="phone" className="standar-input acordion" type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required value={tenant.phone}/><br></br>
-                        <input onChange={handleOnChange}  placeholder={"Tenant email"} className="standar-input acordion"  type="email"  name="email" value={tenant.email}/> <br/>
-                        <button type='submit' className="white-blue-buttons  acordion">Save</button>
+                        <input onChange={handleOnChange}  placeholder="Tenant name" name="name" className="standar-input accordion" type="text" value={tenant.name}/><br></br>
+                        <input onChange={handleOnChange}  placeholder="Tenant phone #" name="phone" className="standar-input accordion" type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required value={tenant.phone}/><br></br>
+                        <input onChange={handleOnChange}  placeholder={"Tenant email"} className="standar-input accordion"  type="email"  name="email" value={tenant.email}/> <br/>
+                        <button type='submit' className="white-blue-buttons  accordion">Save</button>
                     </form>    
                 </div>
             </div>
@@ -58,7 +58,7 @@ const CreateTenant = (props) =>{
 
 const mapStateToProps = state => { 
     return {
-        acordion: state.acordion.acordion,
+        accordion: state.accordion.accordion,
         errorsOrMessages: state.errorsOrMessages.errorsOrMessages,
     }
 }

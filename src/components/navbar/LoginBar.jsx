@@ -39,7 +39,7 @@ const loginBar = (props)=>{
 
 const mapStateToProps = state => { 
     return {
-      acordion: state.acordion.acordion,
+      accordion: state.accordion.accordion,
       user: state.user.user,
       workOrders: state.workOrders.workOrders,
     }

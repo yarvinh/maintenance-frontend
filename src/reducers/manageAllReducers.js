@@ -6,7 +6,7 @@ import {BuildingsReducer,BuildingReducer } from "./buildingsReducers"
 import {CommentsReducer,commentReducer} from "./commentsReducers"
 import {ReplyReducer,RepliesReducer} from "./repliesReducers"
 import {TasksReducer,taskReducer} from "./tasksReducers"
-import {AcordionReducer} from "./acordionReducer"
+import {AccordionReducer} from "./accordionReducer"
 import {messageReducer,messagesEndErrors} from "./errorsOrMessagesReducers"
 import {violationsReducer} from "./violationsReducers"
 import { UnitReducer,UnitsReducer } from "./unitsReducers";
@@ -52,7 +52,7 @@ const rootReducer = combineReducers({
    gallery: galleryReducer,
    units: UnitsReducer,
    unit: UnitReducer,
-   acordion: AcordionReducer,
+   accordion: AccordionReducer,
    workOrderIndex: WorkOrderIndex,
    account:  accountType,
    // paths: pathsReducer

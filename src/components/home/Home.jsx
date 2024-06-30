@@ -14,8 +14,6 @@ const Home = (props)=>{
     )
 }
 
-
-
 const mapStateToProps = state => { 
   return {
     errorsOrMessages: state.errorsOrMessages.errorsOrMessages,

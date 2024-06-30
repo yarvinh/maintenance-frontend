@@ -1,15 +1,15 @@
 import { connect } from 'react-redux';
-import {barButtonClass} from '../../componentsHelpers/acordion'
+import {barButtonClass} from '../../componentsHelpers/accordion'
 
 const NavBarButton = (props)=>{
-    const {acordion} = props
+    const {accordion} = props
     const buttonLines=()=>{
-        if (acordion.varAcordion === 'display-nav-bar'){
+        if (accordion.barAccordion === 'display-nav-bar'){
             return(
                 <>
-                    <div id="display-nav-bar-1"className={`${barButtonClass("display-nav-bar",acordion)} lines`}></div>
-                    <div id="display-nav-bar-2"className={`${barButtonClass("display-nav-bar",acordion)} lines`}></div>
-                    <div id="display-nav-bar-3"className={`${barButtonClass("display-nav-bar",acordion)} lines`}></div>
+                    <div id="display-nav-bar-1"className={`${barButtonClass("display-nav-bar",accordion)} lines`}></div>
+                    <div id="display-nav-bar-2"className={`${barButtonClass("display-nav-bar",accordion)} lines`}></div>
+                    <div id="display-nav-bar-3"className={`${barButtonClass("display-nav-bar",accordion)} lines`}></div>
                 </>
             )
         } else{
@@ -18,7 +18,7 @@ const NavBarButton = (props)=>{
     }
 
     return(
-        <button id="display-nav-bar" className={`${barButtonClass("display-nav-bar",acordion)} nav-bar-button`}>  
+        <button id="display-nav-bar" className={`${barButtonClass("display-nav-bar",accordion)} nav-bar-button`}>  
           {buttonLines()}
         </button>
     )
@@ -27,7 +27,7 @@ const NavBarButton = (props)=>{
 
 const mapStateToProps = state => { 
     return {
-        acordion: state.acordion.acordion,
+        accordion: state.accordion.accordion,
     }
 }
       

@@ -1,5 +1,5 @@
 
-import {acordionDisplay} from '../componentsHelpers/acordion'
+import {accordionDisplay} from '../componentsHelpers/accordion'
 import { connect } from 'react-redux'; 
 import Home from '../components/home/Home'
 import HomeWithoutLogin from '../components/home/HomeWithoutLogin'
@@ -24,7 +24,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        acordionDisplay: (action) => dispatch(acordionDisplay(action)),
+        accordionDisplay: (action) => dispatch(accordionDisplay(action)),
     }
 } 
 

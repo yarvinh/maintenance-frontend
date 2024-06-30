@@ -50,7 +50,7 @@ export const fetchLogIn=(user,path)=> {
   export const fetchLogOut = () => {
     return (dispatch) => {
       dispatch({ type: 'LOADING'})
-        axios.delete(`${baseUrl()}/logout`, {headers:token(),withCredentials: true})
+        axios.delete(`${baseUrl()}/logout`, {headers: token(), withCredentials: true})
         .then(response=> {
             dispatch({ type: 'ADD_USER', user: response.data })
             removeLoginToken()

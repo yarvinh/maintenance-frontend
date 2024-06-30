@@ -1,4 +1,4 @@
-import React, { useState,useEffect} from 'react';
+import { useState,useEffect} from 'react';
 import CreateWorkOrder from "../components/workorders/CreateWorkOrder"
 import { connect } from 'react-redux';
 import WorkOrder from "../components/workorders/WorkOrder"
@@ -83,7 +83,7 @@ const mapStateToProps = state => {
         employees: state.employees.employees,
         buildings: state.buildings.buildings,
         loading: state.workOrders.loading,
-        acordion: state.acordion.acordion
+        accordion: state.accordion.accordion
     }
 }
       

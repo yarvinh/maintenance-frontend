@@ -1,5 +1,4 @@
-
-import { connect } from 'react-redux';
+import {useDispatch, useSelector } from 'react-redux';
 import {useEffect ,useRef} from 'react';
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import LogOut from './components/users/LogOut'
@@ -26,7 +25,7 @@ import EmailValidation from './components/users/EmailValidation';
 import GalleryContainer from './containers/GalleryContainer';
 import UnitDetails from "./components/units/UnitDetails"
 import EditEmployee from './components/employees/EditEmployee';
-import {acordionDisplay,barAccordionDisplay} from './componentsHelpers/acordion'
+import {accordionDisplay,barAccordionDisplay} from './componentsHelpers/accordion'
 import MyWorkOrders from './components/workorders/MyWorkOrders';
 import HomeContainer from './containers/HomeContainer';
 import PendingToAccept from './components/workorders/PendingToAccept';
@@ -39,49 +38,52 @@ import { CURRENT_USER_SETTER, WORKORDERS_SETTER } from './componentsHelpers/fetc
 import Footer from './components/Footer';
 import NavBackButton from './components/NavBackButton';
 import HpdComplaintsContainer from './containers/HpdComplaintsContainer';
+import { ACCORDION_CLASS } from './constants/constants';
 
 
-const App  = (props) => {
-  let { user ,workOrders,acordion,userLoading,verificationSession} = props
+const App  = () => {
+  const dispatch = useDispatch()
+  const verificationSession = useSelector(state => state.user.user?.verification_session)
+  const user = useSelector(state => state.user.user)
+  const workOrders = useSelector(state=> state.workOrders.workOrders)
+  const accordion = useSelector(state => state.accordion.accordion)
   const fetchTimesRef = useRef(1)
-  const handleOnAcordion = (e)=>{
+  
+  const handleOnAccordion = (e)=>{
     const openAccordion =  e.target.className.includes('display_accordion') 
-    || (!e.target.className.includes('acordion')) 
-    && (acordion.acordion === 'display_accordion active')   
+    || (!e.target.className.includes(ACCORDION_CLASS)) 
+    && (accordion.accordion === 'display_accordion active')   
 
     if(verificationSessionToken() && verificationSession && e.target.className.includes('exit-email-verification')){
       removeLoginToken()
-      props.setVerificationSession()
-      props.barAccordionDisplay({element: e, acordion: acordion}) 
-
+      dispatch(setVerificationSession()) //refactor
+      dispatch(barAccordionDisplay({element: e, accordion: accordion}) )
     }else if ( openAccordion ){
-      props.acordionDisplay({element: e, acordion: acordion})
-    }else if(e.target.className.includes('display-nav-bar')  || (!e.target.className.includes('bar-accordion')) && (acordion.varAcordion === 'display-nav-bar hide')){
-      props.barAccordionDisplay({element: e, acordion: acordion})  
+      dispatch(accordionDisplay({element: e, accordion: accordion}))
+    }else if(e.target.className.includes('display-nav-bar')  || (!e.target.className.includes('bar-accordion')) && (accordion.barAccordion === 'display-nav-bar hide')){
+      dispatch(barAccordionDisplay({element: e, accordion: accordion})  )
     } 
   }
   useEffect(() => {
-    props.getFetchAction(CURRENT_USER_SETTER)  
+    dispatch(getFetchAction(CURRENT_USER_SETTER)  )
   },[] ); 
 
   useEffect(() => {
     if(fetchTimesRef.current === 1){
       fetchTimesRef.current += 1  
-      props.getFetchAction(WORKORDERS_SETTER) 
+      dispatch(getFetchAction(WORKORDERS_SETTER) )
     }
   },[user] ); 
-  if(!userLoading && !user.is_login) fetchTimesRef.current = 1  
-
+  if( !user.is_login) fetchTimesRef.current = 1  
   return (
     <BrowserRouter >
-      <div onClick={handleOnAcordion} className="App text-font body">
+      <div onClick={handleOnAccordion} className="App text-font body">
         <NavBarContainer/>
         <section>
           <div>
             {user.is_login && <Notification/> }
           </div>
         </section>
-      
         <main>
           <Routes>
               <Route exact path='/login' element={<LogIn admin={false}/>} />
@@ -121,23 +123,6 @@ const App  = (props) => {
   ); 
 }
 
-const mapStateToProps = state => { 
-  return {
-    verificationSession: state.user.user?.verification_session,
-    acordion: state.acordion.acordion,
-    user: state.user.user,
-    workOrders: state.workOrders.workOrders,
-  }
-}
- 
-const mapDispatchToProps = dispatch => {
-  return {
-    getFetchAction: action => dispatch(getFetchAction(action)),
-    acordionDisplay: action => dispatch(acordionDisplay(action)),
-    barAccordionDisplay: action => dispatch(barAccordionDisplay(action)),
-    setVerificationSession: () => dispatch(setVerificationSession())
-  }
-}
+export default App
 
-export default connect(mapStateToProps, mapDispatchToProps)(App)
 

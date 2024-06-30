@@ -3,12 +3,12 @@ import { connect } from 'react-redux';
 import {editUnit} from '../../actions/unitsActions'
 import {useParams} from 'react-router-dom';
 import {clearErrors} from '../../actions/errorsActions'
-import {acordionButtonClass,diplayAcordion} from '../../componentsHelpers/acordion'
+import {accordionButtonClass,diplayAccordion} from '../../componentsHelpers/accordion'
 import Errors from '../Errors';
 import '../../styles/styles.css'
 
 const EditUnit = (props) =>{
-    const {errorsOrMessages,acordion} = props
+    const {errorsOrMessages,accordion} = props
     let {unit_id,building_id} = useParams()
     
     const [unit,setUnit] = useState({
@@ -28,15 +28,15 @@ const EditUnit = (props) =>{
 
     return(   
       <div className='center '>
-            <button id='edit-unit' className={acordionButtonClass("edit-unit",acordion)}> Edit Unit</button>
-            <div className={diplayAcordion("edit-unit",acordion)}>
-                <div className="standar-forms acordion">
-                    <form onSubmit={handleOnSubmit} className='acordion'>
-                        <div className='acordion'> 
+            <button id='edit-unit' className={accordionButtonClass("edit-unit",accordion)}> Edit Unit</button>
+            <div className={diplayAccordion("edit-unit",accordion)}>
+                <div className="standar-forms accordion">
+                    <form onSubmit={handleOnSubmit} className='accordion'>
+                        <div className='accordion'> 
                         {(errorsOrMessages.from === "update_unit") && <Errors errorsOrMessages={errorsOrMessages}/>}
                         </div>  
-                        <input onChange={handleOnChange} maxLength="8" placeholder="Edit Unit" name="unit" className="standar-input acordion" type="text" value={unit.unit}/>
-                        <button type='submit' className="standar-button acordion">Save</button>
+                        <input onChange={handleOnChange} maxLength="8" placeholder="Edit Unit" name="unit" className="standar-input accordion" type="text" value={unit.unit}/>
+                        <button type='submit' className="standar-button accordion">Save</button>
                     </form>    
                     <br/>
                 </div>
@@ -49,7 +49,7 @@ const EditUnit = (props) =>{
 
 const mapStateToProps = state => { 
     return {
-        acordion: state.acordion.acordion,
+        accordion: state.accordion.accordion,
         errorsOrMessages: state.errorsOrMessages.errorsOrMessages,
     }
 }

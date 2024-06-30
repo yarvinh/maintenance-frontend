@@ -2,7 +2,7 @@
 import {useState,useEffect } from 'react';
 import {useParams} from 'react-router-dom';
 import {connect } from 'react-redux';
-import {acordionButtonClass,diplayAcordion} from '../../componentsHelpers/acordion'
+import {accordionButtonClass,diplayAccordion} from '../../componentsHelpers/accordion'
 import { paths } from '../../actions/actionsHelper';
 import { postFetchAction } from '../../actions/fetchActions';
 import { getFetchAction } from '../../actions/fetchActions';
@@ -12,7 +12,7 @@ import '../../styles/styles.css'
 const CreateWorkOrder = (props) => {
     const {workOrders,user} = props
     const {id} = useParams()
-    const {employees,buildings,employee,building,acordion,errorsOrMessages} = props
+    const {employees,buildings,employee,building,accordion,errorsOrMessages} = props
     const [workOrder, setWorkOrder] = useState({
         unit: "",
         date: "",
@@ -79,34 +79,34 @@ const CreateWorkOrder = (props) => {
 
     return (
       <div className='center'>
-        <button  id='create-work-order' className={acordionButtonClass('create-work-order',acordion)}> Create A Work Order</button>
-        <div className={diplayAcordion('create-work-order',acordion)}>
-            <div className="standar-forms standar-form-position acordion">
-                <form onSubmit={handleOnSubmit} className='acordion'>
-                  <div className="center acordion"> 
+        <button  id='create-work-order' className={accordionButtonClass('create-work-order',accordion)}> Create A Work Order</button>
+        <div className={diplayAccordion('create-work-order',accordion)}>
+            <div className="standar-forms standar-form-position accordion">
+                <form onSubmit={handleOnSubmit} className='accordion'>
+                  <div className="center accordion"> 
                   {(errorsOrMessages.from  === 'create_work_order') && <Errors errorsOrMessages={errorsOrMessages}/>}
                   </div>  
                   {!employee && 
-                    <select  className="standar-input acordion" onChange={handleOnChange} name="employee_id" defaultValue="select_employee">
-                      <option  name="employee" value="select_employee" className='acordion'>Select Employee</option> 
-                      {employees.map(e => <option key={e.id} value={e.id} className='acordion'>{e.name}</option>)}
+                    <select  className="standar-input accordion" onChange={handleOnChange} name="employee_id" defaultValue="select_employee">
+                      <option  name="employee" value="select_employee" className='accordion'>Select Employee</option> 
+                      {employees.map(e => <option key={e.id} value={e.id} className='accordion'>{e.name}</option>)}
                     </select>}
 
                     {!building && 
-                    <select  className="standar-input acordion" onChange={handleOnChange} name="building_id" defaultValue="select_location">
-                      <option  value="select_location" className='acordion'>Select Location</option>
-                      {!buildings.error_message && buildings.map(b => <option key={b.id} className='acordion' value={b.id} >{b.address}</option>)}
+                    <select  className="standar-input accordion" onChange={handleOnChange} name="building_id" defaultValue="select_location">
+                      <option  value="select_location" className='accordion'>Select Location</option>
+                      {!buildings.error_message && buildings.map(b => <option key={b.id} className='accordion' value={b.id} >{b.address}</option>)}
                     </select>}
-                    <label className='acordion'>Date</label>
-                    <div  className='acordion'> 
-                    <input onChange={handleOnChange}  name="date" className="standar-input acordion" type="date" value={workOrder.date} min={today.join("-")} />
+                    <label className='accordion'>Date</label>
+                    <div  className='accordion'> 
+                    <input onChange={handleOnChange}  name="date" className="standar-input accordion" type="date" value={workOrder.date} min={today.join("-")} />
                     </div>
                     <br/>
-                    <label className='acordion'>Title</label> <br/>
-                    <input onChange={handleOnChange} className="standar-input acordion" name="title"  type="text" value={workOrder.title}/><br/>
-                    <label className='acordion'>Unit</label> <br/>
-                    <input onChange={handleOnChange} className="standar-input acordion" name="unit" value={workOrder.unit}/><br/><br/>
-                    <button type='submit' className="white-blue-buttons acordion">Submit</button>
+                    <label className='accordion'>Title</label> <br/>
+                    <input onChange={handleOnChange} className="standar-input accordion" name="title"  type="text" value={workOrder.title}/><br/>
+                    <label className='accordion'>Unit</label> <br/>
+                    <input onChange={handleOnChange} className="standar-input accordion" name="unit" value={workOrder.unit}/><br/><br/>
+                    <button type='submit' className="white-blue-buttons accordion">Submit</button>
                 </form>     
                 <br/>
             </div>
@@ -122,7 +122,7 @@ const mapStateToProps = state => {
   return {
     user: state.user.user,
     workOrders: state.workOrders.workOrders,
-    acordion: state.acordion.acordion,
+    accordion: state.accordion.accordion,
     errorsOrMessages: state.errorsOrMessages.errorsOrMessages,
   }
 }

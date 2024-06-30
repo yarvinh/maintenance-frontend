@@ -2,16 +2,16 @@ import {Link} from 'react-router-dom'
 import { connect } from "react-redux"
 import NavBarButton from '../components/navbar/NavBarButton'
 import { isLoginToken } from '../componentsHelpers/token'
-import {displayBarAccordion} from '../componentsHelpers/acordion'
+import {displayBarAccordion} from '../componentsHelpers/accordion'
 import NoLoginBar from '../components/navbar/NoLoginBar'
 import LoginBar from '../components/navbar/LoginBar'
 
 const NavBarContainer = (props) => {
-   const {user,acordion} = props
+   const {user,accordion} = props
     const {admin} = user
     const navManu=()=>{
       return(              
-      <div id="nav-links"  className={`${displayBarAccordion("display-nav-bar",acordion)} bar-accordion`}>
+      <div id="nav-links"  className={`${displayBarAccordion("display-nav-bar",accordion)} bar-accordion`}>
       <div className="var-menu bar-accordion" id="p">
         <ul className="bar-menu-list bar-accordion">
           {user.is_login && isLoginToken() || user.is_login?<LoginBar/>:null}
@@ -45,7 +45,7 @@ const NavBarContainer = (props) => {
 
 const mapStateToProps = state => { 
     return {
-      acordion: state.acordion.acordion,
+      accordion: state.accordion.accordion,
       user: state.user.user,
       workOrders: state.workOrders.workOrders,
     }
