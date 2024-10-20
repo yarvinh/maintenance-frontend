@@ -42,34 +42,34 @@ const CommentsContainer = ( {workOrder, user} )=> {
         )
         }
     
-        ws.onmessage = (e)=>{
-            const data = JSON.parse(e.data)
-            if(data.type === "ping") return
-            if(data.type === "welcome") return
-            if(data.type === "confirm_subscription") return
-            if (data.message?.from_create_comment){
-                const payload = commentGetSetter({workOrderId: workOrderId, id: data.message.id})
-                dispatch(getFetchAction(payload))
-            } else if (data.message?.from_delete_comment){
-                dispatch(deleteComment(data.message?.comment_deleted))
-            } else if (data.message?.from_create_like_for_comment){
-                const response = data.message.response
-                dispatch(addOrRemoveLikesFromComment(JSON.parse(response)))
-            } else if (data.message?.from_delete_like_from_comment){
-                dispatch(addOrRemoveLikesFromComment(data.message.like_deleted)) 
-            }else  if (data.message?.from_delete_reply ){
-                dispatch(removeReplyFromComment(data.message.reply_deleted))
-            }else if(data.message?.from_create_reply){
-                dispatch(addNewReply(JSON.parse(data.message.reply)))
-            }else if(data.message?.from_create_like_for_reply) {
-                const response = data.message.response
-                dispatch(addOrRemoveLikesFromReply(JSON.parse(response)))
-            } else if (data.message?.from_delete_like_from_reply){
-                dispatch(addOrRemoveLikesFromReply(data.message.like_deleted))
-            }        
-        } 
+    //     ws.onmessage = (e)=>{
+    //         const data = JSON.parse(e.data)
+    //         if(data.type === "ping") return
+    //         if(data.type === "welcome") return
+    //         if(data.type === "confirm_subscription") return
+    //         if (data.message?.from_create_comment){
+    //             const payload = commentGetSetter({workOrderId: workOrderId, id: data.message.id})
+    //             dispatch(getFetchAction(payload))
+    //         } else if (data.message?.from_delete_comment){
+    //             dispatch(deleteComment(data.message?.comment_deleted))
+    //         } else if (data.message?.from_create_like_for_comment){
+    //             const response = data.message.response
+    //             dispatch(addOrRemoveLikesFromComment(JSON.parse(response)))
+    //         } else if (data.message?.from_delete_like_from_comment){
+    //             dispatch(addOrRemoveLikesFromComment(data.message.like_deleted)) 
+    //         }else  if (data.message?.from_delete_reply ){
+    //             dispatch(removeReplyFromComment(data.message.reply_deleted))
+    //         }else if(data.message?.from_create_reply){
+    //             dispatch(addNewReply(JSON.parse(data.message.reply)))
+    //         }else if(data.message?.from_create_like_for_reply) {
+    //             const response = data.message.response
+    //             dispatch(addOrRemoveLikesFromReply(JSON.parse(response)))
+    //         } else if (data.message?.from_delete_like_from_reply){
+    //             dispatch(addOrRemoveLikesFromReply(data.message.like_deleted))
+    //         }        
+    //     } 
 
-    },[workOrderId])
+    // },[workOrderId])
 
     const displayOnSubmit=(e)=>{
         e.preventDefault()
