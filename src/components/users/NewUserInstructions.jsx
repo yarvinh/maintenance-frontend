@@ -1,9 +1,10 @@
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import CreateBuilding from '../buildings/CreateBuilding';
 import { Link } from 'react-router-dom';
 import CreateEmployees from '../employees/CreateEmployees';
 
-const NewUserInstructions = ({user})=>{
+const NewUserInstructions = ()=>{
+    const user = useSelector(state => state.user.user)
     return (
         <article className='center'>
             <header> 
@@ -30,12 +31,7 @@ const NewUserInstructions = ({user})=>{
     )
 }
 
-const mapStateToProps = state => { 
-    return {
-      verificationSession: state.user.user.verification_session,
-      user: state.user.user
-    }
-}
 
-export default connect(mapStateToProps,null)(NewUserInstructions)
+
+export default NewUserInstructions
 

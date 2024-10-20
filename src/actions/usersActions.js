@@ -2,85 +2,69 @@ import axios from 'axios'
 import {token,verificationToken,removeLoginToken} from '../componentsHelpers/token'
 import {baseUrl} from './actionsHelper'
 import { paths } from './actionsHelper'
-export const createUser =  (user) => {
-    return (dispatch) => {
-        dispatch({ type: 'LOADING'})
-        fetch(`${baseUrl()}${paths().usersPath}`, {method: "POST",body:  JSON.stringify(user),
-        headers:token(), withCredentials: true})
-        .then(response => response.json())
-        .then(response => {
-          const error = response.errors_or_messages
-          if(response.created){
-            localStorage.setItem('token', response.token)
-          }
-          dispatch({ type: 'ADD_USER', user: response})
-          error? dispatch({ type: 'ADD_ERRORS_OR_MESSAGES', errorsOrMessages: response.errors_or_messages}): dispatch({ type: 'ADD_ERRORS_OR_MESSAGES', errorsOrMessages: []})
-      }).catch(error => console.log(error, "this is a test from users actions catch"))
+import { userLoading, userReceived } from '../state/reducers/userReducers'
+import { accountReceived } from '../state/reducers/accountReducer'
+import { errorsOrMessagesReceived } from '../state/reducers/errorsOrMessagesReducer'
+import { ERRORS } from '../componentsHelpers/errors'
+
+export const userPostFetchAction = ( {payload,path,loading,reducer}) => {
+  return async (dispatch) => {
+    loading && dispatch(loading())
+    try {
+      const response = await axios.post(`${baseUrl()}${path}`,payload, {headers: token(), withCredentials: true,})
+      const msg = response.data.errors_or_messages
+      if (msg && response.data?.verification_session){
+        dispatch(errorsOrMessagesReceived(msg)) 
+        localStorage.setItem('token', response.data.token)
+      }
+      reducer && dispatch(reducer(response.data))
+    } catch (error){
+      loading && dispatch(loading())
+      if(error.response?.data.errors_or_messages)
+        dispatch(errorsOrMessagesReceived(error.response.data?.errors_or_messages))
+      else
+        dispatch(errorsOrMessagesReceived(ERRORS))
     }
+  }
 }
 
 export const fetchLogIn=(user,path)=> {
-  return (dispatch) => {
-    dispatch({ type: 'LOADING'})
-      fetch(`${baseUrl()}${path}`, { 
-        method: "POST", 
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({user}), 
-        withCredentials: true
-      })
-      .then(response => response.json())
-      .then(response => {
-        const error = response.errors_or_messages
-        if(response.is_login){
-          localStorage.setItem('token', response.token?.token)
-          localStorage.setItem('secret_key', response.token?.secret_key)
-        }else if(!response.valid_email && response.token){
-          localStorage.setItem('token', response.token)
-        }
-        dispatch({ type: 'ADD_USER', user: response})
-        error? dispatch({ type: 'ADD_ERRORS_OR_MESSAGES', errorsOrMessages: response.errors_or_messages}): dispatch({ type: 'ADD_ERRORS_OR_MESSAGES', errorsOrMessages: []})//dispatch({ type: 'ADD_USER', user: response.data})
-      })
+  return async (dispatch) => {
+    dispatch(userLoading())
+    try{
+      const response = await axios.post(`${baseUrl()}${path}`,{user}, { withCredentials: true})
+      const msg = response.data.errors_or_messages
+      if (msg && response.data?.verification_session){
+       dispatch(errorsOrMessagesReceived(msg)) 
+       localStorage.setItem('token', response.data.token)
+      }else{
+        localStorage.setItem('token', response.data.token?.token)
+        localStorage.setItem('secret_key', response.data.token?.secret_key)
+      }
+      dispatch(userReceived(response.data))
+    }catch(error){
+      if(error.response?.data.errors_or_messages)
+        dispatch(errorsOrMessagesReceived(error.response.data?.errors_or_messages))
+      else
+        dispatch(errorsOrMessagesReceived(ERRORS))
+    }
+    }
 }
-}
-
 
   export const fetchLogOut = () => {
-    return (dispatch) => {
-      dispatch({ type: 'LOADING'})
-        axios.delete(`${baseUrl()}/logout`, {headers: token(), withCredentials: true})
-        .then(response=> {
-            dispatch({ type: 'ADD_USER', user: response.data })
-            removeLoginToken()
-        })
+    return async (dispatch) => {
+      dispatch(userLoading())
+      try{
+        const response = await axios.delete(`${baseUrl()}/logout`, {headers: token(), withCredentials: true})
+        removeLoginToken()
+        dispatch(userReceived(response.data))
+      }catch(err){
+        dispatch(errorsOrMessagesReceived(ERRORS))
       }
+    }
 
   }
-
-//   export const fetchLogIn=(user,path)=> {
-//     console.log(`${baseUrl()}${path}`)
-//     return (dispatch) => {
-//       dispatch({ type: 'LOADING'})
-//         axios.post(`${baseUrl()}${path}`, 
-//         {user}, {withCredentials: true})
-//         .then(response=> {
-//           // console.log(response)
-//           const error = response.data.errors_or_messages
-//           if(response.data.is_login){
-//             localStorage.setItem('token', response.data.token?.token)
-//             localStorage.setItem('secret_key', response.data.token?.secret_key)
-//           }else if(!response.data.valid_email && response.data.token){
-//             localStorage.setItem('token', response.data.token)
-//           }
-//           dispatch({ type: 'ADD_USER', user: response.data})
-//           error? dispatch({ type: 'ADD_ERRORS_OR_MESSAGES', errorsOrMessages: response.data.errors_or_messages}): dispatch({ type: 'ADD_ERRORS_OR_MESSAGES', errorsOrMessages: []})//dispatch({ type: 'ADD_USER', user: response.data})
-//         })
-//   }
-// }
-
-
+// esta si ############################
 export const editUser = (params) => {
   return (dispatch) => {
       dispatch({type: "LOADING_USER"})
@@ -97,97 +81,123 @@ export const editUser = (params) => {
 
 export const recoveryPassword=(user)=> {
   const {username, path} = user
-  return (dispatch) => {
-    dispatch({ type: 'LOADING_ERRORS_OR_MESSAGES'})
-      axios.post(`${baseUrl()}${path}`, 
-     {username}, {withCredentials: true, headers: verificationToken() })
-      .then(response=> {
-        if(response.data.token){
-          localStorage.setItem('token', response.data.token)
-          localStorage.setItem('account_type', response.data.account_type)
-        }
-        dispatch({ type: 'ADD_ERRORS_OR_MESSAGES', errorsOrMessages: response.data.errors_or_messages})
-      })
+  return async (dispatch) => {
+    dispatch(userLoading)
+    try{
+      const response = await axios.post(`${baseUrl()}${path}`,{username}, {withCredentials: true, headers: verificationToken() })
+      if(response.data.token){
+        localStorage.setItem('token', response.data.token)
+      }
+      dispatch(userReceived(response.data))
+    }catch(error){
+      dispatch(userLoading())
+      dispatch(errorsOrMessagesReceived(ERRORS))
+    }
   }
 }
 
 export const recoveryUsername=(user)=> {
-  return (dispatch) => {
-    dispatch({ type: 'LOADING_ERRORS_OR_MESSAGES'})
-      axios.post(`${baseUrl()}/forgot_username`, 
-      {user}, {withCredentials: true})
-      .then(response=> {
-        dispatch({ type: 'ADD_ERRORS_OR_MESSAGES', errorsOrMessages: response.data.errors_or_messages})
-      })
-}
+  return async (dispatch) => {
+    dispatch(userLoading())
+    try{
+      const response = await axios.post(`${baseUrl()}/forgot_username`,{user}, {withCredentials: true})
+      const msg = response.data.errors_or_messages
+      if(msg)
+        dispatch(errorsOrMessagesReceived(msg))
+      dispatch(userReceived(response.data))
+        
+    }catch(error){
+      if(error.response?.data.errors_or_messages)
+        dispatch(errorsOrMessagesReceived(error.response.data?.errors_or_messages))
+      else
+        dispatch(errorsOrMessagesReceived(ERRORS))
+    }
+  }
 }
 
 export const resetUserPassword = ({user,path}) => {
-  return (dispatch) => {
-      dispatch({type: "LOADING_USER"})
-      axios.patch(`${baseUrl()}/${path}`,{user} ,{withCredentials: true, headers: verificationToken()})
-      .then(response => {
-        if (response.data.updated){
+  return async (dispatch) => {
+      dispatch(userLoading())
+      try{
+        const response = await axios.patch(`${baseUrl()}/${path}`,{user} ,{withCredentials: true, headers: verificationToken()})
+        if (response.data.updated)
           removeLoginToken()
-        }
-          let error = response.data.errors_or_messages
-           error ? dispatch({ type: 'ADD_ERRORS_OR_MESSAGES', errorsOrMessages: response.data.errors_or_messages}) : dispatch({ type: 'ADD_ERRORS_OR_MESSAGES', errorsOrMessages: []})
-           dispatch({ type: 'ADD_USER', user: response.data})
-      })
+        const msg = response.data.errors_or_messages
+        if(msg)
+          dispatch(errorsOrMessagesReceived(msg))
+        dispatch(userReceived(response.data))
+      }catch(error){
+        if(error.response?.data.errors_or_messages)
+        dispatch(errorsOrMessagesReceived(error.response.data?.errors_or_messages))
+      else
+        dispatch(errorsOrMessagesReceived(ERRORS))
+      }
   }
 }
 
 export const verifyEmail = (params) => {
-  return (dispatch) => {
-      dispatch({type: "LOADING"})
-      fetch(`${baseUrl()}${paths().verifyEmail}`,{method: "PATCH",withCredentials: true, headers: verificationToken(), body: JSON.stringify(params)})
-      .then(response => response.json())
-      .then(response => {
-       let error = response.errors_or_messages
-        if(response.updated){
+  return async (dispatch) => {
+      dispatch(userLoading())
+      try {
+        const response = await axios.patch(`${baseUrl()}${paths().verifyEmail}`,params, {withCredentials: true, headers: verificationToken()})
+        if(response.data.updated){
           localStorage.removeItem('token')
-          localStorage.setItem('token', response.token?.token)
-          localStorage.setItem('secret_key', response.token?.secret_key)
-        }else if (response.session_expired){
-          removeLoginToken()
+          localStorage.setItem('token', response.data.token?.token)
+          localStorage.setItem('secret_key', response.data.token?.secret_key) 
         }
-        error ? dispatch({ type: 'ADD_ERRORS_OR_MESSAGES', errorsOrMessages: response.errors_or_messages}) : dispatch({ type: 'ADD_ERRORS_OR_MESSAGES', errorsOrMessages: []})
-        dispatch({ type: 'ADD_USER', user: response})
-      })
+        dispatch(userReceived(response.data))
+      } catch(error) {
+        dispatch(userLoading())
+        if(error.response?.data.errors_or_messages){
+          dispatch(errorsOrMessagesReceived(error.response.data?.errors_or_messages))
+         } else{
+          dispatch(errorsOrMessagesReceived(ERRORS))
+         }
+      }
   }
 }
+
+
 
 export const requestSecurityCode = () => { 
-  return (dispatch) => {
-      dispatch({ type: 'LOADING_USER'})
-      axios.patch(`${baseUrl()}/request_security_code`, "request_security_code", {headers: verificationToken(),withCredentials: true})    
-      .then(response => {
+  return async (dispatch) => {
+      dispatch(userLoading())
+      try {
+        const response = await axios.patch(`${baseUrl()}/request_security_code`, "request_security_code", {headers: verificationToken(),withCredentials: true})    
         if(!response.data.valid_email && response.data.token){
+          const msg = response.data.errors_or_messages
+          dispatch(errorsOrMessagesReceived(msg)) 
           localStorage.setItem('token', response.data.token)
         }
-        const error = response.data.errors_or_messages
-        dispatch({ type: 'ADD_USER', user: response.data})
-        error? dispatch({ type: 'ADD_ERRORS_OR_MESSAGES', errorsOrMessages: response.data.errors_or_messages}): dispatch({ type: 'ADD_ERRORS_OR_MESSAGES', errorsOrMessages: []})
-      })
-      .catch(error => console.log('api errors:', error))
+        dispatch(userReceived(response.data))
+      } catch(error) {
+        dispatch(userLoading())
+        if(error.response?.data.errors_or_messages){
+          dispatch(errorsOrMessagesReceived(error.response.data?.errors_or_messages))
+        } else{
+          dispatch(errorsOrMessagesReceived(ERRORS))
+        }
+      }
   }
 }
 
-export const setVerificationSession=()=>{
-  return (dispatch) => {
-    dispatch({ type: 'ADD_ERRORS_OR_MESSAGES', errorsOrMessages: ["We must verify your email first to use your account"]})
-    dispatch({ type: 'ADD_USER', user: {
-      is_login: false,
-      reload: false,
-      valid_email: false,
-      verification_session: false
-    }})
-  }
-}
+
+
+// export const setVerificationSession=()=>{
+//   return (dispatch) => {
+//     dispatch({ type: 'ADD_ERRORS_OR_MESSAGES', errorsOrMessages: ["We must verify your email first to use your account"]})
+//     dispatch({ type: 'ADD_USER', user: {
+//       is_login: false,
+//       reload: false,
+//       valid_email: false,
+//       verification_session: false
+//     }})
+//   }
+// }
 
 export const setAccountType = (action)=>{
   return (dispatch) => {
-    dispatch({ type: 'ACCOUNT', account: action})
+    dispatch(accountReceived(action))
   } 
 }
 

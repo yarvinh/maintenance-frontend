@@ -1,13 +1,15 @@
-import {Link} from 'react-router-dom'
-import { connect } from "react-redux"
-import NavBarButton from '../components/navbar/NavBarButton'
+
+import { useSelector } from "react-redux"
 import { isLoginToken } from '../componentsHelpers/token'
 import {displayBarAccordion} from '../componentsHelpers/accordion'
 import NoLoginBar from '../components/navbar/NoLoginBar'
 import LoginBar from '../components/navbar/LoginBar'
+import NavBarButton from "../components/navbar/NavBarButton"
 
-const NavBarContainer = (props) => {
-   const {user,accordion} = props
+const NavBarContainer = () => {
+  // const workOrders = useSelector(state => state.workOrders.workOrders)
+  const user = useSelector(state => state.user.user)
+  const accordion = useSelector(state => state.accordion.accordion)
     const {admin} = user
     const navManu=()=>{
       return(              
@@ -32,6 +34,7 @@ const NavBarContainer = (props) => {
               <div className='acordion-bar'>
                 <div className='profile-container  bar-accordion'>
                    <NavBarButton/>
+
                    {user.profile_image? <img src={user.profile_image} className="profile-image  bar-accordion" ></img> : user.is_login ? <img src="/blank-profile-picture-973460_1280.webp"  className="profile-image  bar-accordion" ></img> : <div className="bar-with-no-login bar-accordion" ></div>}
                    {user.is_login && user.profile_image? <p className="profile_name  bar-accordion">{admin ? user.user.name: user.user.name} </p>:null}
                    {user.is_login && !user.profile_image? <p className='profile_name  bar-accordion'>{admin ? user.user.name : user.user.name} </p>:null}
@@ -43,12 +46,4 @@ const NavBarContainer = (props) => {
     )
 }
 
-const mapStateToProps = state => { 
-    return {
-      accordion: state.accordion.accordion,
-      user: state.user.user,
-      workOrders: state.workOrders.workOrders,
-    }
-  }
-   
-export default connect(mapStateToProps, null)(NavBarContainer)
+export default NavBarContainer

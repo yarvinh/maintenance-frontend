@@ -1,34 +1,37 @@
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {useParams,useNavigate} from 'react-router-dom';
 import {useEffect,useState } from 'react';
 import WorkOrdersContainer from '../../containers/WorkOrdersContainer';
-import {deleteEmployee} from "../../actions/employeesActions"
-import { getFetchAction } from '../../actions/fetchActions';
+import { deleteFetchAction, getFetchAction} from '../../actions/fetchActions';
 import '../../styles/styles.css'
+import { employeeDeleteSetter, employeeGetSetter } from '../../componentsHelpers/fetchingFunctions';
+import ErrorsOrMsg from '../ErrosOrMsg';
 
-const EmployeeDetails = (props)=>{    
-    const {id} = useParams()
+const EmployeeDetails = ()=>{    
+    const dispatch = useDispatch()
+    // const workOrders = useSelector(state => state.workOrders.workOrders)
+    // const workOrder = useSelector(state => state.workOrder.workOrder)
+    const employee = useSelector(state => state.employee.employee)
+    const user = useSelector(state => state.user.user)
+    const errorsOrMsg = useSelector(state => state.errorsOrMessages.errorsOrMessages)
+    const {employeeId} = useParams()
     const navigate = useNavigate()
-    let { workOrders,user,employee} = props
     const [imageClassName, setImageClassName] = useState("employee_card_image")
     const employeeWorkOrders =  employee?.work_orders 
-    
     useEffect(() => {
-      props.getFetchAction({
-        loading: "LOADING_EMPLOYEE", 
-        type: 'ADD_EMPLOYEE',
-        path: `/employees/${id}`, 
-        stateName: 'employee'
-      })
-    },[workOrders]);
+      const payload = employeeGetSetter({id: employeeId})
+      dispatch(getFetchAction(payload))
+    },[]);
 
     const handleOnClick = (e)=> {
+        const payload = employeeDeleteSetter({id: employeeId})
         const confirmBox = window.confirm(
             "Are you sure you want to delete this employee?!"     
           )
-        if (confirmBox === true) 
-        props.deleteEmployee(employee.id)  
-        navigate("/employees")
+        if (confirmBox === true){
+          dispatch(deleteFetchAction(payload))
+          navigate("/employees")
+        }
 
               
     }
@@ -41,42 +44,40 @@ const EmployeeDetails = (props)=>{
       }
     }
 
-    const employeeAsUser = ()=>{
-       return(
-        <>
-          <br/>
-          <br/>
-          <div className="container d-flex justify-content-center">
-            <div className="card-container mb-3">    
-                <div className="card-header employee-header-size">
-                  <img src={user.profile_image} className="employee_card_image" ></img> 
-                  <p >{user.user?.name}</p>
-                </div> 
-                <div className="card-body">
-                  <strong>{user.user?.email}</strong> <br/>
-                  <a href={`tel:${user.user?.phone}`}><span className="bottom">{user.user?.phone}</span></a> 
-                </div>    
-            </div>
-          </div>
-           <h3 className="center">Work Orders</h3>
-          {(user.user && employeeWorkOrders) && <WorkOrdersContainer  workOrders={user.user?.work_orders} employee={user.user} />}
-        </>
-      )
-    }
+    // const employeeAsUser = ()=>{
+    //    return(
+    //     <>
+    //       <div className="container d-flex justify-content-center">
+    //         <div className="card-container mb-3">    
+    //             <div className="card-header employee-header-size">
+    //               <img src={user.profile_image ? user.profile_image: "/blank-profile-picture-973460_1280.webp"} className="employee_card_image" ></img> 
+    //               <p >{user.user?.name}</p>
+    //             </div> 
+    //             <div className="card-body">
+    //               <strong>{user.user?.email}</strong> <br/>
+    //               <a href={`tel:${user.user?.phone}`}><span className="bottom">{user.user?.phone}</span></a> 
+    //             </div>    
+    //         </div>
+    //       </div>
+    //        <h3 className="center">Work Orders</h3>
+    //       {(user.user && employeeWorkOrders) && <WorkOrdersContainer  workOrders={user.user?.work_orders} employee={user.user} />}
+    //     </>
+    //   )
+    // }
 
-    const otherEmployee=()=>{
+    // const otherEmployee=()=>{
       return (
         <>
-        <br/>
-        <br/>
             <div className="container d-flex justify-content-center">
                 <div className="card-container mb-3 car-shadow">   
+
                     {user.admin && <i onClick={handleOnClick}  className="fa-solid fa-trash-can delete-task "></i>}   
                     <div className="card-header employee-header-size">
-                      {employee.image && <img src={employee.image} onClick={handleOnImg} className={imageClassName} ></img>}
+                       <img src={employee.image ? employee.image : "/blank-profile-picture-973460_1280.webp"} onClick={handleOnImg} className={imageClassName} ></img>
                        <p >{employee.name}</p>
                     </div> 
                     <div className="card-body">
+                    {errorsOrMsg.from.includes("employee") && <ErrorsOrMsg {...(errorsOrMsg.errors ? { errors: errorsOrMsg.errors } :{msg: errorsOrMsg.msg })} />}
                        <strong>{employee.email}</strong> <br/>
                        <a href={`tel:${employee.phone}`}><span className="bottom">{employee.phone}</span></a> 
                     </div>    
@@ -86,31 +87,15 @@ const EmployeeDetails = (props)=>{
             {(employee && employeeWorkOrders) && <WorkOrdersContainer  workOrders={employeeWorkOrders} employee={employee} />}
         </>
       )
-    }
+    // }
   
-    return (
-        <>
-            <div>
-              {!user.admin && user.user?.id === id? employeeAsUser() : otherEmployee()}
-            </div>
-        </>
-    )
+    // return (
+    //     <>
+    //         <div>
+    //           {!user.admin && user.user?.id === employeeId? employeeAsUser() : otherEmployee()}
+    //         </div>
+    //     </>
+    // )
 };
 
-const mapStateToProps = state => { 
-    return {
-      workOrders: state.workOrders.workOrders,
-      user: state.user.user,
-      workOrder: state.workOrder.workOrder,
-      employee: state.employee.employee
-    }
-}
-
-const mapDispatchToProps = dispatch => {
-    return {
-      getFetchAction: (action) => dispatch(getFetchAction(action)),
-      deleteEmployee: (action) => dispatch(deleteEmployee(action))
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(EmployeeDetails)
+export default EmployeeDetails

@@ -1,33 +1,38 @@
 
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {useParams,useNavigate,Link} from 'react-router-dom';
 import EditBuilding from "./EditBuilding"
 import '../../styles/styles.css'
-import {deleteBuilding} from "../../actions/buildingsActions"
 import WorkOrdersContainer from '../../containers/WorkOrdersContainer';
 import UnitsContainer from '../../containers/UnitsContainer';
 import { date } from '../../componentsHelpers/date';
 import { useEffect } from 'react';
-import { getFetchAction } from '../../actions/fetchActions';
-import { buildingSetter } from '../../componentsHelpers/fetchingFunctions';
+import { deleteFetchAction, getFetchAction } from '../../actions/fetchActions';
+import { buildingDeleteSetter, buildingGetSetter } from '../../componentsHelpers/fetchingFunctions';
 
-const BuildingDetails = (props)=>{
-    const {id} = useParams()
+const BuildingDetails = ()=>{
+    const {buildingId} = useParams()
+    const dispatch = useDispatch()
     let navigate = useNavigate()
-    const {building,workOrders,user} = props
-    const buildingWorkOrders = workOrders.filter(wo => wo.building && wo.building_id.toString() === id) 
-    
+    const user = useSelector(state => state.user.user)
+    const building = useSelector(state => state.building.building)
+    const workOrders = useSelector(state => state.workOrders.workOrders)
+    const loading = useSelector(state => state.building.buildingLoading)
+
+    const buildingWorkOrders = workOrders.filter(wo => wo.building && wo.building_id.toString() === buildingId) 
     useEffect(()=>{
-      props.getFetchAction(buildingSetter(id))
+        const payload = buildingGetSetter({id: buildingId})
+        dispatch(getFetchAction(payload))
     },[])
 
     const handleOnClick=(e)=>{
+       const payload = buildingDeleteSetter({id: building.id})
         const confirmBox = window.confirm(
             "Are you sure you want to delete this building?"     
           )
           if (confirmBox === true) {
-              props.deleteBuilding(building.id)  
-              navigate('/buildings')
+            dispatch(deleteFetchAction(payload))
+            navigate('/buildings')
           }    
     }
 
@@ -59,26 +64,10 @@ const BuildingDetails = (props)=>{
                     </div>  
                 </div>
             </div>
-            {building.id && <WorkOrdersContainer  building={building} workOrders={buildingWorkOrders} user={props.user}/>}
+            {building.id && <WorkOrdersContainer  building={building} workOrders={buildingWorkOrders} user={user}/>}
         </section>     
     )
 };
 
 
-const mapStateToProps = state => { 
-    return {
-      user: state.user.user,
-      building: state.building.building,
-      workOrders: state.workOrders.workOrders,
-      loading: state.building.loading
-    }
-  }
-
-  const mapDispatchToProps = dispatch => {
-    return {
-      getFetchAction: (action) => dispatch(getFetchAction(action)),
-      deleteBuilding: (action) => dispatch(deleteBuilding(action))
-    }
-  }
-
-  export default connect(mapStateToProps, mapDispatchToProps)(BuildingDetails)
+  export default BuildingDetails

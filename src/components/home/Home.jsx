@@ -1,12 +1,13 @@
-import { connect } from 'react-redux';
+import {useSelector } from 'react-redux';
 import WorkOrdersContainer from "../../containers/WorkOrdersContainer"
 import { pendingUserWorkOrders } from '../../componentsHelpers/workOrdersHelper';
-import { getFetchAction } from '../../actions/fetchActions';
+// import { getFetchAction } from '../../actions/fetchActions';
 
-const Home = (props)=>{
-    const {user,workOrders} = props
+const Home = ()=>{
+    const user = useSelector(state =>  state.user.user)
+    // const errorsOrMessages = useSelector(state => state.errorsOrMessages.errorsOrMessages )
+    const workOrders = useSelector(state => state.workOrders.workOrders)
     const pendingWorkOrders = pendingUserWorkOrders({workOrders: workOrders,user: user})
-
     return (
       <section>
           <WorkOrdersContainer fromHome={true} workOrders={pendingWorkOrders}/>
@@ -14,19 +15,4 @@ const Home = (props)=>{
     )
 }
 
-const mapStateToProps = state => { 
-  return {
-    errorsOrMessages: state.errorsOrMessages.errorsOrMessages,
-    user: state.user.user,
-    workOrders: state.workOrders.workOrders,
-  }
-}
-
-const mapDispatchToProps = dispatch => {
-  return {
-    getFetchAction: action => dispatch(getFetchAction(action))
-  }
-}
- 
-
-export default connect(mapStateToProps, mapDispatchToProps)(Home)
+export default Home

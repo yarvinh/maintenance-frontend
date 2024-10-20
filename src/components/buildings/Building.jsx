@@ -1,23 +1,25 @@
 
 import {Link} from 'react-router-dom'
 import '../../styles/styles.css'
-import { connect } from 'react-redux';
-import {deleteBuilding} from "../../actions/buildingsActions"
+import { useDispatch } from 'react-redux';
+import { buildingDeleteSetter } from '../../componentsHelpers/fetchingFunctions';
+import { deleteFetchAction } from '../../actions/fetchActions';
 
-const Building = (props)=>{
-    const {building,admin} = props
+const Building = ({building,admin,index})=>{
+    const dispatch = useDispatch()
     const handleOnClick = (e)=> {
+      const payload = buildingDeleteSetter({id: building.id})
       const confirmBox = window.confirm(
           "Are you sure you want to delete this building?"     
       )
       if(confirmBox === true) 
-        props.deleteBuilding(building.id)            
+      dispatch(deleteFetchAction(payload))          
     }
  
     return (
         <>
           <tr>
-              <td>{props.index}</td>
+              <td>{index}</td>
               <td>
                   <Link to={`/buildings/${building.id}`}><p >{building.address}</p>  </Link>
               </td>
@@ -29,10 +31,4 @@ const Building = (props)=>{
     )  
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    deleteBuilding: (action) => dispatch(deleteBuilding(action)),
-  }
-}
-
-export default connect(null, mapDispatchToProps)(Building)
+export default Building

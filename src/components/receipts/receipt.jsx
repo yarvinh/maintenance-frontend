@@ -1,28 +1,16 @@
 
 import '../../styles/styles.css'
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import EditReceipt from './EditReceipt';
-import {removeReceipt} from '../../actions/receiptsActions'
+import { deleteFetchAction } from '../../actions/fetchActions';
+import { receiptDeleteSetter } from '../../componentsHelpers/fetchingFunctions';
+import { useParams } from 'react-router';
 
-const Receipt = (props)=>{
-  const {image_url,receipt,user} = props
-
-
-    const receiptUserProfileImage = ()=>{
-      if (receipt.user && user.profile_image)
-        return(
-          <>     
-            <img src={ user.profile_image} className="bg-info rounded-circle receipt_user_image" ></img> <br/>
-          </>
-        )
-      else if (receipt.employee?.image)
-        return(
-            <>     
-              <img src={ receipt.employee.image } className="bg-info rounded-circle receipt_user_image" ></img> <br/>
-            </>
-        )
-    }
-
+const Receipt = ({receipt})=>{
+  const dispatch = useDispatch()
+  const {workOrderId} = useParams()
+    const user = useSelector(state => state.user.user)
+    
     const handleOnClickImage = (e)=>{
       if (e.target.className === "picc")
         e.target.className = "picc-enlarger"
@@ -30,13 +18,26 @@ const Receipt = (props)=>{
         e.target.className = "picc"
     }
 
+    const handleDeleteOnClick = (e) => {
+      const payload = receiptDeleteSetter({workOrderId: workOrderId, id: receipt.id})
+      const message = "Are you sure you want to delete this receipt."
+      const confirmBox = window.confirm(message)
+      if (confirmBox === true ) 
+        dispatch(deleteFetchAction(payload))    
+    
+         
+    }
+    
+
     return (
         <div className='receipt'> 
+        {receipt.user?.id === user.user?.id || receipt.employee?.id === user.user?.id ? <img src="/close.svg" onClick={handleDeleteOnClick} className='x-delete' alt="X delete reply"/> : null}
           <div>
-            {receiptUserProfileImage()}
+          {receipt.user && user.profile_image &&  <img src={ user.profile_image} className="bg-info rounded-circle receipt_user_image" ></img>}
+          {receipt.employee?.image && <img src={ receipt.employee.image } className="bg-info rounded-circle receipt_user_image" ></img>}
             {receipt.employee ? <strong className="profile-name">{receipt.employee?.name}</strong>: <strong className="profile-name">{receipt.user?.name}</strong>}
           </div>
-          <img src={image_url} onClick={handleOnClickImage} className="picc"></img>
+          <img src={receipt.image_url} onClick={handleOnClickImage} className="picc"></img>
           <div  className='center'> 
               <EditReceipt receipt={receipt}/>
           </div>
@@ -45,13 +46,4 @@ const Receipt = (props)=>{
     )
   };
 
-
-
- 
-  const mapDispatchToProps = dispatch => {
-    return {
-      removeReceipt: (action) => dispatch(removeReceipt(action))
-    }
-  }
-
-  export default connect(null, mapDispatchToProps)(Receipt)
+  export default Receipt

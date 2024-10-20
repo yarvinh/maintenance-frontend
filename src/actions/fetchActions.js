@@ -1,62 +1,72 @@
 import axios from 'axios'
 import {token} from '../componentsHelpers/token'
 import {baseUrl} from './actionsHelper'
+import { ERRORS } from '../componentsHelpers/errors'
+import { errorsOrMessagesReceived } from '../state/reducers/errorsOrMessagesReducer'
 
-
-export const getFetchAction = ({path,type, stateName}) => { 
-    return (dispatch) => {
-      dispatch({ type: 'LOADING'})
-        fetch(`${baseUrl()}${path}`, 
-        {headers: token(),withCredentials: true})  
-        .then(response => response.json())  
-        .then(response => {
-          dispatch({ type: type, [stateName]: response})
-        })
-        .catch( error => {
-          throw "Something went wrong with the server, please try again later."
-        })
+export const getFetchAction = ({path, loading, reducer, query_string}) => { 
+  return async (dispatch) => {
+      loading && dispatch(loading())
+        try {
+            const response = await axios.get(`${baseUrl()}${path}`, {params: {query_string}, headers: token(),withCredentials: true})  
+            reducer && dispatch(reducer(response.data))
+        } catch (error){
+            loading && dispatch(loading())
+            if(error.response?.data?.errors_or_messages)
+              dispatch(errorsOrMessagesReceived(error.response.data?.errors_or_messages))
+            else
+              dispatch(errorsOrMessagesReceived(ERRORS))  
+        }
     }
 }
 
-export const postFetchAction = ({path, type, stateName,params}) => {
-    const {payload,array} = params
-    const {itemName,arrayName} = stateName
-    return (dispatch) => {
-        dispatch({ type: "LOADING"})
-        fetch(`${baseUrl()}${path}`,  {method: "POST",headers: token(), withCredentials: true, body: JSON.stringify(payload)})
-        .then(response => response.json())
-        .then(response => {
-          const error = response.errors_or_messages
-          if(error){
-            dispatch({ type: 'ADD_ERRORS_OR_MESSAGES', errorsOrMessages: error})
-          }else{
-            dispatch({ type: type.addItem, [itemName]: response})
-            dispatch({ type: type.addItemToArray, [arrayName]: [ response,...array]})
-          }
-      })
+export const postFetchAction = ( {payload,path,loading,reducer}) => {
+  return async (dispatch) => {
+    loading && dispatch(loading())
+    try {
+      const response = await axios.post(`${baseUrl()}${path}`,payload, {headers: token(), withCredentials: true,})
+      reducer && dispatch(reducer(response.data))
+    }catch (error){
+      loading && dispatch(loading())
+      if(error.response?.data.errors_or_messages)
+        dispatch(errorsOrMessagesReceived(error.response.data?.errors_or_messages))
+      else
+        dispatch(errorsOrMessagesReceived(ERRORS))
     }
   }
+}
 
-  export const patchFetchAction = ({path, type, stateName,params, id}) => {
-    const {payload, array} = params
-    const {itemName,arrayName} = stateName
-    return (dispatch) => {
-        dispatch({type: "LOADING"})
-        axios.patch(`${baseUrl()}${path}`, payload ,{headers: token(), withCredentials: true})
-        .then(response => {
-          const error = response.data.errors_or_messages
-          const index = array.findIndex(e=> e.id?.toString() === id)
-          if (error && response.data.user){
-            dispatch({ type: type.addItem, [itemName]: response.data})
-            dispatch({ type: 'ADD_ERRORS_OR_MESSAGES', errorsOrMessages: response.data.errors_or_messages})
-          } else if(error){
-            dispatch({ type: 'ADD_ERRORS_OR_MESSAGES', errorsOrMessages: response.data.errors_or_messages})
-          }else{
-            array[index] = response.data
-            dispatch({ type: type.addItem, [itemName]: response.data})
-            dispatch({ type: type.addItemToArray, [arrayName]: array})
-          }
-        }).catch((err => console.log(err)))
+export const patchFetchAction = ({payload,path,loading,itemsReducer,itemReducer}) => {
+    return async (dispatch) => {
+       loading && dispatch(loading())
+        try {
+          const response = await axios.patch(`${baseUrl()}${path}`, payload ,{headers: token(), withCredentials: true})
+          itemsReducer && dispatch(itemsReducer(response.data))
+          itemReducer && dispatch(itemReducer(response.data))
+          response.data.errors_or_messages && dispatch(errorsOrMessagesReceived(response.data.errors_or_messages))
+        } catch (error){
+          loading && dispatch(loading())
+          if(error.response?.data.errors_or_messages)
+            dispatch(errorsOrMessagesReceived(error.response.data?.errors_or_messages))
+          else
+            dispatch(errorsOrMessagesReceived(ERRORS))
+        }
+    }
+}
+
+
+export const deleteFetchAction = ({path, reducer, optionalReducer}) => { 
+  return async (dispatch) => {
+    try {
+      const response = await axios.delete(`${baseUrl()}${path}`,{headers: token(), withCredentials: true})
+      reducer && dispatch(reducer(response.data))
+      optionalReducer && dispatch(optionalReducer(response.data))
+    } catch(error) {
+      if(error.response?.data.errors_or_messages)
+        dispatch(errorsOrMessagesReceived(error.response.data?.errors_or_messages))
+      else
+        dispatch(errorsOrMessagesReceived(ERRORS))
     }
   }
+}
   

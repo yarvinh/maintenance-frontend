@@ -1,5 +1,5 @@
 import { useState} from 'react';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {Link} from 'react-router-dom'
 import { fetchLogIn,setAccountType} from '../../actions/usersActions'
 import '../../styles/styles.css'
@@ -7,18 +7,24 @@ import {Navigate} from 'react-router-dom'
 import {verificationSessionToken} from "../../componentsHelpers/token"
 import Errors from '../Errors';
 import { paths } from '../../actions/actionsHelper';
+import ErrorsOrMsg from '../ErrosOrMsg';
 
-const LogIn = (props) => {
+const LogIn = () => {
+  const dispatch = useDispatch()
+  const account = useSelector(state => state.account.account)
+  // const loading = useSelector(state => state.user.loading)
+  const login = useSelector(state => state.user.user.is_login)
+  const errorsOrMsg = useSelector(state => state.errorsOrMessages.errorsOrMessages)
+  const verificationSession = useSelector(state => state.user.user.verification_session )
 
-  const {login,verificationSession,errorsOrMessages,account} = props
-  const {business, text} = account
-    const handleOnClick=(e)=>{
-      if(business) 
-        props.setAccountType({business: false, text: "business"})
-      else 
-        props.setAccountType({business: true, text:  "personal"})
-    }
-
+  // const {business, text} = account
+    // const handleOnClick=(e)=>{
+    //   if(business) 
+    //     dispatch(setAccountType({business: false, text: "business"}))
+    //   else 
+    //     dispatch(setAccountType({business: true, text:  "personal"}))
+    // }
+  
     const [user, setUser] = useState({
       username: '',
       password: ''
@@ -36,18 +42,19 @@ const LogIn = (props) => {
   
     const handleOnSubmit = (e) => {
         e.preventDefault()
-        account.business ? props.fetchLogIn(user,paths(true).login) : props.fetchLogIn(user,paths(false).login)
+        account.business ? dispatch(fetchLogIn(user,paths(true).login)) : dispatch(fetchLogIn(user,paths(false).login))
     }
 
     return(
       <section>
+        {/* {login && <Navigate to="/verifying_email"/>} */}
         {(verificationSession && verificationSessionToken()) && <Navigate to="/verifying_email"/>}
         <div className="center login-messages" > 
-          {(errorsOrMessages.from === "login") && <Errors errorsOrMessages={errorsOrMessages}/>}
+          {errorsOrMsg.from === "login" && <ErrorsOrMsg errors={errorsOrMsg?.errors || errorsOrMsg?.msg} />}
         </div>
-        <div className='center login-messages'>
+        {/* <div className='center login-messages'>
           <button onClick={handleOnClick} className="login-message-button" >Login to {text} account</button>
-        </div>
+        </div> */}
         <div className="container h-100  d-flex  justify-content-center align-items-center">
           <form onSubmit={handleOnSubmit} className="form">
             <br/>
@@ -68,22 +75,4 @@ const LogIn = (props) => {
     );
 };
 
-const mapStateToProps = state => { 
-  return {
-    errorsOrMessages: state.errorsOrMessages.errorsOrMessages,
-    user: state.user.user,
-    login: state.user.user.is_login,
-    loading: state.user.loading,
-    verificationSession: state.user.user.verification_session,
-    account: state.account.account
-  }
-}
- 
-const mapDispatchToProps = dispatch => {
-  return {
-    fetchLogIn: (action,path) => dispatch(fetchLogIn(action,path)),
-    setAccountType: (action)=> dispatch(setAccountType(action)),
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(LogIn)
+export default LogIn

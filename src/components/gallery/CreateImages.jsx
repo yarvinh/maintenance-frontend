@@ -1,29 +1,27 @@
 import {useState} from 'react';
-import { connect } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import '../../styles/styles.css'
 import { useParams} from 'react-router-dom';
 import {createGalleryImages} from '../../actions/galleryActions'
-import Errors from '../Errors';
 import Uploading from '../Loading';
 import imageCompression from 'browser-image-compression';
+import ErrorsOrMsg from '../ErrosOrMsg';
+import { compressImg } from '../../componentsHelpers/functionsHelpers';
 
-const CreateImages=(props)=>{
-    const {user,errorsOrMessages,uploading} = props
+const CreateImages=({user})=>{
+    const {workOrderId} = useParams()
+    const errorsOrMsg = useSelector(state => state.errorsOrMessages.errorsOrMessages)
+    const uploading = useSelector(state => state.gallery.uploadingImages)
+    const dispatch = useDispatch()
     const {id} = useParams()
     const [images,setImages] = useState({
         images: [] 
     })
 
     const handleOnChange =  (e)=>{
-        const options = {
-            maxSizeMB: 1,
-            maxWidthOrHeight: 1920,
-            useWebWorker: true
-          }
-    
         const formData = new FormData(); 
         Array.from(e.target.files).forEach(async (file)=>{   
-            const compressedFile = await imageCompression(file, options);      
+            const compressedFile = await imageCompression(file, compressImg(.1));      
             formData.append("file[]", compressedFile);  
         })
 
@@ -38,7 +36,7 @@ const CreateImages=(props)=>{
         e.preventDefault()
         e.target.children[0].files = null
         e.target.children[0].value = ""
-        props.createGalleryImages({images: images, id: id})
+        dispatch(createGalleryImages({images, id: id, workOrderId: workOrderId}))
         setImages({
             images: []
         })
@@ -51,25 +49,16 @@ const CreateImages=(props)=>{
                    <input  onChange={handleOnChange} type="file" multiple name="images" className="imgs-input"  />
                    <br></br>
                    <button type='submit' className="white-blue-buttons">Save image</button>
-                   {(errorsOrMessages.from === 'add_gallery_images') && <Errors errorsOrMessages={errorsOrMessages}/> }
+
+                   {/* {(errorsOrMessages.from === 'add_gallery_images') && <Errors errorsOrMessages={errorsOrMessages}/> } */}
                 </form>
-                {uploading && (errorsOrMessages.from !== 'add_gallery_images') && <Uploading/>}
+                {uploading && <Uploading/>}
+                </div>
+                  {errorsOrMsg.from === "add_gallery_images" && <ErrorsOrMsg errors={errorsOrMsg?.errors} msg={errorsOrMsg?.msg}/>}
+                <div>
             </div>
         </div>
     )
 }
 
-const mapStateToProps = state => { 
-    return {
-        errorsOrMessages: state.errorsOrMessages.errorsOrMessages,
-        uploading: state.gallery.uploading
-    }
-}
-      
-const mapDispatchToProps = dispatch => {
-    return {
-        createGalleryImages: (action) => dispatch(createGalleryImages(action))
-    }
-}   
-      
-export default connect(mapStateToProps, mapDispatchToProps)(CreateImages)
+export default CreateImages

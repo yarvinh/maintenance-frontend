@@ -1,40 +1,40 @@
 import {useEffect} from 'react';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {Link,useParams,useNavigate} from 'react-router-dom';
 import EditWorkOrder from "./EditWorkOrder"
 import CommentsContainer from '../../containers/CommentsContainer'
 import '../../styles/styles.css'
 import CloseWorkOrder from './CloseWorkOrder';
 import TasksContainer from '../../containers/TasksContainer';
-import {deleteWorkOrder,removeEmployee} from "../../actions/workOrdersActions"
 import {date} from "../../componentsHelpers/date"
-import { getFetchAction } from '../../actions/fetchActions';
-import Errors from '../Errors';
+import { deleteFetchAction, getFetchAction} from '../../actions/fetchActions';
+import { deleteEmployeeFromWorkOrder, workOrderDeleteSetter, workOrderGetSetter } from '../../componentsHelpers/fetchingFunctions';
+import LoadingItems from '../LoadingItems';
 
-const WorkOrderDetails = (props)=>{ 
-    const {id} = useParams()
+const WorkOrderDetails = ({buildings,employees})=>{ 
+    const {workOrderId} = useParams()
     let navigate = useNavigate()
-    const {user,buildings,employees,workOrder,workOrders,errorsOrMessages} = props
+    const dispatch = useDispatch()
+    const errorsOrMsg = useSelector(state => state.errorsOrMessages.errorsOrMessages)
+    const workOrder = useSelector(state => state.workOrder.workOrder)
+    const user = useSelector(state => state.user.user)
+    const loading = useSelector(state => state.workOrder.workOrderLoading)
     const {admin} = user
-    const belongToCurrentUser = workOrder?.employees.filter(emp => emp.id === user.user.id)[0]
+    const belongToCurrentUser = workOrder?.employees?.filter(emp => emp.id === user.user.id)[0]
     
     useEffect(()=>{
-      const worOrderDoesNotExist =  errorsOrMessages.errors?.includes('Access to this comment was dinied')
+      const worOrderDoesNotExist =  errorsOrMsg.errors?.includes('Access to this comment was dinied')
       if(worOrderDoesNotExist )
         navigate('/work_orders') 
-    },[errorsOrMessages])
-
+    },[errorsOrMsg])
+   
     useEffect(()=>{
-      props.getFetchAction({
-        loading: "LOADING_WORK_ORDER", 
-        type: 'ADD_WORK_ORDER',
-        path: `/work_orders/${id}`, 
-        stateName: 'workOrder'
-      })
+      const payload = workOrderGetSetter({id: workOrderId})
+      dispatch(getFetchAction(payload))
     },[])
 
     const workOrderEmployees = ()=>{
-      return workOrder.employees.map((employee,index) => {
+      return workOrder.employees?.map((employee,index) => {
         return( 
           < div  key={index}>
              {admin && <button onClick={handleOnClick} name="employee" value={employee.id} className='delete-x'>X</button>} 
@@ -66,17 +66,17 @@ const WorkOrderDetails = (props)=>{
       const confirmBox = window.confirm(message)  
     
       if (confirmBox === true && e.target.name === "employee") {
-        props.removeEmployee({workOrders: workOrders,ids: {employee_id: e.target.value, work_order_id: id }})
+        const payload = deleteEmployeeFromWorkOrder({workOrderId: workOrderId, id: e.target.value})
+        dispatch(deleteFetchAction(payload))
       }else if (confirmBox === true && e.target.name === "work-order"){
-        props.deleteWorkOrder(workOrder.id)  
+        const payload = workOrderDeleteSetter({id: workOrderId})
+        dispatch(deleteFetchAction(payload))
         navigate('/work_orders')
       }   
     }
 
     return (
         <section className="work-order-detail "> 
-            <br/>
-            <br/>
             <div className="container d-flex"> 
                 <div className="card-container mb-3 car-shadow">
                       {admin && <button onClick={handleOnClick}  className='delete-x' name="work-order">X</button>} 
@@ -88,6 +88,9 @@ const WorkOrderDetails = (props)=>{
                         { admin || (!user?.user_id && belongToCurrentUser) ?  <EditWorkOrder buildings={buildings} employees={employees} workOrder={workOrder}/>:null}
                       </div> 
                       <div className="card-body">
+                        <div className='hight'>
+                          {loading && <LoadingItems/>}
+                        </div>
                         <span>Created date: {date(workOrder.created_at)}</span> <br/>
                         <span>Last time updated: {date(workOrder.updated_at)}</span> 
                         <div>
@@ -101,40 +104,22 @@ const WorkOrderDetails = (props)=>{
                         <div className="nav-item">
                           <Link to={`/work_orders/${workOrder.id}/receipts`}>Material receipts</Link> {receiptAmount()}
                           <br></br>
-                          <Link to={`/work_orders/${workOrder.id}/gallery`}>Project gallery</Link> 
+                          <Link to={`/work_orders/${workOrder.id}/gallery`}>Project gallery. {workOrder.gallery_images_count} images</Link> 
                         </div>
                         <div className="center"> 
                           {!!userWorkorder() || admin ? <CloseWorkOrder />:null}  
                         </div>  
                         <br/>
+                                                           {/* {game, currentUser,loggedIn} */}
                         <div className="task-container center">
                             { workOrder.id && <TasksContainer userWorkorder={userWorkorder} workOrder={workOrder} user={user} admin={admin}/>}
                         </div>  
                       </div>   
                 </div> 
               </div> 
-                {user && <CommentsContainer  user={user} admin={admin}/>}
+                {user && <CommentsContainer workOrder={workOrder} user={user}/>}
         </section>
     )
 };
 
-const mapStateToProps = state => { 
-    return {
-      receipts: state.receipts.receipts,
-      errorsOrMessages: state.errorsOrMessages.errorsOrMessages,
-      user: state.user.user,
-      workOrder: state.workOrder.workOrder,
-      workOrders: state.workOrders.workOrders,
-      index: state.workOrderIndex.workOrderIndex
-    }
-}
-
-const mapDispatchToProps = dispatch => {
-    return {
-      getFetchAction: (action) => dispatch(getFetchAction(action)),
-      deleteWorkOrder: (action) => dispatch(deleteWorkOrder(action)),
-      removeEmployee: (action) => dispatch(removeEmployee(action))
-    }
-}
-
-export default connect(mapStateToProps ,mapDispatchToProps )(WorkOrderDetails)
+export default WorkOrderDetails

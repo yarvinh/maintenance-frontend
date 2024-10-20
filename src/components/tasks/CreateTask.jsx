@@ -1,16 +1,16 @@
-import React, {useState } from 'react';
-import { connect } from 'react-redux';
-import {createTask} from '../../actions/tasksActions'
+import {useState } from 'react';
+import { useDispatch } from 'react-redux';
 import {useParams} from 'react-router-dom';
+import { taskPostSetter } from '../../componentsHelpers/fetchingFunctions';
+import { postFetchAction } from '../../actions/fetchActions';
 
-
-
-const CreateTask = (props) => {
-    const {id} = useParams()
+const CreateTask = () => {
+    const dispatch = useDispatch()
+    const {workOrderId} = useParams()
     const [task, setTask] = useState({
         task: "",
         price: "",
-        work_order_id: id,
+        work_order_id: workOrderId,
     })
     const handleOnChange = (e) => {
         if(!e.target.value.includes('\n')){
@@ -19,24 +19,15 @@ const CreateTask = (props) => {
             e.target.style.maxHeight = `${e.target.scrollHeight}px`
         }
 
-        setTask({
-         ...task,
-         [e.target.name]: e.target.value
-        })
-       
-
+        setTask({...task, [e.target.name]: e.target.value})
     }
 
     const handleOnKeyUp = (e) => {
         e.preventDefault()
-        
+        const payload = taskPostSetter({id: workOrderId, payload: {task: task}})
         if (e.code  === 'Enter'){  
-            props.createTask({task})
-            setTask({
-                ...task,
-                task: "",
-                price: ""
-            })
+            dispatch(postFetchAction(payload))
+            setTask({...task, task: "", price: ""})
             e.target.form.children[0].style.maxHeight  = "24px"
             e.target.form.children[1].style.maxHeight  = "24px"
         }
@@ -52,9 +43,4 @@ const CreateTask = (props) => {
     )
 }
 
-const mapDispatchToProps = dispatch => {
-    return {
-        createTask: (action) => dispatch(createTask(action))
-    }
-}
-export default connect(null, mapDispatchToProps)(CreateTask)
+export default CreateTask

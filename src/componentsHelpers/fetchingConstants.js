@@ -1,29 +1,29 @@
 import { paths } from '../actions/actionsHelper';
+import { buildingsLoading, buildingsReceived } from '../state/reducers/buildingsReducer';
+import { employeesLoading, employeesReceived } from '../state/reducers/employeesReducer';
+import { userLoading, userReceived } from '../state/reducers/userReducers';
+import { workOrdersLoading, workOrdersReceived } from '../state/reducers/workOrdersReducer';
 
 export const CURRENT_USER_SETTER = {
-      loading: "LOADING_USER", 
-      type: 'ADD_USER',
-      path: paths().checkLoginPath, 
-      stateName: 'user'
+    path: paths().checkLoginPath, 
+    loading: userLoading,
+    reducer: userReceived
 }
 
 export const BUILDINGS_SETTER = {
-    loading: "LOADING_BUILDINGS", 
-    type: 'ADD_BUILDINGS',
     path: paths().buildingsPath, 
-    stateName: 'buildings'
+    loading: buildingsLoading,
+    reducer: buildingsReceived
 }
 
 export const WORKORDERS_SETTER = {
-    loading: "LOADING_WORK_ORDERS",
-    type: 'ADD_WORK_ORDERS',
     path: paths().workOrdersPath, 
-    stateName: 'workOrders'
+    reducer: workOrdersReceived,
+    loading: workOrdersLoading
 }
 
 export const EMPLOYEES_SETTER = {
-  loading: "LOADING_EMPLOYEES", 
-  type: 'ADD_EMPLOYEES',
-  path: paths().employeesPath, 
-  stateName: 'employees'
+    path: paths().employeesPath, 
+    loading: employeesLoading,
+    reducer: employeesReceived
 }

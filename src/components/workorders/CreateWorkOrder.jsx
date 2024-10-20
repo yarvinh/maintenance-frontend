@@ -1,91 +1,75 @@
 
 import {useState,useEffect } from 'react';
 import {useParams} from 'react-router-dom';
-import {connect } from 'react-redux';
-import {accordionButtonClass,diplayAccordion} from '../../componentsHelpers/accordion'
-import { paths } from '../../actions/actionsHelper';
+import {useDispatch, useSelector } from 'react-redux';
 import { postFetchAction } from '../../actions/fetchActions';
 import { getFetchAction } from '../../actions/fetchActions';
-import Errors from '../Errors';
 import '../../styles/styles.css'
+import { BUILDINGS_SETTER, EMPLOYEES_SETTER } from '../../componentsHelpers/fetchingConstants';
+import { displayFormReceived } from '../../state/reducers/displayElementReducer';
+import ErrorsOrMsg from '../ErrosOrMsg';
+import { workOrderPostSetter } from '../../componentsHelpers/fetchingFunctions';
 
-const CreateWorkOrder = (props) => {
-    const {workOrders,user} = props
-    const {id} = useParams()
-    const {employees,buildings,employee,building,accordion,errorsOrMessages} = props
+const CreateWorkOrder = ({employees,buildings,employee,building}) => {
+
+    const dispatch = useDispatch()
+    const user = useSelector(state => state.user.user)
+    const isDisplay = useSelector(state => state.isDisplay.formDisplay)
+    const errorsOrMsg = useSelector(state => state.errorsOrMessages.errorsOrMessages)
+    const {employeeId,buildingId} = useParams()
     const [workOrder, setWorkOrder] = useState({
         unit: "",
         date: "",
-        building_id: building && id? id :"",
-        employee_id: employee && id? id :"",
+        building_id: buildingId ? buildingId :"",
+        employee_id: employeeId ? employeeId :"",
         join: true,
         title: "",
     })
+
+    const handleOnClick = (e)=>{
+      if (e.target.className.includes("active"))
+        dispatch(displayFormReceived({buttonClass: "display_accordion", formClass: 'hide_elements', id: e.target.id}))
+      else
+        dispatch(displayFormReceived({buttonClass: "display_accordion active", formClass: 'display_elements', id: e.target.id}))   
+    }
 
     let today = new Date().toISOString().split("T")
     today.pop()
 
     useEffect(() => {
-      if (employees.length === 0)
-         props.getFetchAction({
-           path: "/employees",
-           stateName: "employees",
-           type: "ADD_EMPLOYEES"
-
-          })
-
-      if (employees.length === 0)
-        props.getFetchAction({
-          path: "/buildings",
-          stateName: "buildings",
-          type: "ADD_BUILDINGS"
-        })
+      if (employees.length === 0){
+        dispatch(getFetchAction(EMPLOYEES_SETTER))
+        dispatch(getFetchAction(BUILDINGS_SETTER)) 
+      }
     },[ ]);
-    
+
     const handleOnSubmit=(e)=>{
       e.preventDefault()
-
-      user.admin? 
-        props.postFetchAction({
-          path: paths().workOrdersPath,
-          stateName:{itemName: "workOrder", arrayName: "workOrders"} ,
-          type: {addItemToArray: "ADD_WORK_ORDERS", addItem: "ADD_WORK_ORDER"}, 
-          params: {payload: workOrder, array: workOrders}
-        })
-      : 
-        props.postFetchAction({
-          path: "/work_order_by_employee",
-          stateName:{forResponse: "workOrder", forArray: "workOrders"} ,
-          type: { forArray: "ADD_WORK_ORDERS", forResponse: "ADD_WORK_ORDER"}, 
-          params: {payload: workOrder, array: workOrders}
-        })
+      const payload = workOrderPostSetter({admin: user.admin, payload: {work_order: workOrder}})
+      dispatch(postFetchAction(payload))
       e.target.children[1].value = "select_employee"
       e.target.children[2].value = "select_location"
       setWorkOrder({
         ...workOrder,
         unit: "",
         date: "",
-        building_id: building && id? id :"",
-        employee_id: employee && id? id :"",
+        building_id: building && buildingId? buildingId :"",
+        employee_id: employee && employeeId? employeeId :"",
         title: "",
       })
     }
 
     const handleOnChange=(e)=>{  
-        setWorkOrder({
-            ...workOrder,[e.target.name]: e.target.value
-        })
+        setWorkOrder({...workOrder,[e.target.name]: e.target.value})
     }
 
     return (
       <div className='center'>
-        <button  id='create-work-order' className={accordionButtonClass('create-work-order',accordion)}> Create A Work Order</button>
-        <div className={diplayAccordion('create-work-order',accordion)}>
+        <button  id='create-work-order' onClick={handleOnClick} className={isDisplay.buttonClass}> Create A Work Order</button>
+        <div className={isDisplay.id.includes('create-work-order') ? `${isDisplay.formClass} form-wrapper`: 'hide_elements'}>
             <div className="standar-forms standar-form-position accordion">
                 <form onSubmit={handleOnSubmit} className='accordion'>
-                  <div className="center accordion"> 
-                  {(errorsOrMessages.from  === 'create_work_order') && <Errors errorsOrMessages={errorsOrMessages}/>}
-                  </div>  
+                  {errorsOrMsg.from.includes('create_work_order') && <ErrorsOrMsg {...(errorsOrMsg.errors ? { errors: errorsOrMsg.errors } :{msg: errorsOrMsg.msg })} />}
                   {!employee && 
                     <select  className="standar-input accordion" onChange={handleOnChange} name="employee_id" defaultValue="select_employee">
                       <option  name="employee" value="select_employee" className='accordion'>Select Employee</option> 
@@ -110,28 +94,9 @@ const CreateWorkOrder = (props) => {
                 </form>     
                 <br/>
             </div>
-            
-    <br/>
-    </div>
-  
+      </div>
     </div>
   )
 }
-
-const mapStateToProps = state => { 
-  return {
-    user: state.user.user,
-    workOrders: state.workOrders.workOrders,
-    accordion: state.accordion.accordion,
-    errorsOrMessages: state.errorsOrMessages.errorsOrMessages,
-  }
-}
-
-const mapDispatchToProps = dispatch => {
-    return {
-        getFetchAction: (action) => dispatch(getFetchAction(action)),
-        postFetchAction: (action)=> dispatch(postFetchAction(action))
-    }
-}   
-      
-export default connect(mapStateToProps, mapDispatchToProps)(CreateWorkOrder)
+    
+export default CreateWorkOrder

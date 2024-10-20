@@ -32,9 +32,4 @@ export const verificationSessionToken=()=>{
 export const removeLoginToken = ()=>{
   localStorage.removeItem('token')
   localStorage.removeItem('secret_key')
-  localStorage.removeItem('account_type')
-}
-
-export const accountTypeToken = ()=>{
-  return localStorage.getItem('account_type')
 }

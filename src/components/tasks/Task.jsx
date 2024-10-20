@@ -1,9 +1,11 @@
-import { connect } from 'react-redux';
-import {changeStatus} from '../../actions/tasksActions'
-import {deleteTask} from '../../actions/tasksActions'
+import { useDispatch } from 'react-redux';
+import { useParams } from 'react-router';
+import { deleteFetchAction, patchFetchAction } from '../../actions/fetchActions';
+import { taskDeleteSetter, taskPatchSetter } from '../../componentsHelpers/fetchingFunctions';
 
-const Task = (props)=>{
-   let {task,admin,workOrder,user} = props
+const Task = ({task,admin,workOrder ,user})=>{
+  const {workOrderId} = useParams()
+  const dispatch = useDispatch()
    let disable = false
    if(workOrder.status)
     disable = true
@@ -12,13 +14,19 @@ const Task = (props)=>{
       const confirmBox = window.confirm(
         "Are you sure to delete this task?"
       )
-      if (confirmBox === true) 
-        props.deleteTask(task.id)
+      
+      if (confirmBox === true){
+        const payload = taskDeleteSetter({workOrderId: workOrderId, id: task.id})
+        dispatch(deleteFetchAction(payload))
+      }
     }
   
     const handleOnChange = (e) =>{
-        if (!workOrder.status )
-          props.changeStatus(task.id)
+      if (!workOrder.status ){
+        const payload = taskPatchSetter({workOrderId: workOrderId, id: task.id, payload: {task: task.id}})
+        dispatch(patchFetchAction(payload))
+      }
+
     }
 
     return (     
@@ -34,11 +42,4 @@ const Task = (props)=>{
 
   }
 
-  const mapDispatchToProps = dispatch => {
-    return {
-    deleteTask: (action) => dispatch(deleteTask(action)),
-    changeStatus: (action) => dispatch(changeStatus(action))
-    }
-  }
-  
-  export default connect(null, mapDispatchToProps)(Task)
+  export default Task

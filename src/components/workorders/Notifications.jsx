@@ -1,10 +1,11 @@
 import {Link} from 'react-router-dom';
-import { connect } from 'react-redux';
+import {useSelector } from 'react-redux';
 import '../../styles/styles.css'
 import {currentUserWorkOrders} from '../../componentsHelpers/workOrdersHelper'
 
-const Notification = (props)=>{
-    let {workOrders,user} = props
+const Notification = ()=>{
+    const workOrders = useSelector(state => state.workOrders.workOrders)
+    const user = useSelector(state => state.user.user)
     const acceptedWorkOrders = currentUserWorkOrders({workOrders: workOrders, user: user})?.filter(wo => !wo.accepted)
     
     if (acceptedWorkOrders?.length > 0)
@@ -22,13 +23,6 @@ const Notification = (props)=>{
       )
 };
 
-const mapStateToProps = state => { 
-  return {
-    workOrder: state.workOrder.workOrder,
-    user: state.user.user,
-    workOrders: state.workOrders.workOrders,
-  }
-}
- 
 
-export default connect(mapStateToProps, null)(Notification)
+
+export default Notification

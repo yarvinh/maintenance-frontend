@@ -1,48 +1,41 @@
 import {Link} from 'react-router-dom'
-import { connect } from "react-redux"
+import { useSelector } from "react-redux"
 
-const loginBar = (props)=>{
-  const {user} = props
+const LoginBar = () =>{
+  const user = useSelector(state => state.user.user)
   const {admin} = user
+  
     return (
           <>
-            <li className="bar-item bar-accordion">
-              <Link to='/' className="bar-item">Home</Link>
+            <li className="nav-bar-links display nav-li-link">
+              <Link to='/' className="nav-bar-links">Home</Link>
             </li>
-            <li className="bar-item bar-accordion">
-              {admin && user.user?.id && <Link to={`/settings/${user.user.id}`} className="bar-item">Settings</Link>}
+            <li className="nav-bar-links display nav-li-link">
+              {admin && user.user?.id && <Link to={`/settings/${user.user.id}`} className="nav-bar-links">Settings</Link>}
             </li>
-            <li className="bar-item  bar-accordion">
-              {user.user?.id && !admin && <Link to={`/employee_setting/${user.user.id}`} className="bar-item">Settings</Link>}
+            <li className="nav-bar-links display nav-li-link">
+              {user.user?.id && !admin && <Link to={`/employee_setting/${user.user.id}`} className="nav-bar-links">Settings</Link>}
             </li>
-            <li className="bar-item  bar-accordion">
-              <Link to='/buildings' className="bar-item">Buildings</Link>
+            <li className="nav-bar-links display nav-li-link">
+              <Link to='/buildings' className="nav-bar-links">Buildings</Link>
             </li>
-            <li className="bar-item  bar-accordion">
-              <Link to='/work_orders' className="bar-item">Work Orders</Link>
+            <li className="nav-bar-links display nav-li-link">
+              <Link to='/work_orders' className="nav-bar-links">Work Orders</Link>
             </li>
-            <li className="bar-item  bar-accordion">
-              {!user.admin && <Link to='/my_work_orders' className="bar-item">My Work Orders</Link>}
+            <li className="nav-bar-links display nav-li-link">
+              {!user.admin && <Link to='/my_work_orders' className="nav-bar-links">My Work Orders</Link>}
             </li>
-            <li className="bar-item  bar-accordion">
-              <Link to='/employees' className="bar-item">Employees</Link>
+            <li className="nav-bar-links display nav-li-link">
+              <Link to='/employees' className="nav-bar-links">Employees</Link>
             </li>
-            <li className="bar-item  bar-accordion">
-              <Link to='/documentation' className="bar-item">Documentation</Link>
+            <li className="nav-bar-links display nav-li-link">
+              <Link to='/documentation' className="nav-bar-links">Documentation</Link>
             </li>
-            <li className="bar-item  bar-accordion">
-              <Link to='signout' className="bar-item">Sign Out</Link> 
+            <li className="nav-bar-links display nav-li-link">
+              <Link to='signout' className="nav-bar-links">Sign Out</Link> 
             </li>
         </>
     )
-  }
-
-const mapStateToProps = state => { 
-    return {
-      accordion: state.accordion.accordion,
-      user: state.user.user,
-      workOrders: state.workOrders.workOrders,
-    }
-  }
+}
    
-export default connect(mapStateToProps, null)(loginBar)
+export default LoginBar

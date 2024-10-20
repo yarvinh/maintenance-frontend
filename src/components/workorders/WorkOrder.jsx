@@ -1,16 +1,16 @@
 import {Link} from 'react-router-dom';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import '../../styles/styles.css'
 import {workOrderStatus,statusForMobiles} from "../../componentsHelpers/workOrdersHelper"
-import {deleteWorkOrder,workOrderIndex} from '../../actions/workOrdersActions'
 import {date} from '../../componentsHelpers/date'
-import { patchFetchAction } from '../../actions/fetchActions';
-const WorkOrder = (props) => {
-    let {workOrder,workOrders,index,workOrderIndex} = props
-    const {user,admin} = props.user
+import { deleteFetchAction, patchFetchAction } from '../../actions/fetchActions';
+import { workOrderDeleteSetter, workOrderPatchSetter } from '../../componentsHelpers/fetchingFunctions';
+
+const WorkOrder = ({workOrder,index,workOrderIndex,user}) => {
+    const dispatch = useDispatch()
     const acceptedWorkOrder = ()=>{
-        const currentEmployee = workOrder.employees.find(emp => emp.id === user.id)
-        return  !workOrder.accepted && currentEmployee || !workOrder.accepted && admin ? "pending-work-orders"  : "accepted"
+        const currentEmployee = workOrder.employees.find(emp => emp.id === user.user.id)
+        return  !workOrder.accepted && currentEmployee || !workOrder.accepted && user.admin ? "pending-work-orders"  : "accepted"
     }
 
     const workOrderEmployees=()=>{
@@ -24,29 +24,26 @@ const WorkOrder = (props) => {
     }
 
     const handleDeleteOnClick =  (e)=>{  
+        const payload = workOrderDeleteSetter({id: workOrder.id})
         const confirmBox = window.confirm(
-        "Are you sure you want to delete this work order?  you will lose all comments and ryplies on this work Order!"     
+          "Are you sure you want to delete this work order?  you will lose all comments and ryplies on this work Order!"     
         )
         if (confirmBox === true) 
-            props.deleteWorkOrder(workOrder.id)   
+            dispatch(deleteFetchAction(payload))
     }
 
     const handleOnClick=(e)=>{  
-        workOrderIndex(index)
-        if (acceptedWorkOrder() !== 'accepted' && !admin)
-            props.patchFetchAction({
-                path: `/work_orders/${workOrder.id}`,
-                id: workOrder.id?.toString(),
-                stateName:{itemName: "workOrder", arrayName: "workOrders"} ,
-                type: {addItemToArray: "ADD_WORK_ORDERS", addItem: "ADD_WORK_ORDER"}, 
-                params: {payload: {accepted: true}, array: workOrders}
-            })
+        // workOrderIndex(index)
+        const payload = workOrderPatchSetter({id: workOrder.id, payload: {accepted: true}})
+    
+        if (acceptedWorkOrder() !== 'accepted' && !user.admin)
+           dispatch(patchFetchAction(payload))
     }
 
     return (  
         <>
             <tr className={acceptedWorkOrder() +" "+ statusForMobiles(workOrder)}>
-                <th scope="row">{props.index}</th>
+                <th scope="row">{index}</th>
                 <td>  
                     <p>{date(workOrder.date)}</p>
                 </td>   
@@ -65,19 +62,11 @@ const WorkOrder = (props) => {
                     {workOrderStatus(workOrder)}
                 </td>
                 <td className="work_order_status">
-                    {admin && <i onClick={handleDeleteOnClick}  className="fa-solid fa-trash-can delete-task "></i>} 
+                    {user.admin && <i onClick={handleDeleteOnClick}  className="fa-solid fa-trash-can delete-task "></i>} 
                 </td>
             </tr>
         </>
     )
 };
 
-const mapDispatchToProps = dispatch => {
-    return {
-        patchFetchAction: (action) => dispatch(patchFetchAction(action)),
-        deleteWorkOrder: (action) => dispatch(deleteWorkOrder(action)),
-        workOrderIndex: (action) => dispatch(workOrderIndex(action))
-    }   
-}   
-      
-export default connect(null, mapDispatchToProps)(WorkOrder)
+export default WorkOrder

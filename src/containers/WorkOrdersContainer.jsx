@@ -1,25 +1,21 @@
 import { useState,useEffect} from 'react';
 import CreateWorkOrder from "../components/workorders/CreateWorkOrder"
-import { connect } from 'react-redux';
 import WorkOrder from "../components/workorders/WorkOrder"
-// import {useNavigate} from 'react-router-dom';
-import { clearErrors } from '../actions/errorsActions';
 import {getSearchWorkOrders,workOrderSelector} from "../componentsHelpers/workOrdersHelper"
+import { useSelector } from 'react-redux';
 
-const WorkOrdersContainer = (props)=>{  
-    let {employees,buildings,employee,building,fromHome,user} = props
+const WorkOrdersContainer = (props, {building, fromHome,employee})=>{  
+     
+    const user = useSelector(state => state.user.user)
+    const employees = useSelector(state => state.employees.employees)
+    const buildings = useSelector(state => state.buildings.buildings)
     const [workOrders,setWorkOrders] = useState([])
     const [searchBoxValue, setSearchBoxValue] = useState('')
-    // let navigate = useNavigate()
 
     useEffect(()=>{
      if (props.workOrders?.length > 0)
        setWorkOrders(props.workOrders)
     },[props.workOrders])
-
-    // const goBack = (e) => {
-    //     return navigate(-1)
-    // }
 
     const handleOnChange = (e)=>{
         setSearchBoxValue(e.target.value)
@@ -41,8 +37,8 @@ const WorkOrdersContainer = (props)=>{
                 <br/>
                 <br/>
                 <div className='center'>
-                    {props.workOrders?.length > 10 ?<input onChange={handleOnChange} className='search_box' placeholder='Search Work Orders ' type='search' value={searchBoxValue}/>:null}
-                    {!fromHome? 
+                    {props.workOrders?.length > 10 && <input onChange={handleOnChange} className='search_box' placeholder='Search Work Orders ' type='search' value={searchBoxValue}/>}
+                    {!fromHome && 
                         <select onChange={handleOnclick} className='form-select my-3 mx-auto' > 
                             <option value='all'>All</option>          
                             <option value='today'>Today</option>
@@ -50,8 +46,7 @@ const WorkOrdersContainer = (props)=>{
                             <option value='pending'>Pending Work Orders</option>
                             <option value='expire'>Expire work orders</option>
                         </select> 
-                    :
-                       null}
+                    }
                 </div>
                 {props.workOrders.length > 0 ? 
                     <table className="table table-striped" > 
@@ -76,21 +71,5 @@ const WorkOrdersContainer = (props)=>{
    )
 }
 
-const mapStateToProps = state => { 
-    return {
-        user: state.user.user,
-        errors: state.workOrders.errors,
-        employees: state.employees.employees,
-        buildings: state.buildings.buildings,
-        loading: state.workOrders.loading,
-        accordion: state.accordion.accordion
-    }
-}
-      
-const mapDispatchToProps = dispatch => {
-    return {
-        clearErrors: () => dispatch(clearErrors())
-    }
-}   
-      
-export default connect(mapStateToProps,mapDispatchToProps  )(WorkOrdersContainer)
+
+export default WorkOrdersContainer

@@ -3,15 +3,15 @@ import {token} from '../componentsHelpers/token'
 import {baseUrl} from './actionsHelper'
 
 
-export const deleteEmployee = (id) => {
-  return (dispatch) => {
-    dispatch({ type: 'LOADING'})
-    axios.delete(`${baseUrl()}/employees/${id}`,{headers: token(), withCredentials: true}
-    ).then(response => {   
-      dispatch({ type: 'ADD_EMPLOYEES', employees: response.data })
-    })
-  }
-}
+// export const deleteEmployee = (id) => {
+//   return (dispatch) => {
+//     dispatch({ type: 'LOADING'})
+//     axios.delete(`${baseUrl()}/employees/${id}`,{headers: token(), withCredentials: true}
+//     ).then(response => {   
+//       dispatch({ type: 'ADD_EMPLOYEES', employees: response.data })
+//     })
+//   }
+// }
 
 export const searchEmployees = (params) => {
   return (dispatch) => {

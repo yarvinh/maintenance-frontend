@@ -1,25 +1,37 @@
-import React, {useState,useEffect } from 'react';
-import { connect } from 'react-redux';
-import {getImages} from '../actions/galleryActions'
+import {useState,useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Image from "../components/gallery/Image"
 import CreateImages from '../components/gallery/CreateImages';
-import { useParams,Navigate} from 'react-router-dom';
+import { useParams} from 'react-router-dom';
 import ImgSlider from '../components/gallery/ImgSlider';
+import { deleteFetchAction, getFetchAction } from '../actions/fetchActions';
+import { galleryImageDeleteSetter, getGallerySetter } from '../componentsHelpers/fetchingFunctions';
+import LoadingItems from '../components/LoadingItems';
+import ErrorsOrMsg from '../components/ErrosOrMsg';
 
-const GalleryContainer = (props)=>{  
-
-    const {id} = useParams()
-    const {user,loading} = props.user
-    const {gallery} = props
+const GalleryContainer = ()=>{  
+    const dispatch = useDispatch()
+    const gallery = useSelector(state => state.gallery.gallery)
+    const user = useSelector(state => state.user.user)
+    const galleryLoading = useSelector(state =>  state.gallery.galleryLoading)
+    const errorsOrMsg = useSelector(state => state.errorsOrMessages.errorsOrMessages)
+    const {workOrderId} = useParams()
     const [index,setIndex] = useState(0)
     useEffect(() => {
-       props.getImages(id)
+        const payload = getGallerySetter({workOrderId: workOrderId })
+        dispatch(getFetchAction(payload))
     } ,[]); 
 
     const handleOnclick = (e)=>{
         setIndex(parseInt(e.currentTarget.id))
     }
-
+    const handleDeleteOnClick = (e) => {
+        const payload = galleryImageDeleteSetter({workOrderId: workOrderId, id: gallery[index]?.id})
+        const message = "Are you sure you to remove this image"   
+        const confirmBox = window.confirm(message)
+        if (confirmBox === true ) 
+            dispatch(deleteFetchAction(payload))    
+    }
     const displayImages=()=>{
         let count = 0
         return gallery.map((image)=>{
@@ -35,45 +47,35 @@ const GalleryContainer = (props)=>{
     return(
        <div className='main-gallery-component'>
             <div>
-                <CreateImages user={user.user} workOrderId={id}/>
+                <CreateImages user={user.user} workOrderId={workOrderId}/>
+            </div>
+            {errorsOrMsg.from === "gallery" && <ErrorsOrMsg errors={errorsOrMsg?.errors} msg={errorsOrMsg?.msg}/>}
+            <div className='center hight'>
+                {galleryLoading && <LoadingItems/>}
+            </div>
+            <div className="x-delete-container">
+              {gallery[index]?.user?.id === user.user?.id || gallery[index]?.employee?.id === user.user?.id ? <img src="/close.svg" onClick={handleDeleteOnClick} className='x-delete-img' alt="X delete reply"/> : null}
             </div>
             <div className='center'>
               {gallery[index]?.user ?<strong> {gallery[index].user.name} </strong>: <strong> {gallery[index]?.employee.name}</strong>}
             </div>
-
             <div className='gallery-container'>
                 <div className='slider-wrapper'>
                     <div className='slider'>
-                      {loading || user.is_login? <ImgSlider index={index} setIndex={setIndex} user={user} gallery={gallery}/>: <Navigate to='/login'/>}
+                      {user.is_login && <ImgSlider index={index} setIndex={setIndex} user={user} gallery={gallery}/>}
                     </div>
                 </div>  
             </div>
             <div className='bar-container'>
                 <div className='gallery-image'>
-                  {loading || user.is_login? displayImages(): <Navigate to='/login'/>}
+                  {galleryLoading  || user.is_login ? displayImages(): null}
                 </div>
                 <div className="center">
                   {gallery.length > 0 ?<strong>{gallery.length} images</strong>:null }
                 </div>
             </div>
-   
        </div>
    ) 
 }
 
-const mapStateToProps = state => { 
-    return {
-       gallery: state.gallery.gallery,
-       user: state.user,
-       loading: state.gallery.loading,
-   
-    }
-}
-      
-const mapDispatchToProps = dispatch => {
-    return {
-        getImages: (action) => dispatch(getImages(action))
-    }
-}   
-      
-export default connect(mapStateToProps,mapDispatchToProps  )(GalleryContainer)
+export default GalleryContainer

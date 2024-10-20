@@ -1,15 +1,16 @@
-import {ViolationsFetch} from "../actions/violationsActions"
+import {violationsFetch} from "../actions/violationsActions"
 import {useEffect } from 'react';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import HPDviolation from '../components/violations/HPDviolation'
 import {useParams} from 'react-router-dom';
 
-const HPDviolationsContainer = (props)=>{
+const HPDviolationsContainer = ()=>{
     const {lot,block} = useParams()
-    let {violations} = props
-    
+    const violations = useSelector(state => state.violations.violations)
+    const loading = useSelector(state => state.violations.violationsLoading)
+    const dispatch = useDispatch()
     useEffect(() => {
-        props.ViolationsFetch(`https://data.cityofnewyork.us/resource/csn4-vhvf.json?$where=lot%20=%20${lot}%20and%20block%20=%20${block}`)
+        dispatch(violationsFetch(`https://data.cityofnewyork.us/resource/csn4-vhvf.json?$where=lot%20=%20${lot}%20and%20block%20=%20${block}`))
     } ,[]); 
 
     return (
@@ -20,20 +21,4 @@ const HPDviolationsContainer = (props)=>{
         )
 };
 
-const mapStateToProps = state => { 
-
-    return {
-        violations: state.violations.violations,
-        loading: state.violations.loading
-    }
-
-}
-
-
-const mapDispatchToProps = dispatch => {
-    return {
-        ViolationsFetch: (action) => dispatch(ViolationsFetch(action)), 
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(HPDviolationsContainer)
+export default HPDviolationsContainer

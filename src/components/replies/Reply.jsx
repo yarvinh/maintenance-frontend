@@ -1,49 +1,35 @@
-import { connect } from 'react-redux';
-import {Link} from 'react-router-dom';
-import {deleteReply} from '../../actions/repliesActions'
-const Reply = (props)=>{
-   
-   let {reply,admin,user} = props
-    const dateAndTime = ()=>{
-        const date = new Date(reply.created_at)
-        const time = new Date(reply.created_at)
-        return (
-          <div>
-              <span>{date.toDateString()} at </span>      
-              <span>{time.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })}</span>
-          </div>
-        )
-    }
-    
-    const handleOnClick = (e) =>{
-        props.deleteReply(reply.id)
-    }
 
-    const deleteReply = ()=>{
-        if((admin && user.user?.id === reply.user_id) || (user.user?.id === reply.employee_id)){
-           return <button onClick={handleOnClick} className='delete' value={reply.id}>X</button>
-        }
-    } 
+import { useDispatch} from 'react-redux';
+import Likes from '../likes/Likes';
+import { dateAndTime } from '../../componentsHelpers/functionsHelpers';
+import { deleteFetchAction } from '../../actions/fetchActions';
+import { replyDeleteSetter } from '../../componentsHelpers/fetchingFunctions';
 
-        return (   
-          <div className='replies'> 
-              <div key={reply.id}> 
-                <div>
-                  {deleteReply()}
-                  {reply.user? <span >Reply by: {reply.user.name} {dateAndTime()}</span>:<span >Reply by: <Link to={`/employees/${reply.employee_id}`}>{reply.employee.name}</Link> {dateAndTime()}</span>}
-                </div>
-                <div className='reply'>
-                    <p>{reply.reply}</p> 
-                </div> 
-              </div>
-           </div>
-          )    
+const Reply = ({reply,user}) => {
+  const dispatch = useDispatch()
+  const handleOnClick = (e)=>{
+    const payload = replyDeleteSetter({id: reply.id})
+    dispatch(deleteFetchAction(payload))
   }
 
+  return (
+    <div className='replies' key={reply.id}> 
+      <div>
+        {/* {user.user && reply.user.id === user.user.id && <button onClick={handleOnClick} className='delete' value={reply.id}>x</button>} */}
+        {reply.user?.id === user?.user?.id || reply.employee?.id === user.user?.id ? <img src="../close.svg" onClick={handleOnClick} className='x-delete' alt="X delete reply"/> : null}
+        <span >{reply.user?.name || reply.employee.name} {dateAndTime(reply.created_at)}</span>
+      </div>
+        <div className='reply'>
+          <p >{reply.reply}</p>
+        </div> 
+      <div>
+        <div>
+           {user.user && <Likes idFor="reply_id" likeItem={reply} user={user}/>}
+            {/* {user.is_login? <Likes user={user} likesReceived={replyLikesReceived} replyLikesReceived likes={reply.likes} reply_id={reply.id} user_id={currentUser.id} gameCommentOrReply={reply}/>:null} */}
+        </div>
+      </div>
+    </div>  
+  )
+};
 
-  const mapDispatchToProps = dispatch => {
-    return {
-      deleteReply: (action) => dispatch(deleteReply(action))
-    }
-  }
-  export default connect(null, mapDispatchToProps)(Reply)
+export default Reply

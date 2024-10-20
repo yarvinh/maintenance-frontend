@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import CreateEmployees from '../components/employees/CreateEmployees'
 import Employee from "../components/employees/Employee"
 import {useParams} from 'react-router-dom';
@@ -8,23 +8,27 @@ import { useEffect } from 'react';
 import {employeesFilter} from '../componentsHelpers/employees'
 import { getFetchAction } from '../actions/fetchActions';
 import { EMPLOYEES_SETTER } from '../componentsHelpers/fetchingConstants';
-const EmployeesContainer = (props) => {
-
-    let {admin,user} = props.user
+const EmployeesContainer = () => {
+    const dispatch = useDispatch()
+    const userData = useSelector(state => state.user.user)
+    const employeesData = useSelector(state => state.employees.employees)
+    // const loading = useSelector(state => state.employees.employeesLoading)
+    let {admin,user} = userData
     const {id} = useParams()
     const [employees, setEmployees] = useState([])
     const [searchBoxValue, setSearchBoxValue] = useState("")
-    useEffect(()=>{
-        props.getFetchAction(EMPLOYEES_SETTER)
-    },[])
-    useEffect(()=>{
-        if(props.employees?.length > 0)
-          setEmployees(props.employees)
-    },[props.employees])
-    
 
-   let handleOnChange = (e)=>{
-        const filteredEmployees = employeesFilter({employees: props.employees,value: e.target.value.toLowerCase()})
+    useEffect(()=>{
+        dispatch(getFetchAction(EMPLOYEES_SETTER))
+    },[])
+    
+    useEffect(()=>{
+        if(employeesData ?.length > 0)
+          setEmployees(employeesData )
+    },[employeesData])
+    
+    let handleOnChange = (e)=>{
+        const filteredEmployees = employeesFilter({employees: employeesData,value: e.target.value.toLowerCase()})
         if (e.target.name === 'local-search'){
           setEmployees(filteredEmployees)
         }
@@ -34,7 +38,7 @@ const EmployeesContainer = (props) => {
    const handleOnSubmit = (e)=>{
        e.preventDefault()
        if (searchBoxValue.trim() !== ''){
-        return props.searchEmployees(searchBoxValue)
+        return dispatch(searchEmployees(searchBoxValue))
     }
    }
 
@@ -63,7 +67,7 @@ const EmployeesContainer = (props) => {
             {!id && admin?<CreateEmployees />: null }
             <br/>
             <div className="center">
-                {props.employees?.length > 0 && user?.user_id || props.employees?.length > 0 && admin?<input onChange={handleOnChange} className='search_box' name="local-search" placeholder='Search employees ' type='search' value={searchBoxValue}/>:null}
+                {employeesData?.length > 0 && user?.user_id || employeesData?.length > 0 && admin?<input onChange={handleOnChange} className='search_box' name="local-search" placeholder='Search employees ' type='search' value={searchBoxValue}/>:null}
             </div>
             <div >
                 <form onSubmit={handleOnSubmit} className="text-area-section">
@@ -72,26 +76,11 @@ const EmployeesContainer = (props) => {
             </div>
             <br/>
             <div>
-              {!id && props.employees?.length > 0 ? renderEmployees(): <h3 className='text'>You have no employees to display at this moment</h3> }
+              {!id && employeesData?.length > 0 ? renderEmployees(): <h3 className='text'>You have no employees to display at this moment</h3> }
             </div>
         </div>
     )
 }
 
-const mapStateToProps = state => { 
-    return {
-       user: state.user.user,
-       employees: state.employees.employees,
-       loading: state.employees.loading
-    }
-  }
-
-  const mapDispatchToProps = dispatch => {
-    return {
-        getFetchAction: (action) => dispatch(getFetchAction(action)),
-        searchEmployees: (action) => dispatch(searchEmployees(action)),
-    }
-  }
-
-  export default connect(mapStateToProps, mapDispatchToProps)(EmployeesContainer)
+export default EmployeesContainer
   

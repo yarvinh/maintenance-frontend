@@ -1,21 +1,25 @@
-import React, {useEffect } from 'react';
-import { connect } from 'react-redux';
-import {getReceipts} from '../actions/receiptsActions'
+import {useEffect } from 'react';
 import Receipt from "../components/receipts/receipt"
 import {useNavigate, useParams,Navigate} from 'react-router-dom';
 import CreateReceipt from '../components/receipts/CreateReceipt';
+import { getFetchAction } from '../actions/fetchActions';
+import { useDispatch, useSelector } from 'react-redux';
+import { getReceiptsSetter } from '../componentsHelpers/fetchingFunctions';
 
-const ReceiptsContainer = (props)=>{  
+const ReceiptsContainer = ()=>{  
+    const dispatch = useDispatch()
+    const receipts = useSelector(state => state.receipts.receipts)
+    const user = useSelector(state => state.user.user)
+    const loading = useSelector(state => state.receipts.receiptsLoading)
     let navigate = useNavigate()
-    const {id} = useParams()
-    const {user,loading} = props.user
-    const {receipts} = props
-
+    const {workOrderId} = useParams()
+    // console.log(receipts)
     const goBack = (e) => {
-        return navigate(-1)
+        // return navigate(-1)
     }
     useEffect(() => {
-        props.getReceipts(id)
+        const payload = getReceiptsSetter({id: workOrderId})
+        dispatch(getFetchAction(payload))
     } ,[]); 
     
     const displayImages=()=>{
@@ -41,26 +45,13 @@ const ReceiptsContainer = (props)=>{
    return(
        <div>
             <div>
-                <CreateReceipt user={user.user} workOrderId={id}/>
-               {loading || user.is_login? displayImages(): <Navigate to='/login'/>}
+                <CreateReceipt user={user.user} workOrderId={workOrderId}/>
+                {displayImages()}
+               {/* {loading || user.is_login? displayImages(): <Navigate to='/login'/>} */}
             </div>
        </div>
    )
 }
 
-
-
-const mapStateToProps = state => { 
-    return {
-       receipts: state.receipts.receipts,
-       user: state.user
-    }
-}
       
-const mapDispatchToProps = dispatch => {
-    return {
-        getReceipts: (action) => dispatch(getReceipts(action))
-    }
-}   
-      
-export default connect(mapStateToProps,mapDispatchToProps  )(ReceiptsContainer)
+export default ReceiptsContainer

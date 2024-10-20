@@ -1,4 +1,4 @@
-.auto_height_for_reply { 
+/* .auto_height_for_reply { 
     width: 100%; 
     min-height: 30px;
     border-width: 3px;
@@ -94,4 +94,73 @@
     font-size: 12px;
     box-shadow: 3px 5px 5px 5px #d3d2d0;
   }
-  
+   */
+
+   .replies { 
+    margin-left: auto;
+    background-color: rgb(238, 238, 238);
+    color: #444;
+    padding: 8px;
+    width: 90%;
+    border-width: 3px;
+    border-style: solid;
+    border-color: rgb(252, 247, 247);
+    text-align: left;
+    border-radius: .6rem;
+    font-size: 12px;
+    box-shadow: 1px 1px 3px 0px rgb(176, 173, 173)
+   
+  }
+
+  .reply { 
+    background-color: white;
+    color: #444;
+    padding: 8px;
+    width: 100%;
+    text-align: left;
+    outline: none;
+    font-size: 14px;
+    transition: 0.4s;
+    border-radius: .6rem;
+    overflow-wrap: break-word;
+  }
+
+  .replies_wraper{
+    flex-wrap: wrap;
+  }
+
+  .replies_accordion { 
+    background-color: #263E57;
+    color: white;
+    cursor: pointer;
+    width: 100%;
+    border-width: 0px;
+    border-style: solid;
+    border-color: rgb(252, 247, 247);
+    text-align: left;
+    outline: none;
+    font-size: 12px;
+    transition: 0.4s;
+    border-radius: .25rem;
+    opacity: .8;
+  }
+
+  .replies_accordion:hover{
+    opacity: 1;
+ }
+ 
+ .replies_accordion:after {
+   content: '\002B';
+   color: white;
+   font-weight: bold;
+   float: right;
+   margin-left: 5px;
+ } 
+ 
+ .active:after {
+   content: "\2212"; 
+ } 
+ 
+ .hide_replies {
+   display: none;
+ }

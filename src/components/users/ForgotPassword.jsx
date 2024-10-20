@@ -1,45 +1,34 @@
 import {useState} from 'react';
-import { connect } from 'react-redux';
-import {clearErrors} from '../../actions/errorsActions'
+import { useDispatch, useSelector } from 'react-redux';
 import {recoveryPassword} from '../../actions/usersActions'
 import '../../styles/styles.css'
-import Errors from '../Errors';
-import { setAccountType } from '../../actions/usersActions';
+import ErrorsOrMsg from '../ErrosOrMsg';
 
-const ForgotPassword = (props) =>{
-    const {account, errorsOrMessages} = props
-    const {business, text} = account
+const ForgotPassword = () =>{
+    const dispatch = useDispatch()
+    const errorsOrMsg = useSelector( state => state.errorsOrMessages.errorsOrMessages )
     const [user, setUser] = useState({
       username: ""
     })
 
-    const handleOnClick=(e)=>{
-      if(business) 
-        props.setAccountType({business: false, text: "business"})
-      else 
-        props.setAccountType({business: true, text:  "personal"})
-    }
-
-
-    let handleOnChange = (e)=>{
+    const handleOnChange = (e)=>{
       setUser({
        ...user,[e.target.name]: e.target.value
       })
     }
 
-    let handleOnSubmit = (e) =>{
+    const handleOnSubmit = (e) =>{
         e.preventDefault()
-           business ? props.recoveryPassword({path: "/recovery_password" ,username: user.username}) : props.recoveryPassword({path: '/recovery_employee_password', username: user.username})
+           dispatch(recoveryPassword({path: "/recovery_password" ,username: user.username})) 
             setUser({
                 username: ""
             }) 
-        }
+    }
     
     return (
         <section>
           <br/>
           <div className='center login-messages'>
-            <button onClick={handleOnClick} className="login-message-button" >Recover {text} account password</button>
           </div>
             <div className="container d-flex justify-content-center align-items-center">
                 <form onSubmit={handleOnSubmit} className="form">
@@ -49,30 +38,10 @@ const ForgotPassword = (props) =>{
                 </form>   
             </div>
             <div className="center"> 
-              {(errorsOrMessages.from === 'set_password_session') && <Errors errorsOrMessages={errorsOrMessages}/>}
+              {errorsOrMsg.from === 'set_password_session' && <ErrorsOrMsg errors={errorsOrMsg?.errors} msg={errorsOrMsg?.msg}/>}
             </div> 
         </section>
     )
-
-
 }
-
-
-
-const mapStateToProps = state => { 
-    return {
-      loading: state.user.loading,
-      errorsOrMessages: state.errorsOrMessages.errorsOrMessages,
-      account: state.account.account
-    }
-  }
-  
-const mapDispatchToProps = dispatch => {
-    return {
-        setAccountType: (action)=> dispatch(setAccountType(action)),
-        recoveryPassword: (action) => dispatch(recoveryPassword(action)),
-        clearErrors: () => dispatch(clearErrors()),
-    }
-}   
       
-export default connect(mapStateToProps, mapDispatchToProps)(ForgotPassword)
+export default ForgotPassword

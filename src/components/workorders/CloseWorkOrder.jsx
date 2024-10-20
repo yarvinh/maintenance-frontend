@@ -1,44 +1,31 @@
 import {useParams} from 'react-router-dom';
-import { connect } from 'react-redux';
+import {useDispatch, useSelector } from 'react-redux';
 import '../../styles/styles.css'
 import { patchFetchAction } from '../../actions/fetchActions';
-const CloseWorkOrder = (props) => {
-    const {id} = useParams()
-    let {workOrder,workOrders} = props
+import { workOrderPatchSetter } from '../../componentsHelpers/fetchingFunctions';
 
+const CloseWorkOrder = () => {
+    const {workOrderId} = useParams()
+    const dispatch = useDispatch()
+    const workOrder = useSelector(state=> state.workOrder.workOrder)
+  
     const workOrderStatus = () => {
-        if (workOrder.status)
-            return "Open Work Order"
-        else 
-            return "Close Work Order"
+        return workOrder.status ? "Open Work Order" : "Close Work Order"
     }
 
     const buttonColor = () => {
-        if (workOrder.status)
-            return "inactive_color"
-        else 
-            return "active_color"
+        return workOrder.status ? "inactive_color" : "active_color"
     }
 
     const handleOnClick = (e) => { 
         e.preventDefault()
        if (!workOrder.status){
-            props.patchFetchAction({
-                path: `/work_orders/${id}`,
-                id: id,
-                stateName:{itemName: "workOrder", arrayName: "workOrders"} ,
-                type: {addItemToArray: "ADD_WORK_ORDERS", addItem: "ADD_WORK_ORDER"}, 
-                params: {payload: {status: true}, array: workOrders}
-            })
+            const payload = workOrderPatchSetter({id: workOrderId, payload: {status: true}})
+            dispatch(patchFetchAction(payload))
             e.target.value = "Open Work Order"
-       } else {    
-            props.patchFetchAction({
-                path: `/work_orders/${id}`,
-                id: id,
-                stateName:{itemName: "workOrder", arrayName: "workOrders"} ,
-                type: {addItemToArray: "ADD_WORK_ORDERS", addItem: "ADD_WORK_ORDER"}, 
-                params: {payload: {status: false}, array: workOrders}
-            })
+       } else { 
+            const payload = workOrderPatchSetter({id: workOrderId, payload: {status: false}})
+            dispatch(patchFetchAction(payload))   
             e.target.value = "Close Work Order"
        }
     }
@@ -51,20 +38,5 @@ const CloseWorkOrder = (props) => {
         </div>
     )
 }
-
-const mapStateToProps = state => { 
-    return {
-      workOrder: state.workOrder.workOrder,
-      workOrders: state.workOrders.workOrders,
-    }
-}
-
-
-
-const mapDispatchToProps = dispatch => {
-    return {
-        patchFetchAction: (action) => dispatch(patchFetchAction(action))
-    }
-}   
-      
-export default connect(mapStateToProps , mapDispatchToProps)(CloseWorkOrder)
+     
+export default CloseWorkOrder

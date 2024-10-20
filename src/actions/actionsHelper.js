@@ -1,6 +1,3 @@
-// import { verifyEmail } from "./usersActions"
-
-import { verifyEmail } from "./usersActions"
 
 export const baseUrl = () => { 
    return  process.env.NODE_ENV === "development" ? 'http://localhost:3000'
@@ -13,7 +10,7 @@ export  const wsurl = ()=>{
    return  process.env.NODE_ENV === "development" ? "ws://localhost:3000/cable" : "wss://workorders.herokuapp.com/cable" 
 }
 
-export const paths = (business = false)=>{
+export const paths = (business = false) => {
    const testPaths  = {
       checkLoginPath: '/test/checklogin',
       usersPath: '/test/users',
@@ -25,6 +22,7 @@ export const paths = (business = false)=>{
       verifyEmail: "/test/verify_email",
       login: '/test/business_login'
    }  
+
   const paths =  {
       checkLoginPath: '/checklogin',
       usersPath: '/users',

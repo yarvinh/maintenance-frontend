@@ -1,15 +1,20 @@
-import React, {useState,useEffect} from 'react';
-import { connect } from 'react-redux';
-import {useParams,useNavigate} from 'react-router-dom';
-import {getUnits} from "../actions/unitsActions"
+import {useEffect} from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import {useParams} from 'react-router-dom';
 import CreateUnit from "../components/units/CreateUnit"
 import Unit from "../components/units/Unit"
+import { getFetchAction } from '../actions/fetchActions';
+import { getUnitsSetter } from '../componentsHelpers/fetchingFunctions';
+import LoadingItems from '../components/LoadingItems';
 
-const UnitsContainer = (props) => {
-    const {building,units} = props
-    const {id} = useParams()
+const UnitsContainer = ({building}) => {
+  const dispatch = useDispatch()
+  const units = useSelector(state => state.units.units)
+  const loading = useSelector(state => state.units.loadingUnits)
+    const {buildingId} = useParams()
     useEffect(() => {
-        props.getUnits(id)
+        const payload = getUnitsSetter({buildingId})
+        dispatch(getFetchAction(payload))
     },[]);
 
     const displayUnits = ()=>{
@@ -24,6 +29,7 @@ const UnitsContainer = (props) => {
 
     return (
         <div>
+          {loading && <LoadingItems/>}
             <div className='unit-creater'>
               <CreateUnit building={building}/> 
             </div>
@@ -31,24 +37,7 @@ const UnitsContainer = (props) => {
               {displayUnits()} 
             </div>  
         </div>
-    )
-
-    
+    )   
 }
 
-
-const mapStateToProps = state => { 
-    return {
-       units: state.units.units,
-       loading: state.units.loading
-    }
-  }
-
-  const mapDispatchToProps = dispatch => {
-    return {
-        getUnits: (action) => dispatch(getUnits(action)),
-    }
-  }
-
-
-  export default connect(mapStateToProps, mapDispatchToProps)(UnitsContainer)
+export default UnitsContainer

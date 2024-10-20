@@ -1,27 +1,25 @@
 import  {useState} from 'react';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams} from 'react-router-dom';
 import {createReceipts} from '../../actions/receiptsActions'
 import imageCompression from 'browser-image-compression';
-import Errors from '../Errors';
-import Loading from '../Loading'
+import { compressImg } from '../../componentsHelpers/functionsHelpers';
+import ErrorsOrMsg from '../ErrosOrMsg';
 
-const CreateReceipt=(props)=>{
-    const {user,errorsOrMessages,uploading} = props
-    const {id} = useParams()
+const CreateReceipt=()=>{
+    const dispatch = useDispatch()
+    const errorsOrMsg = useSelector(state => state.errorsOrMessages.errorsOrMessages)
+    const user = useSelector(state => state.user.user)
+    // const loading = useSelector(state => state.receipts.receiptsLoading)
+    const {workOrderId} = useParams()
     const [receipts,setReceipts] = useState({
         receipts: [] 
     })
 
     const handleOnChange=(e)=>{
-        const options = {
-            maxSizeMB: 1,
-            maxWidthOrHeight: 1920,
-            useWebWorker: true
-        }
         const formData = new FormData(); 
         Array.from(e.target.files).forEach( async (file)=>{    
-            const compressedFile = await imageCompression(file, options);  
+            const compressedFile = await imageCompression(file, compressImg(.1));  
             formData.append("file[]", compressedFile);  
         })
 
@@ -35,7 +33,7 @@ const CreateReceipt=(props)=>{
         e.preventDefault()
         e.target.children[0].files = null
         e.target.children[0].value = ""
-        props.createReceipts({receipts: receipts, id: id})
+        dispatch(createReceipts({receipts, id: workOrderId}))
         setReceipts({
             receipts: []
         })
@@ -48,28 +46,13 @@ const CreateReceipt=(props)=>{
                    <input  onChange={handleOnChange} type="file" multiple name="receipts" className='imgs-input' />
                    <br></br>
                    <button type='submit' className="white-blue-buttons">Save image</button>
-                   {(errorsOrMessages.from === "add_receipts") && <Errors errorsOrMessages={errorsOrMessages}/>}
                 </form>
                 </div>
-                  {uploading && (errorsOrMessages.from !== "add_receipts") && <Loading/>}
+                  {errorsOrMsg.from === "add_receipts" && <ErrorsOrMsg errors={errorsOrMsg?.errors} msg={errorsOrMsg?.msg}/>}
                 <div>
             </div>
         </div>
     )
-
 }
-
-const mapStateToProps = state => { 
-    return {
-        errorsOrMessages: state.errorsOrMessages.errorsOrMessages,
-        uploading: state.receipts.uploading
-    }
-}
-      
-const mapDispatchToProps = dispatch => {
-    return {
-        createReceipts: (action) => dispatch(createReceipts(action))
-    }
-}   
-      
-export default connect(mapStateToProps , mapDispatchToProps)(CreateReceipt)
+  
+export default CreateReceipt

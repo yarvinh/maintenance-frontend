@@ -1,39 +1,25 @@
-import { Component } from 'react';
-import { connect } from 'react-redux';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { fetchLogOut } from '../../actions/usersActions'
 import {Navigate} from 'react-router-dom'
 
-class LogOut extends Component {
-    
-    handleLogOut = () => {
-        this.props.fetchLogOut()
+const LogOut = () => {
+    const dispatch = useDispatch()
+    const user = useSelector(state => state.user.user)
+    const loading = useSelector(state => state.user.userLoading)
+    const handleLogOut = () => {
+        dispatch(fetchLogOut())
     }
      
-    componentDidMount() {
-      this.handleLogOut()
-    }
+    useEffect(()=>{
+      handleLogOut()
+    },[])
 
-    render() {
-      return(
-        <div>
-           {(!this.props.user.is_login && !this.props.loading) && <Navigate to='/'/>}     
-        </div>
-      );    
-    }
+    return(
+      <div>
+          {!user.is_login && !loading && <Navigate to='/'/> }     
+      </div>
+    );    
 };
 
-const mapStateToProps = state => { 
-  return {
-      user: state.user.user,
-      loading: state.user.loading
-  }
-}
-
-const mapDispatchToProps = dispatch => {
-  return {
-    fetchLogOut: () => dispatch(fetchLogOut()),
-  }
-}
-
-
-export default connect(mapStateToProps , mapDispatchToProps)(LogOut)
+export default LogOut

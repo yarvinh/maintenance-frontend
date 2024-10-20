@@ -1,11 +1,16 @@
 import axios from 'axios'
+import { ERRORS } from '../componentsHelpers/errors'
+import { errorsOrMessagesReceived } from '../state/reducers/errorsOrMessagesReducer'
+import { violationsLoading, violationsReceived } from '../state/reducers/violationsReducer'
 
-export const ViolationsFetch = (url) => {
-        return (dispatch) => {   
-            dispatch({ type: 'LOADING_VIOLATIONS'})
-            axios.get(url)
-            .then(response => {
-                dispatch({ type: 'ADD_VIOLATIONS', violations: response.data})
-            }).catch(e=> console.log("error",e))
+export const violationsFetch = (url) => {
+        return async (dispatch) => {   
+            dispatch(violationsLoading())
+            try {
+               const response = await axios.get(url)
+               dispatch(violationsReceived(response.data))
+            } catch (error){
+                dispatch(errorsOrMessagesReceived(ERRORS))
+            }
         } 
 }

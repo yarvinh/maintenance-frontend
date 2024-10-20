@@ -1,29 +1,35 @@
 
 import {useNavigate,useParams} from 'react-router-dom';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {useEffect} from 'react';
-import {getUnit,deleteUnit} from "../../actions/unitsActions"
 import EditUnit from './EditUnit';
 import CreateTenant from '../tenants/CreateTenant'
 import TenantContainer from '../../containers/TenantContainer';
+import { deleteFetchAction, getFetchAction } from '../../actions/fetchActions';
+import { deleteUnitSetter, getUnitSetter } from '../../componentsHelpers/fetchingFunctions';
 
-const UnitsDetails = (props)=>{
-    const {unit,user} = props
-    const {building_id, unit_id} = useParams()
+const UnitsDetails = ()=>{
+
+    const {buildingId, unitId} = useParams()
+    const dispatch = useDispatch()
+    const unit = useSelector(state => state.unit.unit)
+    const user = useSelector(state => state.user.user)
+
     let navigate = useNavigate()
     useEffect(() => {
-        if(unit_id)
-          props.getUnit({unitId: unit_id,buildingId: building_id})
+        const payload = getUnitSetter({buildingId: buildingId,id: unitId})
+        if(unitId)
+          dispatch(getFetchAction(payload))
     },[]);
 
-
     const handleOnClick=(e)=>{
-      const confirmBox = window.confirm(
-        "Are you sure you want to delete this unit?"     
-      )
-      if (confirmBox === true) {
-          props.deleteUnit({unitId: unit_id,buildingId: building_id})  
-          navigate(-1)
+        const confirmBox = window.confirm(
+            "Are you sure you want to delete this unit?"     
+        )
+        const payload = deleteUnitSetter({id: unitId, buildingId: buildingId})
+        if (confirmBox === true) {
+            dispatch(deleteFetchAction(payload))
+        navigate(-1)
       }
     }
 
@@ -52,22 +58,5 @@ const UnitsDetails = (props)=>{
     )  
 };
 
-const mapStateToProps = state => { 
-    return {
-      user: state.user.user,
-      unit: state.unit.unit
-    }
 
-}
-
-const mapDispatchToProps = dispatch => {
-    return {
-        getUnit: (action) => dispatch(getUnit(action)),
-        deleteUnit: (action) => dispatch(deleteUnit(action)),
-    }
-}
-
-
-
-
-  export default connect(mapStateToProps, mapDispatchToProps)(UnitsDetails)
+  export default UnitsDetails

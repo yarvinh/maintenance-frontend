@@ -1,15 +1,17 @@
 import {useState} from 'react';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {useParams} from 'react-router-dom';
-import {clearErrors} from '../../actions/errorsActions'
-import {accordionButtonClass,diplayAccordion} from '../../componentsHelpers/accordion'
 import { patchFetchAction } from '../../actions/fetchActions';
 import '../../styles/styles.css'
-import Errors from '../Errors';
+import { displayFormReceived } from '../../state/reducers/displayElementReducer';
+import ErrorsOrMsg from '../ErrosOrMsg';
+import { buildingPatchSetter } from '../../componentsHelpers/fetchingFunctions';
 
-const EditBuilding = (props) =>{
-    const {currentBuilding,buildings,accordion,errorsOrMessages} = props
-    let {id} = useParams()
+const EditBuilding = ({currentBuilding} ) =>{
+    const dispatch = useDispatch()
+    const isDisplay = useSelector(state => state.isDisplay.formDisplay)
+    const errorsOrMsg = useSelector(state => state.errorsOrMessages.errorsOrMessages)
+    let {buildingId} = useParams()
     const [building, setBuilding] = useState({
         address: "",
         super_name: "",
@@ -18,37 +20,31 @@ const EditBuilding = (props) =>{
         block: "",
         lot: "",
     })
+
+    const handleOnClick = (e)=>{
+        if (e.target.className.includes("active"))
+          dispatch(displayFormReceived({buttonClass: "display_accordion", formClass: 'hide_elements', id: e.target.id}))
+        else
+          dispatch(displayFormReceived({buttonClass: "display_accordion active", formClass: 'display_elements', id: e.target.id}))   
+    }
     
     let handleOnChange = (e)=>{
-      setBuilding({
-       ...building,
-       [e.target.name]: e.target.value
-      })
+      setBuilding({...building,[e.target.name]: e.target.value})
     }
 
     let handleOnSubmit = (e,type) =>{
         e.preventDefault()
-        props.patchFetchAction({
-            id: id,
-            path: `/buildings/${id}`,
-            stateName:{itemName: "building", arrayName: "buildings"} ,
-            type: {addItemToArray: "ADD_BUILDINGS", addItem: "ADD_BUILDING"}, 
-            params: {payload: {[type]: building[type]}, array: buildings}
-          })
-            setBuilding({
-                ...building,
-                [type]: ""
-        })    
+        const payload = buildingPatchSetter({id: buildingId, payload: {[type]: building[type]}})
+        dispatch(patchFetchAction(payload))
+            setBuilding({...building,[type]: ""})    
     }
 
   return(   
       <div className="center">
-            <button  id="edit-building" className={accordionButtonClass("edit-building",accordion)}> Edit Building</button>
-            <div className={diplayAccordion("edit-building",accordion)}>
+            <button  id="edit-building" onClick={handleOnClick} className={isDisplay.buttonClass}> Edit Building</button>
+            <div className={isDisplay.id.includes("edit-building") ? `${isDisplay.formClass} form-wrapper`: 'hide_elements'}>
                 <div className='standar-forms accordion'>
-                    <div className='accordion errors'> 
-                    {(errorsOrMessages.from === "update_building") && <Errors errorsOrMessages={errorsOrMessages}/>}
-                    </div> 
+                    {errorsOrMsg.from.includes("update_building") && <ErrorsOrMsg {...(errorsOrMsg.errors ? { errors: errorsOrMsg.errors } :{msg: errorsOrMsg.msg })} />}
                     <div className="container d-flex justify-content-center align-items-center  accordion" > 
                         <form onSubmit={(e)=>handleOnSubmit(e,"address")} className='accordion' >
                             <label className='accordion'>{currentBuilding.address}</label>
@@ -96,25 +92,8 @@ const EditBuilding = (props) =>{
                     <br/>
                 </div>
             </div>
-        </div>
-      
+        </div>  
   )
 }
 
-
-const mapStateToProps = state => { 
-    return {
-        buildings: state.buildings.buildings,
-        accordion: state.accordion.accordion,
-        errorsOrMessages: state.errorsOrMessages.errorsOrMessages,
-    }
-}
-
-const mapDispatchToProps = dispatch => {
-    return {
-        patchFetchAction: (action) => dispatch(patchFetchAction(action)),
-        clearErrors: () => dispatch(clearErrors()),
-    }
-}   
-      
-export default connect(mapStateToProps, mapDispatchToProps)(EditBuilding)
+export default EditBuilding

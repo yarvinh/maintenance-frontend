@@ -88,7 +88,7 @@
 
 .photo img { 
     width: 100%;
-    aspect-ratio: 16/15;
+    aspect-ratio: 10/7;
     object-fit: contain ; 
     position:relative; 
 
@@ -167,8 +167,8 @@
 .gallery-image  img{
    flex: 1 0 100%;
    cursor: pointer;
-   width: 80px;
-   height: 80px;
+   width: 50px;
+   height: 50px;
    scroll-snap-align: start;
    /* padding: 2px; */
    border-radius: .4rem;
@@ -176,8 +176,8 @@
 } 
 
 .gallery-image  img:hover{
-    width: 87px;
-    height: 87px;
+    width: 60px;
+    height: 60px;
 }
 
 .carousel{

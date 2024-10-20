@@ -1,13 +1,17 @@
 import {useState} from 'react';
-import { connect } from 'react-redux';
+import {useDispatch, useSelector } from 'react-redux';
 import {verifyEmail} from '../../actions/usersActions'
 import {Navigate} from 'react-router-dom'
-import {setVerificationSession,requestSecurityCode} from '../../actions/usersActions'
-import Errors from '../Errors';
+import {requestSecurityCode} from '../../actions/usersActions'
+import ErrorsOrMsg from '../ErrosOrMsg';
 
-const EmailValidation = (props) => {
-    const {errorsOrMessages} = props
-    const [user, setUser] = useState({
+const EmailValidation = () => {
+
+  const dispatch = useDispatch()
+  const currentUser = useSelector(state => state.user.user)
+  const errorsOrMsg = useSelector(state => state.errorsOrMessages.errorsOrMessages)
+
+  const [user, setUser] = useState({
       security_code: ""
     })
     const redirect =()=>{
@@ -15,7 +19,9 @@ const EmailValidation = (props) => {
     }
     const handleOnSubmit = (e) => {
         e.preventDefault()
-        props.verifyEmail({user: user})
+        const payload =
+        dispatch(verifyEmail({user: user}))
+
     }
 
     const handleOnChange = (e) => {
@@ -25,19 +31,19 @@ const EmailValidation = (props) => {
     }
 
     const handleOnClick=(e)=>{
-       props.requestSecurityCode()
+       dispatch(requestSecurityCode())
     }
     
     return (
     <div>
-      {props.user.is_login && redirect()}
+      {currentUser.is_login && redirect()}
       <div className="container d-flex justify-content-center align-items-center">
           <form onSubmit={handleOnSubmit} className="form">
               <label htmlFor="email-security-code" className="mt-5">Enter security code:</label>
               <input onChange={handleOnChange} id="email-security-code"  className="form-control" value={user.security_code} name="security_code" type='text'/> <br/>
-              <button type='submit' className="btn btn-primary">Submit</button>
+              <button type='submit' className="btn btn-primary">Submit</button> <br/>
               <div className="center"> 
-                {(errorsOrMessages.from === 'verify_email') || (errorsOrMessages.from ==="request_security_code") ? <Errors errorsOrMessages={errorsOrMessages}/> : null}
+                 {errorsOrMsg.from === 'verify_email' && <ErrorsOrMsg errors={errorsOrMsg?.errors} msg={errorsOrMsg.msg}/>}
               </div>  
           </form>
       </div>
@@ -49,21 +55,4 @@ const EmailValidation = (props) => {
     )  
 };
 
-
-
-const mapStateToProps = state => { 
-    return {
-      user: state.user.user,
-      errorsOrMessages: state.errorsOrMessages.errorsOrMessages,
-    }
-  }
-   
-  const mapDispatchToProps = dispatch => {
-    return {
-        verifyEmail: (action) => dispatch(verifyEmail(action)),
-        setVerificationSession: () => dispatch(setVerificationSession()),
-        requestSecurityCode: () => dispatch(requestSecurityCode())
-    }
-  }
-  
-  export default connect(mapStateToProps, mapDispatchToProps)(EmailValidation )
+export default EmailValidation 

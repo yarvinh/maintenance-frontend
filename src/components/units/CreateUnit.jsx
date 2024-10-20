@@ -1,14 +1,17 @@
-import { connect } from 'react-redux';
+import {useDispatch } from 'react-redux';
 import {useState} from 'react';
 import {useParams} from 'react-router-dom';
 import '../../styles/styles.css'
-import { createUnit} from '../../actions/unitsActions'
+import {} from '../../actions/unitsActions'
+import { postFetchAction } from '../../actions/fetchActions';
+import { createUnitSetter } from '../../componentsHelpers/fetchingFunctions';
 
-const CreateUnit = (props)=>{
-    const {id} = useParams()
+const CreateUnit = ()=>{
+    const dispatch = useDispatch()
+    const {buildingId} = useParams()
     const [unit,setUnit] = useState({
         unit: "",
-        building_id: id
+        building_id: buildingId
     })
 
     const handleOnChange = (e)=>{
@@ -20,7 +23,8 @@ const CreateUnit = (props)=>{
 
     const handleOnSubmit=(e)=>{
         e.preventDefault()
-        props.createUnit(unit)
+        const payload = createUnitSetter({payload: {unit: unit}, buildingId: buildingId})
+        dispatch(postFetchAction(payload))
         setUnit({
             ...unit,
             unit: ""
@@ -35,10 +39,4 @@ const CreateUnit = (props)=>{
   )
 }
 
-const mapDispatchToProps = dispatch => {
-    return {
-      createUnit: (action) => dispatch(createUnit(action))
-    }
-  }
-
-  export default connect(null, mapDispatchToProps)(CreateUnit)
+export default CreateUnit

@@ -1,14 +1,20 @@
 import {useState,useEffect} from 'react';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {useParams} from 'react-router-dom';
-import {accordionButtonClass,diplayAccordion} from '../../componentsHelpers/accordion'
 import { patchFetchAction } from '../../actions/fetchActions';
 import { getFetchAction } from '../../actions/fetchActions';
-import Errors from '../Errors';
+import { BUILDINGS_SETTER, EMPLOYEES_SETTER } from '../../componentsHelpers/fetchingConstants';
+import { workOrderPatchSetter } from '../../componentsHelpers/fetchingFunctions';
+import { displayFormReceived } from '../../state/reducers/displayElementReducer';
+import ErrorsOrMsg from '../ErrosOrMsg';
 
-const EditWorkOrder = (props) =>{
-    const {employees,buildings,errorsOrMessages,accordion,workOrders} = props
-    const {id} = useParams()
+const EditWorkOrder = () =>{
+    const dispatch = useDispatch()
+    const isDisplay = useSelector(state => state.isDisplay.formDisplay)
+    const employees = useSelector(state => state.employees.employees)
+    const buildings = useSelector(state => state.buildings.buildings)
+    const errorsOrMsg = useSelector(state => state.errorsOrMessages.errorsOrMessages)
+    const {workOrderId} = useParams()
     const [workOrder, setWorkOrder] = useState({
         unit: "",
         date: "",
@@ -19,59 +25,45 @@ const EditWorkOrder = (props) =>{
     })
     useEffect(() => {
       if(employees.length === 0)
-        props.getFetchAction({
-          path: '/employees',
-          stateName: "employees",
-          type: "ADD_EMPLOYEES"
-        })
-      
+        dispatch(getFetchAction(EMPLOYEES_SETTER))
       if(buildings.length === 0)
-          props.getFetchAction({
-            path: '/buildings',
-            stateName: "buildings",
-            type: "ADD_BUILDINGS"
-          })
+          dispatch(getFetchAction(BUILDINGS_SETTER))
     },[ ]);
   
-    
     let handleOnChange = (e)=>{
-      setWorkOrder({
-       ...workOrder,[e.target.name]: e.target.value
-      })
+      setWorkOrder({...workOrder,[e.target.name]: e.target.value})
     }
 
+    const handleOnClick = (e)=>{
+      if (e.target.className.includes("active"))
+        dispatch(displayFormReceived({buttonClass: "display_accordion", formClass: 'hide_elements', id: e.target.id}))
+      else
+        dispatch(displayFormReceived({buttonClass: "display_accordion active", formClass: 'display_elements', id: e.target.id}))   
+    }
+  
     let handleOnSubmit = (e,type) =>{
         e.preventDefault()
-        props.patchFetchAction({
-          path: `/work_orders/${id}`,
-          id: id,
-          stateName:{itemName: "workOrder", arrayName: "workOrders"} ,
-          type: {addItemToArray: "ADD_WORK_ORDERS", addItem: "ADD_WORK_ORDER"}, 
-          params: {payload: {[type]: workOrder[type]}, array: workOrders}
-      })
-
-      setWorkOrder({
-        ...workOrder,[type]: ""
-      })  
+        const payload = workOrderPatchSetter({id: workOrderId, payload: {[type]: workOrder[type]}})
+        dispatch(patchFetchAction(payload))
+        setWorkOrder({...workOrder,[type]: ""})  
     }
 
-  return(   
+    return(   
       <div className='center'>
-            <button  id='edit-work-order' className={accordionButtonClass('edit-work-order',accordion)}> Edit Work Order</button>
-            <div className={diplayAccordion('edit-work-order',accordion)}>
-            <div className='standar-forms accordion'>
-              {(errorsOrMessages.from === "update_work_order") && <Errors errorsOrMessages={errorsOrMessages}/>}
+            <button  id='edit-work-order' onClick={handleOnClick} className={isDisplay.buttonClass} > Edit Work Order</button>
+            <div className={isDisplay.id.includes('edit-work-order') ? `${isDisplay.formClass} form-wrapper`: 'hide_elements'}>
+              <div className='standar-forms accordion'>
+                {errorsOrMsg.from.includes("update_work_order") && <ErrorsOrMsg {...(errorsOrMsg.errors ? { errors: errorsOrMsg.errors } :{msg: errorsOrMsg.msg })} />}
                 <div className="container d-flex justify-content-center align-items-center accordion" > 
                     <form onSubmit={(e)=>handleOnSubmit(e,"employee_id")}  className='accordion'>
                         <label className='accordion'>Add new employee</label>
                         <select className="standar-input accordion" onChange={handleOnChange} name="employee_id">
                           <option value='' className='accordion'>Select Employee</option>
-                          {!employees.error_message && employees.map(e => <option key={e.id} value={e.id} className='accordion'>{e.name}</option>)}
+                          {employees.map(e => <option key={e.id} value={e.id} className='accordion'>{e.name}</option>)}
                         </select>
                         <button type='submit' className="standar-button accordion">Add employee</button>
                     </form>
                 </div>
-                <br/>
                 <div className="container d-flex justify-content-center align-items-center accordion"> 
                     <form onSubmit={e => handleOnSubmit(e,'building_id')} className='accordion'>
                         <label className='accordion'>Building</label>
@@ -82,8 +74,6 @@ const EditWorkOrder = (props) =>{
                         <button type='submit' className="standar-button accordion">Save location</button>
                     </form> 
                 </div>
-
-                    <br/>
                 <div className="container d-flex justify-content-center align-items-center accordion"> 
                     <form onSubmit={ e=> handleOnSubmit(e,'date')} className='accordion'>
                       <label className='accordion'>Date</label>
@@ -91,7 +81,6 @@ const EditWorkOrder = (props) =>{
                         <button type='submit' className="standar-button accordion">Save date</button>
                     </form>
                 </div>
-
                 <div className="container d-flex justify-content-center align-items-center accordion"> 
                     <form onSubmit={ e=> handleOnSubmit(e,'title')} className='accordion'>
                       <label className='accordion'>Title</label>
@@ -99,7 +88,6 @@ const EditWorkOrder = (props) =>{
                       <button type='submit' className="standar-button accordion">Save title</button>
                     </form>
                 </div>
-                <br/>
                 <div > 
                     <form onSubmit={ e=> handleOnSubmit(e,'unit')} className='accordion'>
                       <label className='accordion'>Unit</label> <br/>
@@ -109,28 +97,10 @@ const EditWorkOrder = (props) =>{
                 </div>
                 <div>
                 </div>
-                </div>
+              </div>
             </div>   
-        </div>
-      
-  )
+        </div>  
+    )
 }
 
-const mapStateToProps = state => { 
-    return {
-        workOrders: state.workOrders.workOrders,
-        accordion: state.accordion.accordion,
-        employees: state.employees.employees,
-        buildings: state.buildings.buildings,
-        errorsOrMessages: state.errorsOrMessages.errorsOrMessages
-    }
-}
-
-const mapDispatchToProps = dispatch => {
-    return {
-      getFetchAction: (action) => dispatch(getFetchAction(action)),
-      patchFetchAction: (action) => dispatch(patchFetchAction(action))
-    }
-}   
-      
-export default connect(mapStateToProps, mapDispatchToProps)(EditWorkOrder)
+export default EditWorkOrder

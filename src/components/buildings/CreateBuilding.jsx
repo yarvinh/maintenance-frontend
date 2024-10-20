@@ -1,14 +1,16 @@
-import  {useState,useEffect } from 'react';
-import { connect } from 'react-redux';
+import  {useState} from 'react';
+import {useDispatch, useSelector } from 'react-redux';
 import '../../styles/styles.css'
-import {clearErrors} from '../../actions/errorsActions'
-import {accordionButtonClass,diplayAccordion} from '../../componentsHelpers/accordion'
 import { postFetchAction } from '../../actions/fetchActions';
-import { paths } from '../../actions/actionsHelper';
-import Errors from '../Errors';
+import { displayFormReceived } from '../../state/reducers/displayElementReducer';
+import { buildingPostSetter } from '../../componentsHelpers/fetchingFunctions';
+import ErrorsOrMsg from '../ErrosOrMsg';
 
-const CreateBuilding = (props) =>{
-    const {errorsOrMessages ,accordion,buildings} = props
+const CreateBuilding = () =>{
+    const dispatch = useDispatch()
+    const isDisplay = useSelector(state => state.isDisplay.formDisplay)
+    const errorsOrMsg = useSelector(state => state.errorsOrMessages.errorsOrMessages)
+
     const [building, setBuilding] = useState({
         address: "",
         super_name: "",
@@ -18,26 +20,21 @@ const CreateBuilding = (props) =>{
         block: "",
     })
     
-    useEffect(() => {
-      if (errorsOrMessages.length > 0){
-        props.clearErrors()
-      }
-    },[ ]);
-    
     let handleOnChange = (e)=>{
-      setBuilding({
-       ...building,[e.target.name]: e.target.value
-      })
+      setBuilding({...building,[e.target.name]: e.target.value})
+    }
+
+    const handleOnClick = (e)=>{
+      if (e.target.className.includes("active"))
+        dispatch(displayFormReceived({buttonClass: "display_accordion", formClass: 'hide_elements', id: e.target.id}))
+      else
+        dispatch(displayFormReceived({buttonClass: "display_accordion active", formClass: 'display_elements', id: e.target.id}))   
     }
 
     let handleOnSubmit = (e) =>{
         e.preventDefault()
-        props.postFetchAction({
-          path: paths().buildingsPath,
-          stateName:{itemName: "building", arrayName: "buildings"} ,
-          type: { addItemToArray: "ADD_BUILDINGS", addItem: "ADD_BUILDING"}, 
-          params: {payload: {building: building}, array: buildings}
-        })
+        const payload = buildingPostSetter({payload: {building: building}})
+        dispatch(postFetchAction(payload))
         setBuilding({
           address: "",
           super_name: "",
@@ -50,13 +47,13 @@ const CreateBuilding = (props) =>{
 
   return(  
     <div className="center">
-    <button id="create-building" className={accordionButtonClass("create-building",accordion)}> Create A Building</button>
-    <div className={diplayAccordion("create-building",accordion)}>
+    <button id="create-building" onClick={handleOnClick} className={isDisplay.buttonClass}> Create A Building</button>
+    <div className={isDisplay.id.includes("create-building") ? `${isDisplay.formClass} form-wrapper`: 'hide_elements'}>
     <div className="standar-forms standar-form-position accordion">
       <div className="container d-flex justify-content-center align-items-center accordion" > 
           <form onSubmit={handleOnSubmit} className='accordion'>
               <div className='accordion'> 
-              {(errorsOrMessages.from === "create_building") && <Errors errorsOrMessages={errorsOrMessages}/>}
+              {errorsOrMsg.from.includes("create_building") && <ErrorsOrMsg {...(errorsOrMsg.errors ? { errors: errorsOrMsg.errors } :{msg: errorsOrMsg.msg })} />}
               </div>  
               <label htmlFor='c-b-address' className='accordion'>Address</label>
               <input id='c-b-address' onChange={handleOnChange}  name="address" className="standar-input accordion" type="text" value={building.address}/><br/>
@@ -78,22 +75,6 @@ const CreateBuilding = (props) =>{
 </div>
   )
 }
-
-const mapStateToProps = state => { 
-    return {
-        buildings: state.buildings.buildings,
-        accordion: state.accordion.accordion,
-        errorsOrMessages: state.errorsOrMessages.errorsOrMessages,
-        loading: state.buildings.loading
-    }
-}
-      
-const mapDispatchToProps = dispatch => {
-    return {
-        postFetchAction: (action) => dispatch(postFetchAction(action)),
-        clearErrors: () => dispatch(clearErrors()),
-    }
-}   
-      
-export default connect(mapStateToProps , mapDispatchToProps)(CreateBuilding)
+        
+export default CreateBuilding
 

@@ -1,29 +1,22 @@
 import {useState} from 'react';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import '../../styles/styles.css'
 import {createImage,updateImage} from '../../actions/actionsProfileImages'
 import imageCompression from 'browser-image-compression';
+import { compressImg } from '../../componentsHelpers/functionsHelpers';
 
-const UploadProfileImage = (props)=>{
-    const {employeeOrUser} = props
-    const {profile_image} = props.user
+const UploadProfileImage = ({employeeOrUser,user})=>{
+    const dispatch = useDispatch()
+    const {profile_image} = user
     const [image,setImage] = useState({
         image: ""
     })
 
     const handleOnChange= async (e)=>{
-        const options = {
-            maxSizeMB: 1,
-            maxWidthOrHeight: 1920,
-            useWebWorker: true
-        }
-
         const formData = new FormData();    
-        const compressedFile = await imageCompression(e.target.files[0], options);         
+        const compressedFile = await imageCompression(e.target.files[0], compressImg(.1));         
         formData.append("image",compressedFile);  
-        setImage({
-            image: formData,
-        })
+        setImage({image: formData})
     }
 
     const handleOnSubmit = (e) =>{
@@ -31,13 +24,11 @@ const UploadProfileImage = (props)=>{
         e.target.children[0].files = null
         e.target.children[0].value = ""
         if(!profile_image && image.image !== "")
-          props.createImage({path: `create_${employeeOrUser}_image`, image: image.image}) 
+          dispatch(createImage({path: `create_${employeeOrUser}_image`, image: image.image}))
         else if(image.image !== "")
-          props.updateImage({path: `update_${employeeOrUser}_image`, image: image.image}) 
+          dispatch(updateImage({path: `update_${employeeOrUser}_image`, image: image.image}))
         
-        setImage({
-            image: ""
-        })
+        setImage({image: ""})
     }
 
     return (
@@ -47,12 +38,5 @@ const UploadProfileImage = (props)=>{
         </form>
     )
 }
-
-const mapDispatchToProps = dispatch => {
-    return {
-        createImage: (action) => dispatch(createImage(action)),
-        updateImage: (action) => dispatch(updateImage(action))
-    }
-}   
-      
-export default connect(null, mapDispatchToProps)(UploadProfileImage)
+     
+export default UploadProfileImage
