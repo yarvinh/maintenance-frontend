@@ -8,7 +8,7 @@ export const getFetchAction = ({path, loading, reducer, query_string}) => {
   return async (dispatch) => {
       loading && dispatch(loading())
         try {
-            const response = await axios.get(`${baseUrl()}${path}`, {params: {query_string}, headers: token(),withCredentials: true})  
+            const response = await axios.get(`${baseUrl()}${path}`, query_string ? {params: {query_string}, headers: token(), withCredentials: true} : { headers: token(), withCredentials: true} )  
             reducer && dispatch(reducer(response.data))
         } catch (error){
             loading && dispatch(loading())
