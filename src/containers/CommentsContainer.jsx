@@ -20,8 +20,8 @@ const CommentsContainer = ( {workOrder, user} )=> {
     const dispatch = useDispatch()
     const {workOrderId} = useParams()
     const errorsOrMsg = useSelector((state)=> state.errorsOrMessages.errorsOrMessages)
-    const wsRef = useRef(new WebSocket(wsurl()))
-    const [guid, setGuid] = useState("")
+    // const wsRef = useRef(new WebSocket(wsurl()))
+    // const [guid, setGuid] = useState("")
 
     useEffect(()=>{ 
         const ws = wsRef.current
