@@ -7,7 +7,7 @@ export const baseUrl = () => {
 }
 
 export  const wsurl = ()=>{
-   return  process.env.NODE_ENV === "development" ? "ws://localhost:3000/cable" : "ws://workorders.herokuapp.com/cable" 
+   return  process.env.NODE_ENV === "development" ? "ws://localhost:3000/cable" : "wss://workorders.herokuapp.com/cable"
 }
 
 export const paths = (business = false) => {
