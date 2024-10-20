@@ -13,6 +13,7 @@ import { deleteComment } from '../actions/comments';
 import { addOrRemoveLikesFromComment, addOrRemoveLikesFromReply } from '../actions/likeActions';
 import { addNewReply, removeReplyFromComment } from '../actions/repliesActions';
 
+
 const CommentsContainer = ( {workOrder, user} )=> {
     const commentsLoading= useSelector(state => state.comments.commentsLoading)
     const comments = useSelector(state => state.comments.comments)
@@ -29,17 +30,17 @@ const CommentsContainer = ( {workOrder, user} )=> {
         dispatch(getFetchAction(payload))
         ws.onopen = ()=>{
         setGuid(Math.random().toString(36).substring(2,15)) 
-        ws.send(
-            JSON.stringify({
-                command: 'subscribe',
-                withCredentials: true,
-                identifier: JSON.stringify({
-                id: guid,
-                work_order_id: workOrderId,
-                channel: "CommentsChannel"
-            })
-            })
-        )
+            ws.send(
+                JSON.stringify({
+                    command: 'subscribe',
+                    withCredentials: true,
+                    identifier: JSON.stringify({
+                        id: guid,
+                        work_order_id: workOrderId,
+                        channel: "CommentsChannel"
+                    })
+                })
+            )
         }
     
         ws.onmessage = (e)=>{
@@ -49,7 +50,7 @@ const CommentsContainer = ( {workOrder, user} )=> {
             if(data.type === "confirm_subscription") return
             if (data.message?.from_create_comment){
                 const payload = commentGetSetter({workOrderId: workOrderId, id: data.message.id})
-                dispatch(getFetchAction(payload))
+                // dispatch(getFetchAction(payload))
             } else if (data.message?.from_delete_comment){
                 dispatch(deleteComment(data.message?.comment_deleted))
             } else if (data.message?.from_create_like_for_comment){
