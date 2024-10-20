@@ -22,25 +22,25 @@ const CommentsContainer = ( {workOrder, user} )=> {
     const wsRef = useRef(new WebSocket(wsurl()))
     const [guid, setGuid] = useState("")
 
-    useEffect(()=>{ 
+    // useEffect(()=>{ 
 
-        const ws = wsRef.current
-        const payload = commentsGetSetter({id: workOrderId, comments_length: 0 })
-        dispatch(getFetchAction(payload))
-        ws.onopen = ()=>{
-        setGuid(Math.random().toString(36).substring(2,15)) 
-        ws.send(
-            JSON.stringify({
-                command: 'subscribe',
-                withCredentials: true,
-                identifier: JSON.stringify({
-                id: guid,
-                work_order_id: workOrderId,
-                channel: "CommentsChannel"
-            })
-            })
-        )
-        }
+    //     const ws = wsRef.current
+    //     const payload = commentsGetSetter({id: workOrderId, comments_length: 0 })
+    //     dispatch(getFetchAction(payload))
+    //     ws.onopen = ()=>{
+    //     setGuid(Math.random().toString(36).substring(2,15)) 
+    //     ws.send(
+    //         JSON.stringify({
+    //             command: 'subscribe',
+    //             withCredentials: true,
+    //             identifier: JSON.stringify({
+    //             id: guid,
+    //             work_order_id: workOrderId,
+    //             channel: "CommentsChannel"
+    //         })
+    //         })
+    //     )
+    //     }
     
     //     ws.onmessage = (e)=>{
     //         const data = JSON.parse(e.data)
