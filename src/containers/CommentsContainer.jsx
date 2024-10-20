@@ -24,7 +24,7 @@ const CommentsContainer = ( {workOrder, user} )=> {
     // const [guid, setGuid] = useState("")
 
     useEffect(()=>{ 
-        const ws = wsRef.current
+        // const ws = wsRef.current
         const payload = commentsGetSetter({id: workOrderId, comments_length: 0 })
         dispatch(getFetchAction(payload))
         // ws.onopen = ()=>{
