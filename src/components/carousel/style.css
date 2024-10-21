@@ -11,7 +11,8 @@ r-wrapper{
   
     .slider {
       display:flex;
-      aspect-ratio: 10/7;
+      /* aspect-ratio: 10/7; */
+      aspect-ratio: 11/8;
       overflow-x: auto ;
       scroll-snap-type: x mandatory;
       scroll-behavior: smooth;
