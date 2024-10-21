@@ -49,6 +49,7 @@
   background-color: white;
   width: 100px;
   float: right;
+  border: solid;
   margin-right: 20px;
   border-width: 1px;
   transition: .3s;
