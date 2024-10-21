@@ -43,13 +43,19 @@ r-wrapper{
   }
   
   
-  .slider img {
+  /* .slider img {
     flex: 1 0 100%;
     scroll-snap-align: start;
     object-fit:contain;
 
+  } */
+  .slider img {
+    width: 500px;
+    flex: 0 0 100%;
+    scroll-snap-align: start;
+    object-fit:contain;
+  
   }
-
   .slider-nav {
     margin-bottom: 1rem;
     display: flex;
