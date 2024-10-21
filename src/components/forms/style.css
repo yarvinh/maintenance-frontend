@@ -7,7 +7,6 @@
 
 .comment-input{
   border-color:  white;
-  /* border-radius: .8rem; */
   font-size: 14px;
   resize: none;
   border-width: 0;
@@ -99,6 +98,7 @@
 
 .text-area-emojis-container{
   display: flex;
+  height: 35px;
 }
 
 .comment-and-reply-image{

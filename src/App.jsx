@@ -18,7 +18,6 @@ import ReceiptsContainer from './containers/ReceiptsContainer'
 import SignUp from './components/users/SignUp'
 import WorkOrderDetail from './components/workorders/WorkOrderDetail';
 import Documentation from './components/Documentation';
-import Notification from './components/workorders/Notifications';
 import EmailValidation from './components/users/EmailValidation';
 import GalleryContainer from './containers/GalleryContainer';
 import UnitDetails from "./components/units/UnitDetails"
@@ -33,10 +32,8 @@ import { CURRENT_USER_SETTER, WORKORDERS_SETTER } from './componentsHelpers/fetc
 import Footer from './components/Footer';
 import NavBackButton from './components/NavBackButton';
 import HpdComplaintsContainer from './containers/HpdComplaintsContainer';
-import ErrorsOrMsg from './components/ErrosOrMsg';
-import NavBar from './components/navbar/NavBar';
-import NavButton from './components/navbar/NavButton';
 import { displayFormReceived } from './state/reducers/displayElementReducer';
+import Menu from './components/Menu';
 
 const App  = () => {
   const dispatch = useDispatch()
@@ -66,22 +63,7 @@ const App  = () => {
   return (
     <BrowserRouter >
       <div  className="App text-font body">
-        <section className={`${!isDisplay.isDisplay && isDisplay.className} pc-profile-inf `}>
-          {user.profile_image  ? 
-          <img src={user.profile_image} className={`profile-image  bar-accordion ${isDisplay.isDisplay && "hide-profile"}`} ></img> 
-          : user.is_login ? <img src="/blank-profile-picture-973460_1280.webp"  className={`profile-image  bar-accordion ${isDisplay.isDisplay && "hide-profile"}`} ></img> 
-          : <div className="bar-with-no-login bar-accordion" ></div>}
-          {user.is_login && <strong className={`user-name ${isDisplay.isDisplay && "hide-profile"}`}> {user.user.name}</strong>}
-          <NavButton/>
-        </section>
-        <NavBar isDisplay={isDisplay.isDisplay} loggedIn={user.is_login}/>
-        {errorsOrMsg.from === "from_server" && <ErrorsOrMsg errors={errorsOrMsg?.errors || errorsOrMsg?.msg} />}
-        <section>
-          <div>
-            {user.is_login && <Notification/> }
-            {errorsOrMsg.from.includes("server") && <ErrorsOrMsg {...(errorsOrMsg.errors ? { errors: errorsOrMsg.errors } :{msg: errorsOrMsg.msg })} />}
-          </div>
-        </section>
+        <Menu user={user} isDisplay={isDisplay} errorsOrMsg={errorsOrMsg}/>
         <main onClick={handleOnclick} >
           <Routes>
               <Route exact path='/login' element={<LogIn admin={false}/>} />
