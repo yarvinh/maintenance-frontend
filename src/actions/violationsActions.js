@@ -4,13 +4,13 @@ import { errorsOrMessagesReceived } from '../state/reducers/errorsOrMessagesRedu
 import { violationsLoading, violationsReceived } from '../state/reducers/violationsReducer'
 
 export const violationsFetch = (url) => {
-        return async (dispatch) => {   
-            dispatch(violationsLoading())
-            try {
-               const response = await axios.get(url)
-               dispatch(violationsReceived(response.data))
-            } catch (error){
-                dispatch(errorsOrMessagesReceived(ERRORS))
-            }
-        } 
+    return async (dispatch) => {   
+        dispatch(violationsLoading())
+        try {
+            const response = await axios.get(url)
+            dispatch(violationsReceived(response.data))
+        } catch (error){
+            dispatch(errorsOrMessagesReceived(ERRORS))
+        }
+    } 
 }

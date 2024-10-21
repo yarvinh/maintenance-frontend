@@ -20,7 +20,7 @@ export const dispatchComment = ({path, comment, payload}) =>{
 }
 
 export const deleteComment = (payload) => {
-  return async (dispatch) => {
+  return (dispatch) => {
      dispatch(commentReceived(payload))
   }
 }

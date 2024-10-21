@@ -2,7 +2,6 @@ import {useDispatch } from 'react-redux';
 import {useState} from 'react';
 import {useParams} from 'react-router-dom';
 import '../../styles/styles.css'
-import {} from '../../actions/unitsActions'
 import { postFetchAction } from '../../actions/fetchActions';
 import { createUnitSetter } from '../../componentsHelpers/fetchingFunctions';
 

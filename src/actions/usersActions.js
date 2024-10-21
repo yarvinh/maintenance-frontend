@@ -3,7 +3,6 @@ import {token,verificationToken,removeLoginToken} from '../componentsHelpers/tok
 import {baseUrl} from './actionsHelper'
 import { paths } from './actionsHelper'
 import { userLoading, userReceived } from '../state/reducers/userReducers'
-import { accountReceived } from '../state/reducers/accountReducer'
 import { errorsOrMessagesReceived } from '../state/reducers/errorsOrMessagesReducer'
 import { ERRORS } from '../componentsHelpers/errors'
 
@@ -63,21 +62,7 @@ export const fetchLogIn=(user,path)=> {
       }
     }
 
-  }
-// esta si ############################
-export const editUser = (params) => {
-  return (dispatch) => {
-      dispatch({type: "LOADING_USER"})
-      axios.patch(`${baseUrl()}/users/${params.id}`, {user: params.user},{headers:token(), withCredentials: true})
-      .then(response => {
-          let errors = response.data.errors_or_messages
-          errors ? dispatch({ type: 'ADD_ERRORS_OR_MESSAGES', errorsOrMessages: errors}) :dispatch({ type: 'ADD_ERRORS_OR_MESSAGES', errorsOrMessages: []})   
-          dispatch({ type: 'ADD_USER', user: response.data} )
-      })
-  }
-
 }
-
 
 export const recoveryPassword=(user)=> {
   const {username, path} = user
@@ -181,25 +166,11 @@ export const requestSecurityCode = () => {
   }
 }
 
-
-
-// export const setVerificationSession=()=>{
+// export const setAccountType = (action)=>{
 //   return (dispatch) => {
-//     dispatch({ type: 'ADD_ERRORS_OR_MESSAGES', errorsOrMessages: ["We must verify your email first to use your account"]})
-//     dispatch({ type: 'ADD_USER', user: {
-//       is_login: false,
-//       reload: false,
-//       valid_email: false,
-//       verification_session: false
-//     }})
-//   }
+//     dispatch(accountReceived(action))
+//   } 
 // }
-
-export const setAccountType = (action)=>{
-  return (dispatch) => {
-    dispatch(accountReceived(action))
-  } 
-}
 
 
 

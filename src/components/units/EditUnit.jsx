@@ -1,8 +1,5 @@
 import {useState} from 'react';
-import { connect } from 'react-redux';
-import {editUnit} from '../../actions/unitsActions'
 import {useParams} from 'react-router-dom';
-import {clearErrors} from '../../actions/errorsActions'
 import {accordionButtonClass,diplayAccordion} from '../../componentsHelpers/accordion'
 import Errors from '../Errors';
 import '../../styles/styles.css'
@@ -23,7 +20,7 @@ const EditUnit = (props) =>{
 
     let handleOnSubmit = (e) =>{
         e.preventDefault()
-      props.editUnit({unit: unit, building_id: building_id, unit_id: unit_id})
+    //   props.editUnit({unit: unit, building_id: building_id, unit_id: unit_id})
     }
 
     return(   
@@ -46,19 +43,5 @@ const EditUnit = (props) =>{
    )
 }
 
-
-const mapStateToProps = state => { 
-    return {
-        accordion: state.accordion.accordion,
-        errorsOrMessages: state.errorsOrMessages.errorsOrMessages,
-    }
-}
-
-const mapDispatchToProps = dispatch => {
-    return {
-        editUnit: (action) => dispatch(editUnit(action)),
-        clearErrors: () => dispatch(clearErrors()),
-    }
-}   
-      
-export default connect(mapStateToProps, mapDispatchToProps)(EditUnit)
+  
+export default EditUnit

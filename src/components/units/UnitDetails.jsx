@@ -43,7 +43,7 @@ const UnitsDetails = ()=>{
                             <h4 >{unit.building?.address}</h4>
                             <h4>Unit: {unit.unit}</h4>
                         </div>
-                        <EditUnit unit={unit}/>
+                        {/* <EditUnit unit={unit}/> */}
                         <div className="card-body">
                            <h3 className='text-font'>Tenants</h3>
                            <div className='tenant-container'>
