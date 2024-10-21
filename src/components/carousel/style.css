@@ -37,12 +37,13 @@ r-wrapper{
   }
 
   .slider-wrapper{
-    position: relative;
+    /* position: relative; */
     max-width: 48rem;
     margin: auto;
   }
   
   .slider img {
+    width: 100%;
     flex: 1 0 100%;
     scroll-snap-align: center;
     object-fit: contain;
