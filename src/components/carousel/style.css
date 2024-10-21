@@ -11,8 +11,7 @@ r-wrapper{
   
     .slider {
       display:flex;
-      /* aspect-ratio: 10/7; */
-      aspect-ratio: 11/8;
+      aspect-ratio: 10/7;
       overflow-x: auto ;
       scroll-snap-type: x mandatory;
       scroll-behavior: smooth;
@@ -36,12 +35,19 @@ r-wrapper{
       scrollbar-width: none; 
     }
   }
+
+  .slider-wrapper{
+    position: relative;
+    max-width: 48rem;
+    margin: auto;
+  }
+  
   
   .slider img {
     flex: 1 0 100%;
     scroll-snap-align: start;
     object-fit:contain;
-  
+
   }
 
   .slider-nav {
