@@ -50,7 +50,7 @@ r-wrapper{
 
   } */
   .slider img {
-    width: 500px;
+    max-width: 400px;
     flex: 0 0 100%;
     scroll-snap-align: start;
     object-fit:contain;
