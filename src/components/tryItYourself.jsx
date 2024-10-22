@@ -1,12 +1,13 @@
 import  {useEffect} from 'react';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { fetchLogIn } from '../actions/usersActions'
 import {Navigate} from 'react-router-dom'
 import { paths } from '../actions/actionsHelper';
-const TryItYourself = (props) => {
-  const {login} = props
+const TryItYourself = () => {
+    const user = useSelector(state => state.user.user)
+    const dispatch = useDispatch()
     useEffect(() => {
-        props.fetchLogIn({username: "testapp",password: "12345@"},paths(true).login)
+        dispatch(fetchLogIn({user: {username: "testapp",password: "12345@"}} ,paths(false).login))
     } ,[]); 
 
      const redirect = ()=>{
@@ -15,24 +16,10 @@ const TryItYourself = (props) => {
 
     return(
       <div>
-        {login? redirect(): null}
+        {user.is_login? redirect(): null}
       </div>
     );
 };
 
-const mapStateToProps = state => { 
-  return {
-    user: state.user,
-    login: state.user.user.is_login,
-    loading: state.user.loading,
 
-  }
-}
- 
-const mapDispatchToProps = dispatch => {
-  return {
-    fetchLogIn: (action,path) => dispatch(fetchLogIn(action,path)),
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(TryItYourself)
+export default TryItYourself

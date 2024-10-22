@@ -1,30 +1,21 @@
 import { useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {Link} from 'react-router-dom'
-import { fetchLogIn,setAccountType} from '../../actions/usersActions'
+import { fetchLogIn} from '../../actions/usersActions'
 import '../../styles/styles.css'
 import {Navigate} from 'react-router-dom'
 import {verificationSessionToken} from "../../componentsHelpers/token"
-import Errors from '../Errors';
 import { paths } from '../../actions/actionsHelper';
 import ErrorsOrMsg from '../ErrosOrMsg';
 
 const LogIn = () => {
   const dispatch = useDispatch()
   const account = useSelector(state => state.account.account)
-  // const loading = useSelector(state => state.user.loading)
   const login = useSelector(state => state.user.user.is_login)
   const errorsOrMsg = useSelector(state => state.errorsOrMessages.errorsOrMessages)
   const verificationSession = useSelector(state => state.user.user.verification_session )
 
-  // const {business, text} = account
-    // const handleOnClick=(e)=>{
-    //   if(business) 
-    //     dispatch(setAccountType({business: false, text: "business"}))
-    //   else 
-    //     dispatch(setAccountType({business: true, text:  "personal"}))
-    // }
-  
+
     const [user, setUser] = useState({
       username: '',
       password: ''
