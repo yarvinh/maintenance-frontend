@@ -8,6 +8,7 @@ import {buildingsFilter} from '../componentsHelpers/buildings'
 import { getFetchAction } from '../actions/fetchActions';
 import {BUILDINGS_SETTER} from '../componentsHelpers/fetchingConstants';
 import LoadingItems from '../components/LoadingItems';
+import { buildingsLoading, buildingsReceived } from '../state/reducers/buildingsReducer';
 
 const BuildingsContainer = () => {
     const dispatch = useDispatch()
@@ -40,7 +41,7 @@ const BuildingsContainer = () => {
     const handleOnSubmit = (e)=>{
       e.preventDefault()
       if (searchBoxValue.trim() !== '')
-        dispatch(searchBuilding(searchBoxValue))
+        dispatch(getFetchAction({path: "/search/buildings/", query_string: searchBoxValue, reducer: buildingsReceived, loading: buildingsLoading}))
     }
 
     const renderBuildings = () => {     

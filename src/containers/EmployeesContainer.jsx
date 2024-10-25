@@ -8,11 +8,11 @@ import { useEffect } from 'react';
 import {employeesFilter} from '../componentsHelpers/employees'
 import { getFetchAction } from '../actions/fetchActions';
 import { EMPLOYEES_SETTER } from '../componentsHelpers/fetchingConstants';
+import { employeesLoading, employeesReceived } from '../state/reducers/employeesReducer';
 const EmployeesContainer = () => {
     const dispatch = useDispatch()
     const userData = useSelector(state => state.user.user)
     const employeesData = useSelector(state => state.employees.employees)
-    // const loading = useSelector(state => state.employees.employeesLoading)
     let {admin,user} = userData
     const {id} = useParams()
     const [employees, setEmployees] = useState([])
@@ -35,12 +35,12 @@ const EmployeesContainer = () => {
         setSearchBoxValue(e.target.value.toLowerCase())
    } 
 
-   const handleOnSubmit = (e)=>{
-       e.preventDefault()
-       if (searchBoxValue.trim() !== ''){
-        return dispatch(searchEmployees(searchBoxValue))
+    const handleOnSubmit = (e)=>{
+        e.preventDefault()
+        if (searchBoxValue.trim() !== '')
+          dispatch(getFetchAction({path: "/search/employees/", query_string: searchBoxValue, reducer: employeesReceived, loading: employeesLoading}))
+`        // return dispatch(searchEmployees(searchBoxValue))`
     }
-   }
 
     const renderEmployees = () => {   
         return (
