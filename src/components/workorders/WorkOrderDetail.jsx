@@ -98,7 +98,7 @@ const WorkOrderDetails = ({buildings,employees})=>{
                         </div>
                         {workOrder.building && <Link to={`/buildings/${workOrder.building.id}`}>{workOrder.building.address} </Link>} <br/>
                         {workOrder.building && <strong>Contact: {workOrder.building.super_name}</strong>}<br/>
-                        <strong>Unit: {workOrder.unit}</strong> <br/>
+                        <strong>Unit: {workOrder?.unit}</strong> <br/>
                         {workOrder.building && <a href={`tel:${workOrder.building.phone_number}`}><span className="bottom">{workOrder.building.phone_number}</span></a>}
                         <br/>
                         <div className="nav-item">

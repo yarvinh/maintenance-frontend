@@ -14,11 +14,11 @@ const UnitsContainer = ({building}) => {
     const {buildingId} = useParams()
     useEffect(() => {
         const payload = getUnitsSetter({buildingId})
-        dispatch(getFetchAction(payload))
+        building.id && dispatch(getFetchAction(payload))
     },[]);
 
     const displayUnits = ()=>{
-      return units.map((unit)=>{
+      return units?.map((unit)=>{
         return (
             <div  key={unit.id}>
                 <Unit unit={unit}/>
