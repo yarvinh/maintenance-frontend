@@ -13,7 +13,6 @@ import { deleteComment } from '../actions/comments';
 import { addOrRemoveLikesFromComment, addOrRemoveLikesFromReply } from '../actions/likeActions';
 import { addNewReply, removeReplyFromComment } from '../actions/repliesActions';
 
-
 const CommentsContainer = ( {workOrder, user} )=> {
     const commentsLoading= useSelector(state => state.comments.commentsLoading)
     const comments = useSelector(state => state.comments.comments)

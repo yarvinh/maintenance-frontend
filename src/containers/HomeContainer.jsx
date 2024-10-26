@@ -3,10 +3,8 @@ import {accordionDisplay} from '../componentsHelpers/accordion'
 import { connect } from 'react-redux'; 
 import Home from '../components/home/Home'
 import HomeWithoutLogin from '../components/home/HomeWithoutLogin'
-// import {isLoginToken} from "../componentsHelpers/token"
 
 const HomeContainer = ({user})=>{
-    // console.log(user)
     return (
         <>  
             {user.is_login? <Home />:null}

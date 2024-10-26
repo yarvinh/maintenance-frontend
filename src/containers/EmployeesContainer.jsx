@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import CreateEmployees from '../components/employees/CreateEmployees'
 import Employee from "../components/employees/Employee"
 import {useParams} from 'react-router-dom';
-import {searchEmployees} from "../actions/employeesActions"
 import { useEffect } from 'react';
 import {employeesFilter} from '../componentsHelpers/employees'
 import { getFetchAction } from '../actions/fetchActions';
@@ -39,7 +38,6 @@ const EmployeesContainer = () => {
         e.preventDefault()
         if (searchBoxValue.trim() !== '')
           dispatch(getFetchAction({path: "/search/employees/", query_string: searchBoxValue, reducer: employeesReceived, loading: employeesLoading}))
-`        // return dispatch(searchEmployees(searchBoxValue))`
     }
 
     const renderEmployees = () => {   
@@ -61,17 +59,17 @@ const EmployeesContainer = () => {
             </>
         ) 
     }
-
+ 
     return (
         <div> 
             {!id && admin?<CreateEmployees />: null }
             <br/>
             <div className="center">
-                {employeesData?.length > 0 && user?.user_id || employeesData?.length > 0 && admin?<input onChange={handleOnChange} className='search_box' name="local-search" placeholder='Search employees ' type='search' value={searchBoxValue}/>:null}
+                {employeesData?.length > 0 && !user?.user_id || employeesData?.length > 0 && admin?<input onChange={handleOnChange} className='search_box' name="local-search" placeholder='Search employees ' type='search' value={searchBoxValue}/>:null}
             </div>
             <div >
-                <form onSubmit={handleOnSubmit} className="text-area-section">
-                  {!user?.user_id && !admin ? <input onChange={handleOnChange} className='search_box' placeholder='Search employees' name='backend-search' type='search' value={searchBoxValue}/>:null}
+                <form onSubmit={handleOnSubmit} className="text-area-section center">
+                  {user?.user_id && !admin ? <input onChange={handleOnChange} className='search_box' placeholder='Search employees' name='backend-search' type='search' value={searchBoxValue}/>:null}
                 </form>
             </div>
             <br/>

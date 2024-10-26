@@ -7,7 +7,6 @@ import LoginBar from '../components/navbar/LoginBar'
 import NavBarButton from "../components/navbar/NavBarButton"
 
 const NavBarContainer = () => {
-  // const workOrders = useSelector(state => state.workOrders.workOrders)
   const user = useSelector(state => state.user.user)
   const accordion = useSelector(state => state.accordion.accordion)
     const {admin} = user

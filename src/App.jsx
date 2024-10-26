@@ -34,6 +34,7 @@ import NavBackButton from './components/NavBackButton';
 import HpdComplaintsContainer from './containers/HpdComplaintsContainer';
 import { displayFormReceived } from './state/reducers/displayElementReducer';
 import Menu from './components/Menu';
+import SanitationContainer from './containers/SanitationContainer';
 
 const App  = () => {
   const dispatch = useDispatch()
@@ -93,6 +94,7 @@ const App  = () => {
               <Route exact path='/employee_setting/:id' element={<EditEmployee/> }/>       
               <Route exact path='/pending_to_accept' element={<PendingToAccept/>} />   
               <Route exact path='/try_it_yourself' element={<TryItYourself/>} />   
+              <Route path='/buildings/:lot/:block/sanitation_violations' element={<SanitationContainer/>}/>
           </Routes>
           {(window.location.pathname !== "/") && <NavBackButton/>}
           <Footer/>

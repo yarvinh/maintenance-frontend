@@ -56,6 +56,7 @@ const BuildingDetails = ()=>{
                             <strong>Block: {building.block}</strong> <br></br> 
                         </div> 
                         <div className='building-warning'>
+                            {building.lot && building.block ? <Link to={`/buildings/${building.lot}/${building.block}/sanitation_violations`} >Sanitation Violations</Link>  :<p>Lot number and block number must exist to see satitation violations</p>} <br/>
                             {building.bin ? <Link to={`/buildings/${building.bin}/dob_violations`} >DOB Violations</Link>  :<p>Bin number must exist to see dob violations</p>}<br/>
                             {building.bin ? <Link to={`/buildings/${building.bin}/hpd_complaints`} >HPD complaints</Link>  :<p>Bin number must exist to see hpd complaints</p>}<br/>
                             {building.lot && building.block ? <Link to={`/buildings/${building.lot}/hpd_violations/${building.block}`} >HPD Violations</Link>: <p>Lot and block must exist to see HPD violations.</p> } <br/>

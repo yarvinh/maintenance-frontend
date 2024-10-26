@@ -3,7 +3,6 @@ import {useDispatch, useSelector } from 'react-redux';
 import CreateBuilding from '../components/buildings/CreateBuilding'
 import Building from "../components/buildings/Building"
 import {useParams} from 'react-router-dom';
-import {searchBuilding} from "../actions/buildingsActions"
 import {buildingsFilter} from '../componentsHelpers/buildings'
 import { getFetchAction } from '../actions/fetchActions';
 import {BUILDINGS_SETTER} from '../componentsHelpers/fetchingConstants';
