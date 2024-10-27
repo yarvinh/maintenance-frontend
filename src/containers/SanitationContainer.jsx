@@ -1,12 +1,13 @@
 import {sanitationViolations} from "../actions/violationsActions"
-import {useEffect } from 'react';
+import {useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Sanitation from '../components/violations/Sanitation'
 import {useParams} from 'react-router-dom';
 
 const SanitationContainer = ()=>{
     const dispatch = useDispatch()
-    const violations = useSelector(state => state.violations.violations)
+    const [violations, setViolations] = useState([])
+    const allViolations = useSelector(state => state.violations.violations)
     let {lot,block} = useParams()
     if(lot.length < 2)
       lot = `000${lot}`
@@ -24,18 +25,35 @@ const SanitationContainer = ()=>{
     else if (block.length < 5)
        block = `0${block}`
        
-    const localViolations =  violations.filter(vioArr => {
+    const localViolations =  allViolations.filter(vioArr => {
         return vioArr.violation_location_lot_no === lot
     })
+
+    console.log(localViolations)
 
     useEffect(() => {
         dispatch(sanitationViolations(block))
     } ,[]); 
 
+    const handleOnClick = (e)=>{
+        if(e.target.value !== "All")
+            setViolations(
+                localViolations.filter((v)=>{
+                    return v.compliance_status !== e.target.value
+                })
+            )
+        else
+            setViolations(localViolations)
+    }
+
     return (
        
         <div>    
-            {localViolations.map((violation)=>{return <Sanitation key={Math.random()} violation={violation}/> })} 
+            <select onChange={handleOnClick} className='form-select my-3 mx-auto' > 
+                <option value='All'>All</option>          
+                <option value="All Terms Met">Active</option>
+            </select> 
+            {violations.map((violation)=>{return <Sanitation key={Math.random()} violation={violation}/> })} 
         </div>
         )
 };

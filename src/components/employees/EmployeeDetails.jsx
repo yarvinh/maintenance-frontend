@@ -9,8 +9,6 @@ import ErrorsOrMsg from '../ErrosOrMsg';
 
 const EmployeeDetails = ()=>{    
     const dispatch = useDispatch()
-    // const workOrders = useSelector(state => state.workOrders.workOrders)
-    // const workOrder = useSelector(state => state.workOrder.workOrder)
     const employee = useSelector(state => state.employee.employee)
     const user = useSelector(state => state.user.user)
     const errorsOrMsg = useSelector(state => state.errorsOrMessages.errorsOrMessages)
