@@ -35,7 +35,7 @@ const BuildingDetails = ()=>{
             navigate('/buildings')
           }    
     }
-
+    
     return (
         <section className="text-font">
             <div className="container d-flex ">

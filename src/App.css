@@ -598,3 +598,7 @@ height: 20rem;
 .x-delete-img:hover {
   opacity: 1;
 }
+
+.pencil{
+  height: 20px;
+}

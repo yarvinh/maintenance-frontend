@@ -6,17 +6,10 @@ import Notification from "./workorders/Notifications"
 const Menu = ({user, isDisplay, errorsOrMsg}) => {
 
     const handleOnImg=(e)=>{
-        console.log('tetsing')
         if (e.target.className.includes('profile-image-larger'))
            e.target.className = 'profile-image'
         else
            e.target.className = 'profile-image-larger' 
-
-        // if (imageClassName === 'employee_card_image-larger'){
-        //   setImageClassName('employee_card_image')
-        // }else{
-        //   setImageClassName('employee_card_image-larger')
-        // }
       }
   
     return (
@@ -30,6 +23,7 @@ const Menu = ({user, isDisplay, errorsOrMsg}) => {
                 <NavButton/>
             </section>
             <NavBar isDisplay={isDisplay.isDisplay} loggedIn={user.is_login}/>
+            {isDisplay.isDisplay && <div className="gost-bar"></div>}
             {errorsOrMsg.from === "from_server" && <ErrorsOrMsg errors={errorsOrMsg?.errors || errorsOrMsg?.msg} />}
             <section>
                 <div>

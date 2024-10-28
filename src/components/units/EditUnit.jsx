@@ -1,45 +1,41 @@
 import {useState} from 'react';
 import {useParams} from 'react-router-dom';
-import {accordionButtonClass,diplayAccordion} from '../../componentsHelpers/accordion'
-import Errors from '../Errors';
 import '../../styles/styles.css'
+import { useDispatch } from 'react-redux';
+import { patchFetchAction } from '../../actions/fetchActions';
+import { unitReceived } from '../../state/reducers/unitReducer';
+import { unitsReceived } from '../../state/reducers/unitsReducer';
 
-const EditUnit = (props) =>{
-    const {errorsOrMessages,accordion} = props
-    let {unit_id,building_id} = useParams()
-    
-    const [unit,setUnit] = useState({
-        unit: ""
-    })
-    
+const EditUnit = ({unit}) =>{
+    const {unitId, buildingId} = useParams()
+    const dispatch = useDispatch()
+    const [editValue,setEditValue] = useState('')
+
     let handleOnChange = (e)=>{
-        setUnit({
-          unit: e.target.value
-        })
+        setEditValue(e.target.value)
     }
+
+
 
     let handleOnSubmit = (e) =>{
         e.preventDefault()
-    //   props.editUnit({unit: unit, building_id: building_id, unit_id: unit_id})
+        const payload = {
+            payload: {unit: {unit: editValue}},
+            path: `/buildings/${buildingId}/units/${unitId}`,
+            itemReducer: unitReceived, 
+            itemsReducer: unitsReceived
+        }
+        dispatch(patchFetchAction(payload))
     }
 
     return(   
-      <div className='center '>
-            <button id='edit-unit' className={accordionButtonClass("edit-unit",accordion)}> Edit Unit</button>
-            <div className={diplayAccordion("edit-unit",accordion)}>
-                <div className="standar-forms accordion">
-                    <form onSubmit={handleOnSubmit} className='accordion'>
-                        <div className='accordion'> 
-                        {(errorsOrMessages.from === "update_unit") && <Errors errorsOrMessages={errorsOrMessages}/>}
-                        </div>  
-                        <input onChange={handleOnChange} maxLength="8" placeholder="Edit Unit" name="unit" className="standar-input accordion" type="text" value={unit.unit}/>
-                        <button type='submit' className="standar-button accordion">Save</button>
-                    </form>    
-                    <br/>
-                </div>
-            </div>
-           
-        </div>   
+        <>
+            <form onSubmit={handleOnSubmit}>
+                <input onChange={handleOnChange} maxLength="8" placeholder={unit.unit} name="unit"  type="text" value={editValue.unit}/>
+                <button type='submit' >Save</button>
+            </form>    
+        </>
+
    )
 }
 

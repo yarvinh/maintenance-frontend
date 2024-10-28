@@ -1,26 +1,27 @@
 
 import {useNavigate,useParams} from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import {useEffect} from 'react';
+import {useEffect, useState} from 'react';
 import EditUnit from './EditUnit';
 import CreateTenant from '../tenants/CreateTenant'
 import TenantContainer from '../../containers/TenantContainer';
-import { deleteFetchAction, getFetchAction } from '../../actions/fetchActions';
+import { deleteFetchAction, getFetchAction} from '../../actions/fetchActions';
 import { deleteUnitSetter, getUnitSetter } from '../../componentsHelpers/fetchingFunctions';
 
 const UnitsDetails = ()=>{
-
     const {buildingId, unitId} = useParams()
     const dispatch = useDispatch()
     const unit = useSelector(state => state.unit.unit)
     const user = useSelector(state => state.user.user)
-
+    const [editMode, setEditMode] = useState(false)
     let navigate = useNavigate()
+
     useEffect(() => {
-        const payload = getUnitSetter({buildingId: buildingId,id: unitId})
+        const payload = getUnitSetter({buildingId: buildingId, id: unitId})
         if(unitId)
           dispatch(getFetchAction(payload))
     },[]);
+
 
     const handleOnClick=(e)=>{
         const confirmBox = window.confirm(
@@ -33,6 +34,12 @@ const UnitsDetails = ()=>{
       }
     }
 
+    const handleOnEdit = (e) => {
+        setEditMode((prev) => {  
+            return !prev
+        })
+    }
+
     return (
         <section>
             <div className="container d-flex ">
@@ -41,9 +48,10 @@ const UnitsDetails = ()=>{
                     <div >
                         <div className="card-header text-font">
                             <h4 >{unit.building?.address}</h4>
-                            <h4>Unit: {unit.unit}</h4>
+                            <h3 className="static-height"> {editMode ? <EditUnit  unit={unit}/> : unit.unit } </h3>
+                            <button onClick={handleOnEdit} className='unit-button'> {editMode ? "Close" : <img src='/pencil_1.png' className='pencil' alt="Edit"/>} </button>   
                         </div>
-                        {/* <EditUnit unit={unit}/> */}
+                        
                         <div className="card-body">
                            <h3 className='text-font'>Tenants</h3>
                            <div className='tenant-container'>

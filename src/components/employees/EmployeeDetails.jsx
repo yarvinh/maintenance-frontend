@@ -12,10 +12,13 @@ const EmployeeDetails = ()=>{
     const employee = useSelector(state => state.employee.employee)
     const user = useSelector(state => state.user.user)
     const errorsOrMsg = useSelector(state => state.errorsOrMessages.errorsOrMessages)
+    const workOrders = useSelector(state => state.workOrders.workOrders)
     const {employeeId} = useParams()
     const navigate = useNavigate()
     const [imageClassName, setImageClassName] = useState("employee_card_image")
-    const employeeWorkOrders =  employee?.work_orders 
+    const employeeWorkOrders = workOrders.filter(workOrder => {
+        return !!workOrder.employees.find( empl => empl.id === employee.id) 
+    })
     useEffect(() => {
       const payload = employeeGetSetter({id: employeeId})
       dispatch(getFetchAction(payload))

@@ -37,7 +37,7 @@ export const postFetchAction = ( {payload,path,loading,reducer}) => {
 }
 
 export const patchFetchAction = ({payload,path,loading,itemsReducer,itemReducer}) => {
-    return async (dispatch) => {
+  return async (dispatch) => {
        loading && dispatch(loading())
         try {
           const response = await axios.patch(`${baseUrl()}${path}`, payload ,{headers: token(), withCredentials: true})

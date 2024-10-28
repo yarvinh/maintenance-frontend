@@ -70,7 +70,7 @@ const CreateWorkOrder = ({employees,buildings,employee,building}) => {
             <div className="standar-forms standar-form-position accordion">
                 <form onSubmit={handleOnSubmit} className='accordion'>
                   {errorsOrMsg.from.includes('create_work_order') && <ErrorsOrMsg {...(errorsOrMsg.errors ? { errors: errorsOrMsg.errors } :{msg: errorsOrMsg.msg })} />}
-                  {!employee && 
+                  {!employee && !employeeId &&
                     <select  className="standar-input accordion" onChange={handleOnChange} name="employee_id" defaultValue="select_employee">
                       <option  name="employee" value="select_employee" className='accordion'>Select Employee</option> 
                       {employees.map(e => <option key={e.id} value={e.id} className='accordion'>{e.name}</option>)}

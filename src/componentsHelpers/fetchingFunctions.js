@@ -329,6 +329,14 @@ export const deleteUnitSetter = ({id, buildingId}) => {
    }
 }
 
+export const searchSetter = ({path,payload}) => {
+  return {
+    query_string: payload,
+    path: path,
+    reducer: buildingGetSetter
+  }
+}
+
 
 
 const gostFunction = (data)=>{

@@ -10,11 +10,12 @@ import LoadingItems from '../components/LoadingItems';
 const UnitsContainer = ({building}) => {
   const dispatch = useDispatch()
   const units = useSelector(state => state.units.units)
+
   const loading = useSelector(state => state.units.loadingUnits)
     const {buildingId} = useParams()
     useEffect(() => {
         const payload = getUnitsSetter({buildingId})
-        building.id && dispatch(getFetchAction(payload))
+        dispatch(getFetchAction(payload))
     },[]);
 
     const displayUnits = ()=>{

@@ -18,9 +18,19 @@
     flex-wrap: wrap;
     justify-content: space-around;
     margin-top: 1rem;
-    /* border-radius: .5rem; */
-    /* border-width: 2px; */
-    /* box-shadow: 0px 1px 5px 2px #d3d2d0; */
     background-color: #00000008;
+}
+
+.unit-button{
+    width: 80px;
+    height: 30px;
+    text-align: center;
+    border-width: 1px;
+    border:solid;
+    border-radius: .5rem;
+}
+
+.static-height{
+    height: 40px;
 }
   

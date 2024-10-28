@@ -29,8 +29,6 @@ const SanitationContainer = ()=>{
         return vioArr.violation_location_lot_no === lot
     })
 
-    console.log(localViolations)
-
     useEffect(() => {
         dispatch(sanitationViolations(block))
     } ,[]); 
