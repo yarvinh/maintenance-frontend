@@ -26,11 +26,29 @@
     height: 30px;
     text-align: center;
     border-width: 1px;
-    border:solid;
+    border:none;
     border-radius: .5rem;
 }
 
 .static-height{
     height: 40px;
 }
+
+.unit-input{
+    width: 150px;
+    border-width: .1px;
+    border-top-left-radius: .5rem;
+    border-bottom-left-radius:  .5rem;
+}
+
+.unit-edit-button{
+    border-width: .1px;
+    background-color: white;
+    border-top-right-radius: .5rem;
+    border-bottom-right-radius:  .5rem;
+    transition: .4s;
+}
   
+.unit-edit-button:hover{
+    background-color: whitesmoke;
+}

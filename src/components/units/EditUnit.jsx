@@ -15,8 +15,6 @@ const EditUnit = ({unit}) =>{
         setEditValue(e.target.value)
     }
 
-
-
     let handleOnSubmit = (e) =>{
         e.preventDefault()
         const payload = {
@@ -31,8 +29,8 @@ const EditUnit = ({unit}) =>{
     return(   
         <>
             <form onSubmit={handleOnSubmit}>
-                <input onChange={handleOnChange} maxLength="8" placeholder={unit.unit} name="unit"  type="text" value={editValue.unit}/>
-                <button type='submit' >Save</button>
+                <input onChange={handleOnChange} maxLength="8" className="unit-input" placeholder={unit.unit} name="unit"  type="text" value={editValue.unit}/>
+                <button type='submit'className='unit-edit-button' >Save</button>
             </form>    
         </>
 

@@ -1,22 +1,32 @@
-import {useState} from 'react';
-import { connect } from 'react-redux';
-import {createTenant} from '../../actions/tenantsActions'
+import {useRef, useState} from 'react';
+import { useDispatch } from 'react-redux';
 import {useParams} from 'react-router-dom';
-import {accordionButtonClass,diplayAccordion} from '../../componentsHelpers/accordion'
 import '../../styles/styles.css'
-import Errors from '../Errors';
+import { postFetchAction } from '../../actions/fetchActions';
 
-const CreateTenant = (props) =>{
-    const {accordion,errorsOrMessages} = props
-    let {unit_id,building_id} = useParams()
-    
+const CreateTenant = () =>{
+    let {unitId,buildingId} = useParams()
+    const dispatch = useDispatch()
+    const [accordionDisplay, setAccordionDisplay] = useState(false)
+    const formRef = useRef()
     const [tenant,setTenant] = useState({
-        building_id: building_id,
-        unit_id: unit_id,
+        building_id: buildingId,
+        unit_id: unitId,
         name: "",
         phone: "",
         email: ""
     })
+
+    const handleOnClick = (e) => {
+        if(accordionDisplay) {
+           e.target.className = "display_accordion active"
+           formRef.current.className = 'display_elements'
+        } else {
+            e.target.className = "display_accordion"
+            formRef.current.className = 'hide_elements'
+        }
+        setAccordionDisplay(prev => !prev)
+    }
     
     let handleOnChange = (e)=>{
         setTenant({
@@ -26,7 +36,12 @@ const CreateTenant = (props) =>{
 
     let handleOnSubmit = (e) =>{
         e.preventDefault()
-        props.createTenant(tenant)
+        const payload = {
+          payload: {tenant: tenant},
+          path:`/buildings/${buildingId}/units/${unitId}/tenants`
+        }
+        dispatch(postFetchAction(payload))
+
         setTenant({
             ...tenant,
             name: "",
@@ -37,12 +52,12 @@ const CreateTenant = (props) =>{
 
     return(   
       <div className='center'>
-            <button id='create-tenant' className={accordionButtonClass('create-tenant',accordion)}> Add a new tenant</button>
-            <div className={diplayAccordion('create-tenant',accordion)}>
+            <button id='create-tenant' onClick={handleOnClick} className="display_accordion"> Add a new tenant</button>
+            <div ref={formRef} className="hide_elements">
                 <div className="standar-forms accordion">
                     <form onSubmit={handleOnSubmit} className='accordion'>
                         <div className='accordion' > 
-                        {(errorsOrMessages.from === "create_tenant") && <Errors errorsOrMessages={errorsOrMessages}/> }
+                        {/* {(errorsOrMessages.from === "create_tenant") && <Errors errorsOrMessages={errorsOrMessages}/> } */}
                         </div>  
                         <input onChange={handleOnChange}  placeholder="Tenant name" name="name" className="standar-input accordion" type="text" value={tenant.name}/><br></br>
                         <input onChange={handleOnChange}  placeholder="Tenant phone #" name="phone" className="standar-input accordion" type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required value={tenant.phone}/><br></br>
@@ -54,19 +69,5 @@ const CreateTenant = (props) =>{
         </div>   
    )
 }
-
-
-const mapStateToProps = state => { 
-    return {
-        accordion: state.accordion.accordion,
-        errorsOrMessages: state.errorsOrMessages.errorsOrMessages,
-    }
-}
-
-const mapDispatchToProps = dispatch => {
-    return {
-        createTenant: (action) => dispatch(createTenant(action))
-    }
-}   
-      
-export default connect(mapStateToProps, mapDispatchToProps)(CreateTenant)
+     
+export default CreateTenant
