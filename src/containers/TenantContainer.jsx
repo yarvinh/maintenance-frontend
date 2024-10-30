@@ -1,8 +1,7 @@
 
 import Tenant from "../components/tenants/Tenant"
 
-const TenantContainer = (props) => {
-    const {unit}  = props
+const TenantContainer = ({unit}) => {
 
     const displayTenants=()=>{
         return unit.tenants?.map((tenant)=>{
@@ -12,7 +11,7 @@ const TenantContainer = (props) => {
             </div>
           )
         })
-      }
+    }
 
     return (
         <div className={'tenant-container'}>

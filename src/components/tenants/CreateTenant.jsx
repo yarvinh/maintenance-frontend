@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import {useParams} from 'react-router-dom';
 import '../../styles/styles.css'
 import { postFetchAction } from '../../actions/fetchActions';
+import {createdOrDeleteTenant } from '../../state/reducers/unitReducer';
 
 const CreateTenant = () =>{
     let {unitId,buildingId} = useParams()
@@ -38,7 +39,8 @@ const CreateTenant = () =>{
         e.preventDefault()
         const payload = {
           payload: {tenant: tenant},
-          path:`/buildings/${buildingId}/units/${unitId}/tenants`
+          path:`/buildings/${buildingId}/units/${unitId}/tenants`,
+          reducer: createdOrDeleteTenant
         }
         dispatch(postFetchAction(payload))
 

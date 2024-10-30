@@ -3,6 +3,12 @@
     word-break: break-word;
 }
 
+@media screen and (max-width: 400px) {
+  .tenant{
+    width: 100%;
+  }
+}
+
 .tenant-bottom:hover{
     opacity: 1;
 }
