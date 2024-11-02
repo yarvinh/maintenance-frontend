@@ -37,7 +37,7 @@ const EditTenant = ({tenant})=>{
         <>
             <form onSubmit={handleOnSubmit}>
                 <input onChange={handleOnChange} placeholder={tenant.name} name="name" className="edit-input" type="text" value={editTenant.name}/>
-                <input onChange={handleOnChange} placeholder={tenant.phone} name="phone" className="edit-input" type="text" value={editTenant.phone}/>
+                <input onChange={handleOnChange} placeholder={tenant.phone} name="phone" className="" type="text" value={editTenant.phone}/>
                 <input onChange={handleOnChange}  placeholder={tenant.email} name="email" className="edit-input" type="text" value={editTenant.email}/>
                 <button type='submit' className="standar-button accordion">Save</button>
                 {errorsOrMsg.from.includes("edit_tenant") && <ErrorsOrMsg {...(errorsOrMsg.errors ? { errors: errorsOrMsg.errors } :{msg: errorsOrMsg.msg })} />}

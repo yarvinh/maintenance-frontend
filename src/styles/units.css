@@ -47,6 +47,8 @@
     border-top-right-radius: .5rem;
     border-bottom-right-radius:  .5rem;
     transition: .4s;
+    height: 33px;
+    color: black;
 }
   
 .unit-edit-button:hover{

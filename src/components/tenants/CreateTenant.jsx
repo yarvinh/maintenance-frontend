@@ -19,15 +19,16 @@ const CreateTenant = () =>{
     })
 
     const handleOnClick = (e) => {
-        if(accordionDisplay) {
-           e.target.className = "display_accordion active"
-           formRef.current.className = 'display_elements'
-        } else {
-            e.target.className = "display_accordion"
-            formRef.current.className = 'hide_elements'
-        }
         setAccordionDisplay(prev => !prev)
+        if(!accordionDisplay) {
+            e.target.className = "display_accordion active"
+            formRef.current.className = 'display_elements'
+         } else {
+             e.target.className = "display_accordion"
+             formRef.current.className = 'hide_elements'
+         }
     }
+    
     
     let handleOnChange = (e)=>{
         setTenant({
@@ -62,7 +63,7 @@ const CreateTenant = () =>{
                         {/* {(errorsOrMessages.from === "create_tenant") && <Errors errorsOrMessages={errorsOrMessages}/> } */}
                         </div>  
                         <input onChange={handleOnChange}  placeholder="Tenant name" name="name" className="standar-input accordion" type="text" value={tenant.name}/><br></br>
-                        <input onChange={handleOnChange}  placeholder="Tenant phone #" name="phone" className="standar-input accordion" type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required value={tenant.phone}/><br></br>
+                        <input onChange={handleOnChange}  placeholder="Tenant phone #" name="phone" className="standar-input accordion" type="text"  required value={tenant.phone}/><br></br>
                         <input onChange={handleOnChange}  placeholder={"Tenant email"} className="standar-input accordion"  type="email"  name="email" value={tenant.email}/> <br/>
                         <button type='submit' className="white-blue-buttons  accordion">Save</button>
                     </form>    
