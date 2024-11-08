@@ -126,6 +126,9 @@
   .hide-profile{
     display: none;
   }
+  .nav-bar-links{
+    margin-top: 1rem;
+  }
 }
 
 @media screen and (min-width: 900px) {
@@ -142,7 +145,7 @@
     display: flex;
     flex-direction: row;
     color:white;
-    top: 20px;
+    top: 15px;
 
   }
   .nav-bar-container{

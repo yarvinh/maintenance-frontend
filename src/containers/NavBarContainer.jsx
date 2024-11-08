@@ -5,6 +5,7 @@ import {displayBarAccordion} from '../componentsHelpers/accordion'
 import NoLoginBar from '../components/navbar/NoLoginBar'
 import LoginBar from '../components/navbar/LoginBar'
 import NavBarButton from "../components/navbar/NavBarButton"
+import ProfileImg from "../components/ProfileImg"
 
 const NavBarContainer = () => {
   const user = useSelector(state => state.user.user)
@@ -30,6 +31,7 @@ const NavBarContainer = () => {
     return(
       <header>
         <nav className="nav-bar">
+              <ProfileImg user={user} isDisplay={isDisplay}/>
               <div className='acordion-bar'>
                 <div className='profile-container  bar-accordion'>
                    <NavBarButton/>
