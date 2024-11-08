@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { displayElement } from "../../actions/displayElementActions"
 import NoLoginBar from "./NoLoginBar"
 import LoginBar from "./LoginBar"
+import ProfileImg from "../ProfileImg"
 
 
 const NavBar=({isDisplay})=>{

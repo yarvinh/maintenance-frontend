@@ -1,6 +1,7 @@
 import ErrorsOrMsg from "./ErrosOrMsg"
 import NavBar from "./navbar/NavBar"
 import NavButton from "./navbar/NavButton"
+import ProfileImg from "./ProfileImg"
 import Notification from "./workorders/Notifications"
 
 const Menu = ({user, isDisplay, errorsOrMsg}) => {
@@ -19,6 +20,7 @@ const Menu = ({user, isDisplay, errorsOrMsg}) => {
                 <img src={user.profile_image} onClick={handleOnImg} className={`profile-image  bar-accordion ${isDisplay.isDisplay && "hide-profile"}`} ></img> 
                 : user.is_login ? <img src="/blank-profile-picture-973460_1280.webp"  className={`profile-image  bar-accordion ${isDisplay.isDisplay && "hide-profile"}`} ></img> 
                 : <div className="bar-with-no-login bar-accordion" ></div>}
+                {/* <ProfileImg user={user} isDisplay={isDisplay}/> */}
                 {user.is_login && <strong className={`user-name ${isDisplay.isDisplay && "hide-profile"}`}> {user.user.name}</strong>}
                 <NavButton/>
             </section>
