@@ -5,11 +5,11 @@ import { useParams } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import ErrorsOrMsg from '../components/ErrosOrMsg';
 import { getFetchAction } from '../actions/fetchActions';
-import { commentGetSetter, commentsGetSetter, moreCommentsGetSetter } from '../componentsHelpers/fetchingFunctions';
+import { commentsGetSetter, moreCommentsGetSetter } from '../componentsHelpers/fetchingFunctions';
 import Input from '../components/forms/Input';
 import Loading from "../components/Loading"
 import{ wsurl } from '../actions/actionsHelper'
-import { deleteComment } from '../actions/comments';
+import { addAComment, deleteComment } from '../actions/comments';
 import { addOrRemoveLikesFromComment, addOrRemoveLikesFromReply } from '../actions/likeActions';
 import { addNewReply, removeReplyFromComment } from '../actions/repliesActions';
 
@@ -47,8 +47,8 @@ const CommentsContainer = ( {workOrder, user} )=> {
             if(data.type === "welcome") return
             if(data.type === "confirm_subscription") return
             if (data.message?.from_create_comment){
-                const payload = commentGetSetter({workOrderId: workOrderId, id: data.message.id})
-                dispatch(getFetchAction(payload))
+                const response = data.message.comment
+                response && dispatch(addAComment(JSON.parse(response)))
             } else if (data.message?.from_delete_comment){
                 dispatch(deleteComment(data.message?.comment_deleted))
             } else if (data.message?.from_create_like_for_comment){

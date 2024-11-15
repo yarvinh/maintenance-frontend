@@ -24,3 +24,9 @@ export const deleteComment = (payload) => {
      dispatch(commentReceived(payload))
   }
 }
+
+export const addAComment = (payload)=>{
+  return (dispatch) => {
+    dispatch(commentReceived((payload)))
+  }
+}
