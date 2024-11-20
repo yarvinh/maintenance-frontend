@@ -110,7 +110,6 @@ const WorkOrderDetails = ({buildings,employees})=>{
                           {!!userWorkorder() || admin ? <CloseWorkOrder />:null}  
                         </div>  
                         <br/>
-                                                           {/* {game, currentUser,loggedIn} */}
                         <div className="task-container center">
                             { workOrder.id && <TasksContainer userWorkorder={userWorkorder} workOrder={workOrder} user={user} admin={admin}/>}
                         </div>  
