@@ -4,8 +4,8 @@ import WorkOrder from "../components/workorders/WorkOrder"
 import {getSearchWorkOrders,workOrderSelector} from "../componentsHelpers/workOrdersHelper"
 import { useSelector } from 'react-redux';
 
-const WorkOrdersContainer = (props, {building, fromHome,employee})=>{  
-     
+const WorkOrdersContainer = (props, { building, fromHome,employee})=>{  
+
     const user = useSelector(state => state.user.user)
     const employees = useSelector(state => state.employees.employees)
     const buildings = useSelector(state => state.buildings.buildings)
@@ -32,7 +32,7 @@ const WorkOrdersContainer = (props, {building, fromHome,employee})=>{
        <div className=' content-container'>
             <div className='workorder-content'>
                 <div>
-                    {user?.is_login ?<CreateWorkOrder  building={building} employees={employees} employee={employee} buildings={buildings}/>:null}
+                    {user?.is_login ?<CreateWorkOrder  unit={props.unit} building={building} employees={employees} employee={employee} buildings={buildings}/>:null}
                 </div>
                 <br/>
                 <br/>

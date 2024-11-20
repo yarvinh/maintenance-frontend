@@ -7,14 +7,19 @@ import CreateTenant from '../tenants/CreateTenant'
 import TenantContainer from '../../containers/TenantContainer';
 import { deleteFetchAction, getFetchAction} from '../../actions/fetchActions';
 import { deleteUnitSetter, getUnitSetter } from '../../componentsHelpers/fetchingFunctions';
+import WorkOrdersContainer from '../../containers/WorkOrdersContainer';
 
 const UnitsDetails = ()=>{
     const {buildingId, unitId} = useParams()
+    const workOrders = useSelector(state =>  state.workOrders.workOrders )
     const dispatch = useDispatch()
     const unit = useSelector(state => state.unit.unit)
     const user = useSelector(state => state.user.user)
     const [editMode, setEditMode] = useState(false)
     let navigate = useNavigate()
+    const unitsWorkOrders = workOrders.filter((workOrder =>{
+        return workOrder.building_id?.toString() === buildingId && workOrder.unit?.toLowerCase() === unit.unit?.toLowerCase()
+    }))
 
     useEffect(() => {
         const payload = getUnitSetter({buildingId: buildingId, id: unitId})
@@ -62,6 +67,7 @@ const UnitsDetails = ()=>{
                     </div>
                 </div>
             </div>
+            {unit.id && <WorkOrdersContainer  workOrders={unitsWorkOrders} unit={unit}/>}
         </section>        
     )  
 };

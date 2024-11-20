@@ -10,21 +10,24 @@ import { displayFormReceived } from '../../state/reducers/displayElementReducer'
 import ErrorsOrMsg from '../ErrosOrMsg';
 import { workOrderPostSetter } from '../../componentsHelpers/fetchingFunctions';
 
-const CreateWorkOrder = ({employees,buildings,employee,building}) => {
+const CreateWorkOrder = ({employees,buildings,employee,building,unit}) => {
 
     const dispatch = useDispatch()
     const user = useSelector(state => state.user.user)
     const isDisplay = useSelector(state => state.isDisplay.formDisplay)
     const errorsOrMsg = useSelector(state => state.errorsOrMessages.errorsOrMessages)
     const {employeeId,buildingId} = useParams()
+    console.log(buildingId)
     const [workOrder, setWorkOrder] = useState({
-        unit: "",
+        unit: unit ? unit.unit :"",
         date: "",
         building_id: buildingId ? buildingId :"",
         employee_id: employeeId ? employeeId :"",
         join: true,
         title: "",
     })
+
+    // console.log(workOrder)
 
     const handleOnClick = (e)=>{
       if (e.target.className.includes("active"))
@@ -76,7 +79,7 @@ const CreateWorkOrder = ({employees,buildings,employee,building}) => {
                       {employees.map(e => <option key={e.id} value={e.id} className='accordion'>{e.name}</option>)}
                     </select>}
 
-                    {!building && 
+                    {!buildingId && 
                     <select  className="standar-input accordion" onChange={handleOnChange} name="building_id" defaultValue="select_location">
                       <option  value="select_location" className='accordion'>Select Location</option>
                       {!buildings.error_message && buildings.map(b => <option key={b.id} className='accordion' value={b.id} >{b.address}</option>)}
@@ -88,9 +91,15 @@ const CreateWorkOrder = ({employees,buildings,employee,building}) => {
                     <br/>
                     <label className='accordion'>Title</label> <br/>
                     <input onChange={handleOnChange} className="standar-input accordion" name="title"  type="text" value={workOrder.title}/><br/>
-                    <label className='accordion'>Unit</label> <br/>
-                    <input onChange={handleOnChange} className="standar-input accordion" name="unit" value={workOrder.unit}/><br/><br/>
+                    
+                    { !unit && 
+                    <div>
+                      <label className='accordion'>Unit</label> <br/>
+                      <input onChange={handleOnChange} className="standar-input accordion" name="unit" value={workOrder.unit}/><br/><br/>
+                    </div>
+                    } 
                     <button type='submit' className="white-blue-buttons accordion">Submit</button>
+                   
                 </form>     
                 <br/>
             </div>
