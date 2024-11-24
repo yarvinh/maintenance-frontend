@@ -17,7 +17,6 @@ const CreateWorkOrder = ({employees,buildings,employee,building,unit}) => {
     const isDisplay = useSelector(state => state.isDisplay.formDisplay)
     const errorsOrMsg = useSelector(state => state.errorsOrMessages.errorsOrMessages)
     const {employeeId,buildingId} = useParams()
-    console.log(buildingId)
     const [workOrder, setWorkOrder] = useState({
         unit: unit ? unit.unit :"",
         date: "",
@@ -26,8 +25,6 @@ const CreateWorkOrder = ({employees,buildings,employee,building,unit}) => {
         join: true,
         title: "",
     })
-
-    // console.log(workOrder)
 
     const handleOnClick = (e)=>{
       if (e.target.className.includes("active"))

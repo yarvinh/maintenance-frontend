@@ -5,7 +5,7 @@ import {useParams} from 'react-router-dom';
 import HpdComplaint from "../components/violations/HpdComplaint";
 import LoadingItems from "../components/LoadingItems";
 
-const HpdComplaintsContainer = (props)=>{
+const HpdComplaintsContainer = ()=>{
     const {bin} = useParams()
     const dispatch = useDispatch()
     const [violations, setViolations] = useState([])
@@ -16,9 +16,9 @@ const HpdComplaintsContainer = (props)=>{
     } ,[]); 
 
     useEffect(()=>{
-        if (props.violations?.length >  0)
-          setViolations(props.violations)
-    },[ allViolations.length])
+        if (allViolations.length >  0)
+          setViolations(allViolations)
+    },[ allViolations])
 
     const handleOnClick = (e)=>{
         if(e.target.value !== "All")
@@ -28,7 +28,7 @@ const HpdComplaintsContainer = (props)=>{
                 })
             )
         else
-         setViolations(allViolations.violations)
+         setViolations(allViolations)
     }
 
     return (
@@ -39,7 +39,7 @@ const HpdComplaintsContainer = (props)=>{
                 <option value='OPEN'>Open</option>
                 <option value='CLOSE'>Close</option>
             </select> 
-            {violations.map((violation)=>{return <HpdComplaint key={Math.random()} violation={violation}/> })} 
+            {violations?.map((violation)=>{return <HpdComplaint key={Math.random()} violation={violation}/> })} 
         </section>
         )
 };

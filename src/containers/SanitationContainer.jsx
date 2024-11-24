@@ -23,38 +23,40 @@ const SanitationContainer = ()=>{
     else if(block.length < 4)
       block = `00${block}`
     else if (block.length < 5)
-       block = `0${block}`
+      block = `0${block}`
        
     const localViolations =  allViolations.filter(vioArr => {
-        return vioArr.violation_location_lot_no === lot
+      return vioArr.violation_location_lot_no === lot
     })
 
     useEffect(() => {
-        dispatch(sanitationViolations(block))
+      dispatch(sanitationViolations(block))
     } ,[]); 
 
+    useEffect(() => {
+      allViolations.length > 0 && setViolations(localViolations)
+    } ,[allViolations]);
+   
     const handleOnClick = (e)=>{
-        if(e.target.value !== "All")
-            setViolations(
-                localViolations.filter((v)=>{
-                    return v.compliance_status !== e.target.value
-                })
-            )
-        else
-            setViolations(localViolations)
+      if(e.target.value !== "All")
+        setViolations(
+          localViolations.filter((v)=>{
+            return v.compliance_status && v.compliance_status !== e.target.value 
+          })
+        )
+      else
+        setViolations(localViolations)
     }
 
-    return (
-       
-        <div>    
-            <select onChange={handleOnClick} className='form-select my-3 mx-auto' > 
-                <option value='All'>All</option>          
-                <option value="All Terms Met">Active</option>
-            </select> 
-            {violations.map((violation)=>{return <Sanitation key={Math.random()} violation={violation}/> })} 
-        </div>
-        )
+    return ( 
+      <div>    
+        <select onChange={handleOnClick} className='form-select my-3 mx-auto' > 
+          <option value='All'>All</option>          
+          <option value="All Terms Met">Active</option>
+        </select> 
+        {violations.map((violation)=>{return <Sanitation key={Math.random()} violation={violation}/> })} 
+      </div>
+    )
 };
-
 
 export default SanitationContainer
