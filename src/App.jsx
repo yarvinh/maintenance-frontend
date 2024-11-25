@@ -36,6 +36,7 @@ import { displayFormReceived } from './state/reducers/displayElementReducer';
 import Menu from './components/Menu';
 import SanitationContainer from './containers/SanitationContainer';
 
+
 const App  = () => {
   const dispatch = useDispatch()
   const user = useSelector(state => state.user.user)
@@ -103,7 +104,6 @@ const App  = () => {
     </BrowserRouter>    
   ); 
 }
-
 
 export default App
 
