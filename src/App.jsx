@@ -50,7 +50,6 @@ const App  = () => {
     if (displayForm.buttonClass.includes("active") && !e.target.className.includes("accordion"))
       dispatch(displayFormReceived(payload))
   }
-
   useEffect(() => {
     dispatch(getFetchAction(CURRENT_USER_SETTER)  )
   },[] ); 
