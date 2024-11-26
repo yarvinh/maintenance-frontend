@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 
 const Sanitation = ({violation})=>{
 
@@ -29,8 +30,11 @@ const Sanitation = ({violation})=>{
                                     <p>Compliance status: {violation.compliance_status}</p>
                                     <p>hearing date: {date(violation.hearing_date) +" " + violation.hearing_time}</p>
                                     <p>Address: {violation.respondent_address_house + " " + violation.violation_location_street_name}</p>
-                                    <p>Ticket number: {violation.ticket_number}</p>
                                     <p>Violation Description: {violation.charge_1_code_description}</p>
+                                    <p>Ticket number: {violation.ticket_number}</p>
+                                    <Link to="https://a836-citypay.nyc.gov/citypay/ecb" target="_blank">
+                                       For more details copy ticket number and click this link
+                                    </Link>
                                 </div>   
                             </div>
                         </div>

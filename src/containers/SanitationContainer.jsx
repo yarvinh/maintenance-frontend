@@ -47,7 +47,7 @@ const SanitationContainer = ()=>{
       else
         setViolations(localViolations)
     }
-
+    console.log(violations)
     return ( 
       <div>    
         <select onChange={handleOnClick} className='form-select my-3 mx-auto' > 

@@ -1,8 +1,9 @@
-import { connect } from "react-redux"
+import { connect, useSelector } from "react-redux"
 import { currentUserWorkOrders } from "../../componentsHelpers/workOrdersHelper"
 import WorkOrdersContainer from "../../containers/WorkOrdersContainer"
-const MyWorkOrders=(props)=>{
-  const   {user, workOrders} = props
+const MyWorkOrders=()=>{
+  const user = useSelector(state => state.user.user)
+  const workOrders = useSelector(state => state.workOrders.workOrders)
   const myWorkOrders = currentUserWorkOrders({user: user, workOrders: workOrders})
   return(
     <div>
@@ -11,14 +12,5 @@ const MyWorkOrders=(props)=>{
   )
 }
 
-
-const mapStateToProps = state => { 
-    return {
-      user: state.user.user,
-      workOrders: state.workOrders.workOrders,
-    }
-}
-   
-
-  export default connect(mapStateToProps, null)(MyWorkOrders)
+export default MyWorkOrders
   

@@ -23,21 +23,20 @@ export const workOrderStatus = (workOrder) => {
 
  export const currentUserWorkOrders=(payload)=>{
    const {workOrders,user} = payload
-   return !user.admin 
-   ?
-     workOrders.filter(w =>  w.tickets?.find(ticket => ticket.employee_id === user.user.id)) 
-   :
-     workOrders
+
+  if (!user.admin )
+    return workOrders.filter(w =>  w.employees?.find(employee => employee.id === user.user.id)) 
+  else
+    return  workOrders
  }
 
 
  export const pendingUserWorkOrders=(payload)=>{
    const {workOrders,user} = payload
-   if (!user.admin ){
-     return workOrders.filter(w =>  w.tickets?.find(ticket => ticket.employee_id === user.user.id ) && !w.status )
-   }else{
+   if (!user.admin)
+     return workOrders.filter(w =>  w.employees?.find(employee => employee.id === user.user.id ) && !w.status )
+   else
      return workOrders.filter(w =>  !w.status)
-   }
  }
 
 
