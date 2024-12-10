@@ -1,4 +1,4 @@
-import React, {useState } from 'react';
+import {useState } from 'react';
 
 const DOBviolation = (props)=>{
 
@@ -24,7 +24,6 @@ const DOBviolation = (props)=>{
     }
     
     const date = (date) => {
-    
         if (date){
             let year = date.slice(0,4)
             let month = date.slice(4,6)

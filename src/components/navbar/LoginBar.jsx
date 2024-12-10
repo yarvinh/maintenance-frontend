@@ -1,4 +1,4 @@
-import {Link} from 'react-router-dom'
+import {NavLink} from 'react-router-dom'
 import { useSelector } from "react-redux"
 
 const LoginBar = () =>{
@@ -8,31 +8,31 @@ const LoginBar = () =>{
     return (
           <>
             <li className="nav-bar-links display nav-li-link">
-              <Link to='/' className="nav-bar-links">Home</Link>
+              <NavLink className={({isActive})=> isActive ? "navlink-active" : "nav-bar-links"} to='/' >Home</NavLink>
             </li>
             <li className="nav-bar-links display nav-li-link">
-              {admin && user.user?.id && <Link to={`/settings/${user.user.id}`} className="nav-bar-links">Settings</Link>}
+              {admin && user.user?.id && <NavLink className={({isActive})=> isActive ? "navlink-active" : "nav-bar-links"} to={`/settings/${user.user.id}`} >Settings</NavLink>}
             </li>
             <li className="nav-bar-links display nav-li-link">
-              {user.user?.id && !admin && <Link to={`/employee_setting/${user.user.id}`} className="nav-bar-links">Settings</Link>}
+              {user.user?.id && !admin && <NavLink to={`/employee_setting/${user.user.id}`} className={({isActive})=> isActive ? "navlink-active" : "nav-bar-links"}>Settings</NavLink>}
             </li>
             <li className="nav-bar-links display nav-li-link">
-              <Link to='/buildings' className="nav-bar-links">Buildings</Link>
+              <NavLink to='/buildings' className={({isActive})=> isActive ? "navlink-active " : "nav-bar-links"}>Buildings</NavLink>
             </li>
             <li className="nav-bar-links display nav-li-link">
-              <Link to='/work_orders' className="nav-bar-links">Work Orders</Link>
+              <NavLink to='/work_orders' className={({isActive})=> isActive ? "navlink-active " : "nav-bar-links"}>Work Orders</NavLink>
             </li>
             <li className="nav-bar-links display nav-li-link">
-              {!user.admin && <Link to='/my_work_orders' className="nav-bar-links">My Work Orders</Link>}
+              {!user.admin && <NavLink to='/my_work_orders' className={({isActive})=> isActive ? "navlink-active" : "nav-bar-links"}>My Work Orders</NavLink>}
             </li>
             <li className="nav-bar-links display nav-li-link">
-              <Link to='/employees' className="nav-bar-links">Employees</Link>
+              <NavLink to='/employees' className={({isActive})=> isActive ? "navlink-active" : "nav-bar-links"}>Employees</NavLink>
             </li>
             <li className="nav-bar-links display nav-li-link">
-              <Link to='/documentation' className="nav-bar-links">Documentation</Link>
+              <NavLink to='/documentation' className={({isActive})=> isActive ? "navlink-active" : "nav-bar-links"}>Documentation</NavLink>
             </li>
             <li className="nav-bar-links display nav-li-link">
-              <Link to='signout' className="nav-bar-links">Sign Out</Link> 
+              <NavLink to='signout' className={({isActive})=> isActive ? "navlink-active" : "nav-bar-links"}>Sign Out</NavLink> 
             </li>
         </>
     )

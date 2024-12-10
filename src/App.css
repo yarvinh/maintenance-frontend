@@ -611,6 +611,8 @@ height: 20rem;
   height: 33px;
 }
 
-/* .edit-input{
-  width: 200px;
-} */
+.no-match {
+  background-color: orange;
+  text-align: center;
+  color: red;
+}

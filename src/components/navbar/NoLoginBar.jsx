@@ -1,26 +1,25 @@
 import { useSelector } from 'react-redux'
-import {Link} from 'react-router-dom'
+import {NavLink} from 'react-router-dom'
 
 
-const NoLoginBar = (props)=>{
+const NoLoginBar = ()=>{
     const user = useSelector(state => state.user.user)
     return (
       <>
         <li className="nav-bar-links display">
-          <Link to='/' className="nav-bar-links exit-email-verification">Home</Link>
+          <NavLink className={({isActive})=> isActive ? "navlink-active" : "nav-bar-links"} to='/' >Home</NavLink>
         </li>
         <li className="nav-bar-links display">
-          <Link to='/business/login' className="nav-bar-links exit-email-verification">Sign in as a business</Link>
+          <NavLink className={({isActive})=> isActive ? "navlink-active" : "nav-bar-links"} to='/business/login' >Sign in as a business</NavLink>
         </li>
         <li className="nav-bar-links display">
-          <Link to='/login' className="nav-bar-links exit-email-verification">Sign in</Link>
+          <NavLink className={({isActive})=> isActive ? "navlink-active" : "nav-bar-links"} to='/login' >Sign in</NavLink>
         </li>
         <li className="nav-bar-links display">
-          {!user.is_login && <Link to='/signup' className="nav-bar-links exit-email-verification">Sign up</Link>}
+          {!user.is_login && <NavLink className={({isActive})=> isActive ? "navlink-active" : "nav-bar-links"} to='/signup'>Sign up</NavLink>}
         </li>
       </>
     )
   }
- 
 
 export default NoLoginBar

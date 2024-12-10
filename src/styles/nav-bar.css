@@ -187,7 +187,11 @@
 .nav-bar-links{
   text-decoration: none;
   color: white;
+}
 
+.navlink-active{
+  text-decoration: none;
+  color: #0d6efd
 }
 
 .nav-bar ul{

@@ -3,11 +3,13 @@ import {useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Sanitation from '../components/violations/Sanitation'
 import {useParams} from 'react-router-dom';
+import { reverseByDate } from "../componentsHelpers/arrayHelper";
 
 const SanitationContainer = ()=>{
     const dispatch = useDispatch()
     const [violations, setViolations] = useState([])
     const allViolations = useSelector(state => state.violations.violations)
+
     let {lot,block} = useParams()
     if(lot.length < 2)
       lot = `000${lot}`
@@ -25,9 +27,11 @@ const SanitationContainer = ()=>{
     else if (block.length < 5)
       block = `0${block}`
        
-    const localViolations =  allViolations.filter(vioArr => {
+    const filterViolations = allViolations.filter(vioArr => {
       return vioArr.violation_location_lot_no === lot
     })
+
+    const localViolations = reverseByDate(filterViolations, "date")
 
     useEffect(() => {
       dispatch(sanitationViolations(block))
@@ -47,7 +51,7 @@ const SanitationContainer = ()=>{
       else
         setViolations(localViolations)
     }
-    console.log(violations)
+
     return ( 
       <div>    
         <select onChange={handleOnClick} className='form-select my-3 mx-auto' > 

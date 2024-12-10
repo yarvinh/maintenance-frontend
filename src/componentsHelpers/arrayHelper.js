@@ -35,3 +35,10 @@ export const findItemById = ({array,id})=>{
   const item = array.find(i => i.id === parseInt(id,10))
   return item
 }
+
+
+export const reverseByDate=(array, date) => {
+  return array?.reverse((a,b) =>{
+    return new Date(a[date]) - new Date(b[date])
+  })
+}

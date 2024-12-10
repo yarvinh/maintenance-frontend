@@ -22,34 +22,23 @@ import EmailValidation from './components/users/EmailValidation';
 import GalleryContainer from './containers/GalleryContainer';
 import UnitDetails from "./components/units/UnitDetails"
 import EditEmployee from './components/employees/EditEmployee';
-import { handleOnAccordion} from './componentsHelpers/accordion'
 import MyWorkOrders from './components/workorders/MyWorkOrders';
 import HomeContainer from './containers/HomeContainer';
 import PendingToAccept from './components/workorders/PendingToAccept';
 import TryItYourself from './components/tryItYourself';
 import { getFetchAction } from './actions/fetchActions';
 import { CURRENT_USER_SETTER, WORKORDERS_SETTER } from './componentsHelpers/fetchingConstants';
-import Footer from './components/Footer';
-import NavBackButton from './components/NavBackButton';
 import HpdComplaintsContainer from './containers/HpdComplaintsContainer';
-import { displayFormReceived } from './state/reducers/displayElementReducer';
-import Menu from './components/Menu';
+import Layout from './components/Layout';
 import SanitationContainer from './containers/SanitationContainer';
-
+import NoMatch from './components/NoMatch';
 
 const App  = () => {
   const dispatch = useDispatch()
   const user = useSelector(state => state.user.user)
   const workOrders = useSelector(state=> state.workOrders.workOrders)
-  const displayForm = useSelector(state => state.isDisplay.formDisplay)
   const fetchTimesRef = useRef(1)
-  const errorsOrMsg = useSelector(state => state.errorsOrMessages.errorsOrMessages)
-  const isDisplay = useSelector(state=> state.isDisplay)
-  const handleOnclick = (e) => {
-    const payload = handleOnAccordion(displayForm.id)
-    if (displayForm.buttonClass.includes("active") && !e.target.className.includes("accordion"))
-      dispatch(displayFormReceived(payload))
-  }
+  
   useEffect(() => {
     dispatch(getFetchAction(CURRENT_USER_SETTER)  )
   },[] ); 
@@ -60,46 +49,44 @@ const App  = () => {
       dispatch(getFetchAction(WORKORDERS_SETTER) )
     }
   },[user] ); 
+
   if( !user.is_login) fetchTimesRef.current = 1  
+
   return (
     <BrowserRouter >
-      <div  className="App text-font body">
-        <Menu user={user} isDisplay={isDisplay} errorsOrMsg={errorsOrMsg}/>
-        <main onClick={handleOnclick} >
           <Routes>
-              <Route exact path='/login' element={<LogIn admin={false}/>} />
-              <Route exact path='/business/login' element={<LogIn admin={true} />} />
-              <Route exact path='/signup'  element={<SignUp />}/> 
-              <Route exact path='/' index element={<HomeContainer/>} /> 
-              <Route exact path='/username_recovery' element={<ForgotUsername/>} />
-              <Route exact path='/verifying_email' element={<EmailValidation/>} />
-              <Route exact path='/password_recovery' element={<ForgotPassword/>} />
-              <Route exact path='/reset_password' element={<ResetPassword/>} /> 
-              <Route exact path='/signout' element={<LogOut/>}/>
-              <Route exact path='/employees'  element={<EmployeesContainer />}/>
-              <Route exact path='/buildings'  element={<BuildingsContainer/>}/>
-              <Route exact path='/work_orders'  element={<WorkOdersContainer workOrders={workOrders} />}/>
-              <Route exact path='/employees/:employeeId' element={<EmployeeDetails />}/>
-              <Route exact path='/my_work_orders' element={<MyWorkOrders />}/>
-              <Route exact path='/buildings/:buildingId/*' element={<BuildingDetail />}/>
-              <Route exact path="/buildings/:buildingId/units/:unitId/" element={<UnitDetails/>}/>
-              <Route exact path='/work_orders/:workOrderId' element={<WorkOrderDetail/>}/>
-              <Route exact path='/settings/:id' element={<Settings />}/>
-              <Route exact path='/documentation' element={<Documentation/>}/>
-              <Route path='/buildings/:bin/dob_violations' element={<DOBviolationsContainer/>}/>
-              <Route path='/buildings/:bin/hpd_complaints' element={<HpdComplaintsContainer/>}/>
-              <Route path='/buildings/:lot/hpd_violations/:block' element={<HPDviolationsContainer/>}/>
-              <Route exact path='/work_orders/:workOrderId/receipts' element={<ReceiptsContainer/>}/>
-              <Route exact path='/work_orders/:workOrderId/gallery' element={<GalleryContainer/> }/>
-              <Route exact path='/employee_setting/:id' element={<EditEmployee/> }/>       
-              <Route exact path='/pending_to_accept' element={<PendingToAccept/>} />   
-              <Route exact path='/try_it_yourself' element={<TryItYourself/>} />   
-              <Route path='/buildings/:lot/:block/sanitation_violations' element={<SanitationContainer/>}/>
+            <Route path="/" element={<Layout user={user}/> }>
+              <Route index element={<HomeContainer/>} /> 
+              <Route path='login' element={<LogIn admin={false}/>} />
+              <Route path='business/login' element={<LogIn admin={true} />} />
+              <Route path='signup'  element={<SignUp />}/> 
+              <Route path='username_recovery' element={<ForgotUsername/>} />
+              <Route path='verifying_email' element={<EmailValidation/>} />
+              <Route path='password_recovery' element={<ForgotPassword/>} />
+              <Route path='reset_password' element={<ResetPassword/>} /> 
+              <Route path='signout' element={<LogOut/>}/>
+              <Route path='settings/:id' element={<Settings />}/>
+              <Route path='documentation' element={<Documentation/>}/>
+              <Route path='try_it_yourself' element={<TryItYourself/>} /> 
+              <Route path='employees'  element={<EmployeesContainer />}/>
+              <Route path='employees/:employeeId' element={<EmployeeDetails />}/>
+              <Route path='employee_setting/:id' element={<EditEmployee/> }/> 
+              <Route path='work_orders'  element={<WorkOdersContainer workOrders={workOrders} />}/>
+              <Route path='my_work_orders' element={<MyWorkOrders />}/>
+              <Route path='work_orders/:workOrderId/receipts' element={<ReceiptsContainer/>}/>
+              <Route path='work_orders/:workOrderId/gallery' element={<GalleryContainer/> }/>
+              <Route path='work_orders/:workOrderId' element={<WorkOrderDetail/>}/>
+              <Route path='pending_to_accept' element={<PendingToAccept/>} /> 
+              <Route path='buildings'  element={<BuildingsContainer/>}/>
+              <Route path='buildings/:buildingId/*' element={<BuildingDetail />}/>
+              <Route path="buildings/:buildingId/units/:unitId/" element={<UnitDetails/>}/>
+              <Route path='buildings/:bin/dob_violations' element={<DOBviolationsContainer/>}/>
+              <Route path='buildings/:bin/hpd_complaints' element={<HpdComplaintsContainer/>}/>
+              <Route path='buildings/:lot/hpd_violations/:block' element={<HPDviolationsContainer/>}/>
+              <Route path='buildings/:lot/:block/sanitation_violations' element={<SanitationContainer/>}/> 
+              <Route path="*" element={<NoMatch />} /> 
+            </Route>
           </Routes>
-          {(window.location.pathname !== "/") && <NavBackButton/>}
-          <Footer/>
-        </main>
-      </div>  
     </BrowserRouter>    
   ); 
 }

@@ -8,7 +8,7 @@ const DOBviolationsContainer = ()=>{
     const dispatch = useDispatch()
     const violations = useSelector(state => state.violations.violations)
     const {bin} = useParams()
-
+    
     useEffect(() => {
       dispatch(violationsFetch(`https://data.cityofnewyork.us/resource/3h2n-5cm9.json?bin=${bin}`))
     } ,[]); 

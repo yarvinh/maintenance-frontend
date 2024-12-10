@@ -3,7 +3,6 @@ import { displayElement } from "../../actions/displayElementActions"
 
 const NavButton = ()=>{
     const dispatch = useDispatch()
-    // const accordion = useSelector(state => state.accordion.accrodion)
     const isDisplay = useSelector(state => state.isDisplay)
     const handleOnclick = (e)=>{
         !isDisplay.isDisplay ? dispatch(displayElement('nav-button-active')) : dispatch(displayElement('profile-inf'))
