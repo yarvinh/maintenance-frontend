@@ -13,26 +13,7 @@ import './styles/tasks.css'
 import './styles/gallery.css'
 import './styles/styles.css'
 import './styles/nav-bar.css'
-// import { createRoot } from "react-dom/client";
-// import App from './App';  
-// import rootReducer from "./reducers/manageAllReducers";
-// import { createStore, applyMiddleware } from 'redux';
-// import  thunk from 'redux-thunk';
-// import { Provider } from 'react-redux';
 import HttpsRedirect from 'react-https-redirect';
-
-// const store = createStore(rootReducer, applyMiddleware(thunk))
-// const root = createRoot(document.getElementById("root"));
-
-//   root.render(
-//     <HttpsRedirect>
-//       <Provider store={store}>
-//         <App/>
-//       </Provider> 
-//     </HttpsRedirect>
-//   );
-
-import React from 'react';
 import { createRoot } from "react-dom/client";
 import './index.css';
 import App from './App';

@@ -5,8 +5,8 @@ import { fetchLogIn} from '../../actions/usersActions'
 import '../../styles/styles.css'
 import {Navigate} from 'react-router-dom'
 import {verificationSessionToken} from "../../componentsHelpers/token"
-import { paths } from '../../actions/actionsHelper';
 import ErrorsOrMsg from '../ErrosOrMsg';
+import { paths } from '../../componentsHelpers/paths';
 
 const LogIn = () => {
   const dispatch = useDispatch()
@@ -38,7 +38,6 @@ const LogIn = () => {
 
     return(
       <section>
-        {/* {login && <Navigate to="/verifying_email"/>} */}
         {(verificationSession && verificationSessionToken()) && <Navigate to="/verifying_email"/>}
         <div className="center login-messages" > 
           {errorsOrMsg.from === "login" && <ErrorsOrMsg errors={errorsOrMsg?.errors || errorsOrMsg?.msg} />}

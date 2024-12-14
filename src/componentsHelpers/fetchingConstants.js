@@ -1,8 +1,9 @@
-import { paths } from '../actions/actionsHelper';
+
 import { buildingsLoading, buildingsReceived } from '../state/reducers/buildingsReducer';
 import { employeesLoading, employeesReceived } from '../state/reducers/employeesReducer';
 import { userLoading, userReceived } from '../state/reducers/userReducers';
 import { workOrdersLoading, workOrdersReceived } from '../state/reducers/workOrdersReducer';
+import { paths } from './paths';
 
 export const CURRENT_USER_SETTER = {
     path: paths().checkLoginPath, 

@@ -11,7 +11,10 @@ import { createdOrDeleteUnit, unitsLoading, unitsReceived } from "../state/reduc
 import { userLoading, userReceived } from "../state/reducers/userReducers"
 import { workOrderLoading, workOrderReceived } from "../state/reducers/workOrderReducer"
 import { workOrdersLoading,createdOrDeleteWorkOrders, editWorkOrderReceived, workOrdersReceived } from "../state/reducers/workOrdersReducer"
+import { paths } from "./paths"
 
+
+const {usersPath} = paths()
 export const buildingSetter=(id)=>{
   return {
     loading: "LOADING_BUILDING", 
@@ -243,7 +246,7 @@ export const replyDeleteSetter = ({id})=>{
 export const createUserSetter = (payload)=>{
   return {
     payload,
-    path: "/users",
+    path: usersPath,
     reducer: userReceived
   }
 }

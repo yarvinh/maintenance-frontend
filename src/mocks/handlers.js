@@ -21,22 +21,51 @@ export const handlers = [
   //   )
   // }),
 
-  http.post('http://localhost:3000/test/users', async (response) => {
-  const user = {
-    admin: true,
-    created: true,
-    errors_or_messages: {from: "verify_email" , errors: ['We send you an email with a verification code, please check your email.']},
-    is_login: false,
-    reload: false,
-    token: "eyJhbGciOiJIUzI1NiJ9.eyJleHBpcmVzX2F0IjoiMjAyNC0wNC0yNCAwMzoxNzozMyBVVEMiLCJlbWFpbF9jb2RlIjoiZjQzYjRkIn0.cBdT56ZnYejFOtX7pLioGSUcXqElZRrq0uMQJaiszPw",
-    verification_session: true, 
-  }
-    return HttpResponse.json(user)
+  http.post('http://localhost:3000/test/users', async ({request}) => {
+    const payload = await request.json()
+    const {name,email,username,password,password_confirmation} = payload.user
+    const format = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
+    const errors = []
+    name.trim()?.length === 0 && errors.push("Name can't be blank")
+    email.trim()?.length  === 0 && errors.push("Email can't be blank")
+    username.trim()?.length === 0 && errors.push("Username can't be blank")
+    password.trim()?.length === 0 && errors.push("Password can't be blank")
+    password.length < 6 && errors.push("Password is too short (minimum is 6 characters)")
+    !format.test(password) && errors.push("Password is invalid")
+    password !== password_confirmation && errors.push("Password confirmation doesn't match Password")
+
+    const user = {
+      admin: true,
+      created: true,
+      errors_or_messages: {from: 'verify_email' , msg: ['We send you an email with a verification code, please check your email.']},
+      is_login: false,
+      reload: false,
+      token: "eyJhbGciOiJIUzI1NiJ9.eyJleHBpcmVzX2F0IjoiMjAyNC0wNC0yNCAwMzoxNzozMyBVVEMiLCJlbWFpbF9jb2RlIjoiZjQzYjRkIn0.cBdT56ZnYejFOtX7pLioGSUcXqElZRrq0uMQJaiszPw",
+      verification_session: true, 
+    }
+
+    const userWithError = {
+      admin: true,
+      created: false,
+      errors_or_messages: {from: "create_user" , errors: errors},
+      is_login: false,
+      reload: false,
+      token: "eyJhbGciOiJIUzI1NiJ9.eyJleHBpcmVzX2F0IjoiMjAyNC0wNC0yNCAwMzoxNzozMyBVVEMiLCJlbWFpbF9jb2RlIjoiZjQzYjRkIn0.cBdT56ZnYejFOtX7pLioGSUcXqElZRrq0uMQJaiszPw",
+      verification_session: true, 
+    }
+
+    if(errors.length > 0)
+      return HttpResponse.json(userWithError, {status: 422, statusText: 'Invalid inf' })
+    else
+      return HttpResponse.json(user)
+
   }),
 
   http.patch('http://localhost:3000/test/verify_email', async ({request}) => {
-    const user = {
+
+  const user = {
       admin: true,
+      errors_or_messages: {from: "verify_email", msg: ["congratulation, your email was validated"]},
       is_login: true,
       token: {
         secret_key: "8bcc2dcc",
@@ -48,7 +77,6 @@ export const handlers = [
         email: "testingapp@gmail.com",
         id: 1,
         name: "TESTING APP",
-        username: "testingapp",
         valid_email: true
        },
        verification_session: false
@@ -74,7 +102,6 @@ export const handlers = [
       return HttpResponse.json(
        loginInf.user.password === "12345@" && loginInf.user.username === "testapp" ? user : error
       )
-
     }),
 
     http.post('http://localhost:3000/test/buildings', async ({request}) => {
@@ -101,7 +128,5 @@ export const handlers = [
         return HttpResponse.json({is_login: true ,errors_or_messages: {from: "create_building", errors: errors} })
       else
         return HttpResponse.json(building)
-      
-  
     })
 ]

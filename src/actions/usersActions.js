@@ -1,31 +1,42 @@
 import axios from 'axios'
 import {token,verificationToken,removeLoginToken} from '../componentsHelpers/token'
 import {baseUrl} from './actionsHelper'
-import { paths } from './actionsHelper'
 import { userLoading, userReceived } from '../state/reducers/userReducers'
 import { errorsOrMessagesReceived } from '../state/reducers/errorsOrMessagesReducer'
 import { ERRORS } from '../componentsHelpers/errors'
+import { paths } from '../componentsHelpers/paths'
 
 export const userPostFetchAction = ( {payload,path,loading,reducer}) => {
   return async (dispatch) => {
     loading && dispatch(loading())
     try {
-      const response = await axios.post(`${baseUrl()}${path}`,payload, {headers: token(), withCredentials: true,})
-      const msg = response.data.errors_or_messages
-      if (msg && response.data?.verification_session){
-        dispatch(errorsOrMessagesReceived(msg)) 
-        localStorage.setItem('token', response.data.token)
+      const response = await fetch(`${baseUrl()}${path}`,{method: "POST", headers: token(),  withCredentials: true, body: JSON.stringify(payload) })
+      if (!response.ok) {
+        const text = await response.text()
+        throw new Error(text)
       }
-      reducer && dispatch(reducer(response.data))
+      const data = await response.json()
+      const msg = data.errors_or_messages
+
+      if (msg && data.verification_session){
+        dispatch(errorsOrMessagesReceived(msg)) 
+        localStorage.setItem('token', data.token)
+      }
+      reducer && dispatch(reducer(data))
+
     } catch (error){
       loading && dispatch(loading())
-      if(error.response?.data.errors_or_messages)
-        dispatch(errorsOrMessagesReceived(error.response.data?.errors_or_messages))
-      else
+      if(error.message.includes("errors_or_messages")){
+        const data = JSON.parse(error.message)
+        dispatch(errorsOrMessagesReceived(data.errors_or_messages))
+      } else {
         dispatch(errorsOrMessagesReceived(ERRORS))
+      }
     }
   }
 }
+
+
 
 export const fetchLogIn=(user,path)=> {
   return async (dispatch) => {
@@ -120,25 +131,58 @@ export const resetUserPassword = ({user,path}) => {
   }
 }
 
-export const verifyEmail = (params) => {
+// export const verifyEmail = (params) => {
+//   return async (dispatch) => {
+//       dispatch(userLoading())
+//       try {
+//         const response = await axios.patch(`${baseUrl()}${paths().verifyEmail}`,params, {withCredentials: true, headers: verificationToken()})
+//         if(response.data.updated){
+//           localStorage.removeItem('token')
+//           localStorage.setItem('token', response.data.token?.token)
+//           localStorage.setItem('secret_key', response.data.token?.secret_key) 
+//         }
+//         dispatch(userReceived(response.data))
+//       } catch(error) {
+//         dispatch(userLoading())
+//         if(error.response?.data.errors_or_messages){
+//           dispatch(errorsOrMessagesReceived(error.response.data?.errors_or_messages))
+//          } else{
+//           dispatch(errorsOrMessagesReceived(ERRORS))
+//          }
+//       }
+//   }
+// }
+
+export const verifyEmail = (payload) => {
   return async (dispatch) => {
-      dispatch(userLoading())
-      try {
-        const response = await axios.patch(`${baseUrl()}${paths().verifyEmail}`,params, {withCredentials: true, headers: verificationToken()})
-        if(response.data.updated){
-          localStorage.removeItem('token')
-          localStorage.setItem('token', response.data.token?.token)
-          localStorage.setItem('secret_key', response.data.token?.secret_key) 
-        }
-        dispatch(userReceived(response.data))
-      } catch(error) {
-        dispatch(userLoading())
-        if(error.response?.data.errors_or_messages){
-          dispatch(errorsOrMessagesReceived(error.response.data?.errors_or_messages))
-         } else{
-          dispatch(errorsOrMessagesReceived(ERRORS))
-         }
+    dispatch(userLoading())
+    try {
+      const response = await fetch(`${baseUrl()}${paths().verifyEmail}`, {
+        method: "PATCH", 
+        withCredentials: true, 
+        headers: verificationToken(),
+        body: JSON.stringify(payload)
+      })
+      if(!response.ok){
+        const text = await response.text()
+        throw new Error(text)
       }
+      const data = await response.json()
+      if(data.updated){
+        localStorage.removeItem('token')
+        localStorage.setItem('token', data.token?.token)
+        localStorage.setItem('secret_key', data.token?.secret_key) 
+      }
+      dispatch(userReceived(data))
+    }catch (error){
+      dispatch(userLoading())
+      if(error.message.includes("errors_or_messages")){
+        const data = JSON.parse(error.message)
+        dispatch(errorsOrMessagesReceived(data.errors_or_messages))
+      } else {
+        dispatch(errorsOrMessagesReceived(ERRORS))
+      }
+    }
   }
 }
 

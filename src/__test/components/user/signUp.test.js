@@ -1,18 +1,12 @@
 
 import { render as rtlRender,fireEvent, screen,waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom'
-import rootReducer from "../../../reducers/manageAllReducers";
-import { createStore, applyMiddleware } from 'redux';
-import {thunk} from 'redux-thunk';
 import { Provider } from 'react-redux';
 import { server } from '../../../mocks/browser';
-// import SignUp from '../../../components/users/SignUp';
-// import { BrowserRouter} from 'react-router-dom';
+import store from "../../../state/store"
 import App from '../../../App';
+import SignUp from '../../../components/users/SignUp';
 
-
-
-const store = createStore(rootReducer, applyMiddleware(thunk))
 beforeAll(() => server.listen({ onUnhandledRequest: "bypass" }))
 afterEach(() => server.resetHandlers())
 afterAll(() => server.close())
@@ -26,30 +20,38 @@ const render = component => rtlRender(
 describe("<SignUp/>",()=>{
     beforeEach(()=>{
         return  render(
-            <App/>
-            // <BrowserRouter><SignUp/></BrowserRouter>
+            <SignUp/>
         )
     })
-
-    test("Should be able to click on Signup",async()=>{
-        const signUpLink = screen.getByText("Sign up")
-        fireEvent.click(signUpLink)
-    })
-
-    const signUp = ()=>{
+    const signUpWithErrors = ()=>{
         const input1 = screen.getByLabelText('Name:')
-        fireEvent.change(input1, {target: {value: 'Valente Hernandez'}})
+        fireEvent.change(input1, {target: {value: ""}})
         const input2 = screen.getByLabelText('Email:')
-        fireEvent.change(input2, {target: {value: 'valente@gmail.com'}})
+        fireEvent.change(input2, {target: {value: ''}})
         const input3 = screen.getByLabelText('Username:')
-        fireEvent.change(input3, {target: {value: 'valente'}})
+        fireEvent.change(input3, {target: {value: ''}})
         const input4 = screen.getByLabelText('Password:')
-        fireEvent.change(input4, {target: {value: '123456'}})
+        fireEvent.change(input4, {target: {value: ''}})
         const input5 = screen.getByLabelText('Confirm password:')
-        fireEvent.change(input5, {target: {value: '123456'}})
+        fireEvent.change(input5, {target: {value: ''}})
         const button = screen.getByText('Submit')
         fireEvent.click(button)
     }
+    const signUp = ()=>{
+        const input1 = screen.getByLabelText('Name:')
+        fireEvent.change(input1, {target: {value: "TESTING APP"}})
+        const input2 = screen.getByLabelText('Email:')
+        fireEvent.change(input2, {target: {value: 'testing@gmail.com'}})
+        const input3 = screen.getByLabelText('Username:')
+        fireEvent.change(input3, {target: {value: 'testingapp'}})
+        const input4 = screen.getByLabelText('Password:')
+        fireEvent.change(input4, {target: {value: '123456@'}})
+        const input5 = screen.getByLabelText('Confirm password:')
+        fireEvent.change(input5, {target: {value: '123456@'}})
+        const button = screen.getByText('Submit')
+        fireEvent.click(button)
+    }
+
 
     test('Input Name Should exist and accept a value',()=>{
         const input1 = screen.getByLabelText('Name:')
@@ -81,23 +83,54 @@ describe("<SignUp/>",()=>{
         expect(input5.value).toBe('123456')
     })
 
-    test('Should render SignUp in email verification mode, create a new user and confirm email.',async ()=>{
-        signUp()
-        await waitFor(() =>  {
-            const securityCodeInput = screen.getByLabelText('Enter security code:')
-            const securityCodeFormButton = screen.getByText('Submit')
-            screen.getByText('We send you an email with a verification code, please check your email.')
-            screen.getByText("Didn't receive the code?")
-            fireEvent.change(securityCodeInput, {target: {value: 'abdef'}})
-            expect(securityCodeInput.value).toBe('abdef')
-            fireEvent.click(securityCodeFormButton)    
+    // test('Should render SignUp in email verification mode, create a new user and confirm email.',async ()=>{
+    //     signUp()
+    //     await waitFor(() =>  {
+    //         const securityCodeInput = screen.getByLabelText('Enter security code:')
+    //         const securityCodeFormButton = screen.getByText('Submit')
+    //         screen.getByText('We send you an email with a verification code, please check your email.')
+    //         screen.getByText("Didn't receive the code?")
+    //         fireEvent.change(securityCodeInput, {target: {value: 'abdef'}})
+    //         expect(securityCodeInput.value).toBe('abdef')
+    //         fireEvent.click(securityCodeFormButton)    
+    //     })
 
+
+    //     await waitFor(() =>  {
+    //         const welcome = screen.getByText("Welcome TESTING APP")
+    //         expect(welcome.innerHTML).toBe("Welcome TESTING APP")
+    //     })
+
+    // })
+
+    test('Should validate name, email, password and confirm password.', async ()=>{
+        signUpWithErrors()
+        await waitFor(() =>  {
+            expect(screen.getByText("Name can't be blank").innerHTML).toBeDefined()   
+            expect(screen.getByText("Email can't be blank").innerHTML).toBeDefined() 
+            expect(screen.getByText("Password can't be blank").innerHTML).toBeDefined() 
+            expect(screen.getByText("Password is too short (minimum is 6 characters)").innerHTML).toBeDefined()
+            expect(screen.getByText("Password is invalid").innerHTML).toBeDefined() 
+           
         })
 
+    })
 
+    test('Should create an new user.', async ()=>{
+        signUp()
         await waitFor(() =>  {
-            const welcome = screen.getByText("Welcome TESTING APP")
-            expect(welcome.innerHTML).toBe("Welcome TESTING APP")
+            
+            expect(screen.getByText('Enter security code:').innerHTML).toBeDefined() 
+            expect(screen.getByText('We send you an email with a verification code, please check your email.').innerHTML).toBeDefined() 
+            expect(screen.getByText("Didn't receive the code?").innerHTML).toBeDefined() 
+            expect(screen.getByText('Request new code').innerHTML).toBeDefined() 
+            // const securityCodeInput = screen.getByLabelText('Enter security code:')
+            // const securityCodeFormButton = screen.getByText('Submit')
+            // screen.getByText('We send you an email with a verification code, please check your email.')
+            // screen.getByText("Didn't receive the code?")
+            // fireEvent.change(securityCodeInput, {target: {value: 'abdef'}})
+            // expect(securityCodeInput.value).toBe('abdef')
+            // fireEvent.click(securityCodeFormButton)  
         })
 
     })

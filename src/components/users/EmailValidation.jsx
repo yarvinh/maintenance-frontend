@@ -33,7 +33,7 @@ const EmailValidation = () => {
     const handleOnClick=(e)=>{
        dispatch(requestSecurityCode())
     }
-    
+
     return (
     <div>
       {currentUser.is_login && redirect()}
