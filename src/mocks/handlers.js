@@ -62,7 +62,7 @@ export const handlers = [
   }),
 
   http.patch('http://localhost:3000/test/verify_email', async ({request}) => {
-
+ 
   const user = {
       admin: true,
       errors_or_messages: {from: "verify_email", msg: ["congratulation, your email was validated"]},

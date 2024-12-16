@@ -17,7 +17,6 @@ export const userPostFetchAction = ( {payload,path,loading,reducer}) => {
       }
       const data = await response.json()
       const msg = data.errors_or_messages
-
       if (msg && data.verification_session){
         dispatch(errorsOrMessagesReceived(msg)) 
         localStorage.setItem('token', data.token)
@@ -163,6 +162,7 @@ export const verifyEmail = (payload) => {
         headers: verificationToken(),
         body: JSON.stringify(payload)
       })
+
       if(!response.ok){
         const text = await response.text()
         throw new Error(text)
@@ -185,8 +185,6 @@ export const verifyEmail = (payload) => {
     }
   }
 }
-
-
 
 export const requestSecurityCode = () => { 
   return async (dispatch) => {

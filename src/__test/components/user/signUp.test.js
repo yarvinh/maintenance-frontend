@@ -1,27 +1,18 @@
 
-import { render as rtlRender,fireEvent, screen,waitFor } from '@testing-library/react';
+import { render ,fireEvent, screen,waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom'
 import { Provider } from 'react-redux';
 import { server } from '../../../mocks/browser';
 import store from "../../../state/store"
-import App from '../../../App';
 import SignUp from '../../../components/users/SignUp';
 
 beforeAll(() => server.listen({ onUnhandledRequest: "bypass" }))
 afterEach(() => server.resetHandlers())
 afterAll(() => server.close())
 
-const render = component => rtlRender(
-    <Provider store={store}>
-        {component}
-    </Provider>
-)
-
 describe("<SignUp/>",()=>{
     beforeEach(()=>{
-        return  render(
-            <SignUp/>
-        )
+      return render ( <Provider store={store}><SignUp/> </Provider>)
     })
     const signUpWithErrors = ()=>{
         const input1 = screen.getByLabelText('Name:')

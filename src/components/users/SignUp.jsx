@@ -12,7 +12,6 @@ const SignUp = () => {
 
   const verificationSession  = useSelector(state => state.user.user.verification_session)
   const currentUser = useSelector(state => state.user.user)
-
   const errorsOrMsg = useSelector(state => state.errorsOrMessages.errorsOrMessages)
 
   const [user, setUser] = useState({
@@ -35,7 +34,6 @@ const SignUp = () => {
        ...user,[e.target.name]: e.target.value 
     })
   }
-  
   if(currentUser.is_login)
     return <NewUserInstructions/>
   else if (!verificationSession )
