@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import { server } from '../../../mocks/browser';
 import store from "../../../state/store"
 import SignUp from '../../../components/users/SignUp';
+import { MemoryRouter } from 'react-router';
 
 beforeAll(() => server.listen({ onUnhandledRequest: "bypass" }))
 afterEach(() => server.resetHandlers())
@@ -12,7 +13,12 @@ afterAll(() => server.close())
 
 describe("<SignUp/>",()=>{
     beforeEach(()=>{
-      return render ( <Provider store={store}><SignUp/> </Provider>)
+      return render ( 
+      <Provider store={store}>
+         <MemoryRouter>
+           <SignUp/> 
+         </MemoryRouter>
+      </Provider>)
     })
     const signUpWithErrors = ()=>{
         const input1 = screen.getByLabelText('Name:')
@@ -74,26 +80,6 @@ describe("<SignUp/>",()=>{
         expect(input5.value).toBe('123456')
     })
 
-    // test('Should render SignUp in email verification mode, create a new user and confirm email.',async ()=>{
-    //     signUp()
-    //     await waitFor(() =>  {
-    //         const securityCodeInput = screen.getByLabelText('Enter security code:')
-    //         const securityCodeFormButton = screen.getByText('Submit')
-    //         screen.getByText('We send you an email with a verification code, please check your email.')
-    //         screen.getByText("Didn't receive the code?")
-    //         fireEvent.change(securityCodeInput, {target: {value: 'abdef'}})
-    //         expect(securityCodeInput.value).toBe('abdef')
-    //         fireEvent.click(securityCodeFormButton)    
-    //     })
-
-
-    //     await waitFor(() =>  {
-    //         const welcome = screen.getByText("Welcome TESTING APP")
-    //         expect(welcome.innerHTML).toBe("Welcome TESTING APP")
-    //     })
-
-    // })
-
     test('Should validate name, email, password and confirm password.', async ()=>{
         signUpWithErrors()
         await waitFor(() =>  {
@@ -106,23 +92,41 @@ describe("<SignUp/>",()=>{
         })
 
     })
-
+   
     test('Should create an new user.', async ()=>{
         signUp()
         await waitFor(() =>  {
-            
             expect(screen.getByText('Enter security code:').innerHTML).toBeDefined() 
             expect(screen.getByText('We send you an email with a verification code, please check your email.').innerHTML).toBeDefined() 
             expect(screen.getByText("Didn't receive the code?").innerHTML).toBeDefined() 
             expect(screen.getByText('Request new code').innerHTML).toBeDefined() 
-            // const securityCodeInput = screen.getByLabelText('Enter security code:')
-            // const securityCodeFormButton = screen.getByText('Submit')
-            // screen.getByText('We send you an email with a verification code, please check your email.')
-            // screen.getByText("Didn't receive the code?")
-            // fireEvent.change(securityCodeInput, {target: {value: 'abdef'}})
-            // expect(securityCodeInput.value).toBe('abdef')
-            // fireEvent.click(securityCodeFormButton)  
         })
 
+    })
+
+    test('Should validate email, and render NewUserInstructions component.',async ()=>{
+        await waitFor(() =>  {
+            const securityCodeInput = screen.getByLabelText('Enter security code:')
+            const securityCodeFormButton = screen.getByText('Submit')
+            screen.getByText('We send you an email with a verification code, please check your email.')
+            screen.getByText("Didn't receive the code?")
+            fireEvent.change(securityCodeInput, {target: {value: '123456'}})
+            expect(securityCodeInput.value).toBe('123456')
+            fireEvent.click(securityCodeFormButton)    
+        })
+
+        await waitFor(() =>  {
+            const welcome = screen.getByText("Welcome TESTING APP")
+            expect(welcome.innerHTML).toBe("Welcome TESTING APP")
+        })
+
+    })
+
+    test('Should have a link to navigate to home page',async ()=>{
+        const welcome = screen.getByText("Skip")
+        fireEvent.click(welcome)   
+        await waitFor(() =>  {
+            expect(screen.getByText("Skip").closest('a')).toHaveAttribute('href', '/')
+        })
     })
 })

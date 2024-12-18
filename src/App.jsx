@@ -32,6 +32,7 @@ import HpdComplaintsContainer from './containers/HpdComplaintsContainer';
 import Layout from './components/Layout';
 import SanitationContainer from './containers/SanitationContainer';
 import NoMatch from './components/NoMatch';
+import NewUserInstructions from './components/users/NewUserInstructions';
 
 const App  = () => {
   const dispatch = useDispatch()
@@ -85,6 +86,7 @@ const App  = () => {
               <Route path='buildings/:lot/hpd_violations/:block' element={<HPDviolationsContainer/>}/>
               <Route path='buildings/:lot/:block/sanitation_violations' element={<SanitationContainer/>}/> 
               <Route path="*" element={<NoMatch />} /> 
+              <Route path="new_user" element={<NewUserInstructions/>}/>
             </Route>
           </Routes>
     </BrowserRouter>    

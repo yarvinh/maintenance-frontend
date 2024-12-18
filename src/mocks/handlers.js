@@ -62,8 +62,8 @@ export const handlers = [
   }),
 
   http.patch('http://localhost:3000/test/verify_email', async ({request}) => {
- 
-  const user = {
+    const payload = await request.json()
+    const user = {
       admin: true,
       errors_or_messages: {from: "verify_email", msg: ["congratulation, your email was validated"]},
       is_login: true,
@@ -81,8 +81,45 @@ export const handlers = [
        },
        verification_session: false
     }
-      return HttpResponse.json(user)
+
+    const userWithError = {
+      is_login: false, 
+      updated: false, 
+      reload: false, 
+      verification_session: true, 
+      errors_or_messages: {from: "verify_email",  errors: ["Wrong code, please try again."]}
+    }
+
+  
+      if(payload.user.security_code === "123456"){
+        return HttpResponse.json(user)
+       }else{
+        return HttpResponse.json(userWithError, {status: 422, statusText: 'Invalid inf' })
+      }
     }),
+
+    http.patch('http://localhost:3000/test/request_security_code', async ({request}) => { 
+    
+      const payload = await request.json()
+      console.log(payload)
+
+      const response = {
+        is_login: false,  
+        valid_email: false, 
+        reload: false, 
+        verification_session: true, 
+        errors_or_messages: {
+          from: "verify_email", 
+          msg: ['We sent a new code to your email.']
+        } 
+      }
+
+      return HttpResponse.json(response)
+
+   
+
+    }),
+
 
     http.post('http://localhost:3000/test/business_login', async ({request}) => {
       const loginInf = await request.json()
@@ -91,7 +128,7 @@ export const handlers = [
         admin: true, 
         user: {
           name: "TESTING APP",
-          username: 'testingapp',
+          username: 'testingapp', 
           email: 'ggc@gmail.com', 
           id: 1 
         }

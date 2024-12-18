@@ -8,7 +8,8 @@ export const paths = (business = false) => {
        searchBuildingsPath: '/test/search/buildings/',
        employeesPath: "/test/employees",
        verifyEmail: "/test/verify_email",
-       login: '/test/business_login'
+       login: '/test/business_login',
+       requestSecurityCode: '/test/request_security_code'
     }  
     
    const paths =  {
@@ -20,7 +21,8 @@ export const paths = (business = false) => {
        searchBuildingsPath: '/search/buildings/',
        employeesPath: "/employees",
        verifyEmail: "/verify_email",
-       login: business ? '/business_login' : "/login"
+       login: business ? '/business_login' : "/login",
+       requestSecurityCode: '/request_security_code'
     }
     return process.env.NODE_ENV === 'test' ? testPaths : paths
  

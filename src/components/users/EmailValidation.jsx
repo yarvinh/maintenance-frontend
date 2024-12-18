@@ -16,7 +16,7 @@ const EmailValidation = () => {
 
     const handleOnSubmit = (e) => {
         e.preventDefault()
-        dispatch(verifyEmail({user: user}))
+        user.security_code.trim().length > 0 && dispatch(verifyEmail({user: user}))
 
     }
 
@@ -27,7 +27,7 @@ const EmailValidation = () => {
     }
 
     const handleOnClick=(e)=>{
-       dispatch(requestSecurityCode())
+      dispatch(requestSecurityCode())
     }
 
     if(currentUser.is_login){

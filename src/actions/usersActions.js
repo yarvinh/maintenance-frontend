@@ -168,6 +168,7 @@ export const verifyEmail = (payload) => {
         throw new Error(text)
       }
       const data = await response.json()
+
       if(data.updated){
         localStorage.removeItem('token')
         localStorage.setItem('token', data.token?.token)
@@ -187,17 +188,21 @@ export const verifyEmail = (payload) => {
 }
 
 export const requestSecurityCode = () => { 
+
   return async (dispatch) => {
       dispatch(userLoading())
+      
       try {
-        const response = await axios.patch(`${baseUrl()}/request_security_code`, "request_security_code", {headers: verificationToken(),withCredentials: true})    
-        if(!response.data.valid_email && response.data.token){
-          const msg = response.data.errors_or_messages
-          dispatch(errorsOrMessagesReceived(msg)) 
-          localStorage.setItem('token', response.data.token)
-        }
-        dispatch(userReceived(response.data))
+        const response = await axios.patch(`${baseUrl()}${paths().requestSecurityCode}`, "request_security_code", {headers: verificationToken(), withCredentials: true})   
+        console.log(response.data,"testing") 
+        // if(!response.data.valid_email && response.data.token){
+        //   const msg = response.data.errors_or_messages
+        //   dispatch(errorsOrMessagesReceived(msg)) 
+        //   localStorage.setItem('token', response.data.token)
+        // }
+        // dispatch(userReceived(response.data))
       } catch(error) {
+        
         dispatch(userLoading())
         if(error.response?.data.errors_or_messages){
           dispatch(errorsOrMessagesReceived(error.response.data?.errors_or_messages))

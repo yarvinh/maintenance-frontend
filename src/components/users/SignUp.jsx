@@ -34,9 +34,9 @@ const SignUp = () => {
        ...user,[e.target.name]: e.target.value 
     })
   }
-  if(currentUser.is_login)
+  if(currentUser.is_login){
     return <NewUserInstructions/>
-  else if (!verificationSession )
+  }else if (!verificationSession )
     return (
         <div className="container d-flex justify-content-center align-items-center">
           <form onSubmit={handleOnSubmit} className="form">
