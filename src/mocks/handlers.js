@@ -5,21 +5,21 @@ import { http, HttpResponse } from 'msw'
  
 export const handlers = [
   
-  // http.get('http://localhost:3000/test/checklogin', (response) => {
-  //   return HttpResponse.json(
-  //     {
-  //       is_login: true, 
-  //       admin: true, 
-  //       user: {
-  //         name: 'GGC',
-  //         username: 'ggc' ,
-  //         email: 'ggc@gmail.com', 
-  //         id: 1 
-  //       }
+  http.get('http://localhost:3000/test/checklogin', async (response) => {
+    return HttpResponse.json(
+      {
+        is_login: true, 
+        admin: true, 
+        user: {
+          name: 'GGC',
+          username: 'ggc' ,
+          email: 'ggc@gmail.com', 
+          id: 1 
+        }
       
-  //     }
-  //   )
-  // }),
+      }
+    )
+  }),
 
   http.post('http://localhost:3000/test/users', async ({request}) => {
     const payload = await request.json()
@@ -98,12 +98,9 @@ export const handlers = [
       }
     }),
 
-    http.patch('http://localhost:3000/test/request_security_code', async ({request}) => { 
-    
-      const payload = await request.json()
-      console.log(payload)
-
-      const response = {
+    http.patch('http://localhost:3000/test/request_security_code', async () => { 
+      
+    const response = {
         is_login: false,  
         valid_email: false, 
         reload: false, 
@@ -113,17 +110,13 @@ export const handlers = [
           msg: ['We sent a new code to your email.']
         } 
       }
-
-      return HttpResponse.json(response)
-
-   
-
+      return  HttpResponse.json(response)
     }),
 
 
-    http.post('http://localhost:3000/test/business_login', async ({request}) => {
-      const loginInf = await request.json()
-      const user  =  {
+    http.post('http://localhost:3000/test/login', async ({request}) => {
+      const {user} = await request.json()
+      const payload  =  {
         is_login: true, 
         admin: true, 
         user: {
@@ -132,13 +125,18 @@ export const handlers = [
           email: 'ggc@gmail.com', 
           id: 1 
         }
-    }
-    
+      }
+      const payload2 = { 
+        verification_session: true,
+        is_login: false, 
+        errors_or_messages: {from: "verify_email",  msg: ['We must verify your email first to use your account']},
+        valid_email: false, 
+        token: "biuhdbbhvgsvghvsgvysvgyvsyvyvytdvytdvtyv"
+      }
       const error =  {is_login: false,errors_or_messages: {from: "login", errors: ["Incorrect username or password"]} }
-  
-      return HttpResponse.json(
-       loginInf.user.password === "12345@" && loginInf.user.username === "testapp" ? user : error
-      )
+      if (user.username === "testingapp" && user.password === "123456") return HttpResponse.json(payload)
+      if(user.username === "testingemail" && user.password === "123456") return HttpResponse.json(payload2)
+      return HttpResponse.json(error, {status: 422, statusText: 'Invalid inf' })
     }),
 
     http.post('http://localhost:3000/test/buildings', async ({request}) => {

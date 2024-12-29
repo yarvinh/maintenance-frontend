@@ -205,7 +205,6 @@ async function getResponse(event, client, requestId) {
   if (!activeClientIds.has(client.id)) {
     return passthrough()
   }
-
   // Notify the client that a request has been intercepted.
   const requestBuffer = await request.arrayBuffer()
   const clientMessage = await sendToClient(

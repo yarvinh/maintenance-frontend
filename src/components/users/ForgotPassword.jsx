@@ -10,7 +10,6 @@ const ForgotPassword = () =>{
     const [user, setUser] = useState({
       username: ""
     })
-
     const handleOnChange = (e)=>{
       setUser({
        ...user,[e.target.name]: e.target.value

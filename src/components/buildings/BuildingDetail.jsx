@@ -18,7 +18,6 @@ const BuildingDetails = ()=>{
     const building = useSelector(state => state.building.building)
     const workOrders = useSelector(state => state.workOrders.workOrders)
     const loading = useSelector(state => state.building.buildingLoading)
-
     const buildingWorkOrders = workOrders.filter(wo => wo.building && wo.building_id.toString() === buildingId) 
     useEffect(()=>{
         const payload = buildingGetSetter({id: buildingId})

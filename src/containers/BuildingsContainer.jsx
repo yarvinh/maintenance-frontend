@@ -20,7 +20,7 @@ const BuildingsContainer = () => {
     const [buildings, setBuildings] = useState([])
     const [searchBoxValue, setSearchBoxValue] = useState("")
     useEffect(()=>{
-      if(buildingsData.length < 1)
+      // if(buildingsData.length < 1)
         dispatch(getFetchAction( BUILDINGS_SETTER) )
     },[])
 

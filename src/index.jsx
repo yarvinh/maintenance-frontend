@@ -22,7 +22,7 @@ import store  from './state/store';
 
 const root = createRoot(document.getElementById("root"));
 root.render(
-   <HttpsRedirect>
+  <HttpsRedirect>
     <Provider store={store}>
       <App />
     </Provider>

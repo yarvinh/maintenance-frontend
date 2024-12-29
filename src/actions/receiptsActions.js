@@ -22,31 +22,3 @@ export const createReceipts = ({id,receipts}) => {
     } 
 }
 
-
-
-
-
-
-// export const updateReceipt = (receipt) => {
-//     const work_order_id = receipt.work_order_id
-//     const receipt_id = receipt.receipt_id
-//     return (dispatch) => {
-//         dispatch({type: "LOADING"})
-//         axios.patch(`${baseUrl()}/work_orders/${work_order_id}/edit_receipts/${receipt_id}`, receipt.receipt,{headers: token(), withCredentials: true})
-//         .then(response => {
-//             const error = response.data.errors_or_messages
-//             error? dispatch({ type: 'ADD_ERRORS_OR_MESSAGES', errorsOrMessages: response.data.errors_or_messages}):  dispatch({ type: 'ADD_RECEIPTS', receipts: response.data})
-//         })
-//     } 
-// }
-
-
-// export const removeReceipt = (id) => {
-//     return (dispatch) => {
-//       dispatch({ type: 'LOADING'})
-//       axios.delete(`${baseUrl()}/remove_receipt/${id}`,{headers: token(), withCredentials: true}
-//       ).then(response => {   
-//         dispatch({ type: 'ADD_RECEIPTS', receipts: response.data })
-//       })
-//     }
-//   }

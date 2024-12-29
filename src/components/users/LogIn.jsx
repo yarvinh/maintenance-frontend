@@ -15,7 +15,6 @@ const LogIn = () => {
   const errorsOrMsg = useSelector(state => state.errorsOrMessages.errorsOrMessages)
   const verificationSession = useSelector(state => state.user.user.verification_session )
 
-
     const [user, setUser] = useState({
       username: '',
       password: ''
@@ -33,18 +32,14 @@ const LogIn = () => {
   
     const handleOnSubmit = (e) => {
         e.preventDefault()
-        account.business ? dispatch(fetchLogIn(user,paths(true).login)) : dispatch(fetchLogIn(user,paths(false).login))
+        dispatch(fetchLogIn(user,paths().login))
     }
-
     return(
       <section>
         {(verificationSession && verificationSessionToken()) && <Navigate to="/verifying_email"/>}
         <div className="center login-messages" > 
           {errorsOrMsg.from === "login" && <ErrorsOrMsg errors={errorsOrMsg?.errors || errorsOrMsg?.msg} />}
         </div>
-        {/* <div className='center login-messages'>
-          <button onClick={handleOnClick} className="login-message-button" >Login to {text} account</button>
-        </div> */}
         <div className="container h-100  d-flex  justify-content-center align-items-center">
           <form onSubmit={handleOnSubmit} className="form">
             <br/>
@@ -54,7 +49,7 @@ const LogIn = () => {
             <input id='login-password' className="form-control" onChange={handleOnChange } name="password" type="password" value={user.password}/>
             <button  className="white-blue-buttons" type="submit">Login</button>
           </form>
-         {login && redirect()}
+         {login && <Navigate to='/'/>}
         </div>
         <div  className="center">
           <Link to="/password_recovery" className="nav-link login-a-color">Forgot password?</Link>

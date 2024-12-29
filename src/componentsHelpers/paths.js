@@ -1,4 +1,4 @@
-export const paths = (business = false) => {
+export const paths = () => {
     const testPaths  = {
        checkLoginPath: '/test/checklogin',
        usersPath: '/test/users',
@@ -8,12 +8,12 @@ export const paths = (business = false) => {
        searchBuildingsPath: '/test/search/buildings/',
        employeesPath: "/test/employees",
        verifyEmail: "/test/verify_email",
-       login: '/test/business_login',
+       login: '/test/login',
        requestSecurityCode: '/test/request_security_code'
     }  
     
    const paths =  {
-       checkLoginPath: '/checklogin',
+       checkLoginPath: '/checklogin' ,
        usersPath: '/users',
        buildingsPath: '/buildings',
        commentsPath: "/comments",
@@ -21,7 +21,7 @@ export const paths = (business = false) => {
        searchBuildingsPath: '/search/buildings/',
        employeesPath: "/employees",
        verifyEmail: "/verify_email",
-       login: business ? '/business_login' : "/login",
+       login: "/login",
        requestSecurityCode: '/request_security_code'
     }
     return process.env.NODE_ENV === 'test' ? testPaths : paths

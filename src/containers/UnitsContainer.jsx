@@ -17,7 +17,6 @@ const UnitsContainer = ({building}) => {
         const payload = getUnitsSetter({buildingId})
         dispatch(getFetchAction(payload))
     },[]);
-
     const displayUnits = ()=>{
       return units?.map((unit)=>{
         return (

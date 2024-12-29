@@ -12,7 +12,8 @@ beforeAll(() => server.listen({ onUnhandledRequest: "bypass" }))
 afterEach(() => server.resetHandlers())
 afterAll(() => server.close())
 
-describe('EmailValidation Component end to end as an user', () => {
+describe('<EmailValidation/> fetching', () => {
+  
   beforeEach(()=>{
       return  render(
       <Provider store={store}>
@@ -36,9 +37,9 @@ describe('EmailValidation Component end to end as an user', () => {
     expect(screen.getByText("Didn't receive the code?").innerHTML).toBeDefined()
     const button = screen.getByText("Request new code");
     fireEvent.click(button);
-  await waitFor(() =>  {
-    // expect(screen.getByText("Wr please try again.").innerHTML).toBeDefined() 
-  })
+    await waitFor(() =>  {
+      expect(screen.getByText("Wrong code, please try again.").innerHTML).toBeDefined() 
+    })
 })
 
 })

@@ -90,7 +90,6 @@ describe("<SignUp/>",()=>{
             expect(screen.getByText("Password is invalid").innerHTML).toBeDefined() 
            
         })
-
     })
    
     test('Should create an new user.', async ()=>{
@@ -119,7 +118,6 @@ describe("<SignUp/>",()=>{
             const welcome = screen.getByText("Welcome TESTING APP")
             expect(welcome.innerHTML).toBe("Welcome TESTING APP")
         })
-
     })
 
     test('Should have a link to navigate to home page',async ()=>{
