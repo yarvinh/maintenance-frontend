@@ -13,7 +13,7 @@ const Sanitation = ({violation})=>{
     }
 
     return (
-        <div >
+        <div>
                 <div className="justify-content-center align-items-center">
                     <div >
                         <br/>

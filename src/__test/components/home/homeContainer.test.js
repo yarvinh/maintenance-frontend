@@ -90,6 +90,7 @@ describe("<HomeContainer/>",()=>{
         await waitFor(()=>{
             loginSubmitForm({password: "123456", username: "testingapp"})
         })
+
         await waitFor(()=>{
             expect(screen.getByText('You have no work orders to display at this moment')).toBeInTheDocument()
             expect(screen.getByText('Create A Work Order') ).toBeInTheDocument()

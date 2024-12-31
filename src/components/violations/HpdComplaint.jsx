@@ -1,10 +1,6 @@
-import  {useState } from 'react';
 
-const HpdComplaint = (props)=>{
-    const {violation} = props 
-
+const HpdComplaint = ({violation})=>{
     const date = (date) => {
-
         if (date){
             date = new Date(date.split('-').join("-").split("T")[0].replace(/-/g, '\/'))
           return date.toDateString()
@@ -30,6 +26,7 @@ const HpdComplaint = (props)=>{
                                     <p>aparment: {violation.apartment}</p>
                                     <p>Problem status date: {violation.received_date}</p>
                                     <p>Problem code: {violation.problem_code}</p>
+                                    <p>Major category: {violation.major_category}</p>
                                     <p>Minor category: {violation.minor_category}</p>
                                     <p>Description: {violation.novdescription}</p>
                                     <p>Complait status: {violation.complaint_status}</p>

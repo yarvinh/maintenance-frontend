@@ -92,6 +92,27 @@ describe("<Login/>",() => {
             expect(user.is_login).toBe(true)
         })     
     })  
+
+    test("Navigation bar should have login users options", async ()=>{
+        const appComponent = render(
+            <App/>
+        )
+        await waitFor( () => loginSubmitForm({password: "123456", username: "testingapp"}))
+        await waitFor(() =>  {
+            const settings = appComponent.getByText("Settings")
+            const buildings = appComponent.getByText("Buildings")
+            const workOrders = appComponent.getByText("Work Orders")
+            const employees = appComponent.getByText("Sign Out")
+            expect(settings).toBeInTheDocument()
+            expect(buildings).toBeInTheDocument()
+            expect(workOrders).toBeInTheDocument()
+            expect(employees).toBeInTheDocument()
+            expect(settings.closest('a')).toHaveAttribute('href', "/settings/1")
+            expect(buildings.closest('a')).toHaveAttribute('href', "/buildings")
+            expect(workOrders.closest('a')).toHaveAttribute('href', "/work_orders")
+            expect(employees.closest('a')).toHaveAttribute('href', "/signout")
+        })     
+    })  
 })
 
 

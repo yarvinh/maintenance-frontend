@@ -4,24 +4,24 @@ const DOBviolation = (props)=>{
 
     const {violation} = props
     
-    const [acordion,setAcordion] = useState({
-        acordion: 'display_accordion', 
-        display: 'hide_elements',
-    })
+    // const [acordion,setAcordion] = useState({
+    //     acordion: 'display_accordion', 
+    //     display: 'hide_elements',
+    // })
 
-    const handleOnclick = (e)=>{
-        if(acordion.acordion !== 'display_accordion active'){
-        setAcordion({
-          acordion: 'display_accordion active',
-          display: 'display_elements',
-        })
-      }else{
-        setAcordion({
-          acordion: 'display_accordion',
-          display: 'hide_elements', 
-        })
-      }
-    }
+    // const handleOnclick = (e)=>{
+    //     if(acordion.acordion !== 'display_accordion active'){
+    //     setAcordion({
+    //       acordion: 'display_accordion active',
+    //       display: 'display_elements',
+    //     })
+    //   }else{
+    //     setAcordion({
+    //       acordion: 'display_accordion',
+    //       display: 'hide_elements', 
+    //     })
+    //   }
+    // }
     
     const date = (date) => {
         if (date){
@@ -38,8 +38,6 @@ const DOBviolation = (props)=>{
 
     return (
         <div >
-            {/* <button onClick={handleOnclick} className={acordion.acordion}>Issue Date: {date(violation.issue_date)}</button> */}
-            {/* <div className={acordion.display}> */}
                 <div className="container d-flex justify-content-center align-items-center">
                     <div >
                         <br/>
@@ -68,7 +66,6 @@ const DOBviolation = (props)=>{
                     </div>
                 </div>   
             </div>
-        // </div>
     )
 };
 

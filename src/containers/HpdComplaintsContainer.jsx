@@ -15,6 +15,18 @@ const HpdComplaintsContainer = ()=>{
         dispatch(violationsFetch(`https://data.cityofnewyork.us/resource/ygpa-z7cr.json?bin=${bin}`))
     } ,[]); 
 
+    const handleOnChange = (e) => {
+        const searchResult = allViolations.filter((violation)=>{
+            return (
+                violation.apartment?.toLowerCase().includes(e.target.value) ||
+                violation.received_date.includes(e.target.value) ||
+                violation.minor_category?.toLowerCase().includes(e.target.value) ||
+                violation.major_category?.toLowerCase().includes(e.target.value)
+            )   
+        })
+        setViolations(searchResult)
+    }
+
     useEffect(()=>{
         if (allViolations.length >  0)
           setViolations(allViolations)
@@ -33,6 +45,9 @@ const HpdComplaintsContainer = ()=>{
 
     return (
         <section>  
+            <div className="center violation-search">    
+              {<input onChange={handleOnChange} className='search_box' placeholder='Search violations ' />}
+            </div>
             {loading && <LoadingItems/> }
             <select onChange={handleOnClick} className='form-select my-3 mx-auto' > 
                 <option value='All'>All</option>          
