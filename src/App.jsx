@@ -33,6 +33,7 @@ import Layout from './components/Layout';
 import SanitationContainer from './containers/SanitationContainer';
 import NoMatch from './components/NoMatch';
 import NewUserInstructions from './components/users/NewUserInstructions';
+import { isLoginToken } from './componentsHelpers/token';
 
 const App  = () => {
   const dispatch = useDispatch()
@@ -41,13 +42,13 @@ const App  = () => {
   const fetchTimesRef = useRef(1)
   
   useEffect(() => {
-    dispatch(getFetchAction(CURRENT_USER_SETTER)  )
+    isLoginToken() && dispatch(getFetchAction(CURRENT_USER_SETTER)  )
   },[] ); 
 
   useEffect(() => {
     if(fetchTimesRef.current === 1){
       fetchTimesRef.current += 1  
-      dispatch(getFetchAction(WORKORDERS_SETTER) )
+      isLoginToken() && dispatch(getFetchAction(WORKORDERS_SETTER) )
     }
   },[user] ); 
 

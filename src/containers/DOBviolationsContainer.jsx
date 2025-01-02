@@ -20,8 +20,7 @@ const DOBviolationsContainer = ()=>{
                 violation.issue_date.includes(e.target.value) ||
                 violation.violation_number?.includes(e.target.value) ||
                 violation.violation_type?.toLowerCase().includes(e.target.value) ||
-                violation.violation_category?.toLowerCase().includes(e.target.value)
-                
+                violation.violation_category?.toLowerCase().includes(e.target.value)   
             )   
         })
         setViolations(searchResult)

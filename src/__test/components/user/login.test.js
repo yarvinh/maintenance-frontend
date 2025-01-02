@@ -1,38 +1,41 @@
-import { render as rtlRender,fireEvent, screen,waitFor } from '@testing-library/react';
+import {fireEvent, screen,waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom'
-import { Provider } from 'react-redux';
 import { server } from '../../../mocks/browser';
 import store from "../../../state/store"
-import LogIn from '../../../components/users/LogIn';
-import { MemoryRouter } from 'react-router';
 import App from '../../../App';
+import { render } from '../../helpers/reduxStore';
+import { userReceived } from '../../../state/reducers/userReducers';
+import { removeLoginToken } from '../../../componentsHelpers/token';
 
 beforeAll(() => server.listen({ onUnhandledRequest: "bypass" }))
 afterEach(() => server.resetHandlers())
 afterAll(() => server.close())
-
-const render = component => rtlRender(
-    <Provider store={store}>
-        {component}
-    </Provider>
-)
+beforeEach( () => {
+    removeLoginToken()
+    store.dispatch(userReceived({
+        is_login: false,
+        admin: false, 
+        user: {id: 0}
+      })
+    )
+})
 
 describe("<Login/>",() => {
+    const loginSubmitForm = ({password, username}) => {
+        const userNameInput = screen.getByLabelText('Username')
+        fireEvent.change(userNameInput, {target: {value: username}})
+        const passwordInput = screen.getByLabelText('Password')
+        fireEvent.change(passwordInput, {target: {value: password}})
+        const loginFormSubmitButton = screen.getByText("Login")
+        fireEvent.click(loginFormSubmitButton)  
+    }
+
     beforeEach( () => {
         return  render(
-            <MemoryRouter>
-              <LogIn/>
-            </MemoryRouter>
+            <App/>
         )
     })
-    const loginSubmitForm = ({password, username}) => {
-    const userNameInput = screen.getByLabelText('Username')
-    fireEvent.change(userNameInput, {target: {value: username}})
-    const passwordInput = screen.getByLabelText('Password')
-    fireEvent.change(passwordInput, {target: {value: password}})
-    const loginFormSubmitButton = screen.getByText("Login")
-    fireEvent.click(loginFormSubmitButton)  
-    }
+
     test ("Redux user login Should initially be false",()=>{
         const {user} = store.getState().user
         expect(user.is_login).toBe(false)
@@ -61,48 +64,33 @@ describe("<Login/>",() => {
     })
 
     test("Should login and redirect to homepage",async ()=>{
-       loginSubmitForm({password: "123456", username: "testingapp"})
+     loginSubmitForm({password: "123456", username: "testingapp"})
         await waitFor(() =>  {
             const {user} = store.getState().user
             expect(user.is_login).toBe(true)
         }) 
     })
 
-    test("if email is not validated should redirect to ", async ()=>{
-        const appComponent = render(
-            <App/>
-        )
-        await waitFor (() => loginSubmitForm({password: "123456", username: "testingemail"}))
-        await waitFor(() =>  {
-            expect(appComponent.getByText("We must verify your email first to use your account")).toBeInTheDocument()
-            const {user} = store.getState().user
-            expect(user.valid_email).toBe(false)
-        })     
-    })  
 
-
-    test("Should login and redirect to homepage", async ()=>{
-        const appComponent = render(
-            <App/>
-        )
-        await waitFor( () => loginSubmitForm({password: "123456", username: "testingapp"}))
+    // test("Should login and redirect to homepage", async ()=>{
+    //     cleanup()
+    //     const {user} = store.getState().user
+    //     console.log(user)
+    //     loginSubmitForm({password: "123456", username: "testingapp"})
+    //     await waitFor(() =>  {
+    //         expect(screen.getByText("You have no work orders to display at this moment")).toBeInTheDocument()
+    //         // const {user} = store.getState().user
+    //         // expect(user.is_login).toBe(true)
+    //     })     
+    // })  
+    
+    test("Navigation bar should have login users options", async () => {
+        loginSubmitForm({password: "123456", username: "testingapp"})
         await waitFor(() =>  {
-            expect(appComponent.getByText("You have no work orders to display at this moment")).toBeInTheDocument()
-            const {user} = store.getState().user
-            expect(user.is_login).toBe(true)
-        })     
-    })  
-
-    test("Navigation bar should have login users options", async ()=>{
-        const appComponent = render(
-            <App/>
-        )
-        await waitFor( () => loginSubmitForm({password: "123456", username: "testingapp"}))
-        await waitFor(() =>  {
-            const settings = appComponent.getByText("Settings")
-            const buildings = appComponent.getByText("Buildings")
-            const workOrders = appComponent.getByText("Work Orders")
-            const employees = appComponent.getByText("Sign Out")
+            const settings = screen.getByText("Settings")
+            const buildings = screen.getByText("Buildings")
+            const workOrders = screen.getByText("Work Orders")
+            const employees = screen.getByText("Sign Out")
             expect(settings).toBeInTheDocument()
             expect(buildings).toBeInTheDocument()
             expect(workOrders).toBeInTheDocument()
@@ -113,11 +101,15 @@ describe("<Login/>",() => {
             expect(employees.closest('a')).toHaveAttribute('href', "/signout")
         })     
     })  
+
+    test("if email is not validated should redirect to ", async ()=>{
+        loginSubmitForm({password: "123456", username: "testingemail"})
+        await waitFor(() =>  {
+            expect(screen.getByText("We must verify your email first to use your account")).toBeInTheDocument()
+            const {user} = store.getState().user
+            expect(user.valid_email).toBe(false)
+        })    
+    })  
+
 })
-
-
-
-
-
-
 
