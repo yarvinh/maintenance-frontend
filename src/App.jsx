@@ -1,5 +1,5 @@
 import {useDispatch, useSelector } from 'react-redux';
-import {useEffect ,useRef} from 'react';
+import {useEffect} from 'react';
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import LogOut from './components/users/LogOut'
 import LogIn from './components/users/LogIn'
@@ -39,21 +39,14 @@ const App  = () => {
   const dispatch = useDispatch()
   const user = useSelector(state => state.user.user)
   const workOrders = useSelector(state=> state.workOrders.workOrders)
-  const fetchTimesRef = useRef(1)
-  
-  useEffect(() => {
-    isLoginToken() && dispatch(getFetchAction(CURRENT_USER_SETTER)  )
-  },[] ); 
 
   useEffect(() => {
-    if(fetchTimesRef.current === 1){
-      fetchTimesRef.current += 1  
-      isLoginToken() && dispatch(getFetchAction(WORKORDERS_SETTER) )
-    }
+    isLoginToken() && dispatch(getFetchAction(CURRENT_USER_SETTER))
+  },[]); 
+
+  useEffect(() => {
+    user.is_login && dispatch(getFetchAction(WORKORDERS_SETTER) )
   },[user] ); 
-
-  if( !user.is_login) fetchTimesRef.current = 1  
-
   return (
     <BrowserRouter >
           <Routes>

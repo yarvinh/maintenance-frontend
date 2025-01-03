@@ -160,7 +160,7 @@ export const handlers = [
         errors.push("Phone number can't be blank")
       
       if(errors.length > 0) 
-        return HttpResponse.json({is_login: true ,errors_or_messages: {from: "create_building", errors: errors} })
+        return HttpResponse.json({errors_or_messages: {from: "create_building", errors: errors}},{status: 422, statusText: 'Invalid inf' } )
       else
         return HttpResponse.json(building)
     })

@@ -8,24 +8,22 @@ import { getFetchAction } from '../actions/fetchActions';
 import {BUILDINGS_SETTER} from '../componentsHelpers/fetchingConstants';
 import LoadingItems from '../components/LoadingItems';
 import { buildingsLoading, buildingsReceived } from '../state/reducers/buildingsReducer';
+import { isLoginToken } from '../componentsHelpers/token';
 
 const BuildingsContainer = () => {
     const dispatch = useDispatch()
-    const userData = useSelector(state => state.user.user )
+    const {admin,user} = useSelector(state => state.user.user )
     const buildingsData = useSelector(state => state.buildings.buildings)
     const loading = useSelector(state => state.buildings.buildingsLoading)
-    let {admin,user} = userData
-  
     const {id} = useParams()
     const [buildings, setBuildings] = useState([])
     const [searchBoxValue, setSearchBoxValue] = useState("")
     useEffect(()=>{
-      // if(buildingsData.length < 1)
-        dispatch(getFetchAction( BUILDINGS_SETTER) )
+       isLoginToken() && dispatch(getFetchAction( BUILDINGS_SETTER) )
     },[])
 
     useEffect(()=>{
-        setBuildings(buildingsData )
+      isLoginToken() &&  setBuildings(buildingsData )
     },[buildingsData ])
 
     const handleOnChangeSearch = (e) => {
@@ -69,11 +67,11 @@ const BuildingsContainer = () => {
             <br/>
             <div className="center">
               {loading && <LoadingItems/>}
-                {buildingsData?.length > 15 && admin || buildings.length > 15 && user.user_id?<input onChange={handleOnChange} className='search_box' placeholder='Search Buildings ' type='search' value={searchBoxValue}/>:null}
+              {buildingsData?.length > 15 && admin || buildings.length > 15 && user.user_id?<input onChange={handleOnChange} className='search_box' placeholder='Search Buildings ' type='search' value={searchBoxValue}/>:null}
             </div>
             <div>
                 <form onSubmit={handleOnSubmit} className="center">
-                  {!user?.user_id && !user?.admin ? <input onChange={handleOnChangeSearch} className='search_box' placeholder='Search buildings ' type='search' value={searchBoxValue}/>:null}
+                  {!user?.user_id && !user?.admin && <input onChange={handleOnChangeSearch} className='search_box' placeholder='Search buildings ' type='search' value={searchBoxValue}/>}
                 </form>
             </div>
             <br/>

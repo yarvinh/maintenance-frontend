@@ -41,7 +41,7 @@ describe("<Login/>",() => {
         expect(user.is_login).toBe(false)
     })
 
-    test('Input Username Should exist and accept a value',() => {
+    test('Input field Username Should exist and accept a value',() => {
         const userNameInput = screen.getByLabelText('Username')
         fireEvent.change(userNameInput, {target: {value: "testingapp"}})
         expect(userNameInput.value).toBe('testingapp')
@@ -84,7 +84,7 @@ describe("<Login/>",() => {
     //     })     
     // })  
     
-    test("Navigation bar should have login users options", async () => {
+    test("Should have a navigation bar that only appears for registered and logged-in users", async () => {
         loginSubmitForm({password: "123456", username: "testingapp"})
         await waitFor(() =>  {
             const settings = screen.getByText("Settings")
@@ -102,7 +102,7 @@ describe("<Login/>",() => {
         })     
     })  
 
-    test("if email is not validated should redirect to ", async ()=>{
+    test("if email is not validated should redirect to verify_email", async ()=>{
         loginSubmitForm({password: "123456", username: "testingemail"})
         await waitFor(() =>  {
             expect(screen.getByText("We must verify your email first to use your account")).toBeInTheDocument()

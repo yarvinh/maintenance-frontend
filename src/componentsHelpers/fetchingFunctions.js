@@ -51,7 +51,7 @@ export const employeeGetSetter = ({id}) => {
 export const buildingPostSetter = ({payload}) => {
   return {
     payload,
-    path: `/buildings`,
+    path: paths().buildingsPath,
     loading: buildingsLoading,
     reducer:  createdOrDeleteBuilding,
   }

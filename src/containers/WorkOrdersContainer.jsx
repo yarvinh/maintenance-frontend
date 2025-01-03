@@ -5,7 +5,6 @@ import {getSearchWorkOrders,workOrderSelector} from "../componentsHelpers/workOr
 import { useSelector } from 'react-redux';
 
 const WorkOrdersContainer = (props, { building, fromHome,employee})=>{  
-
     const user = useSelector(state => state.user.user)
     const employees = useSelector(state => state.employees.employees)
     const buildings = useSelector(state => state.buildings.buildings)
@@ -13,8 +12,7 @@ const WorkOrdersContainer = (props, { building, fromHome,employee})=>{
     const [searchBoxValue, setSearchBoxValue] = useState('')
 
     useEffect(()=>{
-     if (props.workOrders?.length > 0)
-       setWorkOrders(props.workOrders)
+      props.workOrders?.length > 0 && setWorkOrders(props.workOrders)
     },[props.workOrders])
 
     const handleOnChange = (e)=>{
@@ -28,11 +26,11 @@ const WorkOrdersContainer = (props, { building, fromHome,employee})=>{
         setWorkOrders(newfilteredWorkOrders)
     }
 
-   return(
+    return(
        <div className=' content-container'>
             <div className='workorder-content'>
                 <div>
-                    {user?.is_login ?<CreateWorkOrder  unit={props.unit} building={building} employees={employees} employee={employee} buildings={buildings}/>:null}
+                    {user?.is_login && <CreateWorkOrder  unit={props.unit} building={building} employees={employees} employee={employee} buildings={buildings}/>}
                 </div>
                 <br/>
                 <br/>
@@ -68,8 +66,7 @@ const WorkOrdersContainer = (props, { building, fromHome,employee})=>{
                     <h3 className='text'>You have no work orders to display at this moment</h3>}  
             </div>
        </div>
-   )
+    )
 }
-
 
 export default WorkOrdersContainer

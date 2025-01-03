@@ -1,6 +1,6 @@
 import axios from 'axios'
 import {token} from '../componentsHelpers/token'
-import {baseUrl} from './actionsHelper'
+import {baseUrl, serverErrors} from './actionsHelper'
 import { ERRORS } from '../componentsHelpers/errors'
 import { errorsOrMessagesReceived } from '../state/reducers/errorsOrMessagesReducer'
 
@@ -24,14 +24,18 @@ export const postFetchAction = ( {payload,path,loading,reducer}) => {
   return async (dispatch) => {
     loading && dispatch(loading())
     try {
-      const response = await axios.post(`${baseUrl()}${path}`,payload, {headers: token(), withCredentials: true,})
-      reducer && dispatch(reducer(response.data))
+      const response = await fetch(`${baseUrl()}${path}`, {
+        method: "POST", 
+        headers: token(), 
+        withCredentials: true, 
+        body: JSON.stringify(payload)
+      })
+      if(!response.ok) throw new Error(await response.text())
+      const data = await response.json()
+      reducer && dispatch(reducer(data))
     }catch (error){
       loading && dispatch(loading())
-      if(error.response?.data.errors_or_messages)
-        dispatch(errorsOrMessagesReceived(error.response.data?.errors_or_messages))
-      else
-        dispatch(errorsOrMessagesReceived(ERRORS))
+      serverErrors({dispatch: dispatch, message: error.message}) 
     }
   }
 }
@@ -70,3 +74,20 @@ export const deleteFetchAction = ({path, reducer, optionalReducer}) => {
   }
 }
   
+
+// export const postFetchAction = ( {payload,path,loading,reducer}) => {
+//   return async (dispatch) => {
+//     loading && dispatch(loading())
+//     try {
+//       const response = await axios.post(`${baseUrl()}${path}`,payload, {headers: token(), withCredentials: true,})
+//       reducer && dispatch(reducer(response.data))
+//     }catch (error){
+//       console.log(error)
+//       loading && dispatch(loading())
+//       if(error.response?.data.errors_or_messages)
+//         dispatch(errorsOrMessagesReceived(error.response.data?.errors_or_messages))
+//       else
+//         dispatch(errorsOrMessagesReceived(ERRORS))
+//     }
+//   }
+// }
