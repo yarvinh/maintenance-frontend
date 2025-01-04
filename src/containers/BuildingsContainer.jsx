@@ -2,7 +2,7 @@ import {useState,useEffect} from 'react';
 import {useDispatch, useSelector } from 'react-redux';
 import CreateBuilding from '../components/buildings/CreateBuilding'
 import Building from "../components/buildings/Building"
-import {useParams} from 'react-router-dom';
+// import {useParams} from 'react-router-dom';
 import {buildingsFilter} from '../componentsHelpers/buildings'
 import { getFetchAction } from '../actions/fetchActions';
 import {BUILDINGS_SETTER} from '../componentsHelpers/fetchingConstants';
@@ -15,7 +15,6 @@ const BuildingsContainer = () => {
     const {admin,user} = useSelector(state => state.user.user )
     const buildingsData = useSelector(state => state.buildings.buildings)
     const loading = useSelector(state => state.buildings.buildingsLoading)
-    const {id} = useParams()
     const [buildings, setBuildings] = useState([])
     const [searchBoxValue, setSearchBoxValue] = useState("")
     useEffect(()=>{
@@ -32,7 +31,7 @@ const BuildingsContainer = () => {
     
     let handleOnChange = (e)=>{
         setBuildings(buildingsFilter({buildings: buildingsData , value: e.target.value}))
-        setSearchBoxValue(e.target.value)
+        // setSearchBoxValue(e.target.value)
     }
 
     const handleOnSubmit = (e)=>{
@@ -63,7 +62,7 @@ const BuildingsContainer = () => {
 
     return (
         <section>
-            {!id ? <CreateBuilding />: null }
+            <CreateBuilding/>
             <br/>
             <div className="center">
               {loading && <LoadingItems/>}
@@ -76,7 +75,7 @@ const BuildingsContainer = () => {
             </div>
             <br/>
             <div>
-              {!id && buildings !== 0? renderBuildings(): <h3 className='text'>You have no buildings to display at this moment</h3> }
+              {buildings !== 0? renderBuildings(): <h3 className='text'>You have no buildings to display at this moment</h3> }
             </div> 
         </section>
     )   

@@ -58,21 +58,34 @@ export const patchFetchAction = ({payload,path,loading,itemsReducer,itemReducer}
     }
 }
 
-
 export const deleteFetchAction = ({path, reducer, optionalReducer}) => { 
   return async (dispatch) => {
     try {
-      const response = await axios.delete(`${baseUrl()}${path}`,{headers: token(), withCredentials: true})
-      reducer && dispatch(reducer(response.data))
-      optionalReducer && dispatch(optionalReducer(response.data))
+      const response = await fetch(`${baseUrl()}${path}`,{method: "DELETE",headers: token(), withCredentials: true})
+      const data = await response.json()
+      if(!response.ok) throw new Error(await response.text())
+      reducer && dispatch(reducer(data))
+      optionalReducer && dispatch(optionalReducer(data))
     } catch(error) {
-      if(error.response?.data.errors_or_messages)
-        dispatch(errorsOrMessagesReceived(error.response.data?.errors_or_messages))
-      else
-        dispatch(errorsOrMessagesReceived(ERRORS))
+      serverErrors({dispatch: dispatch, message: error.message}) 
     }
   }
 }
+
+// export const deleteFetchAction = ({path, reducer, optionalReducer}) => { 
+//   return async (dispatch) => {
+//     try {
+//       const response = await axios.delete(`${baseUrl()}${path}`,{headers: token(), withCredentials: true})
+//       reducer && dispatch(reducer(response.data))
+//       optionalReducer && dispatch(optionalReducer(response.data))
+//     } catch(error) {
+//       if(error.response?.data.errors_or_messages)
+//         dispatch(errorsOrMessagesReceived(error.response.data?.errors_or_messages))
+//       else
+//         dispatch(errorsOrMessagesReceived(ERRORS))
+//     }
+//   }
+// }
   
 
 // export const postFetchAction = ( {payload,path,loading,reducer}) => {

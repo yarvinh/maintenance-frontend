@@ -41,7 +41,7 @@ const App  = () => {
   const workOrders = useSelector(state=> state.workOrders.workOrders)
 
   useEffect(() => {
-    isLoginToken() && dispatch(getFetchAction(CURRENT_USER_SETTER))
+    !user.is_login && isLoginToken() && dispatch(getFetchAction(CURRENT_USER_SETTER))
   },[]); 
 
   useEffect(() => {

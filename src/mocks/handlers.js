@@ -148,20 +148,20 @@ export const handlers = [
         super_name: requestInf.building.super_name,
         user_id: 1
       }
-
+      
       const errors = []
-      if (requestInf.building.super_name?.trim() === "" )
-        errors.push("Super name can't be blank")
-       
-      if (requestInf.building.address?.trim() === "")
-        errors.push("Address can't be blank")
-
-      if (requestInf.building.phone_number?.trim() === "")
-        errors.push("Phone number can't be blank")
+      if (requestInf.building.super_name?.trim() === "" ) errors.push("Super name can't be blank")
+      if (requestInf.building.address?.trim() === "") errors.push("Address can't be blank")
+      if (requestInf.building.phone_number?.trim() === "") errors.push("Phone number can't be blank")
       
       if(errors.length > 0) 
         return HttpResponse.json({errors_or_messages: {from: "create_building", errors: errors}},{status: 422, statusText: 'Invalid inf' } )
       else
         return HttpResponse.json(building)
-    })
+    }),
+
+    http.delete('http://localhost:3000/test/buildings/:id', async ({params}) => {
+      return HttpResponse.json({ id: parseInt(params.id), building_removed: true })
+    }),
+  
 ]

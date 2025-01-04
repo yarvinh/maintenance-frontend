@@ -59,7 +59,7 @@ export const buildingPostSetter = ({payload}) => {
 
 export const buildingDeleteSetter = ({id})=>{
   return {
-    path: `/buildings/${id}`,
+    path: `${paths().buildingsPath}/${id}`,
     reducer: createdOrDeleteBuilding
   }
 }

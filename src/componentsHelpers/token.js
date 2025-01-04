@@ -33,3 +33,7 @@ export const removeLoginToken = ()=>{
   localStorage.removeItem('token')
   localStorage.removeItem('secret_key')
 }
+export const setLoginToken = (data) => {
+  localStorage.setItem('token', data.token?.token)
+  localStorage.setItem('secret_key', data.token?.secret_key)
+}
