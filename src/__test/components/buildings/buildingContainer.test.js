@@ -102,14 +102,13 @@ describe("<BuildingsContainer/>",()=>{
        expect(screen.getByText("646-307-2787")).toBeInTheDocument()
     })
 
-    test("Should be able to click on address and navigate to building details",async ()=>{
+    test("Should be able to click on address and navigate to building details page",async ()=>{
         const address = screen.getByText("112 west 119 st")
         fireEvent.click(address)
         await waitFor(()=>{
             expect(location.pathname).toBe("/buildings/2")
-            // screen.getByText("Edit Building")
+            screen.getByText("112 west 119 st")
         })
-
     })
 
 })
