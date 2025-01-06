@@ -23,7 +23,6 @@ const BuildingDetails = ()=>{
         const payload = buildingGetSetter({id: buildingId})
         dispatch(getFetchAction(payload))
     },[])
-
     const handleOnClick=(e)=>{
        const payload = buildingDeleteSetter({id: building.id})
         const confirmBox = window.confirm(

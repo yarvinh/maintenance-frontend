@@ -4,7 +4,6 @@ import { http, HttpResponse } from 'msw'
 // import { isNullishCoalesce } from 'typescript'
  
 export const handlers = [
-  
   http.get('http://localhost:3000/test/checklogin', async (response) => {
     return HttpResponse.json(
       {
@@ -58,7 +57,6 @@ export const handlers = [
       return HttpResponse.json(userWithError, {status: 422, statusText: 'Invalid inf' })
     else
       return HttpResponse.json(user)
-
   }),
 
   http.patch('http://localhost:3000/test/verify_email', async ({request}) => {
@@ -81,7 +79,6 @@ export const handlers = [
        },
        verification_session: false
     }
-
     const userWithError = {
       is_login: false, 
       updated: false, 
@@ -89,18 +86,15 @@ export const handlers = [
       verification_session: true, 
       errors_or_messages: {from: "verify_email",  errors: ["Wrong code, please try again."]}
     }
-
-  
-      if(payload.user.security_code === "123456"){
-        return HttpResponse.json(user)
-       }else{
-        return HttpResponse.json(userWithError, {status: 422, statusText: 'Invalid inf' })
-      }
-    }),
+    if(payload.user.security_code === "123456"){
+      return HttpResponse.json(user)
+      }else{
+      return HttpResponse.json(userWithError, {status: 422, statusText: 'Invalid inf' })
+    }
+  }),
 
     http.patch('http://localhost:3000/test/request_security_code', async () => { 
-      
-    const response = {
+      const response = {
         is_login: false,  
         valid_email: false, 
         reload: false, 
@@ -112,7 +106,6 @@ export const handlers = [
       }
       return  HttpResponse.json(response)
     }),
-
 
     http.post('http://localhost:3000/test/login', async ({request}) => {
       const {user} = await request.json()
@@ -148,7 +141,6 @@ export const handlers = [
         super_name: requestInf.building.super_name,
         user_id: 1
       }
-      
       const errors = []
       if (requestInf.building.super_name?.trim() === "" ) errors.push("Super name can't be blank")
       if (requestInf.building.address?.trim() === "") errors.push("Address can't be blank")
@@ -163,5 +155,21 @@ export const handlers = [
     http.delete('http://localhost:3000/test/buildings/:id', async ({params}) => {
       return HttpResponse.json({ id: parseInt(params.id), building_removed: true })
     }),
+
+    http.get('http://localhost:3000/test/buildings/:id',async ({params})=>{
+      const building = {
+          address: "112 west 119 st",
+          bin: null,
+          block: null,
+          created_at: "2024-02-10T20:32:41.313Z",
+          id: 4,
+          lot: null,
+          phone_number: "646-307-2787",
+          super_name: "Erick Arnold",
+          updated_at: "2024-02-10T20:32:41.313Z",
+          user_id: 1
+      }
+        return HttpResponse.json(building)
+    })
   
 ]

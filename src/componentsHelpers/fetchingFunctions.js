@@ -67,7 +67,7 @@ export const buildingDeleteSetter = ({id})=>{
 
 export const buildingGetSetter = ({id}) => {
   return {
-    path: `/buildings/${id}`,
+    path: `${paths().buildingsPath}/${id}`,
     loading: buildingLoading,
     reducer: buildingReceived,
   }

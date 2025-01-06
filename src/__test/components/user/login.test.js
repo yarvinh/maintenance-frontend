@@ -108,6 +108,7 @@ describe("<Login/>",() => {
             expect(screen.getByText("We must verify your email first to use your account")).toBeInTheDocument()
             const {user} = store.getState().user
             expect(user.valid_email).toBe(false)
+            
         })    
     })  
 

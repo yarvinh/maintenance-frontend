@@ -107,8 +107,13 @@ describe("<BuildingsContainer/>",()=>{
         fireEvent.click(address)
         await waitFor(()=>{
             expect(location.pathname).toBe("/buildings/2")
-            screen.getByText("112 west 119 st")
+            expect(screen.getByText("Edit Building")).toBeInTheDocument()
+            expect(screen.getAllByText("112 west 119 st").length).toBe(2)
         })
+    })
+
+    test("should be able to edit building", async ()=>{
+       
     })
 
 })
