@@ -8,7 +8,7 @@ import CloseWorkOrder from './CloseWorkOrder';
 import TasksContainer from '../../containers/TasksContainer';
 import {date} from "../../componentsHelpers/date"
 import { deleteFetchAction, getFetchAction} from '../../actions/fetchActions';
-import { deleteEmployeeFromWorkOrder, workOrderDeleteSetter, workOrderGetSetter } from '../../componentsHelpers/fetchingFunctions';
+import { deleteEmployeeFromWorkOrder, workOrderDeleteSetter, workOrderGetSetter, workOrdersGetSetter } from '../../componentsHelpers/fetchingFunctions';
 import LoadingItems from '../LoadingItems';
 
 const WorkOrderDetails = ({buildings,employees})=>{ 
@@ -46,18 +46,9 @@ const WorkOrderDetails = ({buildings,employees})=>{
       }) 
     }
 
-    const receiptAmount=()=>{
-      let total = 0
-      workOrder.receipts?.forEach((receipt) => {
-        total += receipt.amount
-      })
-      return <strong key={total}> = {total} </strong>
-    }
-    
     const userWorkorder = ()=>{
       return !admin && user.user?.work_orders?.find((w)=> workOrder.id === w.id) 
     }
-
 
     const handleOnClick = (e) =>{
       let message = e.target.name === "employee" ?  "Are you sure you to remove this employee"
@@ -102,11 +93,11 @@ const WorkOrderDetails = ({buildings,employees})=>{
                         {workOrder.building && <a href={`tel:${workOrder.building.phone_number}`}><span className="bottom">{workOrder.building.phone_number}</span></a>}
                         <br/>
                         <div className="nav-item">
-                          <Link to={`/work_orders/${workOrder.id}/receipts`}>Material receipts</Link> {receiptAmount()}
+                          <Link to={`/work_orders/${workOrder.id}/receipts`}>Material receipts</Link> <strong> = {workOrder?.receipts_total} </strong>
                           <br></br>
                           <Link to={`/work_orders/${workOrder.id}/gallery`}>Project gallery. {workOrder.gallery_images_count} images</Link> 
                         </div>
-                        <div className="center"> 
+                        <div className="center open-close-workorders"> 
                           {!!userWorkorder() || admin ? <CloseWorkOrder />:null}  
                         </div>  
                         <br/>

@@ -276,6 +276,8 @@ export const editReceiptSetter = ({payload, workOrderId, id})=>{
     payload,
     path: `/work_orders/${workOrderId}/receipts/${id}`,
     itemReducer: editReceiptsReceived,
+    itemsReducer: editWorkOrderReceived,
+    propertyName: "work_order"
   }
 }
 

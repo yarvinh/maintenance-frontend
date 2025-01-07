@@ -20,7 +20,10 @@ const WorkOrdersContainer = (props, { building, fromHome,employee})=>{
         const searchedWorkOrders = getSearchWorkOrders({value: e.target.value, workOrdersArr: props.workOrders})
         setWorkOrders(searchedWorkOrders)
     }
-
+    const totalReceiptAmount = ()=>{
+        const total =  workOrders.reduce((accumulator,{receipts_total}) => accumulator + receipts_total,0)
+        return total.toFixed(2)
+    }
     const handleOnclick = (e) => {  
         const newfilteredWorkOrders = workOrderSelector({workOrders: props.workOrders, filterBy: e.target.value })
         setWorkOrders(newfilteredWorkOrders)
@@ -45,7 +48,9 @@ const WorkOrdersContainer = (props, { building, fromHome,employee})=>{
                             <option value='expire'>Expire work orders</option>
                         </select> 
                     }
+                    <p> <strong>Receipts total: {totalReceiptAmount()} </strong></p>
                 </div>
+                 
                 {props.workOrders.length > 0 ? 
                     <table className="table table-striped" > 
                         <thead>

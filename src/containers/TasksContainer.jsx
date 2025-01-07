@@ -10,7 +10,6 @@ import { getFetchAction } from '../actions/fetchActions';
 const TasksContainer = ({user,admin,workOrder})=>{
   const dispatch = useDispatch()
   const tasks = useSelector(state => state.tasks.tasks)
-  // const taskLoading = useSelector(state => state.tasks.taskLoading)
 
   const {workOrderId} = useParams()
   let sumTasks = 0
@@ -26,7 +25,7 @@ const TasksContainer = ({user,admin,workOrder})=>{
   
   return (
   <div>
-      <div className='hight'>
+      <div>
         {!workOrder.status && admin || !workOrder.status && !user?.user_id? <CreateTask/>: null}
       </div>
       <div >

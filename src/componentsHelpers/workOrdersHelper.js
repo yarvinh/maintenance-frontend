@@ -44,13 +44,15 @@ export const workOrderStatus = (workOrder) => {
 
 
 export const getSearchWorkOrders=({value,workOrdersArr})=>{
+
   return workOrdersArr.filter((item)=>{
        return (
-         new Date(item.date.split('-').join("-").split("T")[0].replace(/-/g, '\/')).toLocaleDateString().includes(new Date(value).toLocaleDateString())
-         || item.title.toLowerCase().includes(value.toLowerCase()) 
-         || !!item.employees.find(employee=>employee.name.toLowerCase().includes(value.toLowerCase()))
-         || item.building?.address.toLowerCase().includes(value.toLowerCase())
-         || item.unit.toLowerCase().includes(value.toLowerCase()) 
+        //  new Date(item.date.split('-').join("-").split("T")[0].replace(/-/g, '\/')).toLocaleDateString().includes(new Date(value).toLocaleDateString())
+          item.title.toLowerCase().includes(value.toLowerCase()) 
+          || !!item.employees.find(employee=>employee.name.toLowerCase().includes(value.toLowerCase()))
+          || item.building?.address.toLowerCase().includes(value.toLowerCase())
+          || item.unit.toLowerCase().includes(value.toLowerCase()) 
+          || item.date?.includes(value) 
        )   
    })
 }

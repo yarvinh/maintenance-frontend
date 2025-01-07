@@ -42,7 +42,7 @@ export const postFetchAction = ( {payload,path,loading,reducer}) => {
   }
 }
 
-export const patchFetchAction = ({payload,path,loading,itemsReducer,itemReducer}) => {
+export const patchFetchAction = ({payload,path,loading,itemsReducer,itemReducer,propertyName}) => {
   return async (dispatch) => {
        loading && dispatch(loading())
         try {
@@ -54,8 +54,9 @@ export const patchFetchAction = ({payload,path,loading,itemsReducer,itemReducer}
           })
           if(!response.ok) throw new Error(await response.text())
           const data = await response.json()
-          itemsReducer && dispatch(itemsReducer(data))
+          itemsReducer && !propertyName && dispatch(itemsReducer(data))
           itemReducer && dispatch(itemReducer(data))
+          propertyName && dispatch(itemsReducer(data[propertyName]))
           data.errors_or_messages && dispatch(errorsOrMessagesReceived(data.errors_or_messages))
         } catch (error){
           loading && dispatch(loading())
