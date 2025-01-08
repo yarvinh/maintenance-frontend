@@ -30,7 +30,6 @@ const BuildingsContainer = () => {
     
     let handleOnChange = (e)=>{
         setBuildings(buildingsFilter({buildings: buildingsData , value: e.target.value}))
-        // setSearchBoxValue(e.target.value)
     }
 
     const handleOnSubmit = (e)=>{
@@ -65,7 +64,7 @@ const BuildingsContainer = () => {
             <br/>
             <div className="center">
               {loading && <LoadingItems/>}
-              {buildingsData?.length > 15 && admin || buildings.length > 15 && user.user_id?<input onChange={handleOnChange} className='search_box' placeholder='Search Buildings ' type='search' value={searchBoxValue}/>:null}
+              {buildingsData?.length > 15 && admin || buildings.length > 15 && user.user_id?<input onChange={handleOnChange} className='search_box' placeholder='Search Buildings ' type='search' />:null}
             </div>
             <div>
                 <form onSubmit={handleOnSubmit} className="center">

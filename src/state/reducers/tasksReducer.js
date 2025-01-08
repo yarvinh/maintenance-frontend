@@ -23,7 +23,6 @@ const tasksSlice =  createSlice({
             }
         },
         editTaskReceived: (state, action) => {
-            console.log(action.payload)
             editItemFromArray({array: state.tasks, item: action.payload})
         }
     }

@@ -12,12 +12,7 @@ const TasksContainer = ({user,admin,workOrder})=>{
   const tasks = useSelector(state => state.tasks.tasks)
 
   const {workOrderId} = useParams()
-  let sumTasks = 0
 
-  tasks?.forEach((task) => {
-    task.completed ? sumTasks += task.price : sumTasks += 0
-  })
-  
   useEffect(() => {
     const taskSetter  = tasksGetSetter({id: workOrderId})
     dispatch(getFetchAction(taskSetter))
@@ -32,10 +27,7 @@ const TasksContainer = ({user,admin,workOrder})=>{
         {tasks.map((task)=>{
           return <div key={task.id} ><Task workOrder={workOrder} admin={admin} user={user} task={task}/> </div>
         })}
-      </div>
-      <div>
-          <label className="fa-solid">Total  =  ${sumTasks}</label>  
-      </div>    
+      </div>  
   </div>
 
   )

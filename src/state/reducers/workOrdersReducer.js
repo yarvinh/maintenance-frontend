@@ -24,7 +24,6 @@ const workOrdersSlice =  createSlice({
             }
         },
         editWorkOrderReceived: (state, action) => {
-            console.log(action.payload)
           editItemFromArray({array: state.workOrders, item: action.payload})
           state.workOrdersLoading = false 
         }

@@ -11,9 +11,7 @@ const Task = ({task,admin,workOrder ,user})=>{
     disable = true
 
     const handleOnClick = (e) =>{
-      const confirmBox = window.confirm(
-        "Are you sure to delete this task?"
-      )
+      const confirmBox = window.confirm( "Are you sure to delete this task?" )
       
       if (confirmBox === true){
         const payload = taskDeleteSetter({workOrderId: workOrderId, id: task.id})
@@ -26,7 +24,6 @@ const Task = ({task,admin,workOrder ,user})=>{
         const payload = taskPatchSetter({workOrderId: workOrderId, id: task.id, payload: {task: task.id}})
         dispatch(patchFetchAction(payload))
       }
-
     }
 
     return (     
@@ -39,7 +36,6 @@ const Task = ({task,admin,workOrder ,user})=>{
             <label >${task?.price}</label>  
         </div>
     )  
-
   }
 
   export default Task

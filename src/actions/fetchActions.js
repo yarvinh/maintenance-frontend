@@ -54,10 +54,12 @@ export const patchFetchAction = ({payload,path,loading,itemsReducer,itemReducer,
           })
           if(!response.ok) throw new Error(await response.text())
           const data = await response.json()
+          console.log(data)
           itemsReducer && !propertyName && dispatch(itemsReducer(data))
           itemReducer && dispatch(itemReducer(data))
           propertyName && dispatch(itemsReducer(data[propertyName]))
           data.errors_or_messages && dispatch(errorsOrMessagesReceived(data.errors_or_messages))
+          
         } catch (error){
           loading && dispatch(loading())
           serverErrors({dispatch: dispatch, message: error.message}) 

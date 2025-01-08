@@ -21,7 +21,7 @@ const WorkOrderDetails = ({buildings,employees})=>{
     const loading = useSelector(state => state.workOrder.workOrderLoading)
     const {admin} = user
     const belongToCurrentUser = workOrder?.employees?.filter(emp => emp.id === user.user.id)[0]
-    
+
     useEffect(()=>{
       const worOrderDoesNotExist =  errorsOrMsg.errors?.includes('Access to this comment was dinied')
       if(worOrderDoesNotExist )
@@ -103,6 +103,7 @@ const WorkOrderDetails = ({buildings,employees})=>{
                         <br/>
                         <div className="task-container center">
                             { workOrder.id && <TasksContainer userWorkorder={userWorkorder} workOrder={workOrder} user={user} admin={admin}/>}
+                            <label className="fa-solid">Total  =  ${workOrder.task_inventory_total}</label>  
                         </div>  
                       </div>   
                 </div> 

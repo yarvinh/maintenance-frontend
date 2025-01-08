@@ -153,11 +153,18 @@ export const taskPostSetter = ({id,payload}) => {
 
 export const taskPatchSetter = ({workOrderId, id, payload}) => {
   return {
+    // payload,
+    // path: `/work_orders/${workOrderId}/tasks/${id}`,
+    // loading: tasksLoading,
+    // itemReducer: editTaskReceived,
+    // itemsReducer: editWorkOrderReceived,
+    // propertyName: "work_order"
+
     payload,
     path: `/work_orders/${workOrderId}/tasks/${id}`,
-    loading: tasksLoading,
-    itemsReducer: editTaskReceived,
-    itemReducer: gostFunction
+    loading: workOrderLoading,
+    itemsReducer: editWorkOrderReceived,
+    itemReducer: workOrderReceived
   }
 }
 
@@ -342,9 +349,4 @@ export const searchSetter = ({path,payload}) => {
   }
 }
 
-
-
-const gostFunction = (data)=>{
-   return "Don't do anything"
-}
 

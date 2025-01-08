@@ -22,8 +22,14 @@ const WorkOrdersContainer = (props, { building, fromHome,employee})=>{
     }
     const totalReceiptAmount = ()=>{
         const total =  workOrders.reduce((accumulator,{receipts_total}) => accumulator + receipts_total,0)
-        return total.toFixed(2)
+        return total.toFixed(2)?.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")
     }
+
+    const taskInventoryTotal = ()=>{
+        const total =  workOrders.reduce((accumulator,{task_inventory_total}) => accumulator + task_inventory_total,0)
+        return total.toFixed(2)?.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")
+    }
+    
     const handleOnclick = (e) => {  
         const newfilteredWorkOrders = workOrderSelector({workOrders: props.workOrders, filterBy: e.target.value })
         setWorkOrders(newfilteredWorkOrders)
@@ -36,7 +42,7 @@ const WorkOrdersContainer = (props, { building, fromHome,employee})=>{
                     {user?.is_login && <CreateWorkOrder  unit={props.unit} building={building} employees={employees} employee={employee} buildings={buildings}/>}
                 </div>
                 <br/>
-                <br/>
+
                 <div className='center'>
                     {props.workOrders?.length > 10 && <input onChange={handleOnChange} className='search_box' placeholder='Search Work Orders ' type='search' value={searchBoxValue}/>}
                     {!fromHome && 
@@ -48,9 +54,11 @@ const WorkOrdersContainer = (props, { building, fromHome,employee})=>{
                             <option value='expire'>Expire work orders</option>
                         </select> 
                     }
-                    <p> <strong>Receipts total: {totalReceiptAmount()} </strong></p>
                 </div>
-                 
+                    <p className='center inventory'>
+                       <strong>Receipts total: {totalReceiptAmount()} </strong> <br/>
+                       <strong>Tasks inventory total: {taskInventoryTotal()} </strong>
+                    </p>
                 {props.workOrders.length > 0 ? 
                     <table className="table table-striped" > 
                         <thead>
