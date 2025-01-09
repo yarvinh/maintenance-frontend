@@ -33,7 +33,6 @@ const WorkOrder = ({workOrder,index,workOrderIndex,user}) => {
     }
 
     const handleOnClick=(e)=>{  
-        // workOrderIndex(index)
         const payload = workOrderPatchSetter({id: workOrder.id, payload: {accepted: true}})
     
         if (acceptedWorkOrder() !== 'accepted' && !user.admin)
@@ -50,6 +49,7 @@ const WorkOrder = ({workOrder,index,workOrderIndex,user}) => {
                 <td className="work_order_address"><Link to={`/buildings/${workOrder.building_id}`} className="links"><p>{workOrder.building? workOrder.building.address: "Missing"}</p> </Link></td>
                 <td>
                     <Link to={`/work_orders/${workOrder.id}`} className="links"> 
+                        <span>{workOrder.task_inventory_total}, {workOrder.receipts_total}</span>
                         <span onClick={handleOnClick}>{workOrder.title}, Unit: {workOrder.unit}</span>
                     </Link>   
                 </td>
