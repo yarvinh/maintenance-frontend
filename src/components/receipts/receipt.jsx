@@ -41,7 +41,7 @@ const Receipt = ({receipt})=>{
           <div  className='center'> 
               <EditReceipt receipt={receipt}/>
           </div>
-          <strong color="black" className="font-size"> | title: {receipt.title} | Amount: ${receipt.amount} |</strong><br/>   
+          <strong color="black" className="font-size"> | title: {receipt.title} | Amount: ${receipt.amount?.toFixed(2)?.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")} |</strong><br/>   
         </div>
     )
   };

@@ -158,20 +158,24 @@ export const taskPatchSetter = ({workOrderId, id, payload}) => {
     // loading: tasksLoading,
     // itemReducer: editTaskReceived,
     // itemsReducer: editWorkOrderReceived,
-    // propertyName: "work_order"
-
     payload,
     path: `/work_orders/${workOrderId}/tasks/${id}`,
     loading: workOrderLoading,
-    itemsReducer: editWorkOrderReceived,
-    itemReducer: workOrderReceived
+    itemReducer: editTaskReceived,
+    optionalReducer: editWorkOrderReceived,
+    optionalReducer2: workOrderReceived,
+    propertyName: "work_order",
   }
 }
 
 export const taskDeleteSetter = ({workOrderId, id})=>{
   return {
     path: `/work_orders/${workOrderId}/tasks/${id}`,
-    reducer: createdOrDeleteTasks
+    reducer: createdOrDeleteTasks,
+    optionalReducer2: editWorkOrderReceived,
+    optionalReducer3: workOrderReceived,
+    propertyName: "work_order"
+
   }
 }
 export const commentGetSetter = ({id,workOrderId}) => {
@@ -283,7 +287,7 @@ export const editReceiptSetter = ({payload, workOrderId, id})=>{
     payload,
     path: `/work_orders/${workOrderId}/receipts/${id}`,
     itemReducer: editReceiptsReceived,
-    itemsReducer: editWorkOrderReceived,
+    optionalReducer: editWorkOrderReceived,
     propertyName: "work_order"
   }
 }
@@ -291,7 +295,10 @@ export const editReceiptSetter = ({payload, workOrderId, id})=>{
 export const receiptDeleteSetter = ({workOrderId,id})=>{
   return {
     path: `/work_orders/${workOrderId}/receipts/${id}`,
-    reducer: createdOrDeleteReceipt
+    reducer: createdOrDeleteReceipt,
+    optionalReducer2: editWorkOrderReceived,
+    optionalReducer3: workOrderReceived,
+    propertyName: "work_order"
   }
 }
 

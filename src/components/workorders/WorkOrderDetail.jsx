@@ -21,7 +21,6 @@ const WorkOrderDetails = ({buildings,employees})=>{
     const loading = useSelector(state => state.workOrder.workOrderLoading)
     const {admin} = user
     const belongToCurrentUser = workOrder?.employees?.filter(emp => emp.id === user.user.id)[0]
-
     useEffect(()=>{
       const worOrderDoesNotExist =  errorsOrMsg.errors?.includes('Access to this comment was dinied')
       if(worOrderDoesNotExist )
@@ -76,7 +75,7 @@ const WorkOrderDetails = ({buildings,employees})=>{
                         <strong> Job Title: {workOrder.title}</strong> 
                       </div>
                       <div className=""> 
-                        { admin || (!user?.user_id && belongToCurrentUser) ?  <EditWorkOrder buildings={buildings} employees={employees} workOrder={workOrder}/>:null}
+                        { admin || (!user?.user_id && belongToCurrentUser) ? <EditWorkOrder buildings={buildings} employees={employees} workOrder={workOrder}/>:null}
                       </div> 
                       <div className="card-body">
                         <div className='hight'>
@@ -93,7 +92,7 @@ const WorkOrderDetails = ({buildings,employees})=>{
                         {workOrder.building && <a href={`tel:${workOrder.building.phone_number}`}><span className="bottom">{workOrder.building.phone_number}</span></a>}
                         <br/>
                         <div className="nav-item">
-                          <Link to={`/work_orders/${workOrder.id}/receipts`}>Material receipts</Link> <strong> = {workOrder?.receipts_total} </strong>
+                          <Link to={`/work_orders/${workOrder.id}/receipts`}>Material receipts</Link> <strong> = {workOrder?.receipts_total?.toFixed(2)?.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")} </strong>
                           <br></br>
                           <Link to={`/work_orders/${workOrder.id}/gallery`}>Project gallery. {workOrder.gallery_images_count} images</Link> 
                         </div>

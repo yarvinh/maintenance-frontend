@@ -42,7 +42,7 @@ export const postFetchAction = ( {payload,path,loading,reducer}) => {
   }
 }
 
-export const patchFetchAction = ({payload,path,loading,itemsReducer,itemReducer,propertyName}) => {
+export const patchFetchAction = ({payload,path,loading,itemsReducer,itemReducer, optionalReducer, optionalReducer2, propertyName}) => {
   return async (dispatch) => {
        loading && dispatch(loading())
         try {
@@ -54,10 +54,11 @@ export const patchFetchAction = ({payload,path,loading,itemsReducer,itemReducer,
           })
           if(!response.ok) throw new Error(await response.text())
           const data = await response.json()
-          console.log(data)
-          itemsReducer && !propertyName && dispatch(itemsReducer(data))
+          console.log(data[propertyName])
+          itemsReducer &&dispatch(itemsReducer(data))
           itemReducer && dispatch(itemReducer(data))
-          propertyName && dispatch(itemsReducer(data[propertyName]))
+          propertyName && optionalReducer && dispatch(optionalReducer(data[propertyName]))
+          propertyName && optionalReducer2 && dispatch(optionalReducer2(data[propertyName]))
           data.errors_or_messages && dispatch(errorsOrMessagesReceived(data.errors_or_messages))
           
         } catch (error){
@@ -67,14 +68,17 @@ export const patchFetchAction = ({payload,path,loading,itemsReducer,itemReducer,
     }
 }
 
-export const deleteFetchAction = ({path, reducer, optionalReducer}) => { 
+export const deleteFetchAction = ({path, reducer, optionalReducer, optionalReducer2, optionalReducer3, propertyName}) => { 
   return async (dispatch) => {
     try {
       const response = await fetch(`${baseUrl()}${path}`,{method: "DELETE",headers: token(), withCredentials: true})
       const data = await response.json()
       if(!response.ok) throw new Error(await response.text())
       reducer && dispatch(reducer(data))
-      optionalReducer && dispatch(optionalReducer(data))
+      console.log(data)
+      optionalReducer && dispatch(optionalReducer(response.data))
+      propertyName && optionalReducer2 && dispatch(optionalReducer2(data[propertyName]))
+      propertyName && optionalReducer3 && dispatch(optionalReducer3(data[propertyName]))
     } catch(error) {
       serverErrors({dispatch: dispatch, message: error.message}) 
     }

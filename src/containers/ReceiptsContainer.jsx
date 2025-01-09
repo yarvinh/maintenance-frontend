@@ -37,7 +37,7 @@ const ReceiptsContainer = ()=>{
                 <> 
                   {receiptImages}
                   <br></br>
-                  <strong>Total = {receiptTotal}</strong>
+                  <strong>Total = {receiptTotal?.toFixed(2)?.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")}</strong>
                 </>   
             ) 
     }

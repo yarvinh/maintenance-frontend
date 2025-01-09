@@ -4,7 +4,6 @@ import '../../styles/styles.css'
 import { useParams} from 'react-router-dom';
 import { patchFetchAction } from '../../actions/fetchActions';
 import { editReceiptSetter } from '../../componentsHelpers/fetchingFunctions';
-// import {updateReceipt,removeReceipt} from  '../../actions/receiptsActions'
 
 const EditReceipt=({receipt})=>{
     const dispatch = useDispatch()
@@ -18,9 +17,6 @@ const EditReceipt=({receipt})=>{
     const handleOnClick = (e) =>{
           let  message = "Are you sure you to remove this image"   
           const confirmBox = window.confirm(message)
-        //   if (confirmBox === true ) 
-             
-            // props.removeReceipt(props.receipt.id) 
     }
 
     const handleOnChange=(e)=>{
@@ -46,7 +42,6 @@ const EditReceipt=({receipt})=>{
             </div>
         </div>
     )
-
 }
       
 export default EditReceipt
