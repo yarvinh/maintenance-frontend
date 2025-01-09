@@ -61,7 +61,7 @@ const WorkOrder = ({workOrder,index,workOrderIndex,user}) => {
                   <p>{workOrder.task_inventory_total}</p>
                 </td>
                 <td className="tasks-receipts">
-                  <p>{workOrder.receipts_total}</p>
+                  <p>{workOrder.receipts_total?.toFixed(2)?.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")}</p>
                 </td>
                 <td className="work_order_status">  
                     {workOrderStatus(workOrder)}
