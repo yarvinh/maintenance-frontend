@@ -7,7 +7,7 @@ export const getFetchAction = ({path, loading, reducer, query_string}) => {
   return async (dispatch) => {
       loading && dispatch(loading())
         try {
-            const response = await fetch(`${baseUrl()}${path}${query_string ? "?"+"query_string=" + query_string : ""}`,{
+            const response = await fetch(`${baseUrl()}${path}`,{
               method: "GET", 
               headers: token(), 
               withCredentials: true
@@ -75,7 +75,6 @@ export const deleteFetchAction = ({path, reducer, optionalReducer, optionalReduc
       const data = await response.json()
       if(!response.ok) throw new Error(await response.text())
       reducer && dispatch(reducer(data))
-      console.log(data)
       optionalReducer && dispatch(optionalReducer(response.data))
       propertyName && optionalReducer2 && dispatch(optionalReducer2(data[propertyName]))
       propertyName && optionalReducer3 && dispatch(optionalReducer3(data[propertyName]))
