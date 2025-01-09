@@ -57,17 +57,17 @@ const WorkOrder = ({workOrder,index,workOrderIndex,user}) => {
                       {workOrderEmployees()}
                     </dd>
                 </td>
+                <td className="tasks-receipts">
+                  <p>{workOrder.task_inventory_total}</p>
+                </td>
+                <td className="tasks-receipts">
+                  <p>{workOrder.receipts_total}</p>
+                </td>
                 <td className="work_order_status">  
                     {workOrderStatus(workOrder)}
                 </td>
                 <td className="work_order_status">
                     {user.admin && <i onClick={handleDeleteOnClick}  className="fa-solid fa-trash-can delete-task "></i>} 
-                </td>
-                <td>
-                  <p>tasks: {workOrder.task_inventory_total}</p>
-                </td>
-                <td>
-                  <p>receipts: {workOrder.receipts_total}</p>
                 </td>
             </tr>
         </>

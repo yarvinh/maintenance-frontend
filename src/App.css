@@ -63,29 +63,6 @@
   font-size: 16px;
 }
 
-
-@media screen and (max-width: 450px) {
-  .expire {
-    background-color: rgb(249, 125, 125);
-  }
-  .closed {
-    background-color: rgb(167, 244, 167)
-  }
-  .pending {
-    background-color: rgb(245, 216, 164);
-  }
-  .work_order_status {
-    display: none;
-  }
-}
-
-@media screen and (max-width: 361px) {
-  .work_order_address {
-    display: none;
-  }
-}
-
-
 .search_box { 
   width: 50%;
   min-height: 40px;

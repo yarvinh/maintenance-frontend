@@ -68,6 +68,8 @@ const WorkOrdersContainer = (props, { building, fromHome,employee})=>{
                                 <th className="work_order_address" scope="col">Address</th>
                                 <th scope="col">Summary</th>
                                 <th scope="col">Assigned </th>
+                                <th className="tasks-receipts" scope="col">Tasks</th>
+                                <th className="tasks-receipts" scope="col">Receipts </th>
                                 <th className="work_order_status" scope="col">status</th>
                             </tr>
                         </thead>
