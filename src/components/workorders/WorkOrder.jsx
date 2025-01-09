@@ -6,7 +6,7 @@ import {date} from '../../componentsHelpers/date'
 import { deleteFetchAction, patchFetchAction } from '../../actions/fetchActions';
 import { workOrderDeleteSetter, workOrderPatchSetter } from '../../componentsHelpers/fetchingFunctions';
 
-const WorkOrder = ({workOrder,index,workOrderIndex,user}) => {
+const WorkOrder = ({workOrder,index,user}) => {
     const dispatch = useDispatch()
     const acceptedWorkOrder = ()=>{
         const currentEmployee = workOrder.employees.find(emp => emp.id === user.user.id)
@@ -49,8 +49,11 @@ const WorkOrder = ({workOrder,index,workOrderIndex,user}) => {
                 <td className="work_order_address"><Link to={`/buildings/${workOrder.building_id}`} className="links"><p>{workOrder.building? workOrder.building.address: "Missing"}</p> </Link></td>
                 <td>
                     <Link to={`/work_orders/${workOrder.id}`} className="links"> 
-                        <span onClick={handleOnClick}>{workOrder.title}, Unit: {workOrder.unit}</span>
+                        <span onClick={handleOnClick}>{workOrder.title}</span>
                     </Link>   
+                </td>
+                <td className="units-column">
+                  <p>{workOrder.unit}</p>
                 </td>
                 <td>
                     <dd>
@@ -66,7 +69,7 @@ const WorkOrder = ({workOrder,index,workOrderIndex,user}) => {
                 <td className="work_order_status">  
                     {workOrderStatus(workOrder)}
                 </td>
-                <td className="work_order_status">
+                <td className='removed-work-order'>
                     {user.admin && <i onClick={handleDeleteOnClick}  className="fa-solid fa-trash-can delete-task "></i>} 
                 </td>
             </tr>

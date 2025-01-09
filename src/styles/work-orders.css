@@ -40,7 +40,7 @@
   }
 }
 
-@media screen and (max-width: 450px) {
+@media screen and (max-width: 600px) {
   .expire {
     background-color: rgb(249, 125, 125);
   }
@@ -53,10 +53,20 @@
   .work_order_status {
     display: none;
   }
+  .removed-work-order{
+    display: none;
+  }
 }
 
 @media screen and (max-width: 361px) {
   .work_order_address {
+    display: none;
+  }
+}
+
+
+@media screen and (max-width: 400px) {
+  .units-column{
     display: none;
   }
 }

@@ -67,6 +67,7 @@ const WorkOrdersContainer = (props, { building, fromHome,employee})=>{
                                 <th scope="col">Due Date</th>
                                 <th className="work_order_address" scope="col">Address</th>
                                 <th scope="col">Summary</th>
+                                <th className="units-column" scope="col">Units</th>
                                 <th scope="col">Assigned </th>
                                 <th className="tasks-receipts" scope="col">Tasks</th>
                                 <th className="tasks-receipts" scope="col">Receipts </th>
