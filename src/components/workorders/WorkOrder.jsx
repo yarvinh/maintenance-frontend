@@ -49,7 +49,6 @@ const WorkOrder = ({workOrder,index,workOrderIndex,user}) => {
                 <td className="work_order_address"><Link to={`/buildings/${workOrder.building_id}`} className="links"><p>{workOrder.building? workOrder.building.address: "Missing"}</p> </Link></td>
                 <td>
                     <Link to={`/work_orders/${workOrder.id}`} className="links"> 
-                        <span>{workOrder.task_inventory_total}, {workOrder.receipts_total}</span>
                         <span onClick={handleOnClick}>{workOrder.title}, Unit: {workOrder.unit}</span>
                     </Link>   
                 </td>
@@ -63,6 +62,12 @@ const WorkOrder = ({workOrder,index,workOrderIndex,user}) => {
                 </td>
                 <td className="work_order_status">
                     {user.admin && <i onClick={handleDeleteOnClick}  className="fa-solid fa-trash-can delete-task "></i>} 
+                </td>
+                <td>
+                  <p>tasks: {workOrder.task_inventory_total}</p>
+                </td>
+                <td>
+                  <p>receipts: {workOrder.receipts_total}</p>
                 </td>
             </tr>
         </>
