@@ -16,12 +16,12 @@ const TasksContainer = ({user,admin,workOrder})=>{
   useEffect(() => {
     const taskSetter  = tasksGetSetter({id: workOrderId})
     dispatch(getFetchAction(taskSetter))
-  },[]);
+  },[dispatch, workOrderId]);
   
   return (
   <div>
       <div>
-        {!workOrder.status && admin || !workOrder.status && !user?.user_id? <CreateTask/>: null}
+        {(!workOrder.status && admin) || (!workOrder.status && !user?.user_id)? <CreateTask/>: null}
       </div>
       <div >
         {tasks.map((task)=>{

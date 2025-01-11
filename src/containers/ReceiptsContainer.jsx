@@ -1,6 +1,6 @@
 import {useEffect } from 'react';
 import Receipt from "../components/receipts/receipt"
-import {useNavigate, useParams,Navigate} from 'react-router-dom';
+import { useParams} from 'react-router-dom';
 import CreateReceipt from '../components/receipts/CreateReceipt';
 import { getFetchAction } from '../actions/fetchActions';
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,17 +10,11 @@ const ReceiptsContainer = ()=>{
     const dispatch = useDispatch()
     const receipts = useSelector(state => state.receipts.receipts)
     const user = useSelector(state => state.user.user)
-    const loading = useSelector(state => state.receipts.receiptsLoading)
-    let navigate = useNavigate()
     const {workOrderId} = useParams()
-    // console.log(receipts)
-    const goBack = (e) => {
-        // return navigate(-1)
-    }
     useEffect(() => {
         const payload = getReceiptsSetter({id: workOrderId})
         dispatch(getFetchAction(payload))
-    } ,[]); 
+    } ,[dispatch,workOrderId]); 
     
     const displayImages=()=>{
             let receiptTotal = 0
@@ -47,7 +41,6 @@ const ReceiptsContainer = ()=>{
             <div>
                 <CreateReceipt user={user.user} workOrderId={workOrderId}/>
                 {displayImages()}
-               {/* {loading || user.is_login? displayImages(): <Navigate to='/login'/>} */}
             </div>
        </div>
    )

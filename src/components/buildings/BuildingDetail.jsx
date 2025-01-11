@@ -17,12 +17,12 @@ const BuildingDetails = ()=>{
     const user = useSelector(state => state.user.user)
     const building = useSelector(state => state.building.building)
     const workOrders = useSelector(state => state.workOrders.workOrders)
-    const loading = useSelector(state => state.building.buildingLoading)
+    // const loading = useSelector(state => state.building.buildingLoading)
     const buildingWorkOrders = workOrders.filter(wo => wo.building && wo.building_id.toString() === buildingId) 
     useEffect(()=>{
         const payload = buildingGetSetter({id: buildingId})
         dispatch(getFetchAction(payload))
-    },[])
+    },[buildingId,dispatch])
     const handleOnClick=(e)=>{
        const payload = buildingDeleteSetter({id: building.id})
         const confirmBox = window.confirm(

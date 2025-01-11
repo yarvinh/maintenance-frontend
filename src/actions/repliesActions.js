@@ -9,7 +9,7 @@ import { replyReceived } from "../state/reducers/commentsReducers"
 export const dispatchReply = ({path,reply,payload}) =>{
   return async (dispatch) => {                      
       try {
-        const response  = await axios.post(`${baseUrl()}/${path}`,payload,{ withCredentials: true, params:{reply: reply } ,headers: token('multipart/form-data')})
+        await axios.post(`${baseUrl()}/${path}`,payload,{ withCredentials: true, params:{reply: reply } ,headers: token('multipart/form-data')})
       } catch (error){
         dispatch(errorsOrMessagesReceived(ERRORS))
       }

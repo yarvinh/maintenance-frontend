@@ -10,7 +10,7 @@ const WorkOrder = ({workOrder,index,user}) => {
     const dispatch = useDispatch()
     const acceptedWorkOrder = ()=>{
         const currentEmployee = workOrder.employees.find(emp => emp.id === user.user.id)
-        return  !workOrder.accepted && currentEmployee || !workOrder.accepted && user.admin ? "pending-work-orders"  : "accepted"
+        return  (!workOrder.accepted && currentEmployee) || (!workOrder.accepted && user.admin) ? "pending-work-orders"  : "accepted"
     }
 
     const workOrderEmployees=()=>{

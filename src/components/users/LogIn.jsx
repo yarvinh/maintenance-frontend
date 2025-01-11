@@ -10,7 +10,6 @@ import { paths } from '../../componentsHelpers/paths';
 
 const LogIn = () => {
   const dispatch = useDispatch()
-  const account = useSelector(state => state.account.account)
   const login = useSelector(state => state.user.user.is_login)
   const errorsOrMsg = useSelector(state => state.errorsOrMessages.errorsOrMessages)
   const verificationSession = useSelector(state => state.user.user.verification_session )
@@ -20,10 +19,6 @@ const LogIn = () => {
       password: ''
     })
  
-    const redirect = ()=>{ 
-      return <Navigate to='/'/>
-    }
-
     const handleOnChange = (e) => {  
         setUser({
          ...user,[e.target.name]: e.target.value   

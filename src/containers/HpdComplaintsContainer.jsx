@@ -13,7 +13,7 @@ const HpdComplaintsContainer = ()=>{
     const loading = useSelector(state => state.violations.violationsLoading)
     useEffect(() => {
         dispatch(violationsFetch(`https://data.cityofnewyork.us/resource/ygpa-z7cr.json?bin=${bin}`))
-    } ,[]); 
+    } ,[dispatch, bin]); 
 
     const handleOnChange = (e) => {
         const searchResult = allViolations.filter((violation)=>{

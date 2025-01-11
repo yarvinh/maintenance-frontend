@@ -7,7 +7,7 @@ import {useParams} from 'react-router-dom';
 const HPDviolationsContainer = ()=>{
     const {lot,block} = useParams()
     const allViolations = useSelector(state => state.violations.violations)
-    const loading = useSelector(state => state.violations.violationsLoading)
+    // const loading = useSelector(state => state.violations.violationsLoading)
     const dispatch = useDispatch()
     const [violations, setViolations] = useState([])
 
@@ -25,7 +25,8 @@ const HPDviolationsContainer = ()=>{
     }
     useEffect(() => {
         dispatch(violationsFetch(`https://data.cityofnewyork.us/resource/csn4-vhvf.json?$where=lot%20=%20${lot}%20and%20block%20=%20${block}`))
-    } ,[]); 
+    } ,[dispatch, lot, block]); 
+
     useEffect(()=>{
         if (allViolations.length >  0)
           setViolations(allViolations)

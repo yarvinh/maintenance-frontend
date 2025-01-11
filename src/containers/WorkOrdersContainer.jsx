@@ -4,13 +4,13 @@ import WorkOrder from "../components/workorders/WorkOrder"
 import {getSearchWorkOrders,workOrderSelector} from "../componentsHelpers/workOrdersHelper"
 import { useSelector } from 'react-redux';
 
-const WorkOrdersContainer = (props, { building, fromHome,employee})=>{  
+const WorkOrdersContainer = (props, { building, fromHome, employee })=>{  
     const user = useSelector(state => state.user.user)
     const employees = useSelector(state => state.employees.employees)
     const buildings = useSelector(state => state.buildings.buildings)
     const [workOrders,setWorkOrders] = useState([])
     const [searchBoxValue, setSearchBoxValue] = useState('')
-
+    
     useEffect(()=>{
       props.workOrders?.length > 0 && setWorkOrders(props.workOrders)
     },[props.workOrders])

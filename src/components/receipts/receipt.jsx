@@ -33,11 +33,11 @@ const Receipt = ({receipt})=>{
         <div className='receipt'> 
         {receipt.user?.id === user.user?.id || receipt.employee?.id === user.user?.id ? <img src="/close.svg" onClick={handleDeleteOnClick} className='x-delete' alt="X delete reply"/> : null}
           <div>
-          {receipt.user && user.profile_image &&  <img src={ user.profile_image} className="bg-info rounded-circle receipt_user_image" ></img>}
-          {receipt.employee?.image && <img src={ receipt.employee.image } className="bg-info rounded-circle receipt_user_image" ></img>}
+          {receipt.user && user.profile_image &&  <img src={ user.profile_image} className="bg-info rounded-circle receipt_user_image" alt="profile"></img>}
+          {receipt.employee?.image && <img src={ receipt.employee.image } className="bg-info rounded-circle receipt_user_image" alt="profile"></img>}
             {receipt.employee ? <strong className="profile-name">{receipt.employee?.name}</strong>: <strong className="profile-name">{receipt.user?.name}</strong>}
           </div>
-          <img src={receipt.image_url} onClick={handleOnClickImage} className="picc"></img>
+          <img src={receipt.image_url} onClick={handleOnClickImage} className="picc" alt="receipt"></img>
           <div  className='center'> 
               <EditReceipt receipt={receipt}/>
           </div>

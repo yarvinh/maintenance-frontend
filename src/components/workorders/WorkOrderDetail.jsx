@@ -8,7 +8,7 @@ import CloseWorkOrder from './CloseWorkOrder';
 import TasksContainer from '../../containers/TasksContainer';
 import {date} from "../../componentsHelpers/date"
 import { deleteFetchAction, getFetchAction} from '../../actions/fetchActions';
-import { deleteEmployeeFromWorkOrder, workOrderDeleteSetter, workOrderGetSetter, workOrdersGetSetter } from '../../componentsHelpers/fetchingFunctions';
+import { deleteEmployeeFromWorkOrder, workOrderDeleteSetter, workOrderGetSetter} from '../../componentsHelpers/fetchingFunctions';
 import LoadingItems from '../LoadingItems';
 
 const WorkOrderDetails = ({buildings,employees})=>{ 
@@ -25,12 +25,12 @@ const WorkOrderDetails = ({buildings,employees})=>{
       const worOrderDoesNotExist =  errorsOrMsg.errors?.includes('Access to this comment was dinied')
       if(worOrderDoesNotExist )
         navigate('/work_orders') 
-    },[errorsOrMsg])
+    },[errorsOrMsg, navigate])
    
     useEffect(()=>{
       const payload = workOrderGetSetter({id: workOrderId})
       dispatch(getFetchAction(payload))
-    },[])
+    },[ dispatch, workOrderId])
 
     const workOrderEmployees = ()=>{
       return workOrder.employees?.map((employee,index) => {

@@ -16,13 +16,14 @@ const BuildingsContainer = () => {
     const loading = useSelector(state => state.buildings.buildingsLoading)
     const [buildings, setBuildings] = useState([])
     const [searchBoxValue, setSearchBoxValue] = useState("")
-    useEffect(()=>{
-       isLoginToken() && dispatch(getFetchAction( BUILDINGS_SETTER) )
-    },[])
 
     useEffect(()=>{
+       isLoginToken() && dispatch(getFetchAction( BUILDINGS_SETTER) )
+    },[dispatch])
+    
+    useEffect(()=>{
       isLoginToken() &&  setBuildings(buildingsData )
-    },[buildingsData ])
+    },[buildingsData])
 
     const handleOnChangeSearch = (e) => {
       setSearchBoxValue(e.target.value)
@@ -64,7 +65,7 @@ const BuildingsContainer = () => {
             <br/>
             <div className="center">
               {loading && <LoadingItems/>}
-              {buildingsData?.length > 15 && admin || buildings.length > 15 && user.user_id?<input onChange={handleOnChange} className='search_box' placeholder='Search Buildings ' type='search' />:null}
+              {(buildingsData?.length > 15 && admin) || (buildingsData.length > 15 && user.user_id) ? <input onChange={handleOnChange} className='search_box' placeholder='Search Buildings ' type='search' />:null}
             </div>
             <div>
                 <form onSubmit={handleOnSubmit} className="center">

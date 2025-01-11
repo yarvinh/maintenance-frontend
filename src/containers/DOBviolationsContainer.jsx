@@ -11,7 +11,7 @@ const DOBviolationsContainer = ()=>{
     const [violations, setViolations] = useState([])
     useEffect(() => {
       dispatch(violationsFetch(`https://data.cityofnewyork.us/resource/3h2n-5cm9.json?bin=${bin}`))
-    } ,[]); 
+    } ,[dispatch, bin]); 
 
     const handleOnChange = (e) => {
         const searchResult = allViolations.filter((violation)=>{

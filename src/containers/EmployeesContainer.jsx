@@ -8,6 +8,7 @@ import {employeesFilter} from '../componentsHelpers/employees'
 import { getFetchAction } from '../actions/fetchActions';
 import { EMPLOYEES_SETTER } from '../componentsHelpers/fetchingConstants';
 import { employeesLoading, employeesReceived } from '../state/reducers/employeesReducer';
+
 const EmployeesContainer = () => {
     const dispatch = useDispatch()
     const userData = useSelector(state => state.user.user)
@@ -19,11 +20,10 @@ const EmployeesContainer = () => {
 
     useEffect(()=>{
         dispatch(getFetchAction(EMPLOYEES_SETTER))
-    },[])
+    },[dispatch])
     
     useEffect(()=>{
-        if(employeesData ?.length > 0)
-          setEmployees(employeesData )
+        if(employeesData?.length > 0) setEmployees(employeesData )
     },[employeesData])
     
     let handleOnChange = (e)=>{
@@ -65,7 +65,7 @@ const EmployeesContainer = () => {
             {!id && admin?<CreateEmployees />: null }
             <br/>
             <div className="center">
-                {employeesData?.length > 0 && !user?.user_id || employeesData?.length > 0 && admin?<input onChange={handleOnChange} className='search_box' name="local-search" placeholder='Search employees ' type='search' value={searchBoxValue}/>:null}
+                {(employeesData?.length > 0 && !user?.user_id) || (employeesData?.length > 0 && admin) ?<input onChange={handleOnChange} className='search_box' name="local-search" placeholder='Search employees ' type='search' value={searchBoxValue}/>:null}
             </div>
             <div >
                 <form onSubmit={handleOnSubmit} className="text-area-section center">

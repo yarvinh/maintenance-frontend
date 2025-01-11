@@ -1,27 +1,7 @@
-import {useState } from 'react';
 
 const DOBviolation = (props)=>{
 
     const {violation} = props
-    
-    // const [acordion,setAcordion] = useState({
-    //     acordion: 'display_accordion', 
-    //     display: 'hide_elements',
-    // })
-
-    // const handleOnclick = (e)=>{
-    //     if(acordion.acordion !== 'display_accordion active'){
-    //     setAcordion({
-    //       acordion: 'display_accordion active',
-    //       display: 'display_elements',
-    //     })
-    //   }else{
-    //     setAcordion({
-    //       acordion: 'display_accordion',
-    //       display: 'hide_elements', 
-    //     })
-    //   }
-    // }
     
     const date = (date) => {
         if (date){

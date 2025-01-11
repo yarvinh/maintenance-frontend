@@ -8,7 +8,7 @@ const TryItYourself = () => {
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(fetchLogIn({username: "testapp",password: "12345@"} ,paths().login))
-    } ,[]); 
+    } ,[dispatch]); 
 
      const redirect = ()=>{
       return <Navigate to='/' /> 

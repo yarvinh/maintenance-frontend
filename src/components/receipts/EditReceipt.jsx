@@ -14,11 +14,6 @@ const EditReceipt=({receipt})=>{
 
     })
 
-    const handleOnClick = (e) =>{
-          let  message = "Are you sure you to remove this image"   
-          const confirmBox = window.confirm(message)
-    }
-
     const handleOnChange=(e)=>{
         setReceiptValue({
             ...receiptValue,[e.target.name]: e.target.value

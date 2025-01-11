@@ -24,7 +24,7 @@ const Building = ({building,admin,index})=>{
               </td>
               <td><p>{building.super_name}</p></td>
               <td> <a href={`tel:${building.phone_number}`}><span className="bottom">{building.phone_number}</span></a> </td>
-              <td>{admin &&  <i onClick={handleOnClick}  className="fa-solid fa-trash-can delete-task " role={`delete-building-${building.id}`}></i>} </td>
+              <td>{admin &&  <i onClick={handleOnClick}  className="fa-solid fa-trash-can delete-task " role="button"></i>} </td>
           </tr>
         </>
     )  

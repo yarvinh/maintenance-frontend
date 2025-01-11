@@ -75,7 +75,7 @@ export const workOrderSelector = ({workOrders,filterBy})=>{
               return workOrder.status
           })
       } else if(filterBy === "today"){
-          return workOrders.filter(workOrder => new Date(workOrder.date.split('-').join("-").split("T")[0].replace(/-/g, '\/')).toDateString() === today.toDateString())
+          return workOrders.filter(workOrder => new Date(workOrder.date.split('-').join("-").split("T")[0].replace(/-/g, '/')).toDateString() === today.toDateString())
       } else {
           return workOrders
       }

@@ -1,4 +1,3 @@
-import axios from 'axios'
 import {token,verificationToken,removeLoginToken} from '../componentsHelpers/token'
 import {baseUrl, serverErrors} from './actionsHelper'
 import { userLoading, userReceived } from '../state/reducers/userReducers'

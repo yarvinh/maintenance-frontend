@@ -42,11 +42,8 @@ const App  = () => {
 
   useEffect(() => {
     !user.is_login && isLoginToken() && dispatch(getFetchAction(CURRENT_USER_SETTER))
-  },[]); 
-
-  useEffect(() => {
     user.is_login && dispatch(getFetchAction(WORKORDERS_SETTER) )
-  },[user] ); 
+  },[user.is_login , dispatch]); 
   return (
     <BrowserRouter >
           <Routes>

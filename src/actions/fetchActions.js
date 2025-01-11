@@ -7,7 +7,7 @@ export const getFetchAction = ({path, loading, reducer, query_string}) => {
   return async (dispatch) => {
       loading && dispatch(loading())
         try {
-            const response = await fetch(`${baseUrl()}${path}${query_string ? "?"+"query_string=" + query_string : ""}`,{
+            const response = await fetch(`${baseUrl()}${path}${query_string ? "?query_string=" + query_string : ""}`,{
               method: "GET", 
               headers: token(), 
               withCredentials: true
