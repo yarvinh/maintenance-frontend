@@ -100,6 +100,15 @@ export const workOrderPostSetter = ({admin, payload}) =>{
   }
 }
 
+export const filterWorkOrderSetter = ({query_string}) => {
+  return {
+    query_string,
+    path: paths().workOrdersPath, 
+    reducer: workOrdersReceived,
+    loading: workOrdersLoading
+  }
+}
+
 export const workOrderGetSetter = ({id}) => {
   return {
     path: `/work_orders/${id}`,
@@ -107,6 +116,8 @@ export const workOrderGetSetter = ({id}) => {
     reducer: workOrderReceived,
   }
 }
+
+
 
 export const workOrderPatchSetter = ({id,payload}) => {
   return {

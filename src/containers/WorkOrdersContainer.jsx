@@ -2,12 +2,18 @@ import { useState,useEffect} from 'react';
 import CreateWorkOrder from "../components/workorders/CreateWorkOrder"
 import WorkOrder from "../components/workorders/WorkOrder"
 import {getSearchWorkOrders,workOrderSelector} from "../componentsHelpers/workOrdersHelper"
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import {filterWorkOrderSetter, workOrderPostSetter } from '../componentsHelpers/fetchingFunctions';
+import { getFetchAction } from '../actions/fetchActions';
+import LoadingItems from '../components/LoadingItems';
 
 const WorkOrdersContainer = (props, { building, fromHome, employee })=>{  
+    const dispatch = useDispatch()
     const user = useSelector(state => state.user.user)
     const employees = useSelector(state => state.employees.employees)
     const buildings = useSelector(state => state.buildings.buildings)
+    const loading = useSelector(state => state.workOrders.workOrdersLoading)
+    console.log(loading)
     const [workOrders,setWorkOrders] = useState([])
     const [searchBoxValue, setSearchBoxValue] = useState('')
     
@@ -31,8 +37,11 @@ const WorkOrdersContainer = (props, { building, fromHome, employee })=>{
     }
     
     const handleOnclick = (e) => {  
-        const newfilteredWorkOrders = workOrderSelector({workOrders: props.workOrders, filterBy: e.target.value })
-        setWorkOrders(newfilteredWorkOrders)
+        const setter = filterWorkOrderSetter({query_string: e.target.value})
+         dispatch(getFetchAction(setter))
+         setSearchBoxValue("")
+        // const newfilteredWorkOrders = workOrderSelector({workOrders: props.workOrders, filterBy: e.target.value })
+        // setWorkOrders(newfilteredWorkOrders)
     }
 
     return(
@@ -42,16 +51,20 @@ const WorkOrdersContainer = (props, { building, fromHome, employee })=>{
                     {user?.is_login && <CreateWorkOrder  unit={props.unit} building={building} employees={employees} employee={employee} buildings={buildings}/>}
                 </div>
                 <br/>
-
                 <div className='center'>
-                    {props.workOrders?.length > 10 && <input onChange={handleOnChange} className='search_box' placeholder='Search Work Orders ' type='search' value={searchBoxValue}/>}
+                    <div className='search-box'>
+                      {props.workOrders?.length > 10 && <input onChange={handleOnChange} className='search_box' placeholder='Search Work Orders ' type='search' value={searchBoxValue}/>}
+                    </div>
                     {!fromHome && 
                         <select onChange={handleOnclick} className='form-select my-3 mx-auto' > 
-                            <option value='all'>All</option>          
-                            <option value='today'>Today</option>
-                            <option value='closed'>Closed work orders</option>
+                            {/* <option value='all'>All</option>           */}
+                            {/* <option value='today'>Today</option> */}
+                            {/* <option value='closed'>Closed work orders</option> */}
                             <option value='pending'>Pending Work Orders</option>
-                            <option value='expire'>Expire work orders</option>
+                            {/* <option value='expire'>Expire work orders</option> */}
+                            <option value="2025">2025</option>
+                            <option value="2024">2024</option>
+                            <option value="2023">2023</option>
                         </select> 
                     }
                 </div>
@@ -59,7 +72,11 @@ const WorkOrdersContainer = (props, { building, fromHome, employee })=>{
                        <strong>Receipts total: {totalReceiptAmount()} </strong> <br/>
                        <strong>Tasks inventory total: {taskInventoryTotal()} </strong>
                     </p>
-                {props.workOrders.length > 0 ? 
+                    <div className='center'>
+                       {loading && <LoadingItems/>} 
+                    </div>
+                    
+                    {props.workOrders.length > 0 ? 
                     <table className="table table-striped" > 
                         <thead>
                             <tr>
