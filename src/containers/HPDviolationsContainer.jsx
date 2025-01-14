@@ -5,12 +5,11 @@ import HPDviolation from '../components/violations/HPDviolation'
 import {useParams} from 'react-router-dom';
 
 const HPDviolationsContainer = ()=>{
+
     const {lot,block} = useParams()
     const allViolations = useSelector(state => state.violations.violations)
-    // const loading = useSelector(state => state.violations.violationsLoading)
     const dispatch = useDispatch()
     const [violations, setViolations] = useState([])
-
     const handleOnChange = (e) => {
         const searchResult = allViolations.filter((violation)=>{
             return (
@@ -24,7 +23,7 @@ const HPDviolationsContainer = ()=>{
         setViolations(searchResult)
     }
     useEffect(() => {
-        dispatch(violationsFetch(`https://data.cityofnewyork.us/resource/csn4-vhvf.json?$where=lot%20=%20${lot}%20and%20block%20=%20${block}`))
+        dispatch(violationsFetch(`https://data.cityofnewyork.us/resource/csn4-vhvf.json?$where=lot=${lot} AND block = ${block}`))
     } ,[dispatch, lot, block]); 
 
     useEffect(()=>{
