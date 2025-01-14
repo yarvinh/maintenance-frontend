@@ -16,13 +16,13 @@ const BuildingsContainer = () => {
     const loading = useSelector(state => state.buildings.buildingsLoading)
     const [buildings, setBuildings] = useState([])
     const [searchBoxValue, setSearchBoxValue] = useState("")
-
+   
     useEffect(()=>{
        isLoginToken() && dispatch(getFetchAction( BUILDINGS_SETTER) )
     },[dispatch])
     
     useEffect(()=>{
-      isLoginToken() &&  setBuildings(buildingsData )
+      buildingsData.length > 0 && setBuildings(buildingsData )
     },[buildingsData])
 
     const handleOnChangeSearch = (e) => {

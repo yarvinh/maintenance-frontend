@@ -67,8 +67,11 @@ const CommentsContainer = ( {workOrder, user} )=> {
                 dispatch(addOrRemoveLikesFromReply(data.message.like_deleted))
             }        
         } 
+        return () => {
+            ws.close();  
+        };
 
-    },[workOrderId])
+    },[workOrderId, dispatch])
 
     const displayOnSubmit=(e)=>{
         e.preventDefault()

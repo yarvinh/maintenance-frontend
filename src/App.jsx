@@ -1,4 +1,4 @@
-import {useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {useEffect} from 'react';
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import LogOut from './components/users/LogOut'
@@ -39,11 +39,12 @@ const App  = () => {
   const dispatch = useDispatch()
   const user = useSelector(state => state.user.user)
   const workOrders = useSelector(state=> state.workOrders.workOrders)
-
+  
   useEffect(() => {
     !user.is_login && isLoginToken() && dispatch(getFetchAction(CURRENT_USER_SETTER))
     user.is_login && dispatch(getFetchAction(WORKORDERS_SETTER))
   },[user.is_login , dispatch]); 
+  
   return (
     <BrowserRouter >
           <Routes>
@@ -63,7 +64,7 @@ const App  = () => {
               <Route path='employees'  element={<EmployeesContainer />}/>
               <Route path='employees/:employeeId' element={<EmployeeDetails />}/>
               <Route path='employee_setting/:id' element={<EditEmployee/> }/> 
-              <Route path='work_orders'  element={<WorkOdersContainer fromHome={true} workOrders={workOrders} />}/>
+              <Route path='work_orders'  element={<WorkOdersContainer workOrders={workOrders} />}/>
               <Route path='my_work_orders' element={<MyWorkOrders />}/>
               <Route path='work_orders/:workOrderId/receipts' element={<ReceiptsContainer/>}/>
               <Route path='work_orders/:workOrderId/gallery' element={<GalleryContainer/> }/>
