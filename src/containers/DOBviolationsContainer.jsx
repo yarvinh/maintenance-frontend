@@ -38,7 +38,6 @@ const DOBviolationsContainer = ()=>{
                {<input onChange={handleOnChange} className='search_box' placeholder='Search violations ' />}
                 <ToolTip>
                     <p> Search by date, violation type, violation number and category.</p> 
-                    <p>Search by date format yyyy-mm-dd, example 2024-10-20</p>
                 </ToolTip>
             </div>
             {violations.map((violation)=>{return <DOBviolation key={Math.random()} violation={violation}/> })} 

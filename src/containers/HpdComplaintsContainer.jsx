@@ -50,7 +50,6 @@ const HpdComplaintsContainer = ()=>{
                {<input onChange={handleOnChange} className='search_box' placeholder='Search violations ' />}
                 <ToolTip>
                     <p> Search by date, category, and by apartment.</p> 
-                    <p>Search by date format yyyy-mm-dd, example 2024-10-20</p>
                 </ToolTip>
             </div>
             {loading && <LoadingItems/> }

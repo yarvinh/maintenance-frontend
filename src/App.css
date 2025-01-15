@@ -66,12 +66,13 @@
 .search_box { 
   width: 50%;
   min-height: 40px;
-  border-width: 3px;
+  border-width: 1px;
   border-style: solid;
   border-color:  #777;
   border-radius: .8rem;
   font-size: 20px;
 }
+
 
 .name {
   display: inline;
@@ -612,7 +613,7 @@ height: 20rem;
   border-color: black;
   border-width: 1px;
   transition: 0.3s;
-  text-align: center;
+  /* text-align: center; */
   color: black;
   padding: 0;
 }

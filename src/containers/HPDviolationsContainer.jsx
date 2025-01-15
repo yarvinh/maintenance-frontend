@@ -39,7 +39,6 @@ const HPDviolationsContainer = ()=>{
               {<input onChange={handleOnChange} className='search_box' placeholder='Search violations ' />}
                 <ToolTip>
                     <p> Search by inspection date, current status, violation id, description and by apartment.</p> 
-                    <p>Search by date format yyyy-mm-dd, example 2024-10-20</p>
                 </ToolTip>
             </div>    
             {violations.map((violation)=>{return <HPDviolation key={Math.random()} violation={violation}/> })} 

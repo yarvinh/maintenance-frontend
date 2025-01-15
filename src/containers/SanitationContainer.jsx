@@ -47,8 +47,7 @@ const SanitationContainer = ()=>{
         <div className="center violation-search">    
           {<input onChange={handleOnChange} className='search_box' placeholder='Search violations ' />}
           <ToolTip>
-              <p> Search by violation date, current status, ticket number, Violation Description.</p> 
-              <p>Search by date format yyyy-mm-dd, example 2024-10-20</p>
+              <p>Search by violation date, current status, ticket number, Violation Description.</p> 
           </ToolTip>
         </div>
         <select onChange={handleOnClick} className='form-select my-3 mx-auto' > 

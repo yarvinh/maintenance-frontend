@@ -11,6 +11,7 @@ const ToolTip = ({children}) => {
             {displayAnswer && <div className="tool-tip">
                <img src="/close.svg" onClick={handleDeleteOnClick} className='x-delete' alt="X delete reply"/>
                {children}
+               <p>Use the date format yyyy-mm-dd, for example, 2024-10-20."</p>
             </div>}
         </span>
     )

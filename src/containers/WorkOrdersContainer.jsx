@@ -49,7 +49,6 @@ const WorkOrdersContainer = ( {unit, workOrders, building, fromHome, employee })
                       {workOrders?.length > 10 && <input onChange={handleOnChange} className='search_box' placeholder='Search Work Orders ' type='search' value={searchBoxValue}/>}
                       {workOrders?.length > 10 && <ToolTip>
                         <p> Search by violation date, address, and employee.</p> 
-                        <p>Search by date format yyyy-mm-dd, example 2024-10-20</p>
                        </ToolTip>}
                     </div>
                     {!fromHome && 
