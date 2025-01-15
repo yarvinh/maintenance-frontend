@@ -7,6 +7,7 @@ import {filterWorkOrderSetter} from '../componentsHelpers/fetchingFunctions';
 import { getFetchAction } from '../actions/fetchActions';
 import LoadingItems from '../components/LoadingItems';
 import { calculateTotal } from '../componentsHelpers/arrayHelper';
+import ToolTip from '../components/ToolTip';
 
 const WorkOrdersContainer = ( {unit, workOrders, building, fromHome, employee })=>{  
     const dispatch = useDispatch()
@@ -46,6 +47,10 @@ const WorkOrdersContainer = ( {unit, workOrders, building, fromHome, employee })
                 <div className='center'>
                     <div className='search-box'>
                       {workOrders?.length > 10 && <input onChange={handleOnChange} className='search_box' placeholder='Search Work Orders ' type='search' value={searchBoxValue}/>}
+                      {workOrders?.length > 10 && <ToolTip>
+                        <p> Search by violation date, address, and employee.</p> 
+                        <p>Search by date format yyyy-mm-dd, example 2024-10-20</p>
+                       </ToolTip>}
                     </div>
                     {!fromHome && 
                         <select onChange={handleOnclick} className='form-select my-3 mx-auto' > 

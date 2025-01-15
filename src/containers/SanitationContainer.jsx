@@ -3,6 +3,7 @@ import {useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Sanitation from '../components/violations/Sanitation'
 import {useParams} from 'react-router-dom';
+import ToolTip from "../components/ToolTip";
 
 const SanitationContainer = ()=>{
     const dispatch = useDispatch()
@@ -45,6 +46,10 @@ const SanitationContainer = ()=>{
       <div>  
         <div className="center violation-search">    
           {<input onChange={handleOnChange} className='search_box' placeholder='Search violations ' />}
+          <ToolTip>
+              <p> Search by violation date, current status, ticket number, Violation Description.</p> 
+              <p>Search by date format yyyy-mm-dd, example 2024-10-20</p>
+          </ToolTip>
         </div>
         <select onChange={handleOnClick} className='form-select my-3 mx-auto' > 
           <option value='All'>All</option>          

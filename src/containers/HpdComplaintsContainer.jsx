@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {useParams} from 'react-router-dom';
 import HpdComplaint from "../components/violations/HpdComplaint";
 import LoadingItems from "../components/LoadingItems";
+import ToolTip from "../components/ToolTip";
 
 const HpdComplaintsContainer = ()=>{
     const {bin} = useParams()
@@ -45,8 +46,12 @@ const HpdComplaintsContainer = ()=>{
 
     return (
         <section>  
-            <div className="center violation-search">    
-              {<input onChange={handleOnChange} className='search_box' placeholder='Search violations ' />}
+            <div className="center violation-search">  
+               {<input onChange={handleOnChange} className='search_box' placeholder='Search violations ' />}
+                <ToolTip>
+                    <p> Search by date, category, and by apartment.</p> 
+                    <p>Search by date format yyyy-mm-dd, example 2024-10-20</p>
+                </ToolTip>
             </div>
             {loading && <LoadingItems/> }
             <select onChange={handleOnClick} className='form-select my-3 mx-auto' > 

@@ -3,6 +3,7 @@ import {useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import HPDviolation from '../components/violations/HPDviolation'
 import {useParams} from 'react-router-dom';
+import ToolTip from "../components/ToolTip";
 
 const HPDviolationsContainer = ()=>{
 
@@ -10,6 +11,7 @@ const HPDviolationsContainer = ()=>{
     const allViolations = useSelector(state => state.violations.violations)
     const dispatch = useDispatch()
     const [violations, setViolations] = useState([])
+
     const handleOnChange = (e) => {
         const searchResult = allViolations.filter((violation)=>{
             return (
@@ -35,6 +37,10 @@ const HPDviolationsContainer = ()=>{
         <div>
             <div className="center violation-search">    
               {<input onChange={handleOnChange} className='search_box' placeholder='Search violations ' />}
+                <ToolTip>
+                    <p> Search by inspection date, current status, violation id, description and by apartment.</p> 
+                    <p>Search by date format yyyy-mm-dd, example 2024-10-20</p>
+                </ToolTip>
             </div>    
             {violations.map((violation)=>{return <HPDviolation key={Math.random()} violation={violation}/> })} 
         </div>
