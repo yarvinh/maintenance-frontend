@@ -606,7 +606,7 @@ height: 20rem;
   position: relative;
   left: 4px;
   margin-left: 4px;
-  border-radius: 1rem;
+  border-radius: 50%;
   height: 2rem;
   width: 2rem;
   background-color: white;
