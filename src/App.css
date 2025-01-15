@@ -607,8 +607,10 @@ height: 20rem;
   left: 4px;
   margin-left: 4px;
   border-radius: 50%;
-  height: 2rem;
-  width: 2rem;
+  height: 30px;
+  width: 30px;
+  /* height: 2rem;
+  width: 2rem; */
   background-color: white;
   border: solid;
   border-color: black;
