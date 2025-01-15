@@ -614,6 +614,7 @@ height: 20rem;
   border-color: black;
   border-width: 1px;
   transition: 0.3s;
+  text-align: center;
 }
 
 .question-button:hover{
