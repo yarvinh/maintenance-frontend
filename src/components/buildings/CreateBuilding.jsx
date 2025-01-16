@@ -61,11 +61,11 @@ const CreateBuilding = () =>{
               <input id='c-b-superintendent' onChange={handleOnChange} name="super_name" className="standar-input accordion" type="text" value={building.super_name}/><br/>
               <label htmlFor='c-b-phone' className='accordion'>Phone</label>
               <input id='c-b-phone' onChange={handleOnChange}  name="phone_number" className="standar-input accordion" type="phone" value={building.phone_number}/><br/>
-              <label htmlFor='cb-bin-number' className='accordion'>Bin Number</label>
+              <label htmlFor='c-b-bin-number' className='accordion'>Bin Number</label>
               <input id='c-b-bin-number' onChange={handleOnChange}  name="bin" className="standar-input accordion" type="text" value={building.bin}/><br/>
-              <label htmlFor='cb-tax-lot' className='accordion'>Tax lot</label>
+              <label htmlFor='c-b-tax-lot' className='accordion'>Tax lot</label>
               <input id='c-b-tax-lot' onChange={handleOnChange}  name="lot" className="standar-input accordion" type="text" value={building.lot}/><br/>
-              <label htmlFor='cb-tax-block' className='accordion'>Tax block</label>
+              <label htmlFor='c-b-tax-block' className='accordion'>Tax block</label>
               <input id='c-b-tax-block' onChange={handleOnChange}  name="block" className="standar-input accordion" type="text" value={building.block}/><br/>
               <button type='submit' className="white-blue-buttons accordion">Submit</button>
           </form> 
