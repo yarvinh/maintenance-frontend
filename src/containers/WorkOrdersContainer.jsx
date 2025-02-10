@@ -63,7 +63,7 @@ const WorkOrdersContainer = ( {unit, workOrders, building, fromHome, employee })
                     <p className='center inventory'>
                        <strong>Receipts total: {totalReceiptAmount} </strong> <br/>
                        <strong>Tasks inventory total: {taskInventoryTotal} </strong> <br/>
-                       <strong>Total profit: {taskInventoryTotal - totalReceiptAmount} </strong>
+                       <strong>Total profit: {(taskInventoryTotal - totalReceiptAmount)} </strong>
                     </p>
                     <div className='center'>
                        {loading && <LoadingItems/>} 
