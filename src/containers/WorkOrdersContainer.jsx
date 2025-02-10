@@ -48,7 +48,7 @@ const WorkOrdersContainer = ( {unit, workOrders, building, fromHome, employee })
                     <div className='search-box'>
                       {workOrders?.length > 10 && <input onChange={handleOnChange} className='search_box' placeholder='Search Work Orders ' type='search' value={searchBoxValue}/>}
                       {workOrders?.length > 10 && <ToolTip>
-                        <p> Search by violation date, address, and employee.</p> 
+                        <p> Search by date, address, and employee.</p> 
                        </ToolTip>}
                     </div>
                     {!fromHome && 
@@ -62,7 +62,8 @@ const WorkOrdersContainer = ( {unit, workOrders, building, fromHome, employee })
                 </div>
                     <p className='center inventory'>
                        <strong>Receipts total: {totalReceiptAmount} </strong> <br/>
-                       <strong>Tasks inventory total: {taskInventoryTotal} </strong>
+                       <strong>Tasks inventory total: {taskInventoryTotal} </strong> <br/>
+                       <strong>Total profit: {taskInventoryTotal - totalReceiptAmount} </strong>
                     </p>
                     <div className='center'>
                        {loading && <LoadingItems/>} 

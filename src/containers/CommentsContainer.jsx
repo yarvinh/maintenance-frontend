@@ -1,5 +1,5 @@
 
-import  { useEffect, useRef, useState } from 'react';
+import  { useEffect, useRef} from 'react';
 import Comment from '../components/comments/Comment';
 import { useParams } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
@@ -20,20 +20,17 @@ const CommentsContainer = ( {workOrder, user} )=> {
     const {workOrderId} = useParams()
     const errorsOrMsg = useSelector((state)=> state.errorsOrMessages.errorsOrMessages)
     const wsRef = useRef(new WebSocket(wsurl()))
-    const [guid, setGuid] = useState("")
 
     useEffect(()=>{ 
         const ws = wsRef.current
         const payload = commentsGetSetter({id: workOrderId, comments_length: 0 })
         dispatch(getFetchAction(payload))
         ws.onopen = ()=>{
-        setGuid(Math.random().toString(36).substring(2,15)) 
             ws.send(
                 JSON.stringify({
                     command: 'subscribe',
                     withCredentials: true,
                     identifier: JSON.stringify({
-                        id: guid,
                         work_order_id: workOrderId,
                         channel: "CommentsChannel"
                     })
@@ -46,26 +43,30 @@ const CommentsContainer = ( {workOrder, user} )=> {
             if(data.type === "ping") return
             if(data.type === "welcome") return
             if(data.type === "confirm_subscription") return
-            if (data.message?.from_create_comment){
-                const response = data.message.comment
-                response && dispatch(addAComment(JSON.parse(response)))
-            } else if (data.message?.from_delete_comment){
-                dispatch(deleteComment(data.message?.comment_deleted))
-            } else if (data.message?.from_create_like_for_comment){
-                const response = data.message.response
-                dispatch(addOrRemoveLikesFromComment(JSON.parse(response)))
-            } else if (data.message?.from_delete_like_from_comment){
-                dispatch(addOrRemoveLikesFromComment(data.message.like_deleted)) 
-            }else  if (data.message?.from_delete_reply ){
-                dispatch(removeReplyFromComment(data.message.reply_deleted))
-            }else if(data.message?.from_create_reply){
-                dispatch(addNewReply(JSON.parse(data.message.reply)))
-            }else if(data.message?.from_create_like_for_reply) {
-                const response = data.message.response
-                dispatch(addOrRemoveLikesFromReply(JSON.parse(response)))
-            } else if (data.message?.from_delete_like_from_reply){
-                dispatch(addOrRemoveLikesFromReply(data.message.like_deleted))
-            }        
+            try{
+                if (data.message?.from_create_comment){
+                    const response = data.message.comment
+                    response && dispatch(addAComment(JSON.parse(response)))
+                } else if (data.message?.from_delete_comment){
+                    dispatch(deleteComment(data.message?.comment_deleted))
+                } else if (data.message?.from_create_like_for_comment){
+                    const response = data.message.response
+                    dispatch(addOrRemoveLikesFromComment(JSON.parse(response)))
+                } else if (data.message?.from_delete_like_from_comment){
+                    dispatch(addOrRemoveLikesFromComment(data.message.like_deleted)) 
+                }else  if (data.message?.from_delete_reply ){
+                    dispatch(removeReplyFromComment(data.message.reply_deleted))
+                }else if(data.message?.from_create_reply){
+                    dispatch(addNewReply(JSON.parse(data.message.reply)))
+                }else if(data.message?.from_create_like_for_reply) {
+                    const response = data.message.response
+                    dispatch(addOrRemoveLikesFromReply(JSON.parse(response)))
+                } else if (data.message?.from_delete_like_from_reply){
+                    dispatch(addOrRemoveLikesFromReply(data.message.like_deleted))
+                } 
+            } catch (error) {
+                console.error('Failed to handle WebSocket message:', error);
+            }      
         } 
         return () => {
             ws.close();  

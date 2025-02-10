@@ -232,27 +232,27 @@ export const likeDeleteSetter = ({id})=>{
   }
 }
 
-export const replyPostSetter = ({payload}) => {
+export const replyPostSetter = ({payload,workOrderId,commentId}) => {
   return {
     payload,
-    path: `/replies`,
+    path: `/work_orders/${workOrderId}/comments/${commentId}/replies`,
     reducer:  replyReceived,
   }
 }
 
-export const repliesGetSetter= (payload) => {
+export const repliesGetSetter= ({replies_length,workOrderId,commentId}) => {
   return {
-    query_string: payload,
-    path: "/replies",
+    query_string: replies_length,
+    path: `/work_orders/${workOrderId}/comments/${commentId}/replies`,
     reducer: repliesRecieved,
     loading: repliesLoading
   }
 }
 
-export const getMoreRepliesGetSetter= (payload) => {
+export const getMoreRepliesGetSetter= ({replies_length,workOrderId,commentId}) => {
   return { 
-    query_string: payload,
-    path: "/replies",
+    query_string: replies_length,
+    path: `/work_orders/${workOrderId}/comments/${commentId}/replies`,
     reducer: moreRepliesReceived,
     loading: repliesLoading
   }

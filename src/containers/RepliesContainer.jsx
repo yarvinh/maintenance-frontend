@@ -7,10 +7,12 @@ import { getMoreRepliesGetSetter, repliesGetSetter } from '../componentsHelpers/
 import { getFetchAction} from '../actions/fetchActions';
 import { useDispatch, useSelector } from 'react-redux';
 import Reply from '../components/replies/Reply';
+import { useParams } from 'react-router';
 
 const RepliesContainer = ({user,comment,repliesTotal}) => {
+  const {workOrderId} = useParams()
   const replies = comment.replies
-  const loading = useSelector(state=> state.comments.repliesLoading)
+  const loading = useSelector(state => state.comments.repliesLoading)
   const dispatch = useDispatch()
   const ref = useRef()
   const [displayReplies, setDisplayReplies] = useState({
@@ -22,7 +24,8 @@ const RepliesContainer = ({user,comment,repliesTotal}) => {
   )
 
   const handleOnclickReply = (e)=>{
-    const payload = repliesGetSetter({comment_id: comment.id, replies_length: 0 })
+    const number = 0
+    const payload = repliesGetSetter({commentId: comment.id, workOrderId: workOrderId, replies_length: number.toString()})
     dispatch(getFetchAction(payload))
     if(displayReplies.accordion !== 'replies_accordion active')
       setDisplayReplies({
@@ -44,7 +47,7 @@ const RepliesContainer = ({user,comment,repliesTotal}) => {
     
   const handleOnGetMoreReplies = (e) =>{
     e.preventDefault()
-    const payload = getMoreRepliesGetSetter({comment_id: comment.id, replies_length: replies.length })
+    const payload = getMoreRepliesGetSetter({commentId: comment.id, workOrderId: workOrderId, replies_length: replies.length.toString() })
     dispatch(getFetchAction(payload))
   }
 
