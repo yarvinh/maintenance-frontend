@@ -36,7 +36,7 @@ const WorkOrdersContainer = ( {unit, workOrders, building, fromHome, employee })
          dispatch(getFetchAction(setter))
          setSearchBoxValue("")
     }
-
+    console.log(typeof taskInventoryTotal, typeof totalReceiptAmount)
     return(
        <div className=' content-container'>
             <div className='workorder-content'>
@@ -63,7 +63,7 @@ const WorkOrdersContainer = ( {unit, workOrders, building, fromHome, employee })
                     <p className='center inventory'>
                        <strong>Receipts total: {totalReceiptAmount} </strong> <br/>
                        <strong>Tasks inventory total: {taskInventoryTotal} </strong> <br/>
-                       <strong>Total profit: {(taskInventoryTotal - totalReceiptAmount)} </strong>
+                       <strong>Total profit: {(parseInt(taskInventoryTotal) - parseInt(totalReceiptAmount))} </strong>
                     </p>
                     <div className='center'>
                        {loading && <LoadingItems/>} 
