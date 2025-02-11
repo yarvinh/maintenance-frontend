@@ -30,13 +30,13 @@ const WorkOrdersContainer = ( {unit, workOrders, building, fromHome, employee })
 
     const totalReceiptAmount = useMemo(() => calculateTotal(displayWorkOrders, 'receipts_total'), [displayWorkOrders]);
     const taskInventoryTotal = useMemo(() => calculateTotal(displayWorkOrders, 'task_inventory_total'), [displayWorkOrders]);
-  
+    const totalProfit = (parseInt(taskInventoryTotal) - parseInt(totalReceiptAmount))?.toString()
     const handleOnclick = (e) => {  
         const setter = filterWorkOrderSetter({query_string: e.target.value})
          dispatch(getFetchAction(setter))
          setSearchBoxValue("")
     }
-    console.log(typeof taskInventoryTotal, typeof totalReceiptAmount)
+    console.log(taskInventoryTotal,  parseInt(totalReceiptAmount))
     return(
        <div className=' content-container'>
             <div className='workorder-content'>
@@ -61,9 +61,9 @@ const WorkOrdersContainer = ( {unit, workOrders, building, fromHome, employee })
                     }
                 </div>
                     <p className='center inventory'>
-                       <strong>Receipts total: {totalReceiptAmount} </strong> <br/>
-                       <strong>Tasks inventory total: {taskInventoryTotal} </strong> <br/>
-                       <strong>Total profit: {(parseInt(taskInventoryTotal) - parseInt(totalReceiptAmount))} </strong>
+                       <strong>Receipts total: {totalReceiptAmount?.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")} </strong> <br/>
+                       <strong>Tasks inventory total: {taskInventoryTotal?.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")} </strong> <br/>
+                       <strong>Total profit: {totalProfit?.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")} </strong>
                     </p>
                     <div className='center'>
                        {loading && <LoadingItems/>} 

@@ -46,5 +46,8 @@ export const reverseByDate=(array, date) => {
 
   export  const calculateTotal = (objArray, propertyName)  => {
         return objArray.reduce((accumulator, current) => accumulator + current[propertyName], 0)
-           .toFixed(2)?.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+           .toFixed(2)
   };
+
+
+
