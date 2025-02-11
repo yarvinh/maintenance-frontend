@@ -36,7 +36,7 @@ const WorkOrdersContainer = ( {unit, workOrders, building, fromHome, employee })
          dispatch(getFetchAction(setter))
          setSearchBoxValue("")
     }
-    console.log(taskInventoryTotal,  parseInt(totalReceiptAmount))
+
     return(
        <div className=' content-container'>
             <div className='workorder-content'>
