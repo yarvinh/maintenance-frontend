@@ -23,7 +23,7 @@ const gallerySlice =  createSlice({
         deleteImageFromGallery: (state,action) => {
             console.log(action.payload)
             if (action.payload.gallery_image_removed)
-                deleteItemFromArray({array: state.gallery, id: action.payload.id})
+            state.gallery = deleteItemFromArray({array: state.gallery, id: action.payload.id})
             state.galleryLoading = false 
         }
     }

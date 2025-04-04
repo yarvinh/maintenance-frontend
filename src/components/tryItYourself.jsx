@@ -7,7 +7,7 @@ const TryItYourself = () => {
     const user = useSelector(state => state.user.user)
     const dispatch = useDispatch()
     useEffect(() => {
-        dispatch(fetchLogIn({username: "testapp",password: "12345@"} ,paths().login))
+        dispatch(fetchLogIn({username: "testapp",password: "12345nuihuiguyggvf6g88@"} ,paths().login))
     } ,[dispatch]); 
 
      const redirect = ()=>{

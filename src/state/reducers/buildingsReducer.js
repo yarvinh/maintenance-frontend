@@ -17,14 +17,14 @@ const buildingsSlice =  createSlice({
         },
         createdOrDeleteBuilding: (state,action) => {
             if (action.payload.building_removed){
-                deleteItemFromArray({array: state.buildings, id: action.payload.id})
+                state.buildings = deleteItemFromArray({array: state.buildings, id: action.payload.id})
             } else {
                 addItemToArray({array: state.buildings, item: action.payload})  
                 state.buildingsLoading = false 
             }
         },
         editBuildingReceived: (state, action) => {
-            editItemFromArray({array: state.buildings, item: action.payload})
+            state.buildings = editItemFromArray({array: state.buildings, item: action.payload})
         }
     }
 })

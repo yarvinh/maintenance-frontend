@@ -16,14 +16,14 @@ const unitSlice = createSlice({
         },
         createdOrDeleteTenant: (state,action) => {
             if (action.payload.tenant_removed){
-                deleteItemFromArray({array: state.unit?.tenants, id: action.payload.id})
+                state.unit.tenants = deleteItemFromArray({array: state.unit?.tenants, id: action.payload.id})
             } else {
                 addItemToArray({array: state.unit?.tenants, item: action.payload})  
                 state.unitLoading = false 
             }
         },
         editTenantReceived: (state, action) => {
-            editItemFromArray({array: state.unit.tenants, item: action.payload})
+            state.unit.tenants = editItemFromArray({array: state.unit.tenants, item: action.payload})
         }
     }
 })

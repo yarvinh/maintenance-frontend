@@ -20,12 +20,12 @@ const HomeWithoutLogin = ({errorsOrMessages,fetchAppContent}) => {
           </div>
         </section>
         
-        <section className='try-it-container'>
+        {/* <section className='try-it-container'>
           <p className='try-it'>
             <strong style={{color: "black"}}>Do you want to see how this app works ? </strong>
             <Link to='/try_it_yourself' className="white-blue-buttons" > Try it yourself</Link>  
           </p>
-        </section>
+        </section> */}
   
       </section>
     )

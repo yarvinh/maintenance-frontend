@@ -18,14 +18,14 @@ const receiptsSlice =  createSlice({
         },
         createdOrDeleteReceipt: (state,action) => {
             if (action.payload.receipt_removed){
-                deleteItemFromArray({array: state.receipts, id: action.payload.id})
+                state.receipts = deleteItemFromArray({array: state.receipts, id: action.payload.id})
             } else {
                 addItemToArray({array: state.receipts, item: action.payload})  
             }
             state.receiptsLoading = false 
         },
         editReceiptsReceived: (state, action) => {
-            editItemFromArray({array: state.receipts, item: action.payload})
+            state.receipts = editItemFromArray({array: state.receipts, item: action.payload})
         }
     }
 })

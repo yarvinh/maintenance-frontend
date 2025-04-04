@@ -16,14 +16,14 @@ const tasksSlice =  createSlice({
         },
         createdOrDeleteTasks: (state,action) => {
             if (action.payload.task_removed){
-                deleteItemFromArray({array: state.tasks, id: action.payload.id})
+                state.tasks = deleteItemFromArray({array: state.tasks, id: action.payload.id})
             } else {
                 addItemToArray({array: state.tasks, item: action.payload})  
                 state.tasksLoading = false 
             }
         },
         editTaskReceived: (state, action) => {
-            editItemFromArray({array: state.tasks, item: action.payload})
+            state.tasks = editItemFromArray({array: state.tasks, item: action.payload})
         }
     }
 })

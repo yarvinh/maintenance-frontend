@@ -16,7 +16,7 @@ const employeesSlice =  createSlice({
         },
         createdOrDeleteEmployee: (state,action) => {
             if (action.payload.employee_removed){
-                deleteItemFromArray({array: state.employees, id: action.payload.id})
+                state.employees = deleteItemFromArray({array: state.employees, id: action.payload.id})
             } else {
                 addItemToArray({array: state.employees, item: action.payload})  
                 state.employeesLoading = false 

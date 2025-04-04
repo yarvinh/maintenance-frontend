@@ -24,7 +24,7 @@ const commentsSlice = createSlice({
 
         commentReceived: (state,action) => {
             if (action.payload.comment_removed){
-                deleteItemFromArray({array: state.comments, id: action.payload.id})
+                state.comments = deleteItemFromArray({array: state.comments, id: action.payload.id})
             }else{
                 addItemToArray({array: state.comments, item: action.payload})  
                 state.commentsLoading = false 
@@ -34,7 +34,7 @@ const commentsSlice = createSlice({
         commentLikesReceived: (state,action)=>{ 
             if (action.payload?.like_removed) {
                 let commentIndex = findIndexById({array: state.comments, id: action.payload.comment_id})
-                deleteItemFromArray({array: state.comments[commentIndex].likes, id: action.payload.like_id})
+                state.comments[commentIndex].likes = deleteItemFromArray({array: state.comments[commentIndex].likes, id: action.payload.like_id})
             }else{
                 let commentIndex = findIndexById({array: state.comments, id: action.payload.comment_id})
                 addItemToArray({array: state.comments[commentIndex].likes, item: action.payload})  
@@ -60,7 +60,7 @@ const commentsSlice = createSlice({
             let commentIndex = findIndexById({array: state.comments, id: action.payload.comment_id})
             if(action.payload.reply_removed){
               state.comments[commentIndex].replies_total = state.comments[commentIndex].replies_total - 1
-              deleteItemFromArray({array: state.comments[commentIndex].replies, id: action.payload.reply_id})
+              state.comments[commentIndex].replies = deleteItemFromArray({array: state.comments[commentIndex].replies, id: action.payload.reply_id})
             }else if (action.payload.id){
               state.reply = action.payload
               if(!state.comments[commentIndex].replies)
@@ -74,7 +74,7 @@ const commentsSlice = createSlice({
             if(action.payload.like_removed){
                 let commentIndex = findIndexById({array: state.comments, id: action.payload?.comment_id})
                 const replyIndex = findIndexById({array: state.comments[commentIndex].replies, id: action.payload?.reply_id})
-                deleteItemFromArray({array: state.comments[commentIndex].replies[replyIndex].likes, id: action.payload.like_id})
+                state.comments[commentIndex].replies[replyIndex].likes = deleteItemFromArray({array: state.comments[commentIndex].replies[replyIndex].likes, id: action.payload.like_id})
             }else if (action.payload?.id){
                 let commentIndex = findIndexById({array: state.comments, id: action.payload?.reply.comment_id})
                 const replyIndex = findIndexById({array: state.comments[commentIndex].replies, id: action.payload.reply_id})

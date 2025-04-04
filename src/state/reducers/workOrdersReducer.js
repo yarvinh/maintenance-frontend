@@ -17,14 +17,14 @@ const workOrdersSlice =  createSlice({
         },        
         createdOrDeleteWorkOrders: (state,action) => {
             if (action.payload.work_order_removed){
-                deleteItemFromArray({array: state.workOrders, id: action.payload.id})
+                state.workOrders = deleteItemFromArray({array: state.workOrders, id: action.payload.id})
             } else {
                 addItemToArray({array: state.workOrders, item: action.payload})  
                 state.workOrdersLoading = false 
             }
         },
         editWorkOrderReceived: (state, action) => {
-          editItemFromArray({array: state.workOrders, item: action.payload})
+          state.workOrders = editItemFromArray({array: state.workOrders, item: action.payload})
           state.workOrdersLoading = false 
         }
     }

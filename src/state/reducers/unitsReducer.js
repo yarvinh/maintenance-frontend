@@ -16,7 +16,7 @@ const unitsSlice = createSlice({
         },
         createdOrDeleteUnit: (state,action) => {
             if (action.payload.unit_removed){
-                deleteItemFromArray({array: state.units, id: action.payload.id})
+                state.units = deleteItemFromArray({array: state.units, id: action.payload.id})
             } else {
                 addItemToArray({array: state.units, item: action.payload})  
                 state.unitsLoading = false 
