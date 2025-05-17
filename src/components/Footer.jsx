@@ -2,9 +2,11 @@
 const Footer = (props)=>{
     return(
         <footer className="footer">
-           <section>
-              {/* <p >Copyright Creations Studios NY</p> */}
-            </section>
+           {/* <section className=""> */}
+           <div className="footer-line">
+              <img src="maintainm.jpeg" className="name-logo" ></img> 
+            </div>
+            {/* </section> */}
         </footer>
     )
 }

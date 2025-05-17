@@ -43,15 +43,15 @@ const SignUp = () => {
             <div className="center"> 
             {errorsOrMsg.from === "create_user" && <ErrorsOrMsg errors={errorsOrMsg?.errors || errorsOrMsg?.msg} />}
             </div>  
-            <label className="mt-5" htmlFor="signUpName"> Name: </label>
+            <label className="mt-5 required-field" htmlFor="signUpName"> Name: </label>
             <input onChange={handleOnChange} id="signUpName" className="form-control" value={user.name} name="name" type='text'/> <br/>
-            <label htmlFor='signUpEmail' >Email:</label >
+            <label htmlFor='signUpEmail'className='required-field' >Email:</label >
             <input  onChange={handleOnChange} id="signUpEmail" className="form-control" value={user.email} name="email" type='text'/> <br/>
-            <label htmlFor='signUpUsername'>Username:</label >
+            <label htmlFor='signUpUsername' className='required-field'>Username:</label >
             <input onChange={handleOnChange} id="signUpUsername" className="form-control"  value={user.username} name="username" type='text'/> <br/>
-            <label htmlFor='signUpPassword'> Password: </label >
+            <label htmlFor='signUpPassword' className='required-field'> Password: </label >
             <input onChange={handleOnChange} id='signUpPassword' className="form-control"  value={user.password} name="password" type='password'/> <br/>
-            <label htmlFor='signUpConfirmPassword'> Confirm password:</label >
+            <label htmlFor='signUpConfirmPassword' className='required-field'> Confirm password:</label >
             <input onChange={handleOnChange} id="signUpConfirmPassword" className="form-control"  value={user.password_confirmation} name="password_confirmation" type='password'/> <br/>
             <button type='submit' className="white-blue-buttons">Submit</button>
           </form> 

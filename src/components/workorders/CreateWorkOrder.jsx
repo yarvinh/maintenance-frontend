@@ -77,11 +77,11 @@ const CreateWorkOrder = ({employees,buildings,employee,building,unit}) => {
                     </select>}
 
                     {!buildingId && 
-                    <select  className="standar-input accordion" onChange={handleOnChange} name="building_id" defaultValue="select_location">
-                      <option  value="select_location" className='accordion'>Select Location</option>
-                      {!buildings.error_message && buildings.map(b => <option key={b.id} className='accordion' value={b.id} >{b.address}</option>)}
-                    </select>}
-                    <label className='accordion'>Date</label>
+                      <select  className="standar-input accordion" onChange={handleOnChange} name="building_id" defaultValue="select_location">
+                        <option  value="select_location" className='accordion'>Select Location</option>
+                        {!buildings.error_message && buildings.map(b => <option key={b.id} className='accordion' value={b.id} >{b.address}</option>)}
+                      </select>}
+                    <label className='accordion required-field'>Date</label>
                     <div  className='accordion'> 
                     <input onChange={handleOnChange}  name="date" className="standar-input accordion" type="date" value={workOrder.date} min={today.join("-")} />
                     </div>
@@ -91,7 +91,7 @@ const CreateWorkOrder = ({employees,buildings,employee,building,unit}) => {
                     
                     { !unit && 
                     <div>
-                      <label className='accordion'>Unit</label> <br/>
+                      <label className='accordion required-field'>Unit</label> <br/>
                       <input onChange={handleOnChange} className="standar-input accordion" name="unit" value={workOrder.unit}/><br/><br/>
                     </div>
                     } 

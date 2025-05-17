@@ -303,3 +303,7 @@
   justify-content: center;
 }
 
+.required-field::after {
+  content: "*";
+  color: red;
+}

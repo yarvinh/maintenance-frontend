@@ -55,11 +55,11 @@ const CreateBuilding = () =>{
               <div className='accordion'> 
               {errorsOrMsg.from.includes("create_building") && <ErrorsOrMsg {...(errorsOrMsg.errors ? { errors: errorsOrMsg.errors } :{msg: errorsOrMsg.msg })} />}
               </div>  
-              <label htmlFor='c-b-address' className='accordion'>Address</label>
+              <label htmlFor='c-b-address' className='accordion required-field'>Address</label>
               <input id='c-b-address' onChange={handleOnChange}  name="address" className="standar-input accordion" type="text" value={building.address}/><br/>
-              <label htmlFor='c-b-superintendent' className='accordion'>Superintendent</label>
+              <label htmlFor='c-b-superintendent' className='accordion required-field'>Superintendent</label>
               <input id='c-b-superintendent' onChange={handleOnChange} name="super_name" className="standar-input accordion" type="text" value={building.super_name}/><br/>
-              <label htmlFor='c-b-phone' className='accordion'>Phone</label>
+              <label htmlFor='c-b-phone' className='accordion required-field'>Phone</label>
               <input id='c-b-phone' onChange={handleOnChange}  name="phone_number" className="standar-input accordion" type="phone" value={building.phone_number}/><br/>
               <label htmlFor='c-b-bin-number' className='accordion'>Bin Number</label>
               <input id='c-b-bin-number' onChange={handleOnChange}  name="bin" className="standar-input accordion" type="text" value={building.bin}/><br/>

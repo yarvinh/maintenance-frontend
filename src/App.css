@@ -645,3 +645,20 @@ height: 20rem;
   left: 4px;
 
 }
+
+.name-logo{
+  width: 100px;
+  border-radius: 5rem; 
+  position:absolute;
+  bottom: -50px
+}
+
+.footer-line{
+  display: flex;
+  background-color: #263e57;
+  height: 4px;
+  width: 90%;
+  margin: auto;
+  justify-content: center;
+  position: relative;
+}
