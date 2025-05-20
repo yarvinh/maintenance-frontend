@@ -647,10 +647,10 @@ height: 20rem;
 }
 
 .name-logo{
-  width: 100px;
+  width: 60px;
   border-radius: 5rem; 
   position:absolute;
-  bottom: -50px
+  bottom: -30px
 }
 
 .footer-line{
