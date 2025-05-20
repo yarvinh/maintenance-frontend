@@ -1,11 +1,12 @@
 
-import {Link,Navigate} from 'react-router-dom'
-import { connect } from 'react-redux'; 
+import {Navigate} from 'react-router-dom'
+import {useSelector } from 'react-redux'; 
 import CreateEmployees from "../employees/CreateEmployees"
 import LogIn from '../users/LogIn';
 
 
-const HomeWithoutLogin = ({errorsOrMessages,fetchAppContent}) => {
+const HomeWithoutLogin = ({fetchAppContent}) => {
+  const errorsOrMessages = useSelector(state => state.errorsOrMessages.errorsOrMessages)
   if (errorsOrMessages.msg?.includes("Account was successfully created" )){
     return <Navigate to='/login'/>
   } else {
@@ -24,12 +25,4 @@ const HomeWithoutLogin = ({errorsOrMessages,fetchAppContent}) => {
   }
 }
 
-const mapStateToProps = state => { 
-  return {
-    user: state.user.user,
-    errorsOrMessages: state.errorsOrMessages.errorsOrMessages
-  }
-}
-
-
-export default connect(mapStateToProps,null)(HomeWithoutLogin)
+export default HomeWithoutLogin
